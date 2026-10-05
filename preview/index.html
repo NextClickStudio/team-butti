@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Team Butti — Concept Preview</title>
+<meta name="description" content="Concept preview dello shop Team Butti. Non è un negozio attivo.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=UnifrakturCook:wght@700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d0d0d;--paper:#f4f1ea;--pink:#ff2e93;--yellow:#ffd400;--red:#e3191b;--blue:#1d3fbf;--green:#39ff14;--sand:#c9a46a;
+  --display:'Anton',Impact,'Arial Narrow',sans-serif;--mono:'Space Mono',ui-monospace,monospace;--goth:'UnifrakturCook',serif;--marker:'Permanent Marker',cursive;
+  --g:clamp(14px,2.4vw,32px);--head:64px;
+  --hero-bg:var(--pink);--hero-fg:var(--ink);--hero-pattern:radial-gradient(circle,rgba(0,0,0,.28) 1.3px,transparent 1.8px) 0 0/9px 9px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:14px;line-height:1.5;overflow-x:hidden}
+body.lock{overflow:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.d{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:.86;letter-spacing:.005em}
+.grunge{filter:url(#grunge)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 28px;background:var(--ink);color:var(--paper);border:2px solid var(--ink);font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;transition:transform .15s,background .2s,color .2s;position:relative}
+.btn:hover{background:transparent;color:var(--ink)}
+.btn:active{transform:translateY(2px)}
+.btn--pink{background:var(--pink);border-color:var(--ink);color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.btn--pink:hover{background:var(--yellow);color:var(--ink);box-shadow:6px 6px 0 var(--ink);transform:translate(-2px,-2px)}
+.btn--block{width:100%}
+.btn[disabled]{opacity:.35;pointer-events:none}
+
+/* grain */
+body::after{content:'';position:fixed;inset:-50%;z-index:900;pointer-events:none;opacity:.09;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain .9s steps(4) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}25%{transform:translate(-4%,3%)}50%{transform:translate(3%,-4%)}75%{transform:translate(-3%,-2%)}}
+
+/* loader */
+.loader{position:fixed;inset:0;z-index:1000;background:var(--ink);color:var(--paper);display:grid;place-items:center;transition:clip-path .9s cubic-bezier(.8,0,.2,1);clip-path:inset(0 0 0 0)}
+.loader.done{clip-path:inset(0 0 100% 0)}
+.loader__in{display:grid;justify-items:center;gap:22px}
+.loader .badge{width:150px;height:150px;font-size:44px;animation:slam .6s cubic-bezier(.2,1.6,.4,1) both}
+.loader__rpm{font-family:var(--display);font-size:64px;line-height:1;display:flex;align-items:baseline;gap:10px}
+.loader__rpm small{font-family:var(--mono);font-size:11px;letter-spacing:.2em}
+.loader__bar{width:220px;height:6px;border:1.5px solid var(--paper)}
+.loader__bar i{display:block;height:100%;width:0;background:var(--pink)}
+@keyframes slam{0%{transform:scale(3) rotate(-20deg);opacity:0}100%{transform:none;opacity:1}}
+
+/* badge logo */
+.badge{display:grid;place-items:center;border-radius:50%;background:#fff;color:#000;font-family:var(--display);text-transform:uppercase;line-height:.84;text-align:center;border:2px solid #000;flex-shrink:0}
+
+/* concept strip */
+.concept{background:var(--ink);color:var(--yellow);text-align:center;padding:6px var(--g);font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+
+/* marquee */
+.mq{overflow:hidden;white-space:nowrap;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;background:var(--pink);color:var(--ink);border-bottom:2px solid var(--ink);padding:8px 0}
+.mq__t{display:flex;width:max-content;animation:mq 34s linear infinite}
+.mq__t span{padding:0 18px}
+.mq__t b{color:var(--paper)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* header */
+.hdr{position:sticky;top:0;z-index:80;background:var(--paper);border-bottom:2px solid var(--ink)}
+.hdr__in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:var(--head);padding:0 var(--g)}
+.nav{display:flex;gap:22px}
+.nav a,.hdr__act a,.hdr__act button{font-size:12px;letter-spacing:.1em;text-transform:uppercase;position:relative}
+.nav a::after{content:'';position:absolute;left:0;right:0;bottom:-4px;height:3px;background:var(--pink);transform:scaleX(0);transform-origin:right;transition:transform .25s}
+.nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.hdr .badge{width:50px;height:50px;font-size:15px;transition:transform .4s}
+.hdr__logo:hover .badge{transform:rotate(-12deg) scale(1.08)}
+.hdr__act{justify-self:end;display:flex;gap:20px;align-items:center}
+.bagcount{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;background:var(--ink);color:var(--paper);border-radius:11px;font-size:11px;margin-left:4px;transition:transform .3s}
+.bagcount.pop{animation:pop .5s}
+@keyframes pop{40%{transform:scale(1.6) rotate(-10deg);background:var(--pink);color:var(--ink)}}
+.burger{display:none}
+@media(max-width:900px){.nav,.hdr__act .hide-m{display:none}.burger{display:block;justify-self:start;font-size:12px;letter-spacing:.1em;text-transform:uppercase}.hdr__in{grid-template-columns:1fr auto 1fr}}
+.mmenu{position:fixed;inset:0;z-index:79;background:var(--yellow);padding:120px var(--g) 40px;display:flex;flex-direction:column;gap:6px;transform:translateY(-105%);visibility:hidden;transition:transform .5s cubic-bezier(.8,0,.2,1),visibility 0s .5s}
+.mmenu.open{transform:none;visibility:visible;transition:transform .5s cubic-bezier(.8,0,.2,1)}
+@media(min-width:901px){.mmenu{display:none}}
+.mmenu a{font-family:var(--display);font-size:15vw;line-height:.95;text-transform:uppercase}
+.mmenu a span{font-family:var(--mono);font-size:12px;vertical-align:top;margin-right:8px}
+
+/* hero */
+.hero{position:relative;min-height:calc(100svh - var(--head) - 60px);background:var(--hero-pattern),var(--hero-bg);color:var(--hero-fg);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:var(--g);transition:background .5s,color .5s;isolation:isolate;cursor:crosshair}
+.hero__title{font-size:clamp(96px,22vw,380px);margin:0;position:relative;z-index:3;white-space:nowrap;display:flex;flex-direction:column;pointer-events:none}
+.hero__title span{display:block;transform:translateY(110%);animation:rise 1s cubic-bezier(.2,.9,.2,1) forwards}
+.hero__title span:nth-child(2){animation-delay:.12s;align-self:flex-end}
+.hero__line{overflow:hidden;display:flex}
+.hero__line:nth-child(2){justify-content:flex-end}
+@keyframes rise{to{transform:none}}
+.hero__top{position:absolute;top:var(--g);left:var(--g);right:var(--g);display:flex;justify-content:space-between;gap:16px;z-index:4;flex-wrap:wrap}
+.hero__kicker{max-width:340px;font-size:12px;line-height:1.5;text-transform:uppercase;letter-spacing:.06em}
+.hero__kicker b{background:var(--hero-fg);color:var(--hero-bg);padding:0 4px}
+.vibe-btn{display:inline-flex;align-items:center;gap:10px;border:2px solid currentColor;padding:10px 14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;background:transparent;transition:transform .2s}
+.vibe-btn:hover{transform:rotate(-3deg) scale(1.05)}
+.vibe-btn i{width:14px;height:14px;border-radius:50%;background:currentColor;display:inline-block;animation:spin 1.2s linear infinite;border:3px dotted var(--hero-bg)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero__float{position:absolute;z-index:2;width:clamp(150px,22vw,330px);filter:drop-shadow(10px 14px 0 rgba(0,0,0,.25));transition:transform .2s ease-out;pointer-events:none}
+.hero__float--1{top:14%;left:8%;--r:-12deg}
+.hero__float--2{top:8%;right:28%;--r:9deg;width:clamp(120px,16vw,240px)}
+.hero__float--3{top:24%;right:4%;--r:-4deg}
+.hero__float>div{transform:rotate(var(--r));animation:bob 4s ease-in-out infinite}
+.hero__float--2>div{animation-delay:-1.4s}.hero__float--3>div{animation-delay:-2.6s}
+@keyframes bob{50%{translate:0 -14px}}
+.hero__bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;position:relative;z-index:4;margin-top:14px;flex-wrap:wrap}
+.spin-badge{position:absolute;right:calc(var(--g) + 10px);bottom:calc(var(--g) + 70px);width:130px;height:130px;z-index:4;pointer-events:none}
+.spin-badge svg{width:100%;height:100%;animation:spin 14s linear infinite}
+.spin-badge .badge{position:absolute;inset:30px;font-size:19px}
+.skyline{position:absolute;left:0;right:0;bottom:0;height:28%;z-index:1;opacity:.92;pointer-events:none;color:var(--hero-fg)}
+.skyline svg{width:100%;height:100%}
+.brap{position:absolute;z-index:6;font-family:var(--display);font-size:clamp(38px,6vw,80px);pointer-events:none;text-transform:uppercase;-webkit-text-stroke:2px var(--ink);animation:brap .9s cubic-bezier(.2,1.4,.4,1) forwards;white-space:nowrap}
+@keyframes brap{0%{transform:translate(-50%,-50%) scale(.2) rotate(var(--r));opacity:1}60%{transform:translate(-50%,-80%) scale(1) rotate(var(--r));opacity:1}100%{transform:translate(-50%,-120%) scale(1.05) rotate(var(--r));opacity:0}}
+@media(max-width:700px){.hero__float--2{display:none}.hero__float--1{top:22%;left:-4%}.hero__float--3{top:30%;right:-6%}.spin-badge{width:96px;height:96px;bottom:auto;top:110px;right:var(--g)}.spin-badge .badge{inset:22px;font-size:14px}}
+
+/* tilted tapes */
+.tapes{position:relative;height:190px;overflow:hidden;background:var(--paper);border-top:2px solid var(--ink)}
+.tape{position:absolute;left:-5%;width:110%;padding:14px 0;white-space:nowrap;border-block:2px solid var(--ink);font-family:var(--display);font-size:clamp(28px,4vw,46px);text-transform:uppercase;line-height:1}
+.tape__t{display:flex;width:max-content;will-change:transform}
+.tape__t span{padding:0 22px}
+.tape--a{top:28px;background:var(--yellow);transform:rotate(-3deg)}
+.tape--b{top:96px;background:var(--ink);color:var(--paper);transform:rotate(2deg)}
+.tape--b em{font-style:normal;color:var(--pink)}
+
+/* sections */
+.sec{padding:clamp(56px,8vw,120px) var(--g)}
+.sec__head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;border-bottom:3px solid var(--ink);padding-bottom:14px;margin-bottom:28px;flex-wrap:wrap}
+.sec__title{font-size:clamp(54px,10vw,150px);margin:0}
+.sec__title .out{color:transparent;-webkit-text-stroke:2px var(--ink)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{border:2px solid var(--ink);padding:8px 14px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;transition:background .2s,color .2s}
+.tab.on,.tab:hover{background:var(--ink);color:var(--paper)}
+
+/* product grid */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.5vw,22px)}
+@media(max-width:990px){.grid{grid-template-columns:repeat(2,1fr)}}
+.card{position:relative;cursor:pointer;text-align:left;width:100%}
+.card__m{position:relative;aspect-ratio:4/5;background:#fff;border:2px solid var(--ink);overflow:hidden;perspective:900px}
+.card__m::before{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(0,0,0,.07) 1px,transparent 1.5px) 0 0/8px 8px}
+.flip{position:absolute;inset:8%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.3,.5,1)}
+.flip>div{position:absolute;inset:0;backface-visibility:hidden;display:grid;place-items:center}
+.flip>div:last-child{transform:rotateY(180deg)}
+.card:hover .flip,.card:focus-visible .flip{transform:rotateY(180deg)}
+.card__tag{position:absolute;top:10px;left:10px;z-index:2;background:var(--ink);color:var(--paper);font-size:10px;letter-spacing:.14em;padding:4px 7px;text-transform:uppercase}
+.card__tag--pink{background:var(--pink);color:var(--ink)}
+.card__quick{position:absolute;left:10px;right:10px;bottom:10px;z-index:2;background:var(--yellow);border:2px solid var(--ink);text-align:center;padding:10px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;transform:translateY(140%);transition:transform .3s cubic-bezier(.2,1.4,.4,1)}
+.card:hover .card__quick{transform:none}
+@media(hover:none){.card__quick{transform:none}}
+.card__i{display:flex;justify-content:space-between;gap:10px;padding:10px 2px 0;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.card__i b{font-weight:700}
+.card.sold .flip{filter:grayscale(1);opacity:.55}
+.stamp{position:absolute;z-index:3;top:42%;left:50%;transform:translate(-50%,-50%) rotate(-14deg);border:4px solid var(--red);color:var(--red);font-family:var(--display);font-size:clamp(26px,3.6vw,46px);padding:4px 14px;text-transform:uppercase;background:rgba(255,255,255,.75);mix-blend-mode:multiply}
+
+/* manifesto */
+.mani{background:var(--ink);color:var(--paper);position:relative;overflow:hidden;min-height:110vh}
+.mani__txt{font-family:var(--display);text-transform:uppercase;font-size:clamp(40px,7.4vw,118px);line-height:.95;margin:0;position:relative;z-index:1;pointer-events:none}
+.mani__txt .w{color:#333;transition:color .25s}
+.mani__txt .w.on{color:var(--paper)}
+.mani__txt .w.hl.on{color:var(--pink)}
+.mani__sign{margin-top:36px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;position:relative;z-index:1}
+.mani__sign .marker{font-family:var(--marker);font-size:clamp(26px,3vw,40px);color:var(--yellow);transform:rotate(-4deg)}
+.stickers{position:absolute;inset:0;z-index:2;pointer-events:none}
+.stk{position:absolute;pointer-events:auto;cursor:grab;user-select:none;touch-action:none;transition:box-shadow .2s, scale .2s;filter:drop-shadow(4px 5px 0 rgba(0,0,0,.4))}
+.stk:active{cursor:grabbing;scale:1.1}
+.stk--a{background:var(--yellow);color:var(--ink);font-family:var(--display);font-size:30px;padding:6px 14px;border:3px solid var(--ink)}
+.stk--b{background:var(--pink);color:var(--ink);font-family:var(--display);font-size:24px;padding:16px;border-radius:50%;border:3px solid var(--ink);width:110px;height:110px;display:grid;place-items:center;text-align:center;line-height:.9}
+.stk--c{background:var(--paper);color:var(--red);font-family:var(--goth);font-size:34px;padding:4px 16px;border:3px solid var(--ink);border-radius:6px}
+.stk--d{background:var(--green);color:var(--ink);font-family:var(--marker);font-size:26px;padding:6px 14px;border:3px solid var(--ink)}
+.stk--e{background:var(--blue);color:#fff;font-family:var(--display);font-size:58px;padding:2px 16px;border:3px solid var(--ink);-webkit-text-stroke:1px var(--ink)}
+.stk.badge{width:96px;height:96px;font-size:28px;border-width:3px}
+.mani__hint{position:absolute;right:var(--g);top:22px;z-index:3;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow)}
+
+/* customizer */
+.cfg{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(20px,4vw,64px);align-items:start}
+@media(max-width:900px){.cfg{grid-template-columns:1fr}}
+.cfg__stage{position:relative;aspect-ratio:1;border:3px solid var(--ink);background:var(--cfg-bg,var(--yellow));overflow:hidden;perspective:1200px;transition:background .4s}
+.cfg__stage::before{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(0,0,0,.18) 1.2px,transparent 1.7px) 0 0/10px 10px}
+.cfg__flip{position:absolute;inset:7%;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,1.25,.5,1)}
+.cfg__flip.back{transform:rotateY(180deg)}
+.cfg__flip>div{position:absolute;inset:0;backface-visibility:hidden}
+.cfg__flip>div:last-child{transform:rotateY(180deg)}
+.cfg__flip svg{width:100%;height:100%;filter:drop-shadow(10px 12px 0 rgba(0,0,0,.25))}
+.cfg__turn{position:absolute;right:14px;bottom:14px;z-index:2}
+.cfg__price{position:absolute;left:14px;top:14px;z-index:2;background:var(--ink);color:var(--paper);font-family:var(--display);font-size:30px;padding:4px 12px;transform:rotate(-4deg)}
+.cfg__f{display:grid;gap:24px}
+.cfg__f h3{margin:0 0 10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:2px solid var(--ink);padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;transition:all .15s}
+.opt.on{background:var(--ink);color:var(--paper)}
+.opt:hover{transform:translateY(-2px)}
+.sw{width:46px;height:46px;border:2px solid var(--ink);display:grid;grid-template-columns:1fr 1fr;padding:0;overflow:hidden;transition:transform .2s}
+.sw.on{outline:3px solid var(--ink);outline-offset:3px;transform:rotate(-8deg)}
+.sw i{display:block}
+.inp{width:100%;border:2px solid var(--ink);background:#fff;padding:14px 16px;font-family:var(--display);font-size:28px;text-transform:uppercase;letter-spacing:.04em;outline:none}
+.inp:focus{box-shadow:5px 5px 0 var(--pink)}
+.row2{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+
+/* ride */
+.ride{height:420vh;position:relative;background:var(--ink)}
+.ride__s{position:sticky;top:0;height:100vh;overflow:hidden}
+.ride__track{display:flex;height:100%;width:max-content;will-change:transform}
+.stop{width:100vw;height:100%;flex-shrink:0;position:relative;padding:calc(var(--head) + 40px) var(--g) 0;overflow:hidden;display:flex;flex-direction:column;gap:18px}
+.stop__n{font-size:12px;letter-spacing:.2em}
+.stop__t{font-size:clamp(84px,17vw,280px);margin:0}
+.stop__p{max-width:420px;font-size:13px;line-height:1.6;text-transform:uppercase;letter-spacing:.04em}
+.stop--1{background:radial-gradient(circle,rgba(0,0,0,.3) 1.3px,transparent 1.8px) 0 0/9px 9px,var(--pink)}
+.stop--2{background:linear-gradient(180deg,#9ec9ef 0 45%,#d8b46a 45% 100%);color:var(--ink)}
+.stop--3{background:var(--yellow);color:var(--red)}
+.stop--4{background:var(--ink);color:var(--paper)}
+.stop--4 .stop__t{color:transparent;-webkit-text-stroke:2px var(--pink);text-shadow:0 0 30px rgba(255,46,147,.6)}
+.stop__deco{position:absolute;right:var(--g);bottom:24%;width:min(42vw,520px)}
+.hills{position:absolute;left:0;right:0;bottom:0;height:62%}
+.plate-mini{background:#f7f7f2;border:6px solid #222;border-radius:14px;padding:10px 26px;color:#1d3fbf;text-align:center;box-shadow:8px 8px 0 rgba(0,0,0,.3);transform:rotate(-5deg)}
+.plate-mini .goth{font-family:var(--goth);color:var(--red);font-size:30px;line-height:1}
+.plate-mini .big{font-family:var(--display);font-size:clamp(50px,7vw,96px);color:#111;line-height:1}
+.neon{font-family:var(--marker);font-size:clamp(34px,4.6vw,64px);color:var(--yellow);text-shadow:0 0 6px var(--yellow),0 0 22px var(--pink);transform:rotate(-6deg);animation:flicker 3s infinite}
+@keyframes flicker{0%,18%,22%,62%,64%,100%{opacity:1}20%,63%{opacity:.35}}
+.road{position:absolute;left:0;right:0;bottom:0;height:16%;background:repeating-linear-gradient(90deg,transparent 0 60px,rgba(255,255,255,.12) 60px 100px),#2a2018;border-top:3px solid var(--ink);z-index:3}
+.bike{position:absolute;bottom:calc(16% - 14px);left:0;width:clamp(150px,18vw,240px);z-index:4;will-change:transform}
+.bike .wh{transform-box:fill-box;transform-origin:center}
+.dust{position:absolute;z-index:3;bottom:16%;width:14px;height:14px;border-radius:50%;background:rgba(201,164,106,.8);pointer-events:none;animation:dust .9s ease-out forwards}
+@keyframes dust{to{transform:translate(-60px,-30px) scale(3);opacity:0}}
+.ride__bar{position:absolute;top:calc(var(--head) + 14px);left:var(--g);right:var(--g);z-index:5;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper);mix-blend-mode:difference}
+.ride__bar i{position:absolute;left:0;bottom:-8px;height:3px;background:currentColor;width:0}
+
+/* plate */
+.plate-sec{background:var(--paper);display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,60px);align-items:center}
+@media(max-width:900px){.plate-sec{grid-template-columns:1fr}}
+.plate{position:relative;aspect-ratio:2/1;background:linear-gradient(180deg,#fbfbf7,#e9e8e0);border:10px solid #1a1a1a;border-radius:22px;box-shadow:inset 0 0 0 3px #bbb,14px 14px 0 var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;transform:rotate(-3deg);transition:transform .4s cubic-bezier(.2,1.5,.4,1);overflow:hidden}
+.plate:hover{transform:rotate(1deg) scale(1.02)}
+.plate .goth{font-family:var(--goth);color:var(--red);font-size:clamp(28px,4vw,52px);line-height:1}
+.plate__txt{font-family:var(--display);font-size:clamp(60px,10vw,150px);line-height:1;color:#151515;letter-spacing:.04em;text-shadow:2px 2px 0 #999;white-space:nowrap}
+.plate .goth.b{color:#1d3fbf}
+.plate__bolt{position:absolute;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#eee,#777);top:14px}
+.plate__eu{position:absolute;left:0;top:0;bottom:0;width:9%;background:#1d3fbf;color:var(--yellow);display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:10px;font-family:var(--display);font-size:clamp(16px,2vw,28px);color:#fff}
+
+/* drop */
+.drop{background:radial-gradient(circle,rgba(0,0,0,.3) 1.3px,transparent 1.8px) 0 0/9px 9px,var(--pink);border-block:3px solid var(--ink);position:relative;overflow:hidden}
+.drop__in{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(20px,4vw,60px);align-items:center}
+@media(max-width:900px){.drop__in{grid-template-columns:1fr}}
+.poster{background:var(--yellow);border:3px solid var(--ink);padding:18px;transform:rotate(-2deg);box-shadow:12px 12px 0 var(--ink);position:relative}
+.poster__t{font-size:clamp(70px,11vw,170px);color:var(--red);margin:0}
+.poster__row{display:grid;grid-template-columns:auto 1fr auto;gap:16px;border-top:3px solid var(--ink);padding-top:12px;margin-top:10px;align-items:center}
+.poster__row .d{font-size:clamp(28px,4vw,52px)}
+.poster__row p{margin:0;font-size:10px;line-height:1.4;text-transform:uppercase}
+.poster .stamp{top:40%;font-size:clamp(30px,4.6vw,64px);border-width:6px;background:rgba(255,255,255,.4)}
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:20px 0}
+.count div{background:var(--ink);color:var(--paper);text-align:center;padding:14px 4px;border:2px solid var(--ink)}
+.count b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(40px,6vw,80px);line-height:1}
+.count small{font-size:10px;letter-spacing:.16em}
+
+/* newsletter + footer */
+.nl{display:flex;border:3px solid currentColor;max-width:620px}
+.nl input{flex:1;min-width:0;border:0;background:transparent;padding:16px 18px;font-family:var(--mono);font-size:13px;text-transform:uppercase;outline:none}
+.nl input::placeholder{color:inherit;opacity:.55}
+.nl button{background:currentColor;padding:0 22px}
+.nl button span{color:var(--ink);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;filter:invert(1)}
+.ftr{background:var(--ink);color:var(--paper);padding:64px var(--g) 22px;overflow:hidden}
+.ftr__top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:34px}
+@media(max-width:800px){.ftr__top{grid-template-columns:1fr}}
+.ftr h3{font-size:clamp(44px,6vw,84px);margin:0 0 18px}
+.ftr__links{display:grid;gap:8px;font-size:12px;text-transform:uppercase;letter-spacing:.1em}
+.ftr__links a:hover{color:var(--pink)}
+.ftr__word{margin:60px 0 18px;white-space:nowrap;line-height:.8;text-align:center}
+.ftr__word span{display:inline-block;font-family:var(--display);text-transform:uppercase;font-size:18vw}
+.ftr__word span i{font-style:normal;display:inline-block;transition:transform .3s cubic-bezier(.2,1.6,.4,1),color .2s}
+.ftr__word span i:hover{transform:translateY(-12%) rotate(-6deg);color:var(--pink)}
+.ftr__bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;border-top:1px solid #333;padding-top:16px}
+
+/* drawer + modal */
+.ov{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.ov.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:310;width:min(460px,100%);background:var(--paper);border-left:3px solid var(--ink);transform:translateX(105%);transition:transform .45s cubic-bezier(.2,.9,.2,1);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.drawer__h{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:3px solid var(--ink);background:var(--yellow)}
+.drawer__h .d{font-size:34px}
+.x{width:40px;height:40px;border:2px solid var(--ink);display:grid;place-items:center;font-size:16px;transition:transform .3s;background:var(--paper)}
+.x:hover{transform:rotate(90deg)}
+.drawer__l{flex:1;overflow:auto;padding:6px 20px}
+.ln{display:grid;grid-template-columns:86px 1fr auto;gap:14px;padding:14px 0;border-bottom:2px dashed #bbb;animation:slidein .4s both}
+@keyframes slidein{from{transform:translateX(30px);opacity:0}}
+.ln__m{aspect-ratio:1;background:#fff;border:2px solid var(--ink);padding:6px}
+.ln__i{font-size:11px;text-transform:uppercase;display:grid;gap:3px;align-content:start}
+.ln__i b{font-size:12px}
+.ln__i span{opacity:.7}
+.qty{display:inline-flex;align-items:center;border:2px solid var(--ink);height:34px;align-self:start}
+.qty button{width:30px;height:100%;font-weight:700}
+.qty span{min-width:22px;text-align:center;font-size:12px}
+.drawer__f{padding:18px 20px;border-top:3px solid var(--ink);display:grid;gap:10px}
+.sum{display:flex;justify-content:space-between;font-family:var(--display);font-size:26px;text-transform:uppercase}
+.free{font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.free__bar{height:8px;border:2px solid var(--ink);margin-top:6px}
+.free__bar i{display:block;height:100%;background:var(--pink);transition:width .5s}
+.empty{flex:1;display:grid;place-items:center;text-align:center;padding:30px;gap:16px;align-content:center}
+.empty .d{font-size:56px}
+.modal{position:fixed;z-index:320;inset:auto 0 0 0;max-height:92vh;background:var(--paper);border-top:3px solid var(--ink);transform:translateY(105%);transition:transform .5s cubic-bezier(.2,.9,.2,1);display:grid;grid-template-columns:1.1fr 1fr;overflow:auto}
+.modal.on{transform:none}
+@media(min-width:901px){.modal{inset:50% auto auto 50%;width:min(1080px,92vw);border:3px solid var(--ink);transform:translate(-50%,-40%) scale(.9);opacity:0;pointer-events:none;transition:transform .45s cubic-bezier(.2,1.3,.4,1),opacity .3s}.modal.on{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}}
+@media(max-width:900px){.modal{grid-template-columns:1fr}}
+.modal__m{background:var(--yellow);position:relative;aspect-ratio:1;border-right:3px solid var(--ink);perspective:1000px}
+.modal__m::before{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(0,0,0,.18) 1.2px,transparent 1.7px) 0 0/10px 10px}
+.modal__i{padding:28px;display:grid;gap:18px;align-content:start;position:relative}
+.modal__i .x{position:absolute;top:16px;right:16px}
+.modal__t{font-size:clamp(40px,4.4vw,68px);margin:0;padding-right:50px}
+.modal__p{font-family:var(--display);font-size:32px}
+.sizes{display:flex;gap:6px;flex-wrap:wrap}
+.size{min-width:54px;height:48px;border:2px solid var(--ink);font-weight:700;font-size:12px}
+.size.on{background:var(--ink);color:var(--paper)}
+.size.na{opacity:.3;text-decoration:line-through;pointer-events:none}
+details.acc{border-top:2px solid var(--ink)}
+details.acc summary{list-style:none;cursor:pointer;padding:14px 0;display:flex;justify-content:space-between;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+details.acc summary::after{content:'+'}
+details.acc[open] summary::after{content:'−'}
+details.acc p{margin:0 0 14px;font-size:12px}
+.toast{position:fixed;left:50%;bottom:24px;z-index:400;transform:translate(-50%,calc(100% + 60px)) rotate(-2deg);visibility:hidden;background:var(--ink);color:var(--yellow);border:3px solid var(--yellow);padding:14px 20px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;transition:transform .45s cubic-bezier(.2,1.4,.4,1);max-width:calc(100% - 32px);text-align:center}
+.toast.on{transform:translate(-50%,0) rotate(-2deg);visibility:visible}
+
+/* reveal + cursor */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s cubic-bezier(.2,.9,.2,1)}
+.rv.in{opacity:1;transform:none}
+.cur{position:fixed;left:0;top:0;z-index:950;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;transition:width .25s,height .25s,margin .25s}
+.cur.big{width:70px;height:70px;margin:-35px 0 0 -35px}
+@media(hover:none){.cur{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body class="lock">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="grunge" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency=".45" numOctaves="2" seed="7" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -4 0 0 0 1.28" result="holes"/>
+    <feComposite in="SourceGraphic" in2="holes" operator="out" result="cut"/>
+    <feTurbulence type="turbulence" baseFrequency=".04" numOctaves="2" seed="3" result="w"/>
+    <feDisplacementMap in="cut" in2="w" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__in">
+    <div class="badge">Team<br>Butti</div>
+    <div class="loader__rpm"><span id="rpm">0000</span><small>RPM</small></div>
+    <div class="loader__bar"><i id="rpmbar"></i></div>
+  </div>
+</div>
+
+<div class="cur" id="cur"></div>
+
+<div class="concept">Concept preview · NextClick Studio × Team Butti · Non è un negozio attivo, nessun pagamento</div>
+<div class="mq"><div class="mq__t" id="mq"></div></div>
+
+<header class="hdr">
+  <div class="hdr__in">
+    <button class="burger" id="burger" aria-expanded="false">Menu</button>
+    <nav class="nav" aria-label="Principale">
+      <a href="#shop">Shop</a><a href="#custom">Custom</a><a href="#ride">La storia</a><a href="#drop">Drop</a>
+    </nav>
+    <a href="#top" class="hdr__logo" aria-label="Team Butti home"><span class="badge">Team<br>Butti</span></a>
+    <div class="hdr__act">
+      <a href="#plate" class="hide-m">Targa</a>
+      <button id="openBag" data-h>Bag<span class="bagcount" id="bagcount">0</span></button>
+    </div>
+  </div>
+</header>
+<nav class="mmenu" id="mmenu" aria-label="Menu mobile">
+  <a href="#shop"><span>01</span>Shop</a><a href="#custom"><span>02</span>Custom</a><a href="#ride"><span>03</span>La storia</a><a href="#plate"><span>04</span>Targa</a><a href="#drop"><span>05</span>Drop</a>
+</nav>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero" id="hero" aria-label="Team Butti">
+    <div class="hero__top">
+      <p class="hero__kicker">Dalle colline toscane a <b>Los Angeles</b>.<br>Maglie da hockey, MX e football per chi va di traverso. Drop 02 in arrivo.</p>
+      <button class="vibe-btn" id="vibe" data-h><i></i><span id="vibeName">Vibe: Pink Market</span></button>
+    </div>
+    <div class="hero__float hero__float--1" data-depth="18"><div id="hf1"></div></div>
+    <div class="hero__float hero__float--2" data-depth="-12"><div id="hf2"></div></div>
+    <div class="hero__float hero__float--3" data-depth="26"><div id="hf3"></div></div>
+    <div class="spin-badge">
+      <svg viewBox="0 0 200 200"><defs><path id="circ" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text style="font-family:var(--mono);font-size:15px;letter-spacing:4px;font-weight:700;fill:currentColor"><textPath href="#circ">TEAM BUTTI ★ MILANO ★ SOCAL ★ NYC ★ MERDE ★</textPath></text></svg>
+      <span class="badge">Team<br>Butti</span>
+    </div>
+    <div class="skyline" aria-hidden="true"><svg viewBox="0 0 1440 240" preserveAspectRatio="none" id="skyline"></svg></div>
+    <h1 class="hero__title d grunge"><span class="hero__line"><span>Team</span></span><span class="hero__line"><span>Butti</span></span></h1>
+    <div class="hero__bottom">
+      <a href="#shop" class="btn btn--pink" data-h>Shop il drop →</a>
+      <span class="label">Clicca ovunque · Brap brap</span>
+    </div>
+  </section>
+
+  <div class="tapes" aria-hidden="true">
+    <div class="tape tape--a"><div class="tape__t" id="tapeA"></div></div>
+    <div class="tape tape--b"><div class="tape__t" id="tapeB"></div></div>
+  </div>
+
+  <!-- SHOP -->
+  <section class="sec" id="shop">
+    <div class="sec__head rv">
+      <h2 class="sec__title d grunge">Drop <span class="out">01</span></h2>
+      <div class="tabs" id="tabs">
+        <button class="tab on" data-f="all">Tutto</button><button class="tab" data-f="hockey">Hockey</button><button class="tab" data-f="mx">Motocross</button><button class="tab" data-f="football">Football</button>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="sec mani" id="mani">
+    <span class="mani__hint">← trascina gli sticker</span>
+    <div class="stickers" id="stickers">
+      <div class="stk stk--a" style="left:6%;top:8%;rotate:-8deg">MERDE</div>
+      <div class="stk stk--b" style="right:9%;top:12%;rotate:12deg">BIG AHH TRUCK</div>
+      <div class="stk stk--c" style="left:58%;top:46%;rotate:-6deg">Los Angeles</div>
+      <div class="stk stk--d" style="left:12%;bottom:16%;rotate:5deg">dove sei Selena?</div>
+      <div class="stk stk--e" style="right:16%;bottom:10%;rotate:-10deg">00</div>
+      <div class="stk badge" style="left:44%;top:6%;rotate:14deg">Team<br>Butti</div>
+    </div>
+    <p class="mani__txt" id="maniTxt">Non siamo nati a Los Angeles. Siamo nati sullo *sterrato* dietro casa, con un due tempi che non partiva mai. Ci vestiamo come l'America che sognavamo da bambini e la portiamo al *market* di Milano. Team Butti è la *crew*. Il resto è merde.</p>
+    <div class="mani__sign"><span class="marker">— la crew</span><span class="label" style="color:var(--paper)">Est. Toscana · Milano · SoCal</span></div>
+  </section>
+
+  <!-- CUSTOMIZER -->
+  <section class="sec" id="custom">
+    <div class="sec__head rv">
+      <h2 class="sec__title d grunge">Fattela <span class="out">tua</span></h2>
+      <p class="label" style="max-width:300px">Nome e numero stampati sul retro. Come al Market, ma da casa.</p>
+    </div>
+    <div class="cfg">
+      <div class="cfg__stage rv" id="cfgStage">
+        <span class="cfg__price">99€</span>
+        <div class="cfg__flip" id="cfgFlip"><div id="cfgFront"></div><div id="cfgBack"></div></div>
+        <button class="btn cfg__turn" id="cfgTurn" data-h>↻ Gira</button>
+      </div>
+      <div class="cfg__f rv">
+        <div><h3 class="label">01 — Modello</h3><div class="opts" id="cfgType"></div></div>
+        <div><h3 class="label">02 — Colori</h3><div class="opts" id="cfgColor"></div></div>
+        <div class="row2">
+          <div><h3 class="label"><label for="cfgName">03 — Nome</label></h3><input class="inp" id="cfgName" maxlength="10" value="BUTTI" autocomplete="off"></div>
+          <div><h3 class="label"><label for="cfgNum">04 — N°</label></h3><input class="inp" id="cfgNum" maxlength="2" value="00" inputmode="numeric" autocomplete="off"></div>
+        </div>
+        <div><h3 class="label">05 — Taglia</h3><div class="sizes" id="cfgSize"></div></div>
+        <button class="btn btn--pink btn--block" id="cfgAdd" data-h>Aggiungi alla bag — 99€</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIDE -->
+  <section class="ride" id="ride" aria-label="La storia">
+    <div class="ride__s">
+      <div class="ride__bar"><span>Milano</span><span>Toscana</span><span>SoCal</span><span>NYC</span><i id="rideBar"></i></div>
+      <div class="ride__track" id="rideTrack">
+        <div class="stop stop--1">
+          <span class="stop__n label">01 / 04 — Il Market</span>
+          <h3 class="stop__t d grunge">Milano</h3>
+          <p class="stop__p">Piazzale Antonio Cantore 10. Banchetti pieni di maglie, DJ set dalle 15, la gente in fila. Qui è dove tutto ha preso forma.</p>
+        </div>
+        <div class="stop stop--2">
+          <svg class="hills" viewBox="0 0 1440 500" preserveAspectRatio="none" aria-hidden="true"><path d="M0 220 C200 120 380 140 560 200 S900 90 1100 160 S1360 140 1440 120 V500 H0Z" fill="#c4a05a"/><path d="M0 300 C240 220 420 260 640 300 S1000 220 1240 270 S1400 260 1440 250 V500 H0Z" fill="#b08a45"/><g fill="#2f4a22"><path d="M300 210 q6 -60 12 0z"/><path d="M330 214 q6 -70 12 0z"/><path d="M1150 162 q6 -60 12 0z"/><path d="M1180 166 q5 -50 10 0z"/></g></svg>
+          <span class="stop__n label" style="position:relative">02 / 04 — Lo sterrato</span>
+          <h3 class="stop__t d grunge" style="position:relative">Toscana</h3>
+          <p class="stop__p" style="position:relative">Colline, polvere, due tempi. Le maglie MX non sono un costume: ci cadiamo dentro ogni weekend.</p>
+        </div>
+        <div class="stop stop--3">
+          <span class="stop__n label">03 / 04 — La targa</span>
+          <h3 class="stop__t d grunge">SoCal</h3>
+          <p class="stop__p">Lowrider, pickup, sole che spacca. L'America che sognavamo da bambini, presa e portata a casa.</p>
+          <div class="stop__deco"><div class="plate-mini"><div class="goth">SoCal</div><div class="big">MERDE</div><div class="goth" style="color:#1d3fbf">Los Angeles</div></div></div>
+        </div>
+        <div class="stop stop--4">
+          <span class="stop__n label">04 / 04 — Le luci</span>
+          <h3 class="stop__t d">NYC</h3>
+          <p class="stop__p">Il nostro nome su Times Square. Prossima fermata: ovunque ci sia una crew.</p>
+          <div class="stop__deco" style="bottom:30%"><div class="neon">Team Butti on Broadway</div></div>
+        </div>
+      </div>
+      <div class="road"></div>
+      <div class="bike" id="bike"></div>
+    </div>
+  </section>
+
+  <!-- PLATE -->
+  <section class="sec plate-sec" id="plate">
+    <div class="rv">
+      <h2 class="sec__title d grunge" style="font-size:clamp(54px,8vw,120px)">Targa <span class="out">custom</span></h2>
+      <p style="max-width:440px;text-transform:uppercase;font-size:12px;letter-spacing:.04em">La targa SoCal più famosa d'Italia, con la tua scritta. Da appendere in camera, in garage o sul pickup (a tuo rischio).</p>
+      <div style="display:grid;gap:12px;max-width:440px;margin-top:20px">
+        <label class="label" for="plateIn">Scrivi la tua (max 7)</label>
+        <input class="inp" id="plateIn" maxlength="7" value="MERDE" autocomplete="off">
+        <button class="btn btn--pink" id="plateAdd" data-h>Aggiungi — 39€</button>
+      </div>
+    </div>
+    <div class="rv">
+      <div class="plate" id="plateEl">
+        <span class="plate__bolt" style="left:22%"></span><span class="plate__bolt" style="right:12%"></span>
+        <span class="plate__eu">I</span>
+        <div class="goth">SoCal</div>
+        <div class="plate__txt" id="plateTxt">MERDE</div>
+        <div class="goth b">Los Angeles</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DROP -->
+  <section class="sec drop" id="drop">
+    <div class="drop__in">
+      <div class="poster rv">
+        <h2 class="poster__t d grunge">Market<br>Milano</h2>
+        <div class="poster__row"><span class="d">26.09<br>2026</span><p>Piazzale Antonio Cantore 10<br>20123 Milano<br>Orario 9:00–18:00<br>DJ set dalle 15:00</p><span class="d" style="font-size:22px;line-height:.9">Team<br>Butti<br>Merde</span></div>
+        <span class="stamp">Sold out · Grazie</span>
+      </div>
+      <div class="rv">
+        <p class="label">Prossima tappa</p>
+        <h2 class="sec__title d grunge" style="font-size:clamp(54px,8vw,120px)">Drop 02</h2>
+        <div class="count" id="count" data-date="2026-11-14T18:00:00">
+          <div><b data-u="d">00</b><small>GG</small></div><div><b data-u="h">00</b><small>ORE</small></div><div><b data-u="m">00</b><small>MIN</small></div><div><b data-u="s">00</b><small>SEC</small></div>
+        </div>
+        <p style="text-transform:uppercase;font-size:12px;margin:0 0 14px">Entra nel team e ricevi il link 1 ora prima di tutti.</p>
+        <form class="nl" id="nl"><input type="email" required placeholder="La tua email" aria-label="Email"><button type="submit"><span>Entra</span></button></form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="ftr__top">
+    <div><h3 class="d">Entra nel team</h3><p style="max-width:380px;font-size:12px;text-transform:uppercase;opacity:.75">Niente spam. Solo drop, market e qualche video di gente che cade dalla moto.</p></div>
+    <nav class="ftr__links"><span class="label" style="opacity:.5">Shop</span><a href="#shop">Hockey</a><a href="#shop">Motocross</a><a href="#shop">Football</a><a href="#custom">Custom</a></nav>
+    <nav class="ftr__links"><span class="label" style="opacity:.5">Info</span><a href="#drop">Spedizioni e resi</a><a href="#drop">Guida taglie</a><a href="https://www.instagram.com/team_butti/" target="_blank" rel="noopener">Instagram</a><a href="#drop">Contatti</a></nav>
+  </div>
+  <div class="ftr__word" aria-hidden="true"><span id="fword"></span></div>
+  <div class="ftr__bot"><span>© 2026 Team Butti — concept</span><span>Design: NextClick Studio</span><span>Made between Toscana &amp; SoCal</span></div>
+</footer>
+
+<div class="ov" id="ov"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Bag" aria-hidden="true"></aside>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Prodotto" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const euro = n => n.toFixed(0) + '€';
+
+  /* ---------- Jersey SVG ---------- */
+  const SHAPES = {
+    hockey: 'M95 40 L128 30 Q150 52 172 30 L205 40 L268 72 L286 150 L246 160 L234 122 L234 272 L66 272 L66 122 L54 160 L14 150 L32 72 Z',
+    mx: 'M100 38 L130 30 Q150 50 170 30 L200 38 L254 60 L292 204 L262 214 L232 124 L232 272 L68 272 L68 124 L38 214 L8 204 L46 60 Z',
+    football: 'M96 44 L128 34 Q150 54 172 34 L204 44 L262 64 L274 132 L232 138 L230 272 L70 272 L68 138 L26 132 L38 64 Z'
+  };
+  let uid = 0;
+  function jersey(type, c, side, o = {}) {
+    const id = 'j' + (uid++);
+    const d = SHAPES[type];
+    const name = esc((o.name || 'MERDE').toUpperCase());
+    const num = esc(o.num ?? '00');
+    const T = (x, y, s, txt, extra = '') => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="${s}" ${extra}>${txt}</text>`;
+    let deco = '', txt = '';
+    if (type === 'hockey') {
+      deco = `<rect width="66" height="300" fill="${c.sleeve}"/><rect x="234" width="66" height="300" fill="${c.sleeve}"/>
+        <rect y="124" width="66" height="10" fill="${c.stripe}"/><rect x="234" y="124" width="66" height="10" fill="${c.stripe}"/>
+        <rect y="140" width="66" height="5" fill="${c.base}"/><rect x="234" y="140" width="66" height="5" fill="${c.base}"/>
+        <rect y="222" width="300" height="16" fill="${c.sleeve}"/><rect y="242" width="300" height="8" fill="${c.stripe}"/>
+        <path d="M126 31 L150 68 L174 31" fill="none" stroke="${c.stripe}" stroke-width="10"/>`;
+    } else if (type === 'mx') {
+      deco = `<rect width="68" height="300" fill="${c.sleeve}"/><rect x="232" width="68" height="300" fill="${c.sleeve}"/>
+        <polygon points="68,124 150,186 232,124 232,150 150,212 68,150" fill="${c.sleeve}"/>
+        <rect x="-20" y="118" width="120" height="16" fill="${c.stripe}" transform="rotate(62 40 126)"/><rect x="200" y="118" width="120" height="16" fill="${c.stripe}" transform="rotate(-62 260 126)"/>
+        <rect y="252" width="300" height="20" fill="${c.stripe}"/>
+        <path d="M130 31 Q150 54 170 31" fill="none" stroke="${c.stripe}" stroke-width="9"/>`;
+    } else {
+      deco = `<rect width="70" height="300" fill="${c.sleeve}"/><rect x="230" width="70" height="300" fill="${c.sleeve}"/>
+        <rect y="104" width="70" height="7" fill="${c.stripe}"/><rect y="116" width="70" height="7" fill="${c.stripe}"/>
+        <rect x="230" y="104" width="70" height="7" fill="${c.stripe}"/><rect x="230" y="116" width="70" height="7" fill="${c.stripe}"/>
+        <path d="M126 35 L150 64 L174 35" fill="none" stroke="${c.stripe}" stroke-width="9"/>`;
+    }
+    const stroke = `stroke="${c.stripe}" stroke-width="3" paint-order="stroke"`;
+    if (side === 'front') {
+      if (type === 'hockey') txt = T(150, 140, 40, 'TEAM', `fill="${c.text}"`) + T(150, 180, 40, 'BUTTI', `fill="${c.text}"`) + (o.capt ? T(205, 92, 22, 'C', `fill="${c.text}"`) : '');
+      else if (type === 'mx') txt = `<g transform="skewX(-10) translate(26 0)">${T(150, 120, 42, 'TEAM', `fill="${c.text}"`)}${T(150, 162, 42, 'BUTTI', `fill="${c.text}"`)}</g>` + T(110, 240, 9, 'TOSCANA DIRT CO.', `fill="${c.text}" letter-spacing="1"`);
+      else txt = T(150, 100, 18, 'TEAM BUTTI', `fill="${c.text}" letter-spacing="2"`) + T(150, 215, 104, num, `fill="${c.text}" ${stroke}`);
+    } else {
+      txt = T(150, type === 'mx' ? 100 : 104, 26, name, `fill="${c.text}" letter-spacing="3"`) + T(150, 222, 112, num, `fill="${c.text}" ${stroke}`);
+    }
+    return `<svg viewBox="0 0 300 300" role="img" aria-label="Maglia ${type}"><defs><clipPath id="${id}c"><path d="${d}"/></clipPath>
+      <linearGradient id="${id}g" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".12"/><stop offset=".35" stop-color="#fff" stop-opacity=".12"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></linearGradient></defs>
+      <g clip-path="url(#${id}c)"><rect width="300" height="300" fill="${c.base}"/>${deco}${txt}<rect width="300" height="300" fill="url(#${id}g)"/></g>
+      <path d="${d}" fill="none" stroke="#0d0d0d" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
+  }
+
+  /* ---------- Data ---------- */
+  const COLORS = {
+    kings:  {base:'#f4f1ea', sleeve:'#0d0d0d', stripe:'#9a9a9a', text:'#0d0d0d', bg:'#e8e4da', label:'Kings'},
+    usa:    {base:'#f4f1ea', sleeve:'#e3191b', stripe:'#1d3fbf', text:'#e3191b', bg:'#ffd400', label:'USA'},
+    rosa:   {base:'#ff2e93', sleeve:'#0d0d0d', stripe:'#f4f1ea', text:'#0d0d0d', bg:'#ffd400', label:'Rosa'},
+    navy:   {base:'#1d3fbf', sleeve:'#1d3fbf', stripe:'#f4f1ea', text:'#f4f1ea', bg:'#ff2e93', label:'Navy'},
+    neon:   {base:'#39ff14', sleeve:'#ff2e93', stripe:'#0d0d0d', text:'#ff2e93', bg:'#0d0d0d', label:'Neon'},
+    giallo: {base:'#ffd400', sleeve:'#e3191b', stripe:'#e3191b', text:'#e3191b', bg:'#1d3fbf', label:'Giallo'},
+    bengal: {base:'#0d0d0d', sleeve:'#ff6a13', stripe:'#ff6a13', text:'#ff6a13', bg:'#f4f1ea', label:'Night'},
+    sabbia: {base:'#c9a46a', sleeve:'#7a5a2c', stripe:'#0d0d0d', text:'#0d0d0d', bg:'#39ff14', label:'Desert'}
+  };
+  const PRODUCTS = [
+    {id:'p1', name:'Hockey Jersey "Kings"', type:'hockey', c:'kings', price:89, num:'00', tag:'Nuovo', capt:true},
+    {id:'p2', name:'MX Jersey "Hawaii 2003"', type:'mx', c:'usa', price:79, num:'03', tag:'Best'},
+    {id:'p3', name:'Football Jersey "Merde 00"', type:'football', c:'bengal', price:85, num:'00'},
+    {id:'p4', name:'Hockey Jersey "Rosa Butti"', type:'hockey', c:'rosa', price:89, num:'69', tag:'Market'},
+    {id:'p5', name:'MX Jersey "Toscana Dirt"', type:'mx', c:'neon', price:79, num:'91'},
+    {id:'p6', name:'Hockey Jersey "Navy X"', type:'hockey', c:'navy', price:89, num:'10', sold:true},
+    {id:'p7', name:'Football Jersey "Giallo"', type:'football', c:'giallo', price:85, num:'68'},
+    {id:'p8', name:'MX Jersey "Desert"', type:'mx', c:'sabbia', price:79, num:'25', tag:'Ultimi'}
+  ];
+  const SIZES = ['S','M','L','XL','XXL'];
+
+  /* ---------- Storage-safe cart ---------- */
+  let cart = [];
+  try { cart = JSON.parse(localStorage.getItem('tb-cart') || '[]'); } catch (e) { cart = []; }
+  const save = () => { try { localStorage.setItem('tb-cart', JSON.stringify(cart)); } catch (e) {} };
+
+  /* ---------- Loader ---------- */
+  const loader = $('#loader');
+  const finishLoad = () => { loader.classList.add('done'); document.body.classList.remove('lock'); setTimeout(() => loader.remove(), 1000); };
+  if (reduce) finishLoad(); else {
+    const t0 = performance.now(), dur = 1500;
+    const step = now => {
+      const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      $('#rpm').textContent = String(Math.round(e * 12000)).padStart(4, '0');
+      $('#rpmbar').style.width = (e * 100) + '%';
+      p < 1 ? requestAnimationFrame(step) : setTimeout(finishLoad, 200);
+    };
+    requestAnimationFrame(step);
+    loader.addEventListener('click', finishLoad);
+  }
+
+  /* ---------- Marquees ---------- */
+  const mqItems = ['Market Milano 26.09.2026 — grazie a tutti', 'Drop 02 · 14.11', '<b>Team Butti Merde</b>', 'Spedizione gratuita sopra 100€', 'Dalla Toscana a SoCal'];
+  $('#mq').innerHTML = [...mqItems, ...mqItems, ...mqItems, ...mqItems].map(t => `<span>${t}</span><span>★</span>`).join('');
+  const tapeA = Array(8).fill('<span>Team Butti</span><span>★</span><span>Hockey · MX · Football</span><span>★</span>').join('');
+  const tapeB = Array(8).fill('<span>Big ahh truck around Milano</span><span><em>●</em></span><span>Merde X</span><span><em>●</em></span>').join('');
+  $('#tapeA').innerHTML = tapeA; $('#tapeB').innerHTML = tapeB;
+  let tapeX = 0, lastY = scrollY, vel = 0;
+  const tapeLoop = () => {
+    const dy = scrollY - lastY; lastY = scrollY;
+    vel += (dy - vel) * 0.1;
+    tapeX -= 0.6 + Math.abs(vel) * 0.25;
+    const w = $('#tapeA').scrollWidth / 2;
+    if (-tapeX > w) tapeX += w;
+    $('#tapeA').style.transform = `translateX(${tapeX}px)`;
+    $('#tapeB').style.transform = `translateX(${-w - tapeX}px)`;
+    if (!reduce) requestAnimationFrame(tapeLoop);
+  };
+  tapeLoop();
+
+  /* ---------- Hero ---------- */
+  const leopard = `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><g fill='#a8621c' stroke='#140c05' stroke-width='6' stroke-dasharray='16 7' stroke-linecap='round'><circle cx='22' cy='26' r='12'/><circle cx='86' cy='18' r='10'/><circle cx='118' cy='70' r='13'/><circle cx='54' cy='78' r='11'/><circle cx='18' cy='116' r='10'/><circle cx='92' cy='120' r='12'/></g><g fill='#140c05'><circle cx='60' cy='40' r='4'/><circle cx='120' cy='26' r='3'/><circle cx='30' cy='70' r='3'/><circle cx='70' cy='110' r='4'/><circle cx='130' cy='120' r='3'/></g></svg>`)}") 0 0/140px 140px`;
+  const halftone = 'radial-gradient(circle,rgba(0,0,0,.28) 1.3px,transparent 1.8px) 0 0/9px 9px';
+  const VIBES = [
+    {n:'Pink Market', bg:'#ff2e93', fg:'#0d0d0d', p:halftone, j:['rosa','kings','neon']},
+    {n:'Leopardo', bg:'#e0a54a', fg:'#0d0d0d', p:leopard, j:['bengal','kings','rosa']},
+    {n:'Giallo MX', bg:'#ffd400', fg:'#e3191b', p:halftone, j:['usa','giallo','navy']},
+    {n:'Night NYC', bg:'#0d0d0d', fg:'#f4f1ea', p:'radial-gradient(circle,rgba(255,46,147,.35) 1.3px,transparent 1.8px) 0 0/9px 9px', j:['neon','rosa','navy']},
+    {n:'Neon Dirt', bg:'#39ff14', fg:'#0d0d0d', p:halftone, j:['sabbia','neon','bengal']}
+  ];
+  const hero = $('#hero');
+  let vi = 0;
+  const heroTypes = ['hockey', 'mx', 'football'];
+  const setVibe = i => {
+    const v = VIBES[i];
+    hero.style.setProperty('--hero-bg', v.bg);
+    hero.style.setProperty('--hero-fg', v.fg);
+    hero.style.setProperty('--hero-pattern', v.p);
+    $('#vibeName').textContent = 'Vibe: ' + v.n;
+    ['#hf1', '#hf2', '#hf3'].forEach((s, k) => { $(s).innerHTML = jersey(heroTypes[k], COLORS[v.j[k]], k === 1 ? 'back' : 'front', {num: ['00', '69', '68'][k], name: 'BUTTI', capt: true}); });
+  };
+  setVibe(0);
+  $('#vibe').addEventListener('click', e => { e.stopPropagation(); vi = (vi + 1) % VIBES.length; setVibe(vi); });
+
+  // skyline: buildings + palms
+  (() => {
+    let s = '', x = 0, seed = 7;
+    const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    while (x < 1440) {
+      const w = 40 + rnd() * 90, h = 50 + rnd() * 150;
+      s += `<rect x="${x}" y="${240 - h}" width="${w}" height="${h}" fill="currentColor"/>`;
+      if (rnd() > .6) s += `<rect x="${x + w / 2 - 2}" y="${240 - h - 26}" width="4" height="26" fill="currentColor"/>`;
+      x += w + 2;
+    }
+    const palm = px => `<g fill="currentColor"><path d="M${px} 240 C${px + 4} 180 ${px + 14} 120 ${px + 10} 60 L${px + 18} 60 C${px + 22} 120 ${px + 12} 180 ${px + 10} 240Z"/>${[-60, -25, 15, 50, 85, 130].map(a => `<ellipse cx="${px + 14}" cy="60" rx="46" ry="9" transform="rotate(${a} ${px + 14} 60) translate(30 0)"/>`).join('')}</g>`;
+    $('#skyline').innerHTML = s + palm(180) + palm(260) + palm(1120) + palm(1300);
+  })();
+
+  // parallax
+  const floats = $$('.hero__float');
+  hero.addEventListener('pointermove', e => {
+    if (reduce) return;
+    const r = hero.getBoundingClientRect();
+    const dx = (e.clientX - r.left) / r.width - .5, dy = (e.clientY - r.top) / r.height - .5;
+    floats.forEach(f => { const k = +f.dataset.depth; f.style.transform = `translate(${dx * k * 2}px,${dy * k * 2}px)`; });
+  });
+  // BRAAAP on click
+  const BRAPS = ['BRAAAP!', 'MERDE!', 'BRAP BRAP', 'TEAM!', 'GAS!', '00!'];
+  const POP = ['#ffd400', '#39ff14', '#f4f1ea', '#ff2e93', '#1d3fbf', '#e3191b'];
+  hero.addEventListener('click', e => {
+    if (e.target.closest('a,button')) return;
+    const r = hero.getBoundingClientRect();
+    const b = document.createElement('span');
+    b.className = 'brap';
+    b.textContent = BRAPS[Math.floor(Math.random() * BRAPS.length)];
+    b.style.left = (e.clientX - r.left) + 'px';
+    b.style.top = (e.clientY - r.top) + 'px';
+    b.style.color = POP.filter(c => c !== VIBES[vi].bg)[Math.floor(Math.random() * 5)];
+    b.style.setProperty('--r', (Math.random() * 24 - 12) + 'deg');
+    hero.appendChild(b);
+    setTimeout(() => b.remove(), 950);
+  });
+
+  /* ---------- Grid ---------- */
+  const card = p => {
+    const c = COLORS[p.c];
+    return `<button class="card${p.sold ? ' sold' : ''} rv" data-id="${p.id}" data-type="${p.type}" data-h aria-label="${esc(p.name)}">
+      <div class="card__m" style="background:${c.bg}">
+        ${p.tag && !p.sold ? `<span class="card__tag${p.tag === 'Market' ? ' card__tag--pink' : ''}">${p.tag}</span>` : ''}
+        <div class="flip"><div>${jersey(p.type, c, 'front', p)}</div><div>${jersey(p.type, c, 'back', {num: p.num, name: 'BUTTI'})}</div></div>
+        ${p.sold ? '<span class="stamp">Sold out</span>' : '<span class="card__quick">Vista rapida +</span>'}
+      </div>
+      <div class="card__i"><b>${esc(p.name)}</b><span>${euro(p.price)}</span></div>
+    </button>`;
+  };
+  $('#grid').innerHTML = PRODUCTS.map(card).join('');
+  $('#tabs').addEventListener('click', e => {
+    const t = e.target.closest('.tab'); if (!t) return;
+    $$('.tab').forEach(x => x.classList.toggle('on', x === t));
+    $$('.card').forEach(cd => { const show = t.dataset.f === 'all' || cd.dataset.type === t.dataset.f; cd.style.display = show ? '' : 'none'; });
+  });
+  $('#grid').addEventListener('click', e => { const cd = e.target.closest('.card'); if (cd) openModal(cd.dataset.id); });
+
+  /* ---------- Overlay / modal / drawer ---------- */
+  const ov = $('#ov'), modal = $('#modal'), drawer = $('#drawer');
+  const closeAll = () => {
+    [ov, modal, drawer].forEach(x => x.classList.remove('on'));
+    modal.setAttribute('aria-hidden', 'true'); drawer.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lock');
+  };
+  ov.addEventListener('click', closeAll);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeAll(); toggleMenu(false); } });
+
+  function openModal(id) {
+    const p = PRODUCTS.find(x => x.id === id), c = COLORS[p.c];
+    let size = null;
+    modal.innerHTML = `<div class="modal__m" style="background:${c.bg}"><div class="cfg__flip" id="mFlip"><div>${jersey(p.type, c, 'front', p)}</div><div>${jersey(p.type, c, 'back', {num: p.num, name: 'BUTTI'})}</div></div><button class="btn cfg__turn" id="mTurn" data-h>↻ Gira</button></div>
+      <div class="modal__i"><button class="x" data-close aria-label="Chiudi">✕</button>
+        <span class="label">${p.type === 'mx' ? 'Motocross' : p.type} · Drop 01</span>
+        <h2 class="modal__t d">${esc(p.name)}</h2>
+        <span class="modal__p">${euro(p.price)}</span>
+        <div><p class="label" style="margin:0 0 8px">Taglia</p><div class="sizes">${SIZES.map((s, i) => `<button class="size${p.sold || (i === 4 && p.id === 'p2') ? ' na' : ''}" data-s="${s}">${s}</button>`).join('')}</div></div>
+        <button class="btn btn--pink btn--block" id="mAdd" ${p.sold ? 'disabled' : ''} data-h>${p.sold ? 'Sold out' : 'Scegli la taglia'}</button>
+        <details class="acc" open><summary>Dettagli</summary><p>Maglia oversize in mesh pesante, ricami cuciti, numeri in twill. Vestibilità larga: se vuoi l'effetto pro, prendi la tua taglia.</p></details>
+        <details class="acc"><summary>Guida taglie</summary><p>S 66×56 · M 70×60 · L 74×64 · XL 78×68 · XXL 82×72 cm (lunghezza × larghezza)</p></details>
+        <details class="acc"><summary>Spedizioni e resi</summary><p>Italia 2–4 giorni, gratis sopra 100€. Resi entro 14 giorni.</p></details>
+      </div>`;
+    modal.classList.add('on'); ov.classList.add('on'); modal.setAttribute('aria-hidden', 'false'); document.body.classList.add('lock');
+    $('#mTurn', modal).onclick = () => $('#mFlip', modal).classList.toggle('back');
+    $('[data-close]', modal).onclick = closeAll;
+    $$('.size', modal).forEach(b => b.onclick = () => {
+      size = b.dataset.s; $$('.size', modal).forEach(x => x.classList.toggle('on', x === b));
+      $('#mAdd', modal).textContent = `Aggiungi alla bag — ${euro(p.price)}`;
+    });
+    $('#mAdd', modal).onclick = () => {
+      if (!size) { const s = $('.sizes', modal); s.animate([{transform:'translateX(0)'},{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'translateX(0)'}], {duration: 300}); return; }
+      add({id: p.id, name: p.name, price: p.price, type: p.type, c: p.c, num: p.num, size});
+      closeAll(); openCart();
+    };
+  }
+
+  function add(item) {
+    const key = [item.id, item.size, item.custom || ''].join('|');
+    const ex = cart.find(x => x.key === key);
+    ex ? ex.qty++ : cart.push({...item, key, qty: 1});
+    save(); renderCart();
+    const bc = $('#bagcount'); bc.classList.remove('pop'); void bc.offsetWidth; bc.classList.add('pop');
+  }
+  const FREE = 100;
+  function renderCart() {
+    const n = cart.reduce((a, x) => a + x.qty, 0), tot = cart.reduce((a, x) => a + x.qty * x.price, 0);
+    $('#bagcount').textContent = n;
+    const head = `<div class="drawer__h"><span class="d">Bag (${n})</span><button class="x" data-close aria-label="Chiudi">✕</button></div>`;
+    if (!n) { drawer.innerHTML = head + `<div class="empty"><span class="d">Vuota.<br>Per ora.</span><a href="#shop" class="btn" data-close>Vai allo shop</a></div>`; }
+    else {
+      const left = Math.max(0, FREE - tot);
+      drawer.innerHTML = head + `<div class="drawer__l">${cart.map((x, i) => {
+        const c = x.colors || COLORS[x.c];
+        const art = x.type === 'plate' ? `<div style="display:grid;place-items:center;height:100%;font-family:var(--display);font-size:16px;border:3px solid #111;border-radius:6px">${esc(x.custom)}</div>` : jersey(x.type, c, x.custom ? 'back' : 'front', {num: x.num, name: x.custom || 'BUTTI'});
+        return `<div class="ln"><div class="ln__m">${art}</div><div class="ln__i"><b>${esc(x.name)}</b>${x.size ? `<span>Taglia ${x.size}</span>` : ''}${x.custom ? `<span>Personalizzata: ${esc(x.custom)}${x.type !== 'plate' ? ' #' + esc(x.num) : ''}</span>` : ''}<span>${euro(x.price * x.qty)}</span></div>
+          <div class="qty"><button data-q="${i}" data-d="-1" aria-label="Meno">−</button><span>${x.qty}</span><button data-q="${i}" data-d="1" aria-label="Più">+</button></div></div>`;
+      }).join('')}</div>
+      <div class="drawer__f">
+        <div class="free">${left ? `Ti mancano ${euro(left)} per la spedizione gratis` : 'Spedizione gratis sbloccata 🏁'}<div class="free__bar"><i style="width:${Math.min(100, tot / FREE * 100)}%"></i></div></div>
+        <div class="sum"><span>Totale</span><span>${euro(tot)}</span></div>
+        <button class="btn btn--pink btn--block" id="checkout" data-h>Checkout →</button>
+        <span class="label" style="text-align:center;opacity:.6">Tasse incluse · Spedizione al checkout</span>
+      </div>`;
+    }
+  }
+  drawer.addEventListener('click', e => {
+    if (e.target.closest('[data-close]')) { closeAll(); return; }
+    const q = e.target.closest('[data-q]');
+    if (q) { const it = cart[+q.dataset.q]; it.qty += +q.dataset.d; if (it.qty <= 0) cart.splice(+q.dataset.q, 1); save(); renderCart(); }
+    if (e.target.closest('#checkout')) toast('Concept demo: qui parte il checkout Shopify 💳');
+  });
+  function openCart() { closeAll(); drawer.classList.add('on'); ov.classList.add('on'); drawer.setAttribute('aria-hidden', 'false'); document.body.classList.add('lock'); }
+  $('#openBag').addEventListener('click', openCart);
+  renderCart();
+
+  let tt;
+  function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 2600); }
+
+  /* ---------- Mobile menu ---------- */
+  const mm = $('#mmenu'), burger = $('#burger');
+  function toggleMenu(force) {
+    const open = mm.classList.toggle('open', force);
+    burger.setAttribute('aria-expanded', open); burger.textContent = open ? 'Chiudi' : 'Menu';
+    document.body.classList.toggle('lock', open);
+  }
+  burger.addEventListener('click', () => toggleMenu());
+  mm.addEventListener('click', e => { if (e.target.closest('a')) toggleMenu(false); });
+
+  /* ---------- Customizer ---------- */
+  const cfg = {type: 'hockey', c: 'rosa', size: 'L'};
+  const types = [['hockey', 'Hockey'], ['mx', 'Motocross'], ['football', 'Football']];
+  $('#cfgType').innerHTML = types.map(([k, l]) => `<button class="opt${k === cfg.type ? ' on' : ''}" data-t="${k}">${l}</button>`).join('');
+  $('#cfgColor').innerHTML = Object.entries(COLORS).map(([k, c]) => `<button class="sw${k === cfg.c ? ' on' : ''}" data-c="${k}" title="${c.label}" aria-label="${c.label}"><i style="background:${c.base}"></i><i style="background:${c.sleeve}"></i><i style="background:${c.stripe}"></i><i style="background:${c.text}"></i></button>`).join('');
+  $('#cfgSize').innerHTML = SIZES.map(s => `<button class="size${s === cfg.size ? ' on' : ''}" data-s="${s}">${s}</button>`).join('');
+  const nameIn = $('#cfgName'), numIn = $('#cfgNum');
+  const drawCfg = () => {
+    const c = COLORS[cfg.c], o = {name: nameIn.value.trim() || 'BUTTI', num: numIn.value || '00', capt: true};
+    $('#cfgFront').innerHTML = jersey(cfg.type, c, 'front', o);
+    $('#cfgBack').innerHTML = jersey(cfg.type, c, 'back', o);
+    $('#cfgStage').style.setProperty('--cfg-bg', c.bg);
+  };
+  drawCfg();
+  $('#cfgType').addEventListener('click', e => { const b = e.target.closest('.opt'); if (!b) return; cfg.type = b.dataset.t; $$('.opt', $('#cfgType')).forEach(x => x.classList.toggle('on', x === b)); drawCfg(); });
+  $('#cfgColor').addEventListener('click', e => { const b = e.target.closest('.sw'); if (!b) return; cfg.c = b.dataset.c; $$('.sw').forEach(x => x.classList.toggle('on', x === b)); drawCfg(); });
+  $('#cfgSize').addEventListener('click', e => { const b = e.target.closest('.size'); if (!b) return; cfg.size = b.dataset.s; $$('.size', $('#cfgSize')).forEach(x => x.classList.toggle('on', x === b)); });
+  nameIn.addEventListener('input', () => { nameIn.value = nameIn.value.toUpperCase().replace(/[^A-Z0-9 .'-]/g, ''); drawCfg(); $('#cfgFlip').classList.add('back'); });
+  numIn.addEventListener('input', () => { numIn.value = numIn.value.replace(/\D/g, ''); drawCfg(); $('#cfgFlip').classList.add('back'); });
+  $('#cfgTurn').addEventListener('click', () => $('#cfgFlip').classList.toggle('back'));
+  $('#cfgAdd').addEventListener('click', () => {
+    add({id: 'custom-' + cfg.type, name: 'Custom ' + types.find(t => t[0] === cfg.type)[1], price: 99, type: cfg.type, c: cfg.c, num: numIn.value || '00', size: cfg.size, custom: nameIn.value.trim() || 'BUTTI'});
+    openCart();
+  });
+
+  /* ---------- Plate ---------- */
+  const plateIn = $('#plateIn');
+  plateIn.addEventListener('input', () => { plateIn.value = plateIn.value.toUpperCase().replace(/[^A-Z0-9 ]/g, ''); $('#plateTxt').textContent = plateIn.value || ' '; $('#plateEl').animate([{transform:'rotate(-3deg) scale(1)'},{transform:'rotate(-1deg) scale(1.03)'},{transform:'rotate(-3deg) scale(1)'}], {duration: 250}); });
+  $('#plateAdd').addEventListener('click', () => { add({id: 'plate', name: 'Targa SoCal custom', price: 39, type: 'plate', custom: plateIn.value || 'MERDE'}); openCart(); });
+
+  /* ---------- Manifesto words ---------- */
+  const mt = $('#maniTxt');
+  mt.innerHTML = mt.textContent.split(/\s+/).map(w => { const hl = /^\*.*\*[.,]?$/.test(w); return `<span class="w${hl ? ' hl' : ''}">${esc(w.replace(/\*/g, ''))}</span>`; }).join(' ');
+  const words = $$('.w', mt);
+
+  /* ---------- Stickers drag ---------- */
+  $$('.stk').forEach(s => {
+    let sx, sy, ox, oy;
+    s.addEventListener('pointerdown', e => {
+      s.setPointerCapture(e.pointerId);
+      const r = s.getBoundingClientRect(), pr = s.offsetParent.getBoundingClientRect();
+      s.style.left = (r.left - pr.left) + 'px'; s.style.top = (r.top - pr.top) + 'px'; s.style.right = 'auto'; s.style.bottom = 'auto';
+      sx = e.clientX; sy = e.clientY; ox = r.left - pr.left; oy = r.top - pr.top; s.style.zIndex = 10;
+    });
+    s.addEventListener('pointermove', e => {
+      if (!s.hasPointerCapture(e.pointerId)) return;
+      s.style.left = (ox + e.clientX - sx) + 'px'; s.style.top = (oy + e.clientY - sy) + 'px';
+      s.style.rotate = ((e.clientX - sx) * .08) + 'deg';
+    });
+  });
+
+  /* ---------- Ride ---------- */
+  $('#bike').innerHTML = `<svg viewBox="0 0 240 140" aria-hidden="true">
+    <g class="wh"><circle cx="50" cy="104" r="30" fill="#111"/><circle cx="50" cy="104" r="16" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="4 5"/><circle cx="50" cy="104" r="5" fill="#ccc"/></g>
+    <g class="wh"><circle cx="190" cy="104" r="30" fill="#111"/><circle cx="190" cy="104" r="16" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="4 5"/><circle cx="190" cy="104" r="5" fill="#ccc"/></g>
+    <path d="M50 104 L95 70 L150 70 L190 104" fill="none" stroke="#444" stroke-width="6"/>
+    <path d="M78 56 L150 52 L172 66 L120 82 Z" fill="#ff2e93" stroke="#111" stroke-width="3"/>
+    <path d="M150 52 L176 34 L196 38" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+    <path d="M196 38 L190 104" stroke="#bbb" stroke-width="5"/>
+    <rect x="92" y="72" width="40" height="22" rx="4" fill="#333"/>
+    <path d="M60 60 L84 50 L88 62Z" fill="#ffd400" stroke="#111" stroke-width="3"/>
+    <g><path d="M112 50 L104 18 L132 12 L144 48Z" fill="#ffd400" stroke="#111" stroke-width="3"/><circle cx="128" cy="6" r="12" fill="#e3191b" stroke="#111" stroke-width="3"/><path d="M130 0 L144 4 L140 10Z" fill="#111"/><path d="M132 20 L168 34" stroke="#ffd400" stroke-width="7" stroke-linecap="round"/><path d="M112 50 L100 76 L118 84" fill="none" stroke="#1d3fbf" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <text x="104" y="40" font-family="Anton" font-size="11" fill="#111" transform="rotate(-10 116 36)">00</text>
+  </svg>`;
+  const ride = $('#ride'), track = $('#rideTrack'), bike = $('#bike'), wheels = $$('#bike .wh'), rideBar = $('#rideBar');
+  let lastDust = 0;
+
+  /* ---------- Scroll loop ---------- */
+  const onScroll = () => {
+    const vh = innerHeight;
+    // ride
+    const r = ride.getBoundingClientRect();
+    const total = ride.offsetHeight - vh;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    const maxX = track.scrollWidth - innerWidth;
+    track.style.transform = `translateX(${-p * maxX}px)`;
+    const bw = bike.offsetWidth;
+    const bx = 20 + p * (innerWidth - bw - 40);
+    const bounce = Math.sin(p * 90) * 4;
+    bike.style.transform = `translate(${bx}px,${bounce}px) rotate(${Math.sin(p * 45) * 3}deg)`;
+    wheels.forEach(w => w.style.transform = `rotate(${p * 5400}deg)`);
+    rideBar.style.width = (p * 100) + '%';
+    if (r.top < 0 && r.bottom > vh && Math.abs(p - lastDust) > .006 && !reduce) {
+      lastDust = p;
+      const d = document.createElement('i'); d.className = 'dust'; d.style.left = (bx + 10) + 'px';
+      $('.ride__s').appendChild(d); setTimeout(() => d.remove(), 900);
+    }
+    // manifesto words
+    const m = $('#mani').getBoundingClientRect();
+    const mp = Math.min(1, Math.max(0, (vh * .85 - m.top) / (m.height * .8)));
+    const lit = Math.floor(mp * words.length);
+    words.forEach((w, i) => w.classList.toggle('on', i < lit));
+  };
+  addEventListener('scroll', () => requestAnimationFrame(onScroll), {passive: true});
+  addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Reveal ---------- */
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .12});
+  $$('.rv').forEach((el, i) => { el.style.transitionDelay = ((i % 4) * 70) + 'ms'; io.observe(el); });
+
+  /* ---------- Countdown ---------- */
+  const cd = $('#count'), target = new Date(cd.dataset.date).getTime();
+  const pad = n => String(n).padStart(2, '0');
+  const tick = () => {
+    let diff = Math.max(0, target - Date.now());
+    const v = {d: Math.floor(diff / 864e5), h: Math.floor(diff % 864e5 / 36e5), m: Math.floor(diff % 36e5 / 6e4), s: Math.floor(diff % 6e4 / 1e3)};
+    $$('[data-u]', cd).forEach(b => b.textContent = pad(v[b.dataset.u]));
+  };
+  tick(); setInterval(tick, 1000);
+
+  /* ---------- Newsletter ---------- */
+  $('#nl').addEventListener('submit', e => { e.preventDefault(); e.target.reset(); toast('Sei nel team. Ci vediamo al drop 🏁'); });
+
+  /* ---------- Footer wordmark ---------- */
+  const fw = $('#fword');
+  fw.innerHTML = 'TEAM BUTTI'.split('').map(ch => ch === ' ' ? '<i>&nbsp;</i>' : `<i>${ch}</i>`).join('');
+  const fit = () => { fw.style.fontSize = '100px'; const w = fw.getBoundingClientRect().width; if (w) fw.style.fontSize = Math.floor(100 * fw.parentElement.clientWidth / w * .99) + 'px'; };
+  fit(); addEventListener('resize', fit); document.fonts && document.fonts.ready.then(() => { fit(); onScroll(); });
+
+  /* ---------- Cursor ---------- */
+  const cur = $('#cur');
+  if (matchMedia('(hover:hover)').matches) {
+    let cx = 0, cy = 0, tx = 0, ty = 0;
+    addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; });
+    const loop = () => { cx += (tx - cx) * .2; cy += (ty - cy) * .2; cur.style.transform = `translate(${cx}px,${cy}px)`; requestAnimationFrame(loop); };
+    loop();
+    document.addEventListener('pointerover', e => cur.classList.toggle('big', !!e.target.closest('a,button,.stk,[data-h]')));
+  }
+})();
+</script>
+</body>
+</html>
