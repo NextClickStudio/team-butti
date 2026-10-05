@@ -13,6 +13,10 @@ Concept e tema Shopify per **Team Butti** (Instagram: [@team_butti](https://www.
 | `brand/team-butti.md` | Profilo vibe del brand: palette, font, tono, motivi grafici. |
 | `.claude/skills/brand-vibe/` | Skill di Claude Code: dalle vibes del brand alla preview, fino al porting Shopify. |
 
+## Negozio demo online
+https://team-butti-demo.vercel.app — il tema Shopify reso nel browser con un catalogo di esempio (carrello funzionante, checkout disattivato).
+Aggiornarlo: `node tools/theme-test/demo-shell.js https://cdn.jsdelivr.net/gh/NextClickStudio/team-butti@<commit>/` e ripubblicare `index.html` + `vercel.json` (rewrite di tutto su `/index.html`).
+
 ## Vedere la preview
 - In locale: doppio click su `preview/index.html` (usa `../assets/tb-jersey.js`, tieni la cartella del repo intera).
 - Online: GitHub Pages (Settings → Pages → branch, cartella `/`) e apri `/preview/`, oppure trascina la cartella `preview` su Vercel/Netlify.
