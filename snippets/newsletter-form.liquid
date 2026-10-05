@@ -1,0 +1,15 @@
+{%- comment -%} Accepts: form_id {%- endcomment -%}
+{%- form 'customer', id: form_id, class: 'nl-form' -%}
+  <input type="hidden" name="contact[tags]" value="newsletter">
+  {%- if form.posted_successfully? -%}
+    <p class="nl-ok">{{ 'newsletter.success' | t }}</p>
+  {%- else -%}
+    <div class="nl">
+      <input type="email" name="contact[email]" required autocomplete="email" placeholder="{{ 'newsletter.placeholder' | t }}" aria-label="{{ 'newsletter.placeholder' | t }}">
+      <button type="submit"><span>{{ 'newsletter.submit' | t }}</span></button>
+    </div>
+    {%- if form.errors -%}
+      <div class="form-error">{{ form.errors | default_errors }}</div>
+    {%- endif -%}
+  {%- endif -%}
+{%- endform -%}

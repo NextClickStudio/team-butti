@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=UnifrakturCook:wght@700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Graduate&family=Space+Mono:wght@400;700&family=UnifrakturCook:wght@700&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#0d0d0d;--paper:#f4f1ea;--pink:#ff2e93;--yellow:#ffd400;--red:#e3191b;--blue:#1d3fbf;--green:#39ff14;--sand:#c9a46a;
@@ -100,13 +100,14 @@ body::after{content:'';position:fixed;inset:-50%;z-index:900;pointer-events:none
 .vibe-btn:hover{transform:rotate(-3deg) scale(1.05)}
 .vibe-btn i{width:14px;height:14px;border-radius:50%;background:currentColor;display:inline-block;animation:spin 1.2s linear infinite;border:3px dotted var(--hero-bg)}
 @keyframes spin{to{transform:rotate(360deg)}}
-.hero__float{position:absolute;z-index:2;width:clamp(150px,22vw,330px);filter:drop-shadow(10px 14px 0 rgba(0,0,0,.25));transition:transform .2s ease-out;pointer-events:none}
-.hero__float--1{top:14%;left:8%;--r:-12deg}
-.hero__float--2{top:8%;right:28%;--r:9deg;width:clamp(120px,16vw,240px)}
-.hero__float--3{top:24%;right:4%;--r:-4deg}
-.hero__float>div{transform:rotate(var(--r));animation:bob 4s ease-in-out infinite}
-.hero__float--2>div{animation-delay:-1.4s}.hero__float--3>div{animation-delay:-2.6s}
-@keyframes bob{50%{translate:0 -14px}}
+.line{position:absolute;left:0;right:0;top:118px;height:0;z-index:4;color:var(--hero-fg);pointer-events:none}
+.line__rope{position:absolute;left:0;top:0;width:100%;overflow:visible}
+.peg{position:absolute;width:clamp(150px,19vw,290px);transform:translateX(-50%)}
+.peg__swing{position:relative;transform-origin:50% 0;filter:drop-shadow(10px 18px 0 rgba(0,0,0,.22))}
+.peg__j{aspect-ratio:400/440;margin-top:-9%}
+.pin{position:absolute;top:-16px;width:10px;height:32px;background:linear-gradient(90deg,#b98a4e,#e2b97c,#b98a4e);border:2px solid #0d0d0d;border-radius:3px;z-index:2}
+.pin::after{content:'';position:absolute;left:1px;right:1px;top:12px;height:5px;background:#9a9a9a;border-block:1px solid #0d0d0d}
+.face-in{width:100%;height:100%}
 .hero__bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;position:relative;z-index:4;margin-top:14px;flex-wrap:wrap}
 .spin-badge{position:absolute;right:calc(var(--g) + 10px);bottom:calc(var(--g) + 70px);width:130px;height:130px;z-index:4;pointer-events:none}
 .spin-badge svg{width:100%;height:100%;animation:spin 14s linear infinite}
@@ -115,7 +116,7 @@ body::after{content:'';position:fixed;inset:-50%;z-index:900;pointer-events:none
 .skyline svg{width:100%;height:100%}
 .brap{position:absolute;z-index:6;font-family:var(--display);font-size:clamp(38px,6vw,80px);pointer-events:none;text-transform:uppercase;-webkit-text-stroke:2px var(--ink);animation:brap .9s cubic-bezier(.2,1.4,.4,1) forwards;white-space:nowrap}
 @keyframes brap{0%{transform:translate(-50%,-50%) scale(.2) rotate(var(--r));opacity:1}60%{transform:translate(-50%,-80%) scale(1) rotate(var(--r));opacity:1}100%{transform:translate(-50%,-120%) scale(1.05) rotate(var(--r));opacity:0}}
-@media(max-width:700px){.hero__float--2{display:none}.hero__float--1{top:22%;left:-4%}.hero__float--3{top:30%;right:-6%}.spin-badge{width:96px;height:96px;bottom:auto;top:110px;right:var(--g)}.spin-badge .badge{inset:22px;font-size:14px}}
+@media(max-width:700px){.peg--mid{display:none}.line{top:170px}.spin-badge{width:96px;height:96px;right:var(--g);bottom:calc(var(--g) + 64px)}.spin-badge .badge{inset:22px;font-size:14px}}
 
 /* tilted tapes */
 .tapes{position:relative;height:190px;overflow:hidden;background:var(--paper);border-top:2px solid var(--ink)}
@@ -141,7 +142,10 @@ body::after{content:'';position:fixed;inset:-50%;z-index:900;pointer-events:none
 .card{position:relative;cursor:pointer;text-align:left;width:100%}
 .card__m{position:relative;aspect-ratio:4/5;background:#fff;border:2px solid var(--ink);overflow:hidden;perspective:900px}
 .card__m::before{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(0,0,0,.07) 1px,transparent 1.5px) 0 0/8px 8px}
-.flip{position:absolute;inset:8%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.3,.5,1)}
+.hang{position:absolute;inset:4% 7% 2%;transform-origin:50% 1.4%}
+.glare{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at var(--gx,50%) var(--gy,30%),rgba(255,255,255,.45),transparent 45%);mix-blend-mode:soft-light;opacity:0;transition:opacity .3s}
+.card:hover .glare{opacity:1}
+.flip{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.3,.5,1)}
 .flip>div{position:absolute;inset:0;backface-visibility:hidden;display:grid;place-items:center}
 .flip>div:last-child{transform:rotateY(180deg)}
 .card:hover .flip,.card:focus-visible .flip{transform:rotateY(180deg)}
@@ -177,13 +181,13 @@ body::after{content:'';position:fixed;inset:-50%;z-index:900;pointer-events:none
 /* customizer */
 .cfg{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(20px,4vw,64px);align-items:start}
 @media(max-width:900px){.cfg{grid-template-columns:1fr}}
-.cfg__stage{position:relative;aspect-ratio:1;border:3px solid var(--ink);background:var(--cfg-bg,var(--yellow));overflow:hidden;perspective:1200px;transition:background .4s}
+.cfg__stage{touch-action:pan-y;cursor:grab;position:relative;aspect-ratio:1;border:3px solid var(--ink);background:var(--cfg-bg,var(--yellow));overflow:hidden;perspective:1200px;transition:background .4s}
 .cfg__stage::before{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(0,0,0,.18) 1.2px,transparent 1.7px) 0 0/10px 10px}
-.cfg__flip{position:absolute;inset:7%;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,1.25,.5,1)}
-.cfg__flip.back{transform:rotateY(180deg)}
-.cfg__flip>div{position:absolute;inset:0;backface-visibility:hidden}
+.cfg__flip{position:absolute;inset:6%;transform-style:preserve-3d}
+.cfg__flip>div{position:absolute;inset:0;backface-visibility:hidden;filter:brightness(calc(1 - var(--lit,0) * .4))}
 .cfg__flip>div:last-child{transform:rotateY(180deg)}
-.cfg__flip svg{width:100%;height:100%;filter:drop-shadow(10px 12px 0 rgba(0,0,0,.25))}
+.cfg__flip svg{width:100%;height:100%;filter:drop-shadow(10px 14px 0 rgba(0,0,0,.25))}
+.cfg__hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:2;font-size:10px;letter-spacing:.14em;text-transform:uppercase;background:var(--paper);border:2px solid var(--ink);padding:4px 10px;pointer-events:none}
 .cfg__turn{position:absolute;right:14px;bottom:14px;z-index:2}
 .cfg__price{position:absolute;left:14px;top:14px;z-index:2;background:var(--ink);color:var(--paper);font-family:var(--display);font-size:30px;padding:4px 12px;transform:rotate(-4deg)}
 .cfg__f{display:grid;gap:24px}
@@ -301,7 +305,7 @@ body::after{content:'';position:fixed;inset:-50%;z-index:900;pointer-events:none
 .modal.on{transform:none}
 @media(min-width:901px){.modal{inset:50% auto auto 50%;width:min(1080px,92vw);border:3px solid var(--ink);transform:translate(-50%,-40%) scale(.9);opacity:0;pointer-events:none;transition:transform .45s cubic-bezier(.2,1.3,.4,1),opacity .3s}.modal.on{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}}
 @media(max-width:900px){.modal{grid-template-columns:1fr}}
-.modal__m{background:var(--yellow);position:relative;aspect-ratio:1;border-right:3px solid var(--ink);perspective:1000px}
+.modal__m{touch-action:pan-y;cursor:grab;background:var(--yellow);position:relative;aspect-ratio:1;border-right:3px solid var(--ink);perspective:1000px}
 .modal__m::before{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(0,0,0,.18) 1.2px,transparent 1.7px) 0 0/10px 10px}
 .modal__i{padding:28px;display:grid;gap:18px;align-content:start;position:relative}
 .modal__i .x{position:absolute;top:16px;right:16px}
@@ -377,9 +381,7 @@ details.acc p{margin:0 0 14px;font-size:12px}
       <p class="hero__kicker">Dalle colline toscane a <b>Los Angeles</b>.<br>Maglie da hockey, MX e football per chi va di traverso. Drop 02 in arrivo.</p>
       <button class="vibe-btn" id="vibe" data-h><i></i><span id="vibeName">Vibe: Pink Market</span></button>
     </div>
-    <div class="hero__float hero__float--1" data-depth="18"><div id="hf1"></div></div>
-    <div class="hero__float hero__float--2" data-depth="-12"><div id="hf2"></div></div>
-    <div class="hero__float hero__float--3" data-depth="26"><div id="hf3"></div></div>
+    <div class="line" id="line" aria-hidden="true"><svg class="line__rope" id="rope"></svg></div>
     <div class="spin-badge">
       <svg viewBox="0 0 200 200"><defs><path id="circ" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text style="font-family:var(--mono);font-size:15px;letter-spacing:4px;font-weight:700;fill:currentColor"><textPath href="#circ">TEAM BUTTI ★ MILANO ★ SOCAL ★ NYC ★ MERDE ★</textPath></text></svg>
       <span class="badge">Team<br>Butti</span>
@@ -434,6 +436,7 @@ details.acc p{margin:0 0 14px;font-size:12px}
         <span class="cfg__price">99€</span>
         <div class="cfg__flip" id="cfgFlip"><div id="cfgFront"></div><div id="cfgBack"></div></div>
         <button class="btn cfg__turn" id="cfgTurn" data-h>↻ Gira</button>
+        <span class="cfg__hint">← trascina per girarla →</span>
       </div>
       <div class="cfg__f rv">
         <div><h3 class="label">01 — Modello</h3><div class="opts" id="cfgType"></div></div>
@@ -540,6 +543,7 @@ details.acc p{margin:0 0 14px;font-size:12px}
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Prodotto" aria-hidden="true"></div>
 <div class="toast" id="toast" role="status"></div>
 
+<script src="../assets/tb-jersey.js"></script>
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
@@ -548,62 +552,20 @@ details.acc p{margin:0 0 14px;font-size:12px}
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const euro = n => n.toFixed(0) + '€';
 
-  /* ---------- Jersey SVG ---------- */
-  const SHAPES = {
-    hockey: 'M95 40 L128 30 Q150 52 172 30 L205 40 L268 72 L286 150 L246 160 L234 122 L234 272 L66 272 L66 122 L54 160 L14 150 L32 72 Z',
-    mx: 'M100 38 L130 30 Q150 50 170 30 L200 38 L254 60 L292 204 L262 214 L232 124 L232 272 L68 272 L68 124 L38 214 L8 204 L46 60 Z',
-    football: 'M96 44 L128 34 Q150 54 172 34 L204 44 L262 64 L274 132 L232 138 L230 272 L70 272 L68 138 L26 132 L38 64 Z'
-  };
-  let uid = 0;
-  function jersey(type, c, side, o = {}) {
-    const id = 'j' + (uid++);
-    const d = SHAPES[type];
-    const name = esc((o.name || 'MERDE').toUpperCase());
-    const num = esc(o.num ?? '00');
-    const T = (x, y, s, txt, extra = '') => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="${s}" ${extra}>${txt}</text>`;
-    let deco = '', txt = '';
-    if (type === 'hockey') {
-      deco = `<rect width="66" height="300" fill="${c.sleeve}"/><rect x="234" width="66" height="300" fill="${c.sleeve}"/>
-        <rect y="124" width="66" height="10" fill="${c.stripe}"/><rect x="234" y="124" width="66" height="10" fill="${c.stripe}"/>
-        <rect y="140" width="66" height="5" fill="${c.base}"/><rect x="234" y="140" width="66" height="5" fill="${c.base}"/>
-        <rect y="222" width="300" height="16" fill="${c.sleeve}"/><rect y="242" width="300" height="8" fill="${c.stripe}"/>
-        <path d="M126 31 L150 68 L174 31" fill="none" stroke="${c.stripe}" stroke-width="10"/>`;
-    } else if (type === 'mx') {
-      deco = `<rect width="68" height="300" fill="${c.sleeve}"/><rect x="232" width="68" height="300" fill="${c.sleeve}"/>
-        <polygon points="68,124 150,186 232,124 232,150 150,212 68,150" fill="${c.sleeve}"/>
-        <rect x="-20" y="118" width="120" height="16" fill="${c.stripe}" transform="rotate(62 40 126)"/><rect x="200" y="118" width="120" height="16" fill="${c.stripe}" transform="rotate(-62 260 126)"/>
-        <rect y="252" width="300" height="20" fill="${c.stripe}"/>
-        <path d="M130 31 Q150 54 170 31" fill="none" stroke="${c.stripe}" stroke-width="9"/>`;
-    } else {
-      deco = `<rect width="70" height="300" fill="${c.sleeve}"/><rect x="230" width="70" height="300" fill="${c.sleeve}"/>
-        <rect y="104" width="70" height="7" fill="${c.stripe}"/><rect y="116" width="70" height="7" fill="${c.stripe}"/>
-        <rect x="230" y="104" width="70" height="7" fill="${c.stripe}"/><rect x="230" y="116" width="70" height="7" fill="${c.stripe}"/>
-        <path d="M126 35 L150 64 L174 35" fill="none" stroke="${c.stripe}" stroke-width="9"/>`;
-    }
-    const stroke = `stroke="${c.stripe}" stroke-width="3" paint-order="stroke"`;
-    if (side === 'front') {
-      if (type === 'hockey') txt = T(150, 140, 40, 'TEAM', `fill="${c.text}"`) + T(150, 180, 40, 'BUTTI', `fill="${c.text}"`) + (o.capt ? T(205, 92, 22, 'C', `fill="${c.text}"`) : '');
-      else if (type === 'mx') txt = `<g transform="skewX(-10) translate(26 0)">${T(150, 120, 42, 'TEAM', `fill="${c.text}"`)}${T(150, 162, 42, 'BUTTI', `fill="${c.text}"`)}</g>` + T(110, 240, 9, 'TOSCANA DIRT CO.', `fill="${c.text}" letter-spacing="1"`);
-      else txt = T(150, 100, 18, 'TEAM BUTTI', `fill="${c.text}" letter-spacing="2"`) + T(150, 215, 104, num, `fill="${c.text}" ${stroke}`);
-    } else {
-      txt = T(150, type === 'mx' ? 100 : 104, 26, name, `fill="${c.text}" letter-spacing="3"`) + T(150, 222, 112, num, `fill="${c.text}" ${stroke}`);
-    }
-    return `<svg viewBox="0 0 300 300" role="img" aria-label="Maglia ${type}"><defs><clipPath id="${id}c"><path d="${d}"/></clipPath>
-      <linearGradient id="${id}g" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".12"/><stop offset=".35" stop-color="#fff" stop-opacity=".12"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></linearGradient></defs>
-      <g clip-path="url(#${id}c)"><rect width="300" height="300" fill="${c.base}"/>${deco}${txt}<rect width="300" height="300" fill="url(#${id}g)"/></g>
-      <path d="${d}" fill="none" stroke="#0d0d0d" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
-  }
+  /* ---------- Jersey: shared renderer (assets/tb-jersey.js) ---------- */
+  const J = window.TBJersey;
+  const jersey = (type, c, side, o = {}) => `<div class="tbj face-in" style="${J.style(c)}">${J.svg(type, side, o)}</div>`;
 
   /* ---------- Data ---------- */
   const COLORS = {
     kings:  {base:'#f4f1ea', sleeve:'#0d0d0d', stripe:'#9a9a9a', text:'#0d0d0d', bg:'#e8e4da', label:'Kings'},
     usa:    {base:'#f4f1ea', sleeve:'#e3191b', stripe:'#1d3fbf', text:'#e3191b', bg:'#ffd400', label:'USA'},
     rosa:   {base:'#ff2e93', sleeve:'#0d0d0d', stripe:'#f4f1ea', text:'#0d0d0d', bg:'#ffd400', label:'Rosa'},
-    navy:   {base:'#1d3fbf', sleeve:'#1d3fbf', stripe:'#f4f1ea', text:'#f4f1ea', bg:'#ff2e93', label:'Navy'},
+    navy:   {base:'#1d3fbf', sleeve:'#1d3fbf', stripe:'#e3191b', text:'#f4f1ea', bg:'#ff2e93', label:'Navy'},
     neon:   {base:'#39ff14', sleeve:'#ff2e93', stripe:'#0d0d0d', text:'#ff2e93', bg:'#0d0d0d', label:'Neon'},
-    giallo: {base:'#ffd400', sleeve:'#e3191b', stripe:'#e3191b', text:'#e3191b', bg:'#1d3fbf', label:'Giallo'},
-    bengal: {base:'#0d0d0d', sleeve:'#ff6a13', stripe:'#ff6a13', text:'#ff6a13', bg:'#f4f1ea', label:'Night'},
-    sabbia: {base:'#c9a46a', sleeve:'#7a5a2c', stripe:'#0d0d0d', text:'#0d0d0d', bg:'#39ff14', label:'Desert'}
+    giallo: {base:'#ffd400', sleeve:'#e3191b', stripe:'#0d0d0d', text:'#e3191b', bg:'#1d3fbf', label:'Giallo'},
+    bengal: {base:'#0d0d0d', sleeve:'#ff6a13', stripe:'#f4f1ea', text:'#ff6a13', bg:'#f4f1ea', label:'Night'},
+    sabbia: {base:'#c9a46a', sleeve:'#7a5a2c', stripe:'#f4f1ea', text:'#0d0d0d', bg:'#39ff14', label:'Desert'}
   };
   const PRODUCTS = [
     {id:'p1', name:'Hockey Jersey "Kings"', type:'hockey', c:'kings', price:89, num:'00', tag:'Nuovo', capt:true},
@@ -669,13 +631,33 @@ details.acc p{margin:0 0 14px;font-size:12px}
   const hero = $('#hero');
   let vi = 0;
   const heroTypes = ['hockey', 'mx', 'football'];
+  const line = $('#line'), rope = $('#rope');
+  const pegs = [0.2, 0.5, 0.8].map((t, k) => {
+    const el = document.createElement('div');
+    el.className = 'peg' + (k === 1 ? ' peg--mid' : '');
+    el.innerHTML = '<div class="peg__swing"><div class="peg__j"></div><i class="pin" style="left:24%"></i><i class="pin" style="left:71%"></i></div>';
+    line.appendChild(el);
+    return {t, el, j: $('.peg__j', el), s: J.swing($('.peg__swing', el), {k: 36, c: 1.5, wind: 2.4, max: 30})};
+  });
+  const layoutLine = () => {
+    const W = line.clientWidth, y0 = 14, S = Math.min(56, W * 0.035);
+    rope.setAttribute('viewBox', `0 0 ${W} ${y0 + 2 * S + 8}`);
+    rope.style.height = (y0 + 2 * S + 8) + 'px';
+    rope.innerHTML = `<path d="M-10 ${y0} Q${W / 2} ${y0 + 2 * S} ${W + 10} ${y0}" fill="none" stroke="currentColor" stroke-width="2.5"/>`;
+    pegs.forEach(p => { p.el.style.left = (-10 + p.t * (W + 20)) + 'px'; p.el.style.top = (y0 + 4 * S * p.t * (1 - p.t)) + 'px'; });
+  };
+  layoutLine(); addEventListener('resize', layoutLine);
   const setVibe = i => {
     const v = VIBES[i];
     hero.style.setProperty('--hero-bg', v.bg);
     hero.style.setProperty('--hero-fg', v.fg);
     hero.style.setProperty('--hero-pattern', v.p);
     $('#vibeName').textContent = 'Vibe: ' + v.n;
-    ['#hf1', '#hf2', '#hf3'].forEach((s, k) => { $(s).innerHTML = jersey(heroTypes[k], COLORS[v.j[k]], k === 1 ? 'back' : 'front', {num: ['00', '69', '68'][k], name: 'BUTTI', capt: true}); });
+    pegs.forEach((p, k) => {
+      if (!p.j.firstChild) p.j.innerHTML = J.svg(heroTypes[k], k === 1 ? 'back' : 'front', {num: ['00', '69', '68'][k], name: 'BUTTI', capt: true});
+      J.apply(p.j, COLORS[v.j[k]]);
+      p.s.kick((k % 2 ? 1 : -1) * (60 + Math.random() * 60));
+    });
   };
   setVibe(0);
   $('#vibe').addEventListener('click', e => { e.stopPropagation(); vi = (vi + 1) % VIBES.length; setVibe(vi); });
@@ -694,13 +676,14 @@ details.acc p{margin:0 0 14px;font-size:12px}
     $('#skyline').innerHTML = s + palm(180) + palm(260) + palm(1120) + palm(1300);
   })();
 
-  // parallax
-  const floats = $$('.hero__float');
+  // wind from the pointer
   hero.addEventListener('pointermove', e => {
-    if (reduce) return;
-    const r = hero.getBoundingClientRect();
-    const dx = (e.clientX - r.left) / r.width - .5, dy = (e.clientY - r.top) / r.height - .5;
-    floats.forEach(f => { const k = +f.dataset.depth; f.style.transform = `translate(${dx * k * 2}px,${dy * k * 2}px)`; });
+    if (J.reduceMotion) return;
+    pegs.forEach(p => {
+      const r = p.el.getBoundingClientRect();
+      const f = Math.max(0, 1 - Math.abs(e.clientX - (r.left + r.width / 2)) / 280);
+      if (f > 0) p.s.kick((e.movementX || 0) * 1.3 * f);
+    });
   });
   // BRAAAP on click
   const BRAPS = ['BRAAAP!', 'MERDE!', 'BRAP BRAP', 'TEAM!', 'GAS!', '00!'];
@@ -725,13 +708,24 @@ details.acc p{margin:0 0 14px;font-size:12px}
     return `<button class="card${p.sold ? ' sold' : ''} rv" data-id="${p.id}" data-type="${p.type}" data-h aria-label="${esc(p.name)}">
       <div class="card__m" style="background:${c.bg}">
         ${p.tag && !p.sold ? `<span class="card__tag${p.tag === 'Market' ? ' card__tag--pink' : ''}">${p.tag}</span>` : ''}
-        <div class="flip"><div>${jersey(p.type, c, 'front', p)}</div><div>${jersey(p.type, c, 'back', {num: p.num, name: 'BUTTI'})}</div></div>
+        <div class="hang"><div class="flip"><div>${jersey(p.type, c, 'front', {...p, hanger: true})}</div><div>${jersey(p.type, c, 'back', {num: p.num, name: 'BUTTI', hanger: true})}</div></div></div>
+        <span class="glare"></span>
         ${p.sold ? '<span class="stamp">Sold out</span>' : '<span class="card__quick">Vista rapida +</span>'}
       </div>
       <div class="card__i"><b>${esc(p.name)}</b><span>${euro(p.price)}</span></div>
     </button>`;
   };
   $('#grid').innerHTML = PRODUCTS.map(card).join('');
+  $$('.card').forEach(cd => {
+    const m = $('.card__m', cd), sw = J.swing($('.hang', cd), {k: 46, c: 2.2, max: 16});
+    m.addEventListener('pointerenter', e => { const r = m.getBoundingClientRect(); sw.kick(((e.clientX - r.left) / r.width - .5) * -110); });
+    m.addEventListener('pointermove', e => {
+      sw.kick((e.movementX || 0) * .35);
+      const r = m.getBoundingClientRect();
+      m.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100) + '%');
+      m.style.setProperty('--gy', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
   $('#tabs').addEventListener('click', e => {
     const t = e.target.closest('.tab'); if (!t) return;
     $$('.tab').forEach(x => x.classList.toggle('on', x === t));
@@ -764,7 +758,8 @@ details.acc p{margin:0 0 14px;font-size:12px}
         <details class="acc"><summary>Spedizioni e resi</summary><p>Italia 2–4 giorni, gratis sopra 100€. Resi entro 14 giorni.</p></details>
       </div>`;
     modal.classList.add('on'); ov.classList.add('on'); modal.setAttribute('aria-hidden', 'false'); document.body.classList.add('lock');
-    $('#mTurn', modal).onclick = () => $('#mFlip', modal).classList.toggle('back');
+    const mrot = J.rotator($('.modal__m', modal), $('#mFlip', modal));
+    $('#mTurn', modal).onclick = () => mrot.toggle();
     $('[data-close]', modal).onclick = closeAll;
     $$('.size', modal).forEach(b => b.onclick = () => {
       size = b.dataset.s; $$('.size', modal).forEach(x => x.classList.toggle('on', x === b));
@@ -836,19 +831,30 @@ details.acc p{margin:0 0 14px;font-size:12px}
   $('#cfgColor').innerHTML = Object.entries(COLORS).map(([k, c]) => `<button class="sw${k === cfg.c ? ' on' : ''}" data-c="${k}" title="${c.label}" aria-label="${c.label}"><i style="background:${c.base}"></i><i style="background:${c.sleeve}"></i><i style="background:${c.stripe}"></i><i style="background:${c.text}"></i></button>`).join('');
   $('#cfgSize').innerHTML = SIZES.map(s => `<button class="size${s === cfg.size ? ' on' : ''}" data-s="${s}">${s}</button>`).join('');
   const nameIn = $('#cfgName'), numIn = $('#cfgNum');
-  const drawCfg = () => {
+  const stage = $('#cfgStage'), cflip = $('#cfgFlip');
+  const crot = J.rotator(stage, cflip);
+  const drawCfg = (only) => {
     const c = COLORS[cfg.c], o = {name: nameIn.value.trim() || 'BUTTI', num: numIn.value || '00', capt: true};
-    $('#cfgFront').innerHTML = jersey(cfg.type, c, 'front', o);
-    $('#cfgBack').innerHTML = jersey(cfg.type, c, 'back', o);
-    $('#cfgStage').style.setProperty('--cfg-bg', c.bg);
+    J.apply(stage, c);
+    stage.style.setProperty('--cfg-bg', c.bg);
+    if (only !== 'colors') { $('#cfgFront').innerHTML = J.svg(cfg.type, 'front', o); $('#cfgBack').innerHTML = J.svg(cfg.type, 'back', o); }
   };
   drawCfg();
-  $('#cfgType').addEventListener('click', e => { const b = e.target.closest('.opt'); if (!b) return; cfg.type = b.dataset.t; $$('.opt', $('#cfgType')).forEach(x => x.classList.toggle('on', x === b)); drawCfg(); });
-  $('#cfgColor').addEventListener('click', e => { const b = e.target.closest('.sw'); if (!b) return; cfg.c = b.dataset.c; $$('.sw').forEach(x => x.classList.toggle('on', x === b)); drawCfg(); });
+  let sewT;
+  const sew = () => { const b = $('#cfgBack'); b.classList.remove('tbj-new'); void b.offsetWidth; b.classList.add('tbj-new'); clearTimeout(sewT); sewT = setTimeout(() => b.classList.remove('tbj-new'), 1200); };
+  $('#cfgType').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || b.dataset.t === cfg.type) return;
+    cfg.type = b.dataset.t; $$('.opt', $('#cfgType')).forEach(x => x.classList.toggle('on', x === b));
+    cflip.animate([{opacity: 1, scale: 1}, {opacity: 0, scale: .9}], {duration: 180, easing: 'ease-in'}).finished.then(() => {
+      drawCfg();
+      cflip.animate([{opacity: 0, scale: 1.08}, {opacity: 1, scale: 1}], {duration: 420, easing: 'cubic-bezier(.2,1.4,.4,1)'});
+    });
+  });
+  $('#cfgColor').addEventListener('click', e => { const b = e.target.closest('.sw'); if (!b) return; cfg.c = b.dataset.c; $$('.sw').forEach(x => x.classList.toggle('on', x === b)); drawCfg('colors'); });
   $('#cfgSize').addEventListener('click', e => { const b = e.target.closest('.size'); if (!b) return; cfg.size = b.dataset.s; $$('.size', $('#cfgSize')).forEach(x => x.classList.toggle('on', x === b)); });
-  nameIn.addEventListener('input', () => { nameIn.value = nameIn.value.toUpperCase().replace(/[^A-Z0-9 .'-]/g, ''); drawCfg(); $('#cfgFlip').classList.add('back'); });
-  numIn.addEventListener('input', () => { numIn.value = numIn.value.replace(/\D/g, ''); drawCfg(); $('#cfgFlip').classList.add('back'); });
-  $('#cfgTurn').addEventListener('click', () => $('#cfgFlip').classList.toggle('back'));
+  nameIn.addEventListener('input', () => { nameIn.value = nameIn.value.toUpperCase().replace(/[^A-Z0-9 .'-]/g, ''); drawCfg(); crot.show(true); sew(); });
+  numIn.addEventListener('input', () => { numIn.value = numIn.value.replace(/\D/g, ''); drawCfg(); crot.show(true); sew(); });
+  $('#cfgTurn').addEventListener('click', () => crot.toggle());
   $('#cfgAdd').addEventListener('click', () => {
     add({id: 'custom-' + cfg.type, name: 'Custom ' + types.find(t => t[0] === cfg.type)[1], price: 99, type: cfg.type, c: cfg.c, num: numIn.value || '00', size: cfg.size, custom: nameIn.value.trim() || 'BUTTI'});
     openCart();

@@ -1,0 +1,19 @@
+<div class="tapes" data-tb="tapes" aria-hidden="true">
+  <div class="tape tape--a"><div class="tape__t" data-tape>
+    {%- for i in (1..8) -%}<span>{{ section.settings.text_a | escape }}</span><span>★</span>{%- endfor -%}
+  </div></div>
+  <div class="tape tape--b"><div class="tape__t" data-tape data-reverse>
+    {%- for i in (1..8) -%}<span>{{ section.settings.text_b | escape }}</span><span><em>●</em></span>{%- endfor -%}
+  </div></div>
+</div>
+
+{% schema %}
+{
+  "name": "Nastri inclinati",
+  "settings": [
+    { "type": "text", "id": "text_a", "label": "Nastro giallo", "default": "Team Butti ★ Hockey · MX · Football" },
+    { "type": "text", "id": "text_b", "label": "Nastro nero", "default": "Big ahh truck around Milano ● Merde X" }
+  ],
+  "presets": [{ "name": "Nastri inclinati" }]
+}
+{% endschema %}

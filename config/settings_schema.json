@@ -1,0 +1,52 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Team Butti",
+    "theme_version": "1.0.0",
+    "theme_author": "NextClick Studio",
+    "theme_documentation_url": "https://github.com/NextClickStudio/team-butti",
+    "theme_support_url": "https://github.com/NextClickStudio/team-butti"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo (se vuoto: badge Team Butti)" },
+      { "type": "text", "id": "badge_text", "label": "Testo badge", "default": "Team|Butti", "info": "Usa | per andare a capo" },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+    ]
+  },
+  {
+    "name": "Colori",
+    "settings": [
+      { "type": "color", "id": "color_ink", "label": "Inchiostro", "default": "#0D0D0D" },
+      { "type": "color", "id": "color_paper", "label": "Carta (sfondo)", "default": "#F4F1EA" },
+      { "type": "color", "id": "color_pink", "label": "Rosa poster", "default": "#FF2E93" },
+      { "type": "color", "id": "color_yellow", "label": "Giallo MX", "default": "#FFD400" },
+      { "type": "color", "id": "color_red", "label": "Rosso", "default": "#E3191B" },
+      { "type": "color", "id": "color_blue", "label": "Blu royal", "default": "#1D3FBF" },
+      { "type": "color", "id": "color_green", "label": "Verde neon", "default": "#39FF14" }
+    ]
+  },
+  {
+    "name": "Effetti",
+    "settings": [
+      { "type": "checkbox", "id": "loader", "label": "Loader contagiri all'apertura", "default": true },
+      { "type": "checkbox", "id": "custom_cursor", "label": "Cursore personalizzato (desktop)", "default": true },
+      { "type": "checkbox", "id": "grain", "label": "Grana pellicola", "default": true }
+    ]
+  },
+  {
+    "name": "Carrello",
+    "settings": [
+      { "type": "checkbox", "id": "cart_drawer", "label": "Carrello laterale", "default": true },
+      { "type": "range", "id": "free_shipping", "label": "Soglia spedizione gratis", "min": 0, "max": 300, "step": 10, "unit": "€", "default": 100 }
+    ]
+  },
+  {
+    "name": "Social",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" }
+    ]
+  }
+]

@@ -1,0 +1,38 @@
+{%- comment -%} Rendered via Section Rendering API: /products/<handle>?section_id=quick-view {%- endcomment -%}
+{%- liquid
+  assign jtype = product.metafields.custom.jersey_type.value
+  assign jcolors = product.metafields.custom.jersey_colors.value
+  assign jnum = product.metafields.custom.jersey_number.value | default: '00'
+-%}
+<div class="qv" data-tb="product">
+  <div class="modal__m" data-stage>
+    <div class="cfg__flip" data-flip>
+      {%- if product.featured_image -%}
+        {%- assign alt = product.title | escape -%}
+        <div>{{ product.featured_image | image_url: width: 1000 | image_tag: class: 'qv__img', widths: '500,800,1000', sizes: '(min-width: 990px) 50vw, 100vw', alt: alt }}</div>
+        <div>{%- if product.images[1] -%}{{ product.images[1] | image_url: width: 1000 | image_tag: class: 'qv__img', widths: '500,800,1000', sizes: '(min-width: 990px) 50vw, 100vw', alt: alt }}{%- else -%}{{ product.featured_image | image_url: width: 1000 | image_tag: class: 'qv__img', alt: alt }}{%- endif -%}</div>
+      {%- elsif jtype != blank -%}
+        <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, capt: true %}</div>
+        <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, side: 'back' %}</div>
+      {%- else -%}
+        <div>{{ 'product-apparel-1' | placeholder_svg_tag: 'card__ph' }}</div><div></div>
+      {%- endif -%}
+    </div>
+    <button class="btn cfg__turn" type="button" data-turn data-h>↻ {{ 'customizer.turn' | t }}</button>
+  </div>
+  <div class="modal__i">
+    <button class="x" type="button" data-close aria-label="{{ 'general.close' | t }}">✕</button>
+    <span class="label">{{ product.type | escape }}</span>
+    <h2 class="modal__t d">{{ product.title | escape }}</h2>
+    <div class="modal__p">{% render 'price', product: product, variant: product.selected_or_first_available_variant %}</div>
+    {% render 'product-form', product: product %}
+    <a href="{{ product.url }}" class="label qv__link">{{ 'products.full_details' | t }} →</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Vista rapida",
+  "settings": []
+}
+{% endschema %}
