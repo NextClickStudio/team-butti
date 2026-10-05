@@ -1,0 +1,14 @@
+{%- comment -%}
+  Renders a jersey illustration (drawn client-side by assets/tb-jersey.js).
+  Accepts: type, colors ("base,sleeve,trim,text"), side, num, name, hanger, capt, class
+{%- endcomment -%}
+<div
+  class="jart {{ class }}"
+  data-tb-jersey="{{ type | default: 'hockey' | escape }}"
+  data-colors="{{ colors | default: '#f4f1ea,#0d0d0d,#9a9a9a,#0d0d0d' | escape }}"
+  data-side="{{ side | default: 'front' }}"
+  data-num="{{ num | default: '00' | escape }}"
+  data-name="{{ name | default: 'BUTTI' | escape }}"
+  data-hanger="{{ hanger | default: false }}"
+  data-capt="{{ capt | default: false }}"
+></div>

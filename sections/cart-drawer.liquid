@@ -1,0 +1,64 @@
+{%- liquid
+  assign threshold = settings.free_shipping | times: 100
+  assign left = threshold | minus: cart.total_price
+  assign pct = 100
+  if threshold > 0 and cart.total_price < threshold
+    assign pct = cart.total_price | times: 100 | divided_by: threshold
+  endif
+-%}
+<aside class="drawer" id="CartDrawer" role="dialog" aria-modal="true" aria-label="{{ 'cart.title' | t }}" aria-hidden="true">
+  <div class="drawer__inner" data-count="{{ cart.item_count }}">
+    <div class="drawer__h"><span class="d">{{ 'cart.title' | t }} ({{ cart.item_count }})</span><button class="x" type="button" data-close aria-label="{{ 'general.close' | t }}">✕</button></div>
+    {%- if cart.item_count > 0 -%}
+      <div class="drawer__l">
+        {%- for item in cart.items -%}
+          <div class="ln">
+            <a href="{{ item.url }}" class="ln__m">
+              {%- if item.image -%}
+                {%- assign alt = item.product.title | escape -%}
+                {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: alt }}
+              {%- else -%}
+                {%- assign line_num = item.properties['Numero'] | default: item.product.metafields.custom.jersey_number.value -%}
+                {% render 'jersey-art', type: item.product.metafields.custom.jersey_type.value, colors: item.product.metafields.custom.jersey_colors.value, num: line_num, name: item.properties['Nome'], side: 'back' %}
+              {%- endif -%}
+            </a>
+            <div class="ln__i">
+              <b>{{ item.product.title | escape }}</b>
+              {%- unless item.product.has_only_default_variant -%}<span>{{ item.variant.title | escape }}</span>{%- endunless -%}
+              {%- for p in item.properties -%}
+                {%- assign first_char = p.first | slice: 0 -%}
+                {%- if p.last != blank and first_char != '_' -%}<span>{{ p.first | escape }}: {{ p.last | escape }}</span>{%- endif -%}
+              {%- endfor -%}
+              <span>{{ item.final_line_price | money }}</span>
+            </div>
+            <div class="qty">
+              <button type="button" data-line="{{ forloop.index }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="{{ 'cart.decrease' | t }}">−</button>
+              <span>{{ item.quantity }}</span>
+              <button type="button" data-line="{{ forloop.index }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.increase' | t }}">+</button>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="drawer__f">
+        {%- if threshold > 0 -%}
+          <div class="free">
+            {%- if left > 0 -%}{%- assign left_money = left | money -%}{{ 'cart.free_left' | t: amount: left_money }}{%- else -%}{{ 'cart.free_done' | t }}{%- endif -%}
+            <div class="free__bar"><i style="width: {{ pct }}%"></i></div>
+          </div>
+        {%- endif -%}
+        <div class="sum"><span>{{ 'cart.total' | t }}</span><span>{{ cart.total_price | money }}</span></div>
+        <form action="{{ routes.cart_url }}" method="post"><button type="submit" name="checkout" class="btn btn--pink btn--block" data-h>{{ 'cart.checkout' | t }} →</button></form>
+        <span class="label drawer__note">{{ 'cart.taxes' | t }}</span>
+      </div>
+    {%- else -%}
+      <div class="empty"><span class="d">{{ 'cart.empty_html' | t }}</span><a href="{{ routes.all_products_collection_url }}" class="btn">{{ 'cart.continue' | t }}</a></div>
+    {%- endif -%}
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Carrello laterale",
+  "settings": []
+}
+{% endschema %}

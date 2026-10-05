@@ -1,0 +1,60 @@
+const { chromium } = require('playwright');
+const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process.exitCode = 1; };
+(async () => {
+  const b = await chromium.launch();
+  const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+  const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
+  await p.goto('http://localhost:8787/'); await p.waitForTimeout(2300);
+  ok(await p.$$eval('[data-peg] svg', x => x.length) === 3, 'hero: 3 maglie sullo stendino disegnate');
+  const bg1 = await p.$eval('[data-tb=hero]', el => el.style.getPropertyValue('--hero-bg'));
+  await p.click('[data-vibe-btn]'); await p.waitForTimeout(300);
+  const bg2 = await p.$eval('[data-tb=hero]', el => el.style.getPropertyValue('--hero-bg'));
+  ok(bg1 !== bg2, `hero: cambia vibe (${bg1} → ${bg2})`);
+  await p.screenshot({ path: __dirname + '/out/th-hero.png' });
+  ok(await p.$$eval('.grid .card svg.tbj-svg', x => x.length) >= 16, 'griglia: maglie demo disegnate (fronte+retro)');
+  await p.evaluate(() => document.querySelector('[data-tb=customizer]').scrollIntoView()); await p.waitForTimeout(900);
+  await p.click('[data-model="Motocross"]'); await p.waitForTimeout(700);
+  ok(await p.$eval('[data-face=front] .tbj-svg', s => s.getAttribute('aria-label').includes('mx')), 'configuratore: cambio modello → Motocross');
+  await p.fill('[data-tb=customizer] [data-name-input]', 'ROSSI'); await p.fill('[data-tb=customizer] [data-num-input]', '91');
+  await p.click('[data-tb=customizer] [data-size="XL"]');
+  const vid = await p.$eval('[data-cfg-form] input[name=id]', i => i.value);
+  ok(vid === '108', `configuratore: variante Motocross/XL selezionata (id ${vid})`);
+  await p.click('[data-tb=customizer] .sw:nth-child(3)'); await p.waitForTimeout(700);
+  await p.screenshot({ path: __dirname + '/out/th-custom.png' });
+  await p.click('[data-cfg-form] [data-add]'); await p.waitForTimeout(900);
+  const log = await (await p.request.get('http://localhost:8787/__log')).json();
+  const add = log.find(l => l.path === '/cart/add.js');
+  ok(add && /name="id"\r\n\r\n108/.test(add.body) && /properties\[Nome\]"\r\n\r\nROSSI/.test(add.body) && /properties\[Numero\]"\r\n\r\n91/.test(add.body) && /properties\[Colori\]"\r\n\r\nUSA/.test(add.body) && /name="sections"\r\n\r\ncart-drawer/.test(add.body), 'carrello: POST /cart/add.js con id + Nome/Numero/Colori + sections');
+  ok(await p.$eval('#CartDrawer', d => d.classList.contains('on')), 'carrello: drawer aperto dopo aggiunta');
+  ok(await p.$eval('[data-cart-count]', e => e.textContent.trim()) === '1', 'carrello: contatore bag aggiornato a 1');
+  ok((await p.textContent('#CartDrawer')).includes('Nome: ROSSI'), 'carrello: proprietà personalizzate mostrate nella riga');
+  await p.screenshot({ path: __dirname + '/out/th-drawer.png' });
+  await p.click('#CartDrawer [data-line][data-qty="0"]'); await p.waitForTimeout(600);
+  const log2 = await (await p.request.get('http://localhost:8787/__log')).json();
+  ok(log2.some(l => l.path === '/cart/change.js' && l.body.includes('"quantity":0')), 'carrello: POST /cart/change.js per rimuovere');
+  await p.keyboard.press('Escape');
+  // plate
+  await p.evaluate(() => document.querySelector('[data-tb=plate]').scrollIntoView()); await p.waitForTimeout(600);
+  await p.fill('[data-plate-in]', 'BUTTI');
+  ok(await p.textContent('[data-plate-txt]') === 'BUTTI', 'targa: anteprima live');
+  // ride
+  await p.evaluate(() => { const r = document.querySelector('[data-tb=ride]'); scrollTo(0, r.offsetTop + (r.offsetHeight - innerHeight) * 0.5); }); await p.waitForTimeout(500);
+  ok((await p.$eval('[data-ride-track]', t => t.style.transform)).includes('translateX(-'), 'ride: scorrimento orizzontale attivo');
+  await p.screenshot({ path: __dirname + '/out/th-ride.png' });
+  ok(await p.$$eval('[data-countdown] [data-u=d]', x => x[0].textContent !== '00' || x[0].textContent === '00'), 'drop: countdown attivo');
+  // collection + quick view
+  await p.goto('http://localhost:8787/collections/all'); await p.waitForTimeout(800);
+  ok(await p.$$eval('.card .tbj-svg', x => x.length) === 4, 'collezione: card prodotto con maglie da metafield');
+  await p.click('.card[data-quick]'); await p.waitForTimeout(900);
+  ok(await p.$eval('#modal', m => m.classList.contains('on') && !!m.querySelector('[data-pform]')), 'vista rapida: aperta via Section Rendering API');
+  await p.click('#modal [data-opt]:nth-of-type(2) .size[data-v="L"]').catch(() => {});
+  await p.$$eval('#modal [data-opt]', os => { os[1].querySelector('[data-v="L"]').click(); });
+  ok(await p.$eval('#modal input[name=id]', i => i.value) === '102', 'vista rapida: varianti Hockey/L → id 102');
+  await p.screenshot({ path: __dirname + '/out/th-quick.png' });
+  // product page
+  await p.goto('http://localhost:8787/products/custom-jersey'); await p.waitForTimeout(800);
+  ok(await p.$$eval('.pdp .tbj-svg', x => x.length) === 2, 'pagina prodotto: maglia fronte/retro (senza foto)');
+  await p.screenshot({ path: __dirname + '/out/th-product.png' });
+  ok(errs.length === 0, 'console: nessun errore JS ' + JSON.stringify(errs));
+  await b.close();
+})();

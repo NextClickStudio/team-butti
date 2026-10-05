@@ -1,0 +1,131 @@
+{%- liquid
+  assign vibes = section.blocks | where: 'type', 'vibe'
+  assign jerseys = section.blocks | where: 'type', 'jersey'
+  assign first = vibes.first
+-%}
+<section
+  class="hero"
+  data-tb="hero"
+  data-braps="{{ section.settings.brap_words | escape }}"
+  {% if first %}style="--hero-bg: {{ first.settings.bg }}; --hero-fg: {{ first.settings.fg }};"{% endif %}
+>
+  {%- for v in vibes -%}
+    <i hidden data-vibe data-name="{{ v.settings.name | escape }}" data-bg="{{ v.settings.bg }}" data-fg="{{ v.settings.fg }}" data-pattern="{{ v.settings.pattern }}" data-j="{{ v.settings.jersey_1 | escape }}|{{ v.settings.jersey_2 | escape }}|{{ v.settings.jersey_3 | escape }}" {{ v.shopify_attributes }}></i>
+  {%- endfor -%}
+  <div class="hero__top">
+    <div class="hero__kicker">{{ section.settings.kicker }}</div>
+    {%- if vibes.size > 1 -%}
+      <button class="vibe-btn" type="button" data-vibe-btn data-h><i></i><span data-vibe-name>{{ 'hero.vibe' | t }}: {{ first.settings.name | escape }}</span></button>
+    {%- endif -%}
+  </div>
+  {%- if section.settings.show_line and jerseys.size > 0 -%}
+    <div class="line" data-line aria-hidden="true">
+      <svg class="line__rope" data-rope></svg>
+      {%- for j in jerseys limit: 3 -%}
+        <div class="peg{% if forloop.index == 2 %} peg--mid{% endif %}" data-peg data-type="{{ j.settings.type }}" data-side="{{ j.settings.side }}" data-num="{{ j.settings.num | escape }}" data-name="{{ j.settings.name | escape }}" {{ j.shopify_attributes }}>
+          <div class="peg__swing"><div class="peg__j"></div><i class="pin" style="left:24%"></i><i class="pin" style="left:71%"></i></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+  {%- if section.settings.show_badge -%}
+    <div class="spin-badge" aria-hidden="true">
+      <svg viewBox="0 0 200 200"><defs><path id="circ-{{ section.id }}" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text class="spin-badge__t"><textPath href="#circ-{{ section.id }}">{{ section.settings.badge_text | escape }}</textPath></text></svg>
+      {% render 'badge' %}
+    </div>
+  {%- endif -%}
+  {%- if section.settings.show_skyline -%}
+    <div class="skyline" aria-hidden="true"><svg viewBox="0 0 1440 240" preserveAspectRatio="none" data-skyline></svg></div>
+  {%- endif -%}
+  <h1 class="hero__title d grunge">
+    <span class="hero__line"><span>{{ section.settings.title_1 | escape }}</span></span>
+    <span class="hero__line"><span>{{ section.settings.title_2 | escape }}</span></span>
+  </h1>
+  <div class="hero__bottom">
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--pink" data-h>{{ section.settings.button_label | escape }}</a>
+    {%- endif -%}
+    <span class="label">{{ section.settings.hint | escape }}</span>
+  </div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="grunge" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".45" numOctaves="2" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -4 0 0 0 1.28" result="holes"/>
+      <feComposite in="SourceGraphic" in2="holes" operator="out" result="cut"/>
+      <feTurbulence type="turbulence" baseFrequency=".04" numOctaves="2" seed="3" result="w"/>
+      <feDisplacementMap in="cut" in2="w" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+</section>
+
+{% schema %}
+{
+  "name": "Hero cambia vibe",
+  "class": "section-hero",
+  "max_blocks": 11,
+  "settings": [
+    { "type": "inline_richtext", "id": "kicker", "label": "Testo in alto", "default": "Dalle colline toscane a <b>Los Angeles</b>. Maglie da hockey, MX e football per chi va di traverso." },
+    { "type": "text", "id": "title_1", "label": "Titolo riga 1", "default": "Team" },
+    { "type": "text", "id": "title_2", "label": "Titolo riga 2", "default": "Butti" },
+    { "type": "text", "id": "button_label", "label": "Bottone", "default": "Shop il drop →" },
+    { "type": "url", "id": "button_link", "label": "Link bottone" },
+    { "type": "text", "id": "hint", "label": "Suggerimento", "default": "Clicca ovunque · Brap brap" },
+    { "type": "text", "id": "brap_words", "label": "Scritte al click", "info": "Separate da virgola", "default": "BRAAAP!,MERDE!,BRAP BRAP,TEAM!,GAS!,00!" },
+    { "type": "checkbox", "id": "show_line", "label": "Stendino con maglie", "default": true },
+    { "type": "checkbox", "id": "show_skyline", "label": "Skyline con palme", "default": true },
+    { "type": "checkbox", "id": "show_badge", "label": "Badge rotante", "default": true },
+    { "type": "text", "id": "badge_text", "label": "Testo badge rotante", "default": "TEAM BUTTI ★ MILANO ★ SOCAL ★ NYC ★ MERDE ★" }
+  ],
+  "blocks": [
+    {
+      "type": "vibe",
+      "name": "Vibe",
+      "limit": 8,
+      "settings": [
+        { "type": "text", "id": "name", "label": "Nome", "default": "Pink Market" },
+        { "type": "color", "id": "bg", "label": "Sfondo", "default": "#FF2E93" },
+        { "type": "color", "id": "fg", "label": "Testo", "default": "#0D0D0D" },
+        { "type": "select", "id": "pattern", "label": "Texture", "default": "halftone", "options": [
+          { "value": "halftone", "label": "Retino" },
+          { "value": "halftone-pink", "label": "Retino rosa" },
+          { "value": "leopard", "label": "Leopardato" },
+          { "value": "none", "label": "Nessuna" }
+        ] },
+        { "type": "text", "id": "jersey_1", "label": "Colori maglia 1", "info": "base,maniche,bordi,scritte", "default": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d" },
+        { "type": "text", "id": "jersey_2", "label": "Colori maglia 2", "default": "#f4f1ea,#0d0d0d,#9a9a9a,#0d0d0d" },
+        { "type": "text", "id": "jersey_3", "label": "Colori maglia 3", "default": "#39ff14,#ff2e93,#0d0d0d,#ff2e93" }
+      ]
+    },
+    {
+      "type": "jersey",
+      "name": "Maglia sullo stendino",
+      "limit": 3,
+      "settings": [
+        { "type": "select", "id": "type", "label": "Modello", "default": "hockey", "options": [
+          { "value": "hockey", "label": "Hockey" },
+          { "value": "mx", "label": "Motocross" },
+          { "value": "football", "label": "Football" }
+        ] },
+        { "type": "select", "id": "side", "label": "Lato", "default": "front", "options": [
+          { "value": "front", "label": "Fronte" },
+          { "value": "back", "label": "Retro" }
+        ] },
+        { "type": "text", "id": "num", "label": "Numero", "default": "00" },
+        { "type": "text", "id": "name", "label": "Nome (retro)", "default": "BUTTI" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero cambia vibe",
+      "blocks": [
+        { "type": "vibe", "settings": { "name": "Pink Market" } },
+        { "type": "vibe", "settings": { "name": "Leopardo", "bg": "#E0A54A", "pattern": "leopard", "jersey_1": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13" } },
+        { "type": "jersey", "settings": { "type": "hockey" } },
+        { "type": "jersey", "settings": { "type": "mx", "side": "back", "num": "69" } },
+        { "type": "jersey", "settings": { "type": "football", "num": "68" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

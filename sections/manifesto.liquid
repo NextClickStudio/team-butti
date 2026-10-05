@@ -1,0 +1,56 @@
+<section class="sec mani" data-tb="manifesto">
+  {%- if section.blocks.size > 0 -%}<span class="mani__hint">{{ 'manifesto.drag' | t }}</span>{%- endif -%}
+  <div class="stickers">
+    {%- for block in section.blocks -%}
+      <div class="stk stk--{{ block.settings.style }}{% if block.settings.style == 'badge' %} badge{% endif %}" style="left:{{ block.settings.x }}%;top:{{ block.settings.y }}%;rotate:{{ block.settings.rotate }}deg" {{ block.shopify_attributes }}>
+        {{- block.settings.text | escape | replace: '|', '<br>' -}}
+      </div>
+    {%- endfor -%}
+  </div>
+  <div class="mani__txt" data-words>{{ section.settings.text }}</div>
+  <div class="mani__sign">
+    <span class="marker">{{ section.settings.signature | escape }}</span>
+    <span class="label">{{ section.settings.sub | escape }}</span>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Manifesto + sticker",
+  "settings": [
+    { "type": "richtext", "id": "text", "label": "Testo", "info": "Le parole in corsivo diventano rosa", "default": "<p>Non siamo nati a Los Angeles. Siamo nati sullo <em>sterrato</em> dietro casa, con un due tempi che non partiva mai. Ci vestiamo come l'America che sognavamo da bambini e la portiamo al <em>market</em> di Milano. Team Butti è la <em>crew</em>. Il resto è merde.</p>" },
+    { "type": "text", "id": "signature", "label": "Firma", "default": "— la crew" },
+    { "type": "text", "id": "sub", "label": "Sottotitolo", "default": "Est. Toscana · Milano · SoCal" }
+  ],
+  "blocks": [
+    {
+      "type": "sticker",
+      "name": "Sticker",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Testo", "default": "MERDE", "info": "Usa | per andare a capo" },
+        { "type": "select", "id": "style", "label": "Stile", "default": "a", "options": [
+          { "value": "a", "label": "Giallo" },
+          { "value": "b", "label": "Bollino rosa" },
+          { "value": "c", "label": "Gotico" },
+          { "value": "d", "label": "Pennarello verde" },
+          { "value": "e", "label": "Numero blu" },
+          { "value": "badge", "label": "Badge logo" }
+        ] },
+        { "type": "range", "id": "x", "label": "Posizione orizzontale", "min": 0, "max": 90, "step": 1, "unit": "%", "default": 10 },
+        { "type": "range", "id": "y", "label": "Posizione verticale", "min": 0, "max": 90, "step": 1, "unit": "%", "default": 10 },
+        { "type": "range", "id": "rotate", "label": "Rotazione", "min": -30, "max": 30, "step": 1, "unit": "°", "default": -6 }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Manifesto + sticker",
+      "blocks": [
+        { "type": "sticker", "settings": { "text": "MERDE", "style": "a", "x": 6, "y": 8, "rotate": -8 } },
+        { "type": "sticker", "settings": { "text": "BIG AHH|TRUCK", "style": "b", "x": 82, "y": 12, "rotate": 12 } },
+        { "type": "sticker", "settings": { "text": "Los Angeles", "style": "c", "x": 58, "y": 46, "rotate": -6 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

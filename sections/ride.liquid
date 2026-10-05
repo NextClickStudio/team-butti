@@ -1,0 +1,74 @@
+<section class="ride" data-tb="ride" style="height: {{ section.blocks.size | times: 100 | plus: 20 }}vh">
+  <div class="ride__s">
+    <div class="ride__bar">
+      {%- for block in section.blocks -%}<span>{{ block.settings.title | escape }}</span>{%- endfor -%}
+      <i data-ride-bar></i>
+    </div>
+    <div class="ride__track" data-ride-track>
+      {%- for block in section.blocks -%}
+        <div class="stop stop--{{ block.settings.style }}" style="--stop-bg: {{ block.settings.bg }}; --stop-fg: {{ block.settings.fg }};" {{ block.shopify_attributes }}>
+          {%- if block.settings.style == 'hills' -%}
+            <svg class="hills" viewBox="0 0 1440 500" preserveAspectRatio="none" aria-hidden="true"><path d="M0 220 C200 120 380 140 560 200 S900 90 1100 160 S1360 140 1440 120 V500 H0Z" fill="#c4a05a"/><path d="M0 300 C240 220 420 260 640 300 S1000 220 1240 270 S1400 260 1440 250 V500 H0Z" fill="#b08a45"/><g fill="#2f4a22"><path d="M300 210 q6 -60 12 0z"/><path d="M330 214 q6 -70 12 0z"/><path d="M1150 162 q6 -60 12 0z"/><path d="M1180 166 q5 -50 10 0z"/></g></svg>
+          {%- endif -%}
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 1600 | image_tag: class: 'stop__img', loading: 'lazy', widths: '800,1200,1600', sizes: '100vw' }}
+          {%- endif -%}
+          <span class="stop__n label">{{ forloop.index | prepend: '0' | slice: -2, 2 }} / {{ forloop.length | prepend: '0' | slice: -2, 2 }} — {{ block.settings.label | escape }}</span>
+          <h3 class="stop__t d{% unless block.settings.style == 'night' %} grunge{% endunless %}">{{ block.settings.title | escape }}</h3>
+          <p class="stop__p">{{ block.settings.text | escape }}</p>
+          {%- if block.settings.deco == 'plate' -%}
+            <div class="stop__deco"><div class="plate-mini"><div class="goth">SoCal</div><div class="big">{{ block.settings.deco_text | escape }}</div><div class="goth goth--b">Los Angeles</div></div></div>
+          {%- elsif block.settings.deco == 'neon' -%}
+            <div class="stop__deco"><div class="neon">{{ block.settings.deco_text | escape }}</div></div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="road"></div>
+    <div class="bike" data-bike>{% render 'bike' %}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Racconto in moto",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "stop",
+      "name": "Tappa",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Etichetta", "default": "Il Market" },
+        { "type": "text", "id": "title", "label": "Titolo", "default": "Milano" },
+        { "type": "textarea", "id": "text", "label": "Testo", "default": "Piazzale Antonio Cantore 10. Banchetti pieni di maglie, DJ set dalle 15, la gente in fila." },
+        { "type": "select", "id": "style", "label": "Stile", "default": "halftone", "options": [
+          { "value": "halftone", "label": "Retino" },
+          { "value": "hills", "label": "Colline" },
+          { "value": "flat", "label": "Pieno" },
+          { "value": "night", "label": "Notte neon" }
+        ] },
+        { "type": "color", "id": "bg", "label": "Sfondo", "default": "#FF2E93" },
+        { "type": "color", "id": "fg", "label": "Testo", "default": "#0D0D0D" },
+        { "type": "image_picker", "id": "image", "label": "Foto di sfondo (opzionale)" },
+        { "type": "select", "id": "deco", "label": "Decorazione", "default": "none", "options": [
+          { "value": "none", "label": "Nessuna" },
+          { "value": "plate", "label": "Targa" },
+          { "value": "neon", "label": "Scritta neon" }
+        ] },
+        { "type": "text", "id": "deco_text", "label": "Testo decorazione", "default": "MERDE" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Racconto in moto",
+      "blocks": [
+        { "type": "stop" },
+        { "type": "stop", "settings": { "label": "Lo sterrato", "title": "Toscana", "text": "Colline, polvere, due tempi. Le maglie MX non sono un costume: ci cadiamo dentro ogni weekend.", "style": "hills", "bg": "#9EC9EF" } },
+        { "type": "stop", "settings": { "label": "La targa", "title": "SoCal", "text": "Lowrider, pickup, sole che spacca. L'America che sognavamo da bambini.", "style": "flat", "bg": "#FFD400", "fg": "#E3191B", "deco": "plate" } },
+        { "type": "stop", "settings": { "label": "Le luci", "title": "NYC", "text": "Il nostro nome su Times Square. Prossima fermata: ovunque ci sia una crew.", "style": "night", "bg": "#0D0D0D", "fg": "#F4F1EA", "deco": "neon", "deco_text": "Team Butti on Broadway" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

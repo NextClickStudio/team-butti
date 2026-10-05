@@ -1,0 +1,13 @@
+{%- comment -%} Accepts: product, variant (optional) {%- endcomment -%}
+{%- liquid
+  assign target = product
+  if variant != blank
+    assign target = variant
+  endif
+  assign compare = target.compare_at_price
+-%}
+<span class="price" data-price>
+  {%- if variant == blank and product.price_varies -%}{{ 'products.from' | t }} {% endif -%}
+  {{- target.price | money -}}
+  {%- if compare > target.price %} <s>{{ compare | money }}</s>{%- endif -%}
+</span>

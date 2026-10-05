@@ -1,0 +1,45 @@
+{%- assign coll = section.settings.collection -%}
+<section class="sec" data-tb="grid">
+  <div class="sec__head rv">
+    <h2 class="sec__title d grunge">{{ section.settings.title | escape }} <span class="out">{{ section.settings.title_outline | escape }}</span></h2>
+    {%- if section.settings.show_tabs -%}
+      <div class="tabs" data-tabs>
+        <button type="button" class="tab on" data-f="all">{{ 'collections.all' | t }}</button>
+        {%- if coll != blank -%}
+          {%- for t in coll.all_types -%}
+            {%- if t != blank -%}<button type="button" class="tab" data-f="{{ t | handleize }}">{{ t | escape }}</button>{%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <button type="button" class="tab" data-f="hockey">Hockey</button><button type="button" class="tab" data-f="mx">Motocross</button><button type="button" class="tab" data-f="football">Football</button>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="grid">
+    {%- if coll != blank and coll.products_count > 0 -%}
+      {%- for product in coll.products limit: section.settings.limit -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    {%- else -%}
+      {% render 'demo-cards', limit: section.settings.limit %}
+    {%- endif -%}
+  </div>
+  {%- if coll != blank and section.settings.link_label != blank -%}
+    <div class="sec__more"><a href="{{ coll.url }}" class="btn">{{ section.settings.link_label | escape }}</a></div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Griglia drop",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Drop" },
+    { "type": "text", "id": "title_outline", "label": "Titolo (contorno)", "default": "01" },
+    { "type": "collection", "id": "collection", "label": "Collezione", "info": "Vuota = maglie demo" },
+    { "type": "range", "id": "limit", "label": "Prodotti", "min": 2, "max": 16, "step": 1, "default": 8 },
+    { "type": "checkbox", "id": "show_tabs", "label": "Filtri per tipo prodotto", "default": true },
+    { "type": "text", "id": "link_label", "label": "Bottone collezione", "default": "Vedi tutto" }
+  ],
+  "presets": [{ "name": "Griglia drop" }]
+}
+{% endschema %}

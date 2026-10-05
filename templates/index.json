@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-vibe",
+      "blocks": {
+        "v1": { "type": "vibe", "settings": { "name": "Pink Market", "bg": "#FF2E93", "fg": "#0D0D0D", "pattern": "halftone", "jersey_1": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d", "jersey_2": "#f4f1ea,#0d0d0d,#9a9a9a,#0d0d0d", "jersey_3": "#39ff14,#ff2e93,#0d0d0d,#ff2e93" } },
+        "v2": { "type": "vibe", "settings": { "name": "Leopardo", "bg": "#E0A54A", "fg": "#0D0D0D", "pattern": "leopard", "jersey_1": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13", "jersey_2": "#f4f1ea,#0d0d0d,#9a9a9a,#0d0d0d", "jersey_3": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d" } },
+        "v3": { "type": "vibe", "settings": { "name": "Giallo MX", "bg": "#FFD400", "fg": "#E3191B", "pattern": "halftone", "jersey_1": "#f4f1ea,#e3191b,#1d3fbf,#e3191b", "jersey_2": "#ffd400,#e3191b,#0d0d0d,#e3191b", "jersey_3": "#1d3fbf,#1d3fbf,#e3191b,#f4f1ea" } },
+        "v4": { "type": "vibe", "settings": { "name": "Night NYC", "bg": "#0D0D0D", "fg": "#F4F1EA", "pattern": "halftone-pink", "jersey_1": "#39ff14,#ff2e93,#0d0d0d,#ff2e93", "jersey_2": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d", "jersey_3": "#1d3fbf,#1d3fbf,#e3191b,#f4f1ea" } },
+        "v5": { "type": "vibe", "settings": { "name": "Neon Dirt", "bg": "#39FF14", "fg": "#0D0D0D", "pattern": "halftone", "jersey_1": "#c9a46a,#7a5a2c,#f4f1ea,#0d0d0d", "jersey_2": "#39ff14,#ff2e93,#0d0d0d,#ff2e93", "jersey_3": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13" } },
+        "j1": { "type": "jersey", "settings": { "type": "hockey", "side": "front", "num": "00", "name": "BUTTI" } },
+        "j2": { "type": "jersey", "settings": { "type": "mx", "side": "back", "num": "69", "name": "BUTTI" } },
+        "j3": { "type": "jersey", "settings": { "type": "football", "side": "front", "num": "68", "name": "BUTTI" } }
+      },
+      "block_order": ["v1", "v2", "v3", "v4", "v5", "j1", "j2", "j3"],
+      "settings": {}
+    },
+    "tapes": { "type": "tapes", "settings": {} },
+    "drop": { "type": "featured-collection", "settings": { "title": "Drop", "title_outline": "01", "limit": 8 } },
+    "manifesto": {
+      "type": "manifesto",
+      "blocks": {
+        "s1": { "type": "sticker", "settings": { "text": "MERDE", "style": "a", "x": 6, "y": 8, "rotate": -8 } },
+        "s2": { "type": "sticker", "settings": { "text": "BIG AHH|TRUCK", "style": "b", "x": 82, "y": 12, "rotate": 12 } },
+        "s3": { "type": "sticker", "settings": { "text": "Los Angeles", "style": "c", "x": 58, "y": 46, "rotate": -6 } },
+        "s4": { "type": "sticker", "settings": { "text": "dove sei Selena?", "style": "d", "x": 12, "y": 78, "rotate": 5 } },
+        "s5": { "type": "sticker", "settings": { "text": "00", "style": "e", "x": 78, "y": 76, "rotate": -10 } },
+        "s6": { "type": "sticker", "settings": { "text": "Team|Butti", "style": "badge", "x": 44, "y": 6, "rotate": 14 } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6"],
+      "settings": {}
+    },
+    "custom": {
+      "type": "jersey-customizer",
+      "blocks": {
+        "m1": { "type": "model", "settings": { "label": "Hockey", "type": "hockey" } },
+        "m2": { "type": "model", "settings": { "label": "Motocross", "type": "mx" } },
+        "m3": { "type": "model", "settings": { "label": "Football", "type": "football" } },
+        "c1": { "type": "colorway", "settings": { "name": "Rosa", "base": "#FF2E93", "sleeve": "#0D0D0D", "trim": "#F4F1EA", "text": "#0D0D0D", "bg": "#FFD400" } },
+        "c2": { "type": "colorway", "settings": { "name": "Kings", "base": "#F4F1EA", "sleeve": "#0D0D0D", "trim": "#9A9A9A", "text": "#0D0D0D", "bg": "#E8E4DA" } },
+        "c3": { "type": "colorway", "settings": { "name": "USA", "base": "#F4F1EA", "sleeve": "#E3191B", "trim": "#1D3FBF", "text": "#E3191B", "bg": "#FFD400" } },
+        "c4": { "type": "colorway", "settings": { "name": "Navy", "base": "#1D3FBF", "sleeve": "#1D3FBF", "trim": "#E3191B", "text": "#F4F1EA", "bg": "#FF2E93" } },
+        "c5": { "type": "colorway", "settings": { "name": "Neon", "base": "#39FF14", "sleeve": "#FF2E93", "trim": "#0D0D0D", "text": "#FF2E93", "bg": "#0D0D0D" } },
+        "c6": { "type": "colorway", "settings": { "name": "Giallo", "base": "#FFD400", "sleeve": "#E3191B", "trim": "#0D0D0D", "text": "#E3191B", "bg": "#1D3FBF" } },
+        "c7": { "type": "colorway", "settings": { "name": "Night", "base": "#0D0D0D", "sleeve": "#FF6A13", "trim": "#F4F1EA", "text": "#FF6A13", "bg": "#F4F1EA" } },
+        "c8": { "type": "colorway", "settings": { "name": "Desert", "base": "#C9A46A", "sleeve": "#7A5A2C", "trim": "#F4F1EA", "text": "#0D0D0D", "bg": "#39FF14" } }
+      },
+      "block_order": ["m1", "m2", "m3", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"],
+      "settings": {}
+    },
+    "ride": {
+      "type": "ride",
+      "blocks": {
+        "r1": { "type": "stop", "settings": { "label": "Il Market", "title": "Milano", "style": "halftone", "bg": "#FF2E93", "fg": "#0D0D0D" } },
+        "r2": { "type": "stop", "settings": { "label": "Lo sterrato", "title": "Toscana", "text": "Colline, polvere, due tempi. Le maglie MX non sono un costume: ci cadiamo dentro ogni weekend.", "style": "hills", "bg": "#9EC9EF", "fg": "#0D0D0D" } },
+        "r3": { "type": "stop", "settings": { "label": "La targa", "title": "SoCal", "text": "Lowrider, pickup, sole che spacca. L'America che sognavamo da bambini, presa e portata a casa.", "style": "flat", "bg": "#FFD400", "fg": "#E3191B", "deco": "plate", "deco_text": "MERDE" } },
+        "r4": { "type": "stop", "settings": { "label": "Le luci", "title": "NYC", "text": "Il nostro nome su Times Square. Prossima fermata: ovunque ci sia una crew.", "style": "night", "bg": "#0D0D0D", "fg": "#F4F1EA", "deco": "neon", "deco_text": "Team Butti on Broadway" } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4"],
+      "settings": {}
+    },
+    "plate": { "type": "plate-builder", "settings": {} },
+    "drop_countdown": { "type": "drop-countdown", "settings": {} }
+  },
+  "order": ["hero", "tapes", "drop", "manifesto", "custom", "ride", "plate", "drop_countdown"]
+}

@@ -1,0 +1,4 @@
+node_modules/
+tools/theme-test/out/
+tools/theme-test/demo-site/
+*.zip

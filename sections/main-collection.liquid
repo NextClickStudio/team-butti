@@ -1,0 +1,36 @@
+{%- paginate collection.products by section.settings.per_page -%}
+  <section class="sec" data-tb="grid">
+    <div class="sec__head">
+      <h1 class="sec__title d grunge">{{ collection.title | escape }}</h1>
+      <span class="label">{{ 'collections.count' | t: count: collection.products_count }}</span>
+    </div>
+    {%- if collection.description != blank -%}<div class="rte coll-desc">{{ collection.description }}</div>{%- endif -%}
+    {%- if collection.all_types.size > 1 -%}
+      <div class="tabs coll-tabs" data-tabs>
+        <button type="button" class="tab on" data-f="all">{{ 'collections.all' | t }}</button>
+        {%- for t in collection.all_types -%}
+          {%- if t != blank -%}<button type="button" class="tab" data-f="{{ t | handleize }}">{{ t | escape }}</button>{%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    {%- if collection.products.size > 0 -%}
+      <div class="grid">
+        {%- for product in collection.products -%}{% render 'product-card', product: product %}{%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="empty-msg">{{ 'collections.empty' | t }}</p>
+    {%- endif -%}
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" aria-label="{{ 'general.pagination' | t }}">{{ paginate | default_pagination: next: '→', previous: '←' }}</nav>
+    {%- endif -%}
+  </section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collezione",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Prodotti per pagina", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

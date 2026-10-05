@@ -1,0 +1,95 @@
+{
+  "general": {
+    "skip": "Vai al contenuto",
+    "page": "Pagina {{ page }}",
+    "menu": "Menu",
+    "close": "Chiudi",
+    "search": "Cerca",
+    "pagination": "Paginazione"
+  },
+  "header": {
+    "bag": "Bag"
+  },
+  "hero": {
+    "vibe": "Vibe"
+  },
+  "manifesto": {
+    "drag": "← trascina gli sticker"
+  },
+  "products": {
+    "add": "Aggiungi alla bag",
+    "sold_out": "Sold out",
+    "unavailable": "Non disponibile",
+    "choose_size": "Scegli la taglia",
+    "from": "Da",
+    "quick_view": "Vista rapida +",
+    "demo": "Demo · collega una collezione",
+    "details": "Dettagli",
+    "full_details": "Tutti i dettagli"
+  },
+  "customizer": {
+    "model": "Modello",
+    "colors": "Colori",
+    "name": "Nome",
+    "size": "Taglia",
+    "turn": "Gira",
+    "drag": "← trascina per girarla →",
+    "setup": "Collega un prodotto nel theme editor"
+  },
+  "plate": {
+    "label": "Scrivi la tua (max 7)"
+  },
+  "countdown": {
+    "days": "GG",
+    "hours": "ORE",
+    "minutes": "MIN",
+    "seconds": "SEC"
+  },
+  "newsletter": {
+    "placeholder": "La tua email",
+    "submit": "Entra",
+    "success": "Sei nel team. Ci vediamo al drop."
+  },
+  "collections": {
+    "all": "Tutto",
+    "title": "Collezioni",
+    "empty": "Niente qui. Il prossimo drop arriva presto.",
+    "count": {
+      "one": "{{ count }} pezzo",
+      "other": "{{ count }} pezzi"
+    }
+  },
+  "search": {
+    "placeholder": "Cerca maglie, MX, hockey…",
+    "none": "Niente. Prova con un'altra parola.",
+    "count": {
+      "one": "{{ count }} risultato",
+      "other": "{{ count }} risultati"
+    }
+  },
+  "cart": {
+    "title": "Bag",
+    "empty": "La bag è vuota. Per ora.",
+    "empty_html": "Vuota.<br>Per ora.",
+    "continue": "Vai allo shop",
+    "checkout": "Checkout",
+    "total": "Totale",
+    "taxes": "Tasse incluse · Spedizione al checkout",
+    "remove": "Rimuovi",
+    "update": "Aggiorna",
+    "quantity": "Quantità",
+    "increase": "Aumenta quantità",
+    "decrease": "Diminuisci quantità",
+    "free_left": "Ti mancano {{ amount }} per la spedizione gratis",
+    "free_done": "Spedizione gratis sbloccata"
+  },
+  "nf": {
+    "text": "Questa pagina è finita fuori strada.",
+    "home": "Torna in pista"
+  },
+  "password": {
+    "enter": "Entra con la password",
+    "placeholder": "Password",
+    "submit": "Entra"
+  }
+}

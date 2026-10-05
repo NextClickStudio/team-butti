@@ -1,0 +1,18 @@
+{
+  "name": "team-butti-theme-test",
+  "private": true,
+  "description": "Theme tests + static demo store generated from the Shopify theme.",
+  "scripts": {
+    "check": "shopify theme check --path ../..",
+    "demo": "node build-demo.js",
+    "e2e": "node render.js && (node server.js & sleep 1 && node e2e.js; kill %1)",
+    "demo:e2e": "node build-demo.js && (node demo-serve.js & sleep 1 && node demo-e2e.js; kill %1)"
+  },
+  "dependencies": {
+    "liquidjs": "^10.30.0"
+  },
+  "devDependencies": {
+    "@shopify/cli": "^3.0.0",
+    "playwright": "^1.40.0"
+  }
+}

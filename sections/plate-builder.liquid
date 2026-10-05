@@ -1,0 +1,41 @@
+{%- assign p = section.settings.product -%}
+<section class="sec plate-sec" data-tb="plate">
+  <div class="rv">
+    <h2 class="sec__title d grunge">{{ section.settings.title | escape }} <span class="out">{{ section.settings.title_outline | escape }}</span></h2>
+    <p class="plate__desc">{{ section.settings.text | escape }}</p>
+    <form action="{{ routes.cart_add_url }}" method="post" class="plate__form" data-plate-form>
+      <label class="label" for="PlateIn-{{ section.id }}">{{ 'plate.label' | t }}</label>
+      <input class="inp" id="PlateIn-{{ section.id }}" name="properties[Testo]" maxlength="7" value="{{ section.settings.default_text | escape }}" autocomplete="off" data-plate-in>
+      <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+      <button type="submit" class="btn btn--pink" data-add data-h{% if p == blank %} disabled{% endif %}>
+        {%- if p == blank -%}{{ 'customizer.setup' | t }}{%- else -%}{{ 'products.add' | t }} — {{ p.price | money_without_trailing_zeros }}{%- endif -%}
+      </button>
+      <p class="form-error" data-error hidden></p>
+    </form>
+  </div>
+  <div class="rv">
+    <div class="plate" data-plate>
+      <span class="plate__bolt" style="left:22%"></span><span class="plate__bolt" style="right:12%"></span>
+      <span class="plate__eu">I</span>
+      <div class="goth">{{ section.settings.top | escape }}</div>
+      <div class="plate__txt" data-plate-txt>{{ section.settings.default_text | escape }}</div>
+      <div class="goth goth--b">{{ section.settings.bottom | escape }}</div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Targa custom",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Targa" },
+    { "type": "text", "id": "title_outline", "label": "Titolo (contorno)", "default": "custom" },
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "La targa SoCal più famosa d'Italia, con la tua scritta. Da appendere in camera, in garage o sul pickup." },
+    { "type": "product", "id": "product", "label": "Prodotto targa", "info": "Il testo arriva nell'ordine come proprietà \"Testo\"." },
+    { "type": "text", "id": "default_text", "label": "Testo iniziale", "default": "MERDE" },
+    { "type": "text", "id": "top", "label": "Scritta alta", "default": "SoCal" },
+    { "type": "text", "id": "bottom", "label": "Scritta bassa", "default": "Los Angeles" }
+  ],
+  "presets": [{ "name": "Targa custom" }]
+}
+{% endschema %}

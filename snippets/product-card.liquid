@@ -1,0 +1,50 @@
+{%- comment -%}
+  Product card. Photos: front = featured image, back = 2nd image (flips on hover).
+  No photos: jersey illustration from metafields custom.jersey_type / jersey_colors / jersey_number.
+  Accepts: product, bg (optional; default metafield custom.card_bg)
+{%- endcomment -%}
+{%- liquid
+  assign img1 = product.featured_image
+  assign img2 = product.images[1]
+  assign jtype = product.metafields.custom.jersey_type.value
+  assign jcolors = product.metafields.custom.jersey_colors.value
+  assign jnum = product.metafields.custom.jersey_number.value | default: '00'
+  assign card_bg = bg | default: product.metafields.custom.card_bg.value
+  assign alt = product.title | escape
+  assign badge = ''
+  for tag in product.tags
+    if tag contains 'badge:'
+      assign badge = tag | remove: 'badge:'
+      break
+    endif
+  endfor
+-%}
+<a href="{{ product.url }}" class="card{% unless product.available %} sold{% endunless %}{% if img1 and img2 == blank %} card--single{% endif %}" data-type="{{ product.type | handleize }}" data-quick="{{ product.url }}" data-h>
+  <div class="card__m"{% if card_bg != blank %} style="background:{{ card_bg }}"{% endif %}>
+    {%- if badge != blank and product.available -%}<span class="card__tag">{{ badge | escape }}</span>{%- endif -%}
+    {%- if img1 -%}
+      <div class="flip flip--photo">
+        <div>{{ img1 | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360,540,720,900', sizes: '(min-width: 990px) 25vw, 50vw', class: 'card__img', alt: alt }}</div>
+        {%- if img2 -%}
+          <div>{{ img2 | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360,540,720,900', sizes: '(min-width: 990px) 25vw, 50vw', class: 'card__img', alt: alt }}</div>
+        {%- endif -%}
+      </div>
+    {%- elsif jtype != blank -%}
+      <div class="hang" data-swing>
+        <div class="flip">
+          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, hanger: true, capt: true %}</div>
+          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, side: 'back', hanger: true %}</div>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="flip flip--photo"><div>{{ 'product-apparel-1' | placeholder_svg_tag: 'card__ph' }}</div></div>
+    {%- endif -%}
+    <span class="glare"></span>
+    {%- if product.available -%}
+      <span class="card__quick">{{ 'products.quick_view' | t }}</span>
+    {%- else -%}
+      <span class="stamp">{{ 'products.sold_out' | t }}</span>
+    {%- endif -%}
+  </div>
+  <div class="card__i"><b>{{ product.title | escape }}</b>{% render 'price', product: product %}</div>
+</a>

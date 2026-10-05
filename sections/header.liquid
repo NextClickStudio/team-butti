@@ -1,0 +1,38 @@
+<header class="hdr" data-tb="header">
+  <div class="hdr__in">
+    <button class="burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="MobileMenu">{{ 'general.menu' | t }}</button>
+    <nav class="nav" aria-label="{{ 'general.menu' | t }}">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+      {%- endfor -%}
+    </nav>
+    <a href="{{ routes.root_url }}" class="hdr__logo" aria-label="{{ shop.name | escape }}">
+      {%- if settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 240 | image_tag: class: 'hdr__img', alt: shop.name, widths: '120,240', sizes: '120px' }}
+      {%- else -%}
+        {% render 'badge' %}
+      {%- endif -%}
+    </a>
+    <div class="hdr__act">
+      <a href="{{ routes.search_url }}" class="hide-m">{{ 'general.search' | t }}</a>
+      <a href="{{ routes.cart_url }}" data-cart-open data-h>{{ 'header.bag' | t }}<span class="bagcount" data-cart-count>{{ cart.item_count }}</span></a>
+    </div>
+  </div>
+  <nav class="mmenu" id="MobileMenu" aria-label="{{ 'general.menu' | t }}">
+    {%- for link in section.settings.menu.links -%}
+      <a href="{{ link.url }}"><span>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{{ link.title | escape }}</a>
+    {%- endfor -%}
+    <a href="{{ routes.search_url }}"><span>→</span>{{ 'general.search' | t }}</a>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

@@ -1,0 +1,49 @@
+<section class="sec cart-page">
+  <div class="sec__head"><h1 class="sec__title d grunge">{{ 'cart.title' | t }}</h1></div>
+  {%- if cart.item_count > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post" class="cart-page__grid">
+      <div>
+        {%- for item in cart.items -%}
+          <div class="ln">
+            <a href="{{ item.url }}" class="ln__m">
+              {%- if item.image -%}
+                {%- assign alt = item.product.title | escape -%}
+                {{ item.image | image_url: width: 300 | image_tag: loading: 'lazy', alt: alt }}
+              {%- else -%}
+                {%- assign line_num = item.properties['Numero'] | default: item.product.metafields.custom.jersey_number.value -%}
+                {% render 'jersey-art', type: item.product.metafields.custom.jersey_type.value, colors: item.product.metafields.custom.jersey_colors.value, num: line_num, name: item.properties['Nome'], side: 'back' %}
+              {%- endif -%}
+            </a>
+            <div class="ln__i">
+              <b>{{ item.product.title | escape }}</b>
+              {%- unless item.product.has_only_default_variant -%}<span>{{ item.variant.title | escape }}</span>{%- endunless -%}
+              {%- for p in item.properties -%}
+                {%- assign first_char = p.first | slice: 0 -%}
+                {%- if p.last != blank and first_char != '_' -%}<span>{{ p.first | escape }}: {{ p.last | escape }}</span>{%- endif -%}
+              {%- endfor -%}
+              <span>{{ item.final_line_price | money }}</span>
+              <a href="{{ item.url_to_remove }}" class="label">{{ 'cart.remove' | t }}</a>
+            </div>
+            <input class="inp inp--qty" type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="{{ 'cart.quantity' | t }}">
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="cart-page__sum">
+        <div class="sum"><span>{{ 'cart.total' | t }}</span><span>{{ cart.total_price | money_with_currency }}</span></div>
+        <p class="label">{{ 'cart.taxes' | t }}</p>
+        <button type="submit" name="update" class="btn btn--block">{{ 'cart.update' | t }}</button>
+        <button type="submit" name="checkout" class="btn btn--pink btn--block">{{ 'cart.checkout' | t }} →</button>
+      </div>
+    </form>
+  {%- else -%}
+    <p class="empty-msg">{{ 'cart.empty' | t }}</p>
+    <a href="{{ routes.all_products_collection_url }}" class="btn">{{ 'cart.continue' | t }}</a>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Carrello",
+  "settings": []
+}
+{% endschema %}

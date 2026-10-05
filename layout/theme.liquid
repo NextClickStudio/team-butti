@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_paper }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+    {%- endif -%}
+    <title>
+      {{- page_title -}}
+      {%- if current_page != 1 %} – {{ 'general.page' | t: page: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} – {{ shop.name }}{% endunless -%}
+    </title>
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+    {% render 'meta-tags' %}
+    {{ 'anton.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {% render 'css-variables' %}
+    <script>
+      window.TB = {
+        routes: {
+          root: {{ routes.root_url | json }},
+          cart: {{ routes.cart_url | json }},
+          cartAdd: {{ routes.cart_add_url | json }},
+          cartChange: {{ routes.cart_change_url | json }}
+        },
+        cartDrawer: {{ settings.cart_drawer | json }},
+        strings: {
+          add: {{ 'products.add' | t | json }},
+          soldOut: {{ 'products.sold_out' | t | json }},
+          unavailable: {{ 'products.unavailable' | t | json }},
+          chooseSize: {{ 'products.choose_size' | t | json }},
+          joined: {{ 'newsletter.success' | t | json }},
+          setupProduct: {{ 'customizer.setup' | t | json }}
+        }
+      };
+    </script>
+    <script src="{{ 'tb-jersey.js' | asset_url }}" defer></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ template.name }}{% if settings.grain %} has-grain{% endif %}">
+    <a class="skip-link" href="#main">{{ 'general.skip' | t }}</a>
+    {%- if settings.loader and template.name == 'index' -%}
+      <div class="loader" id="loader" aria-hidden="true">
+        <div class="loader__in">
+          {% render 'badge' %}
+          <div class="loader__rpm"><span data-rpm>0000</span><small>RPM</small></div>
+          <div class="loader__bar"><i data-rpmbar></i></div>
+        </div>
+      </div>
+    {%- endif -%}
+    {%- if settings.custom_cursor -%}<div class="cur" id="cur" aria-hidden="true"></div>{%- endif -%}
+
+    {% sections 'header-group' %}
+
+    <main id="main" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {%- if settings.cart_drawer -%}
+      <div class="ov" id="ov"></div>
+      {% section 'cart-drawer' %}
+      <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="{{ 'products.quick_view' | t }}" aria-hidden="true"></div>
+    {%- endif -%}
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
