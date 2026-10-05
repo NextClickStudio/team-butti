@@ -1,7 +1,7 @@
 {%- comment -%}
   Product card. Photos: front = featured image, back = 2nd image (flips on hover).
   No photos: jersey illustration from metafields custom.jersey_type / jersey_colors / jersey_number.
-  Accepts: product, bg (optional card background)
+  Accepts: product, bg (optional; default metafield custom.card_bg)
 {%- endcomment -%}
 {%- liquid
   assign img1 = product.featured_image
@@ -9,6 +9,7 @@
   assign jtype = product.metafields.custom.jersey_type.value
   assign jcolors = product.metafields.custom.jersey_colors.value
   assign jnum = product.metafields.custom.jersey_number.value | default: '00'
+  assign card_bg = bg | default: product.metafields.custom.card_bg.value
   assign alt = product.title | escape
   assign badge = ''
   for tag in product.tags
@@ -19,7 +20,7 @@
   endfor
 -%}
 <a href="{{ product.url }}" class="card{% unless product.available %} sold{% endunless %}{% if img1 and img2 == blank %} card--single{% endif %}" data-type="{{ product.type | handleize }}" data-quick="{{ product.url }}" data-h>
-  <div class="card__m"{% if bg != blank %} style="background:{{ bg }}"{% endif %}>
+  <div class="card__m"{% if card_bg != blank %} style="background:{{ card_bg }}"{% endif %}>
     {%- if badge != blank and product.available -%}<span class="card__tag">{{ badge | escape }}</span>{%- endif -%}
     {%- if img1 -%}
       <div class="flip flip--photo">

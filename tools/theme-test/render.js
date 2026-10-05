@@ -97,6 +97,7 @@ const GLOBALS = {
   template: { name: process.env.TPL || 'index' }, content_for_header: '', canonical_url: 'http://localhost/', page_title: 'Team Butti', page_description: '', current_page: 1, 'now': 'now'
 };
 
+engine.options.globals = { settings: GLOBALS.settings, shop: GLOBALS.shop, routes: GLOBALS.routes, request: GLOBALS.request };
 (async () => {
   // index template
   const tpl = JSON.parse(read('templates/index.json'));

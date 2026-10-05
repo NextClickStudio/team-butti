@@ -18,7 +18,8 @@
                 {%- assign alt = item.product.title | escape -%}
                 {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: alt }}
               {%- else -%}
-                {% render 'jersey-art', type: item.product.metafields.custom.jersey_type.value, colors: item.product.metafields.custom.jersey_colors.value, num: item.properties['Numero'], name: item.properties['Nome'], side: 'back' %}
+                {%- assign line_num = item.properties['Numero'] | default: item.product.metafields.custom.jersey_number.value -%}
+                {% render 'jersey-art', type: item.product.metafields.custom.jersey_type.value, colors: item.product.metafields.custom.jersey_colors.value, num: line_num, name: item.properties['Nome'], side: 'back' %}
               {%- endif -%}
             </a>
             <div class="ln__i">
