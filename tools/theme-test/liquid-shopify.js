@@ -52,7 +52,7 @@
     var kw = function (args) { var o = {}; args.forEach(function (a) { if (Array.isArray(a)) o[a[0]] = a[1]; }); return o; };
     var F = {
       t: function (k) { return tr(k, kw([].slice.call(arguments, 1))); },
-      asset_url: function (n) { return '/assets/' + n; },
+      asset_url: function (n) { return (opts.assetBase || '/assets/') + n; },
       stylesheet_tag: function (u) { return '<link rel="stylesheet" href="' + u + '">'; },
       preload_tag: function (u) { return '<link rel="preload" href="' + u + '" as="font" type="font/woff2" crossorigin>'; },
       image_url: function (img) { return img && img.src ? img.src : ''; },

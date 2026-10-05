@@ -9,7 +9,7 @@
   var env = window.LiquidShopify.create(window.liquidjs, {
     read: function (p) { return D.templates[p]; },
     exists: function (p) { return Object.prototype.hasOwnProperty.call(D.templates, p); },
-    locale: D.locale, menus: CAT.menus, globals: D.globals
+    locale: D.locale, menus: CAT.menus, globals: D.globals, assetBase: window.TB_ASSET_BASE
   });
   var products = CAT.products.map(env.product);
   var KEY = 'tb-demo-cart';
@@ -74,7 +74,12 @@
       return (body.sections ? sections(body.sections) : Promise.resolve(undefined)).then(function (sec) { return json({ item_count: cart().item_count, sections: sec }); });
     }
     if (url.pathname === '/cart' && url.searchParams.get('sections')) return sections(url.searchParams.get('sections').split(',')).then(json);
-    if (url.searchParams.get('section_id') === 'quick-view') return realFetch('/qv/' + url.pathname.split('/').pop() + '.html');
+    if (url.searchParams.get('section_id') === 'quick-view') {
+      var handle = url.pathname.split('/').pop();
+      var prod = products.filter(function (p) { return p.handle === handle; })[0];
+      if (!prod) return Promise.resolve(new Response('Not found', { status: 404 }));
+      return env.renderSection('quick-view', 'quick-view', {}, { product: prod }).then(function (h) { return new Response(h, { headers: { 'Content-Type': 'text/html' } }); });
+    }
     return realFetch(input, init);
   };
 
