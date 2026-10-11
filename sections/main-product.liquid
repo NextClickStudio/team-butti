@@ -1,7 +1,12 @@
 {%- liquid
   assign jtype = product.metafields.custom.jersey_type.value
   assign jcolors = product.metafields.custom.jersey_colors.value
-  assign jnum = product.metafields.custom.jersey_number.value | default: '00'
+  assign jnum = product.metafields.custom.jersey_number.value
+  assign jtags = product.tags | join: '|'
+  assign has_art = false
+  if jtype != blank or jtags contains 'jersey:'
+    assign has_art = true
+  endif
 -%}
 <section class="pdp" data-tb="product">
   <div class="pdp__media">
@@ -18,11 +23,11 @@
           {{ image | image_url: width: 1800 | image_tag: loading: loading, widths: '600,900,1200,1500,1800', sizes: '(min-width: 990px) 60vw, 100vw', alt: alt }}
         </div>
       {%- endfor -%}
-    {%- elsif jtype != blank -%}
+    {%- elsif has_art -%}
       <div class="cfg__stage pdp__stage" data-stage style="--cfg-bg: var(--yellow)">
         <div class="cfg__flip" data-flip>
-          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, capt: true %}</div>
-          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, side: 'back' %}</div>
+          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, tags: jtags, capt: true %}</div>
+          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, tags: jtags, side: 'back' %}</div>
         </div>
         <button class="btn cfg__turn" type="button" data-turn data-h>↻ {{ 'customizer.turn' | t }}</button>
         <span class="cfg__hint">{{ 'customizer.drag' | t }}</span>

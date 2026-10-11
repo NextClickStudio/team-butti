@@ -163,6 +163,12 @@
         j.innerHTML = J.svg(el.dataset.type, el.dataset.side, { num: el.dataset.num, name: el.dataset.name, capt: true });
         return { el: el, j: j, t: [0.2, 0.5, 0.8][k], s: J.swing($('.peg__swing', el), { k: 36, c: 1.5, wind: 2.4, max: 30 }) };
       });
+      // floating jerseys (approved concept): parallax + bob
+      var floats = $$('[data-float]', hero).map(function (el) {
+        var inn = $('.hero__float-in', el);
+        inn.innerHTML = J.svg(el.dataset.type, el.dataset.side, { num: el.dataset.num, name: el.dataset.name, capt: true });
+        return { el: el, j: inn, depth: +el.dataset.depth || 10 };
+      });
       function layout() {
         if (!line) return;
         var W = line.clientWidth, y0 = 14, S = Math.min(56, W * 0.035);
@@ -179,13 +185,21 @@
         hero.style.setProperty('--hero-bg', v.bg); hero.style.setProperty('--hero-fg', v.fg); hero.style.setProperty('--hero-pattern', v.p);
         var name = $('[data-vibe-name]', hero); if (name) name.textContent = name.textContent.split(':')[0] + ': ' + v.n;
         pegs.forEach(function (p, k) { J.apply(p.j, J.parse(v.j[k])); p.s.kick((k % 2 ? 1 : -1) * (60 + Math.random() * 60)); });
+        floats.forEach(function (f, k) {
+          J.apply(f.j, J.parse(v.j[k]));
+          if (!reduce && f.j.animate && hero.dataset.ready) f.j.animate([{ transform: 'scale(1) rotate(0)' }, { transform: 'scale(1.12) rotate(' + (k % 2 ? 8 : -8) + 'deg)' }, { transform: 'scale(1) rotate(0)' }], { duration: 520, easing: 'cubic-bezier(.2,1.6,.4,1)' });
+        });
       }
       setVibe(0);
+      hero.dataset.ready = '1';
       hero._setVibe = function (i) { vi = i; setVibe(i); };
       var btn = $('[data-vibe-btn]', hero);
       if (btn) btn.addEventListener('click', function (e) { e.stopPropagation(); vi = (vi + 1) % vibes.length; setVibe(vi); });
       hero.addEventListener('pointermove', function (e) {
         if (reduce) return;
+        var hr = hero.getBoundingClientRect();
+        var dx = (e.clientX - hr.left) / hr.width - 0.5, dy = (e.clientY - hr.top) / hr.height - 0.5;
+        floats.forEach(function (f) { f.el.style.transform = 'translate(' + (dx * f.depth * 2) + 'px,' + (dy * f.depth * 2) + 'px)'; });
         pegs.forEach(function (p) {
           var r = p.el.getBoundingClientRect();
           var f = Math.max(0, 1 - Math.abs(e.clientX - (r.left + r.width / 2)) / 280);
@@ -245,7 +259,8 @@
         $$('.card', root).forEach(function (c) { c.style.display = (t.dataset.f === 'all' || c.dataset.type === t.dataset.f) ? '' : 'none'; });
       });
       $$('.card__m', root).forEach(function (m) {
-        var hang = $('[data-swing]', m), sw = hang && J ? J.swing(hang, { k: 46, c: 2.2, max: 16 }) : null;
+        var detailed = document.documentElement.getAttribute('data-jersey-style') === 'detailed';
+        var hang = $('[data-swing]', m), sw = hang && J && detailed ? J.swing(hang, { k: 46, c: 2.2, max: 16 }) : null;
         m.addEventListener('pointerenter', function (e) { if (sw) { var r = m.getBoundingClientRect(); sw.kick(((e.clientX - r.left) / r.width - 0.5) * -110); } });
         m.addEventListener('pointermove', function (e) {
           if (sw) sw.kick((e.movementX || 0) * 0.35);
@@ -369,6 +384,63 @@
       onScroll();
     },
 
+    vscroll: function (root) {
+      var video = $('video', root), bike = $('[data-bike]', root), bar = $('[data-vbar]', root);
+      var wheels = bike ? $$('.wh', bike) : [];
+      var target = 0, shown = 0, raf = 0;
+      if (video) {
+        video.pause(); video.muted = true;
+        video.addEventListener('loadedmetadata', function () { onScroll(); });
+      }
+      function progress() {
+        var r = root.getBoundingClientRect(), total = root.offsetHeight - window.innerHeight;
+        return total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
+      }
+      function step() {
+        raf = 0;
+        shown += (target - shown) * (reduce ? 1 : 0.18);
+        if (Math.abs(target - shown) < 0.0005) shown = target;
+        bar.style.width = (shown * 100) + '%';
+        if (video && video.duration) { try { video.currentTime = shown * (video.duration - 0.05); } catch (e) {} }
+        if (bike) {
+          var w = root.clientWidth;
+          bike.style.transform = 'translate(' + (20 + shown * (w - bike.offsetWidth - 40)) + 'px,' + (Math.sin(shown * 80) * 4) + 'px)';
+          wheels.forEach(function (wh) { wh.style.transform = 'rotate(' + (shown * 4800) + 'deg)'; });
+        }
+        if (shown !== target) raf = requestAnimationFrame(step);
+      }
+      function onScroll() { target = progress(); if (!raf) raf = requestAnimationFrame(step); }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      onScroll();
+    },
+
+    story: function (root) {
+      var frame = $('[data-story-frame]', root), play = $('[data-story-play]', root);
+      if (frame && !reduce && window.matchMedia('(hover:hover)').matches) {
+        frame.addEventListener('pointermove', function (e) {
+          var r = frame.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+          frame.style.transform = 'perspective(1200px) rotateY(' + (x * 6).toFixed(2) + 'deg) rotateX(' + (-y * 6).toFixed(2) + 'deg)';
+        });
+        frame.addEventListener('pointerleave', function () { frame.style.transform = ''; });
+      }
+      if (!play) return;
+      play.addEventListener('click', function () {
+        var video = $('[data-story-media] video', root), embed = $('[data-story-embed]', root);
+        if (video) {
+          video.muted = false; video.loop = false; video.controls = true; video.currentTime = 0;
+          var pr = video.play(); if (pr && pr.catch) pr.catch(function () {});
+        } else if (embed) {
+          var id = encodeURIComponent(embed.dataset.id), src = embed.dataset.provider === 'vimeo'
+            ? 'https://player.vimeo.com/video/' + id + '?autoplay=1'
+            : 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1';
+          embed.innerHTML = '<iframe src="' + src + '" title="Video" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+        }
+        root.classList.add('is-playing');
+      });
+    },
+
     plate: function (root) {
       var input = $('[data-plate-in]', root), txt = $('[data-plate-txt]', root), plate = $('[data-plate]', root);
       input.addEventListener('input', function () {
@@ -415,7 +487,69 @@
       if (fn && !el.dataset.tbInit) { el.dataset.tbInit = '1'; try { fn(el); } catch (err) { console.error('[TB]', el.dataset.tb, err); } }
     });
     initCountdowns(root);
+    splitTitles(root);
     $$('.rv', root).forEach(function (el, i) { el.style.transitionDelay = ((i % 4) * 70) + 'ms'; if (io) io.observe(el); else el.classList.add('in'); });
+  }
+
+  /* ---------------- effects: split titles, magnetic buttons, page wipe ---------------- */
+  var html = document.documentElement;
+  var splitIO = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('split-in'); splitIO.unobserve(e.target); } });
+  }, { threshold: 0.2 }) : null;
+  function splitTitles(root) {
+    if (!html.hasAttribute('data-split-titles') || reduce) return;
+    $$('.sec__title, .poster__t, .stop__t, .vscroll__t', root).forEach(function (h) {
+      if (h.dataset.split) return; h.dataset.split = '1';
+      var i = 0;
+      (function walk(node) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+          if (n.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            n.textContent.split(/(\s+)/).forEach(function (word) {
+              if (!word) return;
+              if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(word)); return; }
+              var w = document.createElement('span'); w.className = 'wd';
+              word.split('').forEach(function (ch) {
+                var c = document.createElement('span'); c.className = 'ch'; c.textContent = ch; c.style.setProperty('--i', i++);
+                w.appendChild(c);
+              });
+              frag.appendChild(w);
+            });
+            n.replaceWith(frag);
+          } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
+        });
+      })(h);
+      h.classList.add('split');
+      if (splitIO) splitIO.observe(h); else h.classList.add('split-in');
+    });
+  }
+  function magnetic() {
+    if (!html.hasAttribute('data-magnetic') || reduce || !window.matchMedia('(hover:hover)').matches) return;
+    document.addEventListener('pointermove', function (e) {
+      var b = e.target.closest && e.target.closest('.btn');
+      $$('.btn.is-mag').forEach(function (x) { if (x !== b) { x.classList.remove('is-mag'); x.style.translate = ''; } });
+      if (!b) return;
+      var r = b.getBoundingClientRect();
+      b.classList.add('is-mag');
+      b.style.translate = ((e.clientX - r.left - r.width / 2) * 0.18).toFixed(1) + 'px ' + ((e.clientY - r.top - r.height / 2) * 0.3).toFixed(1) + 'px';
+    });
+  }
+  function pageWipe() {
+    var wipe = $('#wipe'); if (!wipe || reduce) { if (wipe) wipe.remove(); return; }
+    requestAnimationFrame(function () { wipe.classList.add('out'); });
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href]');
+      if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      if (a.target && a.target !== '_self') return;
+      if (a.hasAttribute('download') || a.closest('[data-quick]') || a.hasAttribute('data-cart-open')) return;
+      var url = new URL(a.href, location.href);
+      if (url.origin !== location.origin || (url.pathname === location.pathname && url.hash)) return;
+      if (/^\/(checkout|account|cart\/change)/.test(url.pathname)) return;
+      e.preventDefault();
+      wipe.classList.remove('out'); wipe.classList.add('in');
+      setTimeout(function () { location.href = url.href; }, 420);
+    });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) { wipe.classList.remove('in'); wipe.classList.add('out'); } });
   }
 
   /* ---------------- loader + cursor ---------------- */
@@ -441,7 +575,7 @@
   }
 
   function boot() {
-    loader(); cursor(); init(document);
+    loader(); cursor(); magnetic(); pageWipe(); init(document);
     if (TB.cartDrawer && $('#CartDrawer') && window.location.hash === '#cart') openCart();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();

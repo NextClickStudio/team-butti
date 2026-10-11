@@ -8,14 +8,21 @@
   assign img2 = product.images[1]
   assign jtype = product.metafields.custom.jersey_type.value
   assign jcolors = product.metafields.custom.jersey_colors.value
-  assign jnum = product.metafields.custom.jersey_number.value | default: '00'
+  assign jnum = product.metafields.custom.jersey_number.value
   assign card_bg = bg | default: product.metafields.custom.card_bg.value
+  assign jtags = product.tags | join: '|'
+  assign has_art = false
+  if jtype != blank or jtags contains 'jersey:'
+    assign has_art = true
+  endif
   assign alt = product.title | escape
   assign badge = ''
   for tag in product.tags
-    if tag contains 'badge:'
+    if tag contains 'badge:' and badge == blank
       assign badge = tag | remove: 'badge:'
-      break
+    endif
+    if tag contains 'bg:' and card_bg == blank
+      assign card_bg = tag | remove: 'bg:' | strip | prepend: '#' | replace: '##', '#'
     endif
   endfor
 -%}
@@ -29,11 +36,11 @@
           <div>{{ img2 | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360,540,720,900', sizes: '(min-width: 990px) 25vw, 50vw', class: 'card__img', alt: alt }}</div>
         {%- endif -%}
       </div>
-    {%- elsif jtype != blank -%}
+    {%- elsif has_art -%}
       <div class="hang" data-swing>
         <div class="flip">
-          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, hanger: true, capt: true %}</div>
-          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, side: 'back', hanger: true %}</div>
+          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, tags: jtags, hanger: true, capt: true %}</div>
+          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, tags: jtags, side: 'back', hanger: true %}</div>
         </div>
       </div>
     {%- else -%}

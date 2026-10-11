@@ -5,11 +5,14 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
   const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
   const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
   await p.goto('http://localhost:8787/'); await p.waitForTimeout(2300);
-  ok(await p.$$eval('[data-peg] svg', x => x.length) === 3, 'hero: 3 maglie sullo stendino disegnate');
+  ok(await p.$$eval('[data-float] svg', x => x.length) === 3, 'hero: 3 maglie fluttuanti disegnate (concept approvato)');
   const bg1 = await p.$eval('[data-tb=hero]', el => el.style.getPropertyValue('--hero-bg'));
   await p.click('[data-vibe-btn]'); await p.waitForTimeout(300);
   const bg2 = await p.$eval('[data-tb=hero]', el => el.style.getPropertyValue('--hero-bg'));
   ok(bg1 !== bg2, `hero: cambia vibe (${bg1} → ${bg2})`);
+  await p.mouse.click(700, 520); await p.waitForTimeout(120);
+  ok(await p.$$eval('[data-tb=hero] .brap', x => x.length) >= 1, 'hero: scritte a vignetta al click (invariate)');
+  ok(!(await p.$('[data-tb=story]')) && !(await p.$('[data-tb=vscroll]')), 'negozio vero: sezioni video nascoste finché non si carica il video');
   await p.screenshot({ path: __dirname + '/out/th-hero.png' });
   ok(await p.$$eval('.grid .card svg.tbj-svg', x => x.length) >= 16, 'griglia: maglie demo disegnate (fronte+retro)');
   await p.evaluate(() => document.querySelector('[data-tb=customizer]').scrollIntoView()); await p.waitForTimeout(900);

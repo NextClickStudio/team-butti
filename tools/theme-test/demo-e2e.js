@@ -10,6 +10,12 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     const shot = n => p.screenshot({ path: `${__dirname}/out/demo-${name}-${n}.png` });
     await p.goto(BASE + '/'); await p.waitForTimeout(2500); await shot('home');
     ok(await p.$$eval('#shopify-section-drop .card[data-quick]', x => x.length) === 8, `[${name}] home: 8 prodotti veri nella griglia`);
+    ok(await p.$$eval('[data-float] svg.tbj-svg--flat', x => x.length) >= 2, `[${name}] hero: maglie fluttuanti in stile flat (concept approvato)`);
+    ok(!/nextclick/i.test(await p.content()), `[${name}] nessun riferimento a NextClick nella pagina`);
+    ok(!!(await p.$('[data-tb=story] .story__slot')) && !!(await p.$('[data-tb=vscroll] .vscroll__slot')), `[${name}] slot video pronti: storia + moto Higgsfield`);
+    await p.$eval('#shopify-section-manifesto', el => el.scrollIntoView()); await p.waitForTimeout(300);
+    await p.$eval('#shopify-section-drop', el => el.scrollIntoView()); await p.waitForTimeout(900);
+    ok(await p.$$eval('#shopify-section-drop .sec__title.split-in .ch', x => x.length) > 3, `[${name}] titoli animati lettera per lettera`);
     // quick view + add
     await p.$eval('#shopify-section-drop .card[data-quick]', el => el.scrollIntoView()); await p.waitForTimeout(400);
     await p.click('#shopify-section-drop .card[data-quick]'); await p.waitForTimeout(900);
@@ -35,7 +41,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     await p.$eval('[data-tb=customizer]', el => el.scrollIntoView()); await p.waitForTimeout(500);
     await p.fill('[data-name-input]', 'ROSSI'); await p.fill('[data-num-input]', '7');
     await p.click('[data-tb=customizer] [data-add]'); await p.waitForTimeout(900);
-    ok((await p.textContent('#CartDrawer')).includes('Nome: ROSSI'), `[${name}] configuratore: maglia custom con nome nel carrello`);
+    ok((await p.textContent('#CartDrawer')).includes('Nome: ROSSI'), `[${name}] configuratore: maglia custom con nome nel carrello (prodotto trovato da handle)`);
     await p.keyboard.press('Escape');
     // cart page: update + checkout
     await p.goto(BASE + '/cart'); await p.waitForTimeout(1000);

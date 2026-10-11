@@ -10,7 +10,9 @@
           {%- if block.settings.style == 'hills' -%}
             <svg class="hills" viewBox="0 0 1440 500" preserveAspectRatio="none" aria-hidden="true"><path d="M0 220 C200 120 380 140 560 200 S900 90 1100 160 S1360 140 1440 120 V500 H0Z" fill="#c4a05a"/><path d="M0 300 C240 220 420 260 640 300 S1000 220 1240 270 S1400 260 1440 250 V500 H0Z" fill="#b08a45"/><g fill="#2f4a22"><path d="M300 210 q6 -60 12 0z"/><path d="M330 214 q6 -70 12 0z"/><path d="M1150 162 q6 -60 12 0z"/><path d="M1180 166 q5 -50 10 0z"/></g></svg>
           {%- endif -%}
-          {%- if block.settings.image != blank -%}
+          {%- if block.settings.video != blank -%}
+            <div class="stop__video">{{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1600x' }}</div>
+          {%- elsif block.settings.image != blank -%}
             {{ block.settings.image | image_url: width: 1600 | image_tag: class: 'stop__img', loading: 'lazy', widths: '800,1200,1600', sizes: '100vw' }}
           {%- endif -%}
           <span class="stop__n label">{{ forloop.index | prepend: '0' | slice: -2, 2 }} / {{ forloop.length | prepend: '0' | slice: -2, 2 }} — {{ block.settings.label | escape }}</span>
@@ -38,24 +40,97 @@
       "type": "stop",
       "name": "Tappa",
       "settings": [
-        { "type": "text", "id": "label", "label": "Etichetta", "default": "Il Market" },
-        { "type": "text", "id": "title", "label": "Titolo", "default": "Milano" },
-        { "type": "textarea", "id": "text", "label": "Testo", "default": "Piazzale Antonio Cantore 10. Banchetti pieni di maglie, DJ set dalle 15, la gente in fila." },
-        { "type": "select", "id": "style", "label": "Stile", "default": "halftone", "options": [
-          { "value": "halftone", "label": "Retino" },
-          { "value": "hills", "label": "Colline" },
-          { "value": "flat", "label": "Pieno" },
-          { "value": "night", "label": "Notte neon" }
-        ] },
-        { "type": "color", "id": "bg", "label": "Sfondo", "default": "#FF2E93" },
-        { "type": "color", "id": "fg", "label": "Testo", "default": "#0D0D0D" },
-        { "type": "image_picker", "id": "image", "label": "Foto di sfondo (opzionale)" },
-        { "type": "select", "id": "deco", "label": "Decorazione", "default": "none", "options": [
-          { "value": "none", "label": "Nessuna" },
-          { "value": "plate", "label": "Targa" },
-          { "value": "neon", "label": "Scritta neon" }
-        ] },
-        { "type": "text", "id": "deco_text", "label": "Testo decorazione", "default": "MERDE" }
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etichetta",
+          "default": "Il Market"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titolo",
+          "default": "Milano"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Testo",
+          "default": "Piazzale Antonio Cantore 10. Banchetti pieni di maglie, DJ set dalle 15, la gente in fila."
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Stile",
+          "default": "halftone",
+          "options": [
+            {
+              "value": "halftone",
+              "label": "Retino"
+            },
+            {
+              "value": "hills",
+              "label": "Colline"
+            },
+            {
+              "value": "flat",
+              "label": "Pieno"
+            },
+            {
+              "value": "night",
+              "label": "Notte neon"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "bg",
+          "label": "Sfondo",
+          "default": "#FF2E93"
+        },
+        {
+          "type": "color",
+          "id": "fg",
+          "label": "Testo",
+          "default": "#0D0D0D"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Foto di sfondo (opzionale)"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video di sfondo (opzionale)",
+          "info": "Clip in loop senza audio, es. Higgsfield. Ha la precedenza sulla foto."
+        },
+        {
+          "type": "select",
+          "id": "deco",
+          "label": "Decorazione",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "Nessuna"
+            },
+            {
+              "value": "plate",
+              "label": "Targa"
+            },
+            {
+              "value": "neon",
+              "label": "Scritta neon"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "deco_text",
+          "label": "Testo decorazione",
+          "default": "MERDE"
+        }
       ]
     }
   ],
@@ -63,10 +138,44 @@
     {
       "name": "Racconto in moto",
       "blocks": [
-        { "type": "stop" },
-        { "type": "stop", "settings": { "label": "Lo sterrato", "title": "Toscana", "text": "Colline, polvere, due tempi. Le maglie MX non sono un costume: ci cadiamo dentro ogni weekend.", "style": "hills", "bg": "#9EC9EF" } },
-        { "type": "stop", "settings": { "label": "La targa", "title": "SoCal", "text": "Lowrider, pickup, sole che spacca. L'America che sognavamo da bambini.", "style": "flat", "bg": "#FFD400", "fg": "#E3191B", "deco": "plate" } },
-        { "type": "stop", "settings": { "label": "Le luci", "title": "NYC", "text": "Il nostro nome su Times Square. Prossima fermata: ovunque ci sia una crew.", "style": "night", "bg": "#0D0D0D", "fg": "#F4F1EA", "deco": "neon", "deco_text": "Team Butti on Broadway" } }
+        {
+          "type": "stop"
+        },
+        {
+          "type": "stop",
+          "settings": {
+            "label": "Lo sterrato",
+            "title": "Toscana",
+            "text": "Colline, polvere, due tempi. Le maglie MX non sono un costume: ci cadiamo dentro ogni weekend.",
+            "style": "hills",
+            "bg": "#9EC9EF"
+          }
+        },
+        {
+          "type": "stop",
+          "settings": {
+            "label": "La targa",
+            "title": "SoCal",
+            "text": "Lowrider, pickup, sole che spacca. L'America che sognavamo da bambini.",
+            "style": "flat",
+            "bg": "#FFD400",
+            "fg": "#E3191B",
+            "deco": "plate"
+          }
+        },
+        {
+          "type": "stop",
+          "settings": {
+            "label": "Le luci",
+            "title": "NYC",
+            "text": "Il nostro nome su Times Square. Prossima fermata: ovunque ci sia una crew.",
+            "style": "night",
+            "bg": "#0D0D0D",
+            "fg": "#F4F1EA",
+            "deco": "neon",
+            "deco_text": "Team Butti on Broadway"
+          }
+        }
       ]
     }
   ]

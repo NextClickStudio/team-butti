@@ -1,0 +1,52 @@
+{%- comment -%}
+  Scroll-scrubbed video (e.g. a Higgsfield clip of the bike): the video advances as you scroll.
+  For smooth scrubbing export the clip with a keyframe every frame (ffmpeg: -g 1) and keep it short (3–8 s).
+  Without a video, the illustrated bike rides across instead.
+{%- endcomment -%}
+{%- liquid
+  assign show = false
+  if section.settings.video != blank or request.design_mode or section.settings.show_without_video
+    assign show = true
+  endif
+-%}
+{%- if show -%}
+<section class="vscroll vscroll--{{ section.settings.theme }}" data-tb="vscroll" style="height: {{ section.settings.length }}vh">
+  <div class="vscroll__s">
+    {%- if section.settings.video != blank -%}
+      <div class="vscroll__media">{{ section.settings.video | video_tag: autoplay: false, loop: false, muted: true, controls: false, playsinline: true, preload: 'auto', image_size: '1920x' }}</div>
+    {%- else -%}
+      <div class="vscroll__media vscroll__media--fallback" aria-hidden="true">
+        <svg class="hills" viewBox="0 0 1440 500" preserveAspectRatio="none"><path d="M0 220 C200 120 380 140 560 200 S900 90 1100 160 S1360 140 1440 120 V500 H0Z" fill="#c4a05a"/><path d="M0 300 C240 220 420 260 640 300 S1000 220 1240 270 S1400 260 1440 250 V500 H0Z" fill="#b08a45"/></svg>
+        <div class="road"></div>
+        <div class="bike" data-bike>{% render 'bike' %}</div>
+        <span class="vscroll__slot label">{{ 'vscroll.slot' | t }}</span>
+      </div>
+    {%- endif -%}
+    <div class="vscroll__txt">
+      <p class="label">{{ section.settings.kicker | escape }}</p>
+      <h2 class="vscroll__t d grunge">{{ section.settings.title | escape }}</h2>
+      {%- if section.settings.text != blank -%}<p class="vscroll__p">{{ section.settings.text | escape }}</p>{%- endif -%}
+    </div>
+    <div class="vscroll__bar"><i data-vbar></i></div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Moto a scroll (video)",
+  "settings": [
+    { "type": "video", "id": "video", "label": "Video", "info": "Il video avanza con lo scroll. Consigliato: 3–8 s, senza audio, keyframe su ogni frame." },
+    { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Sterrato · Toscana" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Gas aperto" },
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "Scorri e dai gas. Il resto lo fa la polvere." },
+    { "type": "range", "id": "length", "label": "Lunghezza dello scroll", "min": 150, "max": 500, "step": 25, "unit": "vh", "default": 300 },
+    { "type": "select", "id": "theme", "label": "Testo", "default": "light", "options": [
+      { "value": "light", "label": "Chiaro su video" },
+      { "value": "dark", "label": "Scuro su video" }
+    ] },
+    { "type": "checkbox", "id": "show_without_video", "label": "Mostra anche senza video (moto disegnata)", "default": false, "info": "Di default la sezione resta nascosta sul negozio finché non carichi la clip." }
+  ],
+  "presets": [{ "name": "Moto a scroll (video)" }]
+}
+{% endschema %}

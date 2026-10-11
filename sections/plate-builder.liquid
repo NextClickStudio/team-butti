@@ -1,4 +1,9 @@
-{%- assign p = section.settings.product -%}
+{%- liquid
+  assign p = section.settings.product
+  if p == blank
+    assign p = all_products['targa-socal']
+  endif
+-%}
 <section class="sec plate-sec" data-tb="plate">
   <div class="rv">
     <h2 class="sec__title d grunge">{{ section.settings.title | escape }} <span class="out">{{ section.settings.title_outline | escape }}</span></h2>
@@ -31,7 +36,7 @@
     { "type": "text", "id": "title", "label": "Titolo", "default": "Targa" },
     { "type": "text", "id": "title_outline", "label": "Titolo (contorno)", "default": "custom" },
     { "type": "textarea", "id": "text", "label": "Testo", "default": "La targa SoCal più famosa d'Italia, con la tua scritta. Da appendere in camera, in garage o sul pickup." },
-    { "type": "product", "id": "product", "label": "Prodotto targa", "info": "Il testo arriva nell'ordine come proprietà \"Testo\"." },
+    { "type": "product", "id": "product", "label": "Prodotto targa", "info": "Vuoto = prodotto con handle targa-socal. Il testo arriva nell'ordine come proprietà \"Testo\"." },
     { "type": "text", "id": "default_text", "label": "Testo iniziale", "default": "MERDE" },
     { "type": "text", "id": "top", "label": "Scritta alta", "default": "SoCal" },
     { "type": "text", "id": "bottom", "label": "Scritta bassa", "default": "Los Angeles" }

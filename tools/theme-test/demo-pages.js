@@ -45,15 +45,16 @@
     function seq(ids, fn) {
       return ids.reduce(function (p, id) { return p.then(function (acc) { return fn(id).then(function (h) { return acc + h; }); }); }, Promise.resolve(''));
     }
-    var req = function (type) { return { locale: { iso_code: 'it' }, page_type: type, origin: '' }; };
+    // design_mode: show the empty video slots (story, Higgsfield bike) like the Shopify theme editor does
+    var req = function (type) { return { locale: { iso_code: 'it' }, page_type: type, origin: '', design_mode: true }; };
 
     var routes = {
       home: function () {
         var home = tpl('index');
         home.sections.drop.settings = Object.assign({}, home.sections.drop.settings, { collection__obj: collections['drop-01'] });
-        home.sections.custom.settings = { product__obj: byHandle('maglia-custom') };
-        home.sections.plate.settings = { product__obj: byHandle('targa-socal') };
-        return seq(home.order, function (id) { return sec(home.sections[id].type, id, home.sections[id]); })
+        // customizer + plate find their products by handle, exactly as on a fresh store
+        var extra = { all_products: { 'maglia-custom': byHandle('maglia-custom'), 'targa-socal': byHandle('targa-socal') }, collections: { all: collections.all } };
+        return seq(home.order, function (id) { return sec(home.sections[id].type, id, home.sections[id], extra); })
           .then(function (b) { return page(b, { template: { name: 'index' }, page_title: 'Team Butti', request: req('index') }); });
       },
       collection: function (handle) {

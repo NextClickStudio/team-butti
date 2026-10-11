@@ -1,5 +1,8 @@
 {%- liquid
   assign p = section.settings.product
+  if p == blank
+    assign p = all_products['maglia-custom']
+  endif
   assign models = section.blocks | where: 'type', 'model'
   assign colorways = section.blocks | where: 'type', 'colorway'
   assign first_cw = colorways.first
@@ -83,7 +86,7 @@
     { "type": "text", "id": "title", "label": "Titolo", "default": "Fattela" },
     { "type": "text", "id": "title_outline", "label": "Titolo (contorno)", "default": "tua" },
     { "type": "text", "id": "text", "label": "Testo", "default": "Nome e numero stampati sul retro. Come al Market, ma da casa." },
-    { "type": "product", "id": "product", "label": "Prodotto personalizzabile", "info": "Varianti: Modello (uguale alle etichette dei blocchi Modello) × Taglia. Nome, numero e colori arrivano nell'ordine come proprietà." },
+    { "type": "product", "id": "product", "label": "Prodotto personalizzabile", "info": "Vuoto = prodotto con handle maglia-custom. Varianti: Modello (uguale alle etichette dei blocchi Modello) × Taglia. Nome, numero e colori arrivano nell'ordine come proprietà." },
     { "type": "text", "id": "size_option_name", "label": "Nome opzione taglia (minuscolo)", "default": "taglia" }
   ],
   "blocks": [

@@ -33,6 +33,7 @@ const F = {
   handleize: s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
   default_errors: e => e ? '<ul><li>err</li></ul>' : '',
   payment_type_svg_tag: () => '<svg class="payment-icon"></svg>',
+  video_tag: (v) => `<video autoplay muted loop playsinline><source src="${v && v.sources ? v.sources[0].url : ''}"></video>`,
   default_pagination: () => '<span class="current">1</span>',
   json: v => JSON.stringify(v && v.valueOf ? (typeof v.valueOf() === 'object' ? v : v.valueOf()) : v),
 };

@@ -11,6 +11,13 @@
   var FONT_BLOCK = "Graduate, 'Anton', Impact, sans-serif";
   var FONT_COND = "'Anton', Impact, 'Arial Narrow', sans-serif";
 
+  // Flat silhouettes (300x300) used by the approved concept
+  var FLAT = {
+    hockey: 'M95 40 L128 30 Q150 52 172 30 L205 40 L268 72 L286 150 L246 160 L234 122 L234 272 L66 272 L66 122 L54 160 L14 150 L32 72 Z',
+    mx: 'M100 38 L130 30 Q150 50 170 30 L200 38 L254 60 L292 204 L262 214 L232 124 L232 272 L68 272 L68 124 L38 214 L8 204 L46 60 Z',
+    football: 'M96 44 L128 34 Q150 54 172 34 L204 44 L262 64 L274 132 L232 138 L230 272 L70 272 L68 138 L26 132 L38 64 Z'
+  };
+
   var G = {
     hockey: {
       body: 'M160 40 Q200 54 240 40 L305 62 Q298 108 282 150 L290 405 Q200 416 110 405 L118 150 Q102 108 95 62 Z',
@@ -64,6 +71,8 @@
       '<path id="tb-arc-hf" d="M112 212 Q200 150 288 212"/>' +
       '<path id="tb-arc-hb" d="M118 156 Q200 116 282 156"/>' +
       '<path id="tb-arc-mb" d="M128 140 Q200 112 272 140"/>' +
+      Object.keys(FLAT).map(function (t) { return '<clipPath id="tbf-' + t + '"><path d="' + FLAT[t] + '"/></clipPath>'; }).join('') +
+      '<linearGradient id="tbf-shade" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".12"/><stop offset=".35" stop-color="#fff" stop-opacity=".12"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></linearGradient>' +
       '</defs></svg>';
     var css = '<style id="tb-jersey-css">' +
       '@property --jb{syntax:"<color>";inherits:true;initial-value:#f4f1ea}' +
@@ -217,12 +226,59 @@
     return r;
   }
 
+  /* ---------- flat style (approved concept) ---------- */
+  function flat(type, side, o) {
+    var d = FLAT[type];
+    var name = esc(String(o.name || 'BUTTI').toUpperCase().slice(0, 12));
+    var num = esc(String(o.num == null || o.num === '' ? '00' : o.num).slice(0, 2));
+    var T = function (x, y, s, txt, extra) {
+      return '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-family="' + FONT_COND + '" font-size="' + s + '" ' + (extra || '') + '>' + txt + '</text>';
+    };
+    var fill = 'class="tbj-fill" style="fill:var(--jx)"';
+    var numFill = 'class="tbj-fill" style="fill:var(--jx);stroke:var(--jt)" stroke-width="3" paint-order="stroke"';
+    var deco, txt;
+    if (type === 'hockey') {
+      deco = '<rect width="66" height="300" style="fill:var(--js)"/><rect x="234" width="66" height="300" style="fill:var(--js)"/>' +
+        '<rect y="124" width="66" height="10" style="fill:var(--jt)"/><rect x="234" y="124" width="66" height="10" style="fill:var(--jt)"/>' +
+        '<rect y="140" width="66" height="5" style="fill:var(--jb)"/><rect x="234" y="140" width="66" height="5" style="fill:var(--jb)"/>' +
+        '<rect y="222" width="300" height="16" style="fill:var(--js)"/><rect y="242" width="300" height="8" style="fill:var(--jt)"/>' +
+        '<path d="M126 31 L150 68 L174 31" fill="none" style="stroke:var(--jt)" stroke-width="10"/>';
+    } else if (type === 'mx') {
+      deco = '<rect width="68" height="300" style="fill:var(--js)"/><rect x="232" width="68" height="300" style="fill:var(--js)"/>' +
+        '<polygon points="68,124 150,186 232,124 232,150 150,212 68,150" style="fill:var(--js)"/>' +
+        '<rect x="-20" y="118" width="120" height="16" style="fill:var(--jt)" transform="rotate(62 40 126)"/><rect x="200" y="118" width="120" height="16" style="fill:var(--jt)" transform="rotate(-62 260 126)"/>' +
+        '<rect y="252" width="300" height="20" style="fill:var(--jt)"/>' +
+        '<path d="M130 31 Q150 54 170 31" fill="none" style="stroke:var(--jt)" stroke-width="9"/>';
+    } else {
+      deco = '<rect width="70" height="300" style="fill:var(--js)"/><rect x="230" width="70" height="300" style="fill:var(--js)"/>' +
+        '<rect y="104" width="70" height="7" style="fill:var(--jt)"/><rect y="116" width="70" height="7" style="fill:var(--jt)"/>' +
+        '<rect x="230" y="104" width="70" height="7" style="fill:var(--jt)"/><rect x="230" y="116" width="70" height="7" style="fill:var(--jt)"/>' +
+        '<path d="M126 35 L150 64 L174 35" fill="none" style="stroke:var(--jt)" stroke-width="9"/>';
+    }
+    if (side === 'front') {
+      if (type === 'hockey') txt = T(150, 140, 40, 'TEAM', fill) + T(150, 180, 40, 'BUTTI', fill) + (o.capt ? T(205, 92, 22, 'C', fill) : '');
+      else if (type === 'mx') txt = '<g transform="skewX(-10) translate(26 0)">' + T(150, 120, 42, 'TEAM', fill) + T(150, 162, 42, 'BUTTI', fill) + '</g>' + T(110, 240, 9, 'TOSCANA DIRT CO.', fill + ' letter-spacing="1"');
+      else txt = T(150, 100, 18, 'TEAM BUTTI', fill + ' letter-spacing="2"') + T(150, 215, 104, num, numFill);
+    } else {
+      txt = T(150, type === 'mx' ? 100 : 104, Math.min(26, 190 / (name.length * 0.5)).toFixed(1), name, fill + ' letter-spacing="3"') +
+        '<g class="tbj-stitch">' + T(150, 222, 112, num, numFill) + '</g>';
+    }
+    return '<svg class="tbj-svg tbj-svg--flat" viewBox="0 0 300 300" role="img" aria-label="Maglia ' + esc(type) + ' ' + (side === 'front' ? 'fronte' : 'retro') + '">' +
+      '<g clip-path="url(#tbf-' + type + ')"><rect width="300" height="300" style="fill:var(--jb)"/>' + deco + txt + '<rect width="300" height="300" fill="url(#tbf-shade)"/></g>' +
+      '<path d="' + d + '" fill="none" stroke="#0d0d0d" stroke-width="2.5" stroke-linejoin="round"/></svg>';
+  }
+  function currentStyle(o) {
+    var s = (o && o.style) || (d.documentElement && d.documentElement.getAttribute('data-jersey-style')) || 'detailed';
+    return s === 'flat' ? 'flat' : 'detailed';
+  }
+
   /* ---------- public: svg markup ---------- */
   function svg(type, side, o) {
     ensureDefs();
     type = G[type] ? type : 'hockey';
     side = side === 'back' ? 'back' : 'front';
     o = o || {};
+    if (currentStyle(o) === 'flat') return flat(type, side, o);
     var g = G[type], r = decorate(type, side, o);
     var hanger = o.hanger ?
       '<g class="tbj-hanger"><path d="M108 66 Q200 24 292 66" fill="none" stroke="url(#tb-metal)" stroke-width="6" stroke-linecap="round"/>' +
@@ -342,16 +398,33 @@
   }
 
   /* ---------- auto-render: <div data-tb-jersey="hockey" data-colors="..." data-side="front"> ---------- */
+  // Product tags as a no-setup alternative to metafields: jersey:mx, colors:ff2e93-0d0d0d-f4f1ea-0d0d0d, num:69
+  function fromTags(str) {
+    var out = {};
+    String(str || '').split('|').forEach(function (tag) {
+      var m = tag.trim().match(/^(jersey|colors|num|bg):\s*(.+)$/i);
+      if (!m) return;
+      var k = m[1].toLowerCase(), v = m[2].trim();
+      if (k === 'jersey') out.type = v.toLowerCase();
+      else if (k === 'colors') out.colors = v.split('-').map(function (c) { return c.charAt(0) === '#' ? c : '#' + c; }).join(',');
+      else out[k] = v;
+    });
+    return out;
+  }
   function hydrate(root) {
     (root || d).querySelectorAll('[data-tb-jersey]').forEach(function (el) {
       if (el.dataset.tbDone) return;
       el.dataset.tbDone = '1';
-      apply(el, parse(el.dataset.colors));
-      el.innerHTML = svg(el.dataset.tbJersey, el.dataset.side, {
-        name: el.dataset.name, num: el.dataset.num, capt: el.dataset.capt === 'true', hanger: el.dataset.hanger === 'true'
+      var t = fromTags(el.dataset.tags);
+      var type = el.dataset.tbJersey || t.type || 'hockey';
+      var colors = el.dataset.colors || t.colors;
+      var num = el.dataset.num || t.num;
+      apply(el, parse(colors));
+      el.innerHTML = svg(type, el.dataset.side, {
+        name: el.dataset.name, num: num, capt: el.dataset.capt === 'true', hanger: el.dataset.hanger === 'true'
       });
     });
   }
 
-  w.TBJersey = { svg: svg, style: style, apply: apply, parse: parse, swing: swing, rotator: rotator, hydrate: hydrate, ensureDefs: ensureDefs, reduceMotion: reduce };
+  w.TBJersey = { svg: svg, style: style, apply: apply, parse: parse, swing: swing, rotator: rotator, hydrate: hydrate, ensureDefs: ensureDefs, fromTags: fromTags, reduceMotion: reduce };
 })(window, document);

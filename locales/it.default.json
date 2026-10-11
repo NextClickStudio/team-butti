@@ -91,5 +91,12 @@
     "enter": "Entra con la password",
     "placeholder": "Password",
     "submit": "Entra"
+  },
+  "story": {
+    "slot": "Slot video: qui andrà il video della vostra storia",
+    "play": "Guarda il video con l'audio"
+  },
+  "vscroll": {
+    "slot": "Slot video Higgsfield: la moto animata che avanza con lo scroll"
   }
 }

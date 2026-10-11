@@ -19,7 +19,8 @@ const globals = {
   shop: { name: 'Team Butti', description: 'Maglie da hockey, MX e football dalla Toscana a SoCal.', enabled_payment_types: ['visa', 'master', 'paypal', 'apple_pay'], password_message: 'Drop 02 in arrivo. Entra nel team per il link anticipato.' },
   routes: { root_url: '/', cart_url: '/cart', cart_add_url: '/cart/add', cart_change_url: '/cart/change', search_url: '/search', all_products_collection_url: '/collections/all' },
   cart: { item_count: 0, items: [], total_price: 0 },
-  request: { locale: { iso_code: 'it' }, page_type: 'index', origin: '' },
+  // design_mode: empty video slots (story, Higgsfield bike) are shown, as in the Shopify theme editor
+  request: { locale: { iso_code: 'it' }, page_type: 'index', origin: '', design_mode: true },
   content_for_header: '', canonical_url: '/', page_description: 'Team Butti — maglie da hockey, MX e football.', current_page: 1
 };
 

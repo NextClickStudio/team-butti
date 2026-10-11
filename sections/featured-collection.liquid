@@ -1,4 +1,9 @@
-{%- assign coll = section.settings.collection -%}
+{%- liquid
+  assign coll = section.settings.collection
+  if coll == blank
+    assign coll = collections['all']
+  endif
+-%}
 <section class="sec" data-tb="grid">
   <div class="sec__head rv">
     <h2 class="sec__title d grunge">{{ section.settings.title | escape }} <span class="out">{{ section.settings.title_outline | escape }}</span></h2>
@@ -35,7 +40,7 @@
   "settings": [
     { "type": "text", "id": "title", "label": "Titolo", "default": "Drop" },
     { "type": "text", "id": "title_outline", "label": "Titolo (contorno)", "default": "01" },
-    { "type": "collection", "id": "collection", "label": "Collezione", "info": "Vuota = maglie demo" },
+    { "type": "collection", "id": "collection", "label": "Collezione", "info": "Vuota = tutti i prodotti del negozio (maglie demo se il negozio non ha ancora prodotti)" },
     { "type": "range", "id": "limit", "label": "Prodotti", "min": 2, "max": 16, "step": 1, "default": 8 },
     { "type": "checkbox", "id": "show_tabs", "label": "Filtri per tipo prodotto", "default": true },
     { "type": "text", "id": "link_label", "label": "Bottone collezione", "default": "Vedi tutto" }
