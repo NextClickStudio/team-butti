@@ -8,7 +8,7 @@
       {%- for block in section.blocks -%}
         <div class="stop stop--{{ block.settings.style }}" style="--stop-bg: {{ block.settings.bg }}; --stop-fg: {{ block.settings.fg }};" {{ block.shopify_attributes }}>
           {%- if block.settings.style == 'hills' -%}
-            <svg class="hills" viewBox="0 0 1440 500" preserveAspectRatio="none" aria-hidden="true"><path d="M0 220 C200 120 380 140 560 200 S900 90 1100 160 S1360 140 1440 120 V500 H0Z" fill="#c4a05a"/><path d="M0 300 C240 220 420 260 640 300 S1000 220 1240 270 S1400 260 1440 250 V500 H0Z" fill="#b08a45"/><g fill="#2f4a22"><path d="M300 210 q6 -60 12 0z"/><path d="M330 214 q6 -70 12 0z"/><path d="M1150 162 q6 -60 12 0z"/><path d="M1180 166 q5 -50 10 0z"/></g></svg>
+            <div class="stop__land">{% render 'panorama', view: '0 50 720 170' %}</div>
           {%- endif -%}
           {%- if block.settings.video != blank -%}
             <div class="stop__video">{{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1600x' }}</div>
@@ -19,7 +19,7 @@
           <h3 class="stop__t d{% unless block.settings.style == 'night' %} grunge{% endunless %}">{{ block.settings.title | escape }}</h3>
           <p class="stop__p">{{ block.settings.text | escape }}</p>
           {%- if block.settings.deco == 'plate' -%}
-            <div class="stop__deco"><div class="plate-mini"><div class="goth">SoCal</div><div class="big">{{ block.settings.deco_text | escape }}</div><div class="goth goth--b">Los Angeles</div></div></div>
+            <div class="stop__deco"><div class="plate-mini"><div class="goth">{{ block.settings.plate_top | escape }}</div><div class="big">{{ block.settings.deco_text | escape }}</div><div class="goth goth--b">{{ block.settings.plate_bottom | escape }}</div></div></div>
           {%- elsif block.settings.deco == 'neon' -%}
             <div class="stop__deco"><div class="neon">{{ block.settings.deco_text | escape }}</div></div>
           {%- endif -%}
@@ -27,13 +27,13 @@
       {%- endfor -%}
     </div>
     <div class="road"></div>
-    <div class="bike" data-bike>{% render 'bike' %}</div>
+    <div class="car car--ride" data-car><div class="car__fx"><i></i><i></i><i></i></div>{% render 'cadillac', uid: section.id %}</div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Racconto in moto",
+  "name": "Il viaggio (Cadillac)",
   "max_blocks": 6,
   "blocks": [
     {
@@ -130,17 +130,26 @@
           "id": "deco_text",
           "label": "Testo decorazione",
           "default": "MERDE"
+        },
+        {
+          "type": "text",
+          "id": "plate_top",
+          "label": "Targa: scritta alta",
+          "default": "Toscana"
+        },
+        {
+          "type": "text",
+          "id": "plate_bottom",
+          "label": "Targa: scritta bassa",
+          "default": "Milano"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Racconto in moto",
+      "name": "Il viaggio (Cadillac)",
       "blocks": [
-        {
-          "type": "stop"
-        },
         {
           "type": "stop",
           "settings": {
@@ -154,9 +163,9 @@
         {
           "type": "stop",
           "settings": {
-            "label": "La targa",
-            "title": "SoCal",
-            "text": "Lowrider, pickup, sole che spacca. L'America che sognavamo da bambini.",
+            "label": "La strada",
+            "title": "A1",
+            "text": "Cadillac carica di maglie, autogrill alle sette, Appennino a finestrini giù. Trecento chilometri di musica alta.",
             "style": "flat",
             "bg": "#FFD400",
             "fg": "#E3191B",
@@ -164,16 +173,19 @@
           }
         },
         {
+          "type": "stop"
+        },
+        {
           "type": "stop",
           "settings": {
             "label": "Le luci",
-            "title": "NYC",
-            "text": "Il nostro nome su Times Square. Prossima fermata: ovunque ci sia una crew.",
+            "title": "Navigli",
+            "text": "Navigli, insegne al neon e una crew che non va a dormire. Prossima fermata: ovunque ci sia una crew.",
             "style": "night",
             "bg": "#0D0D0D",
             "fg": "#F4F1EA",
             "deco": "neon",
-            "deco_text": "Team Butti on Broadway"
+            "deco_text": "Team Butti Merde"
           }
         }
       ]

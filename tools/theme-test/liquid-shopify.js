@@ -62,6 +62,7 @@
       money_with_currency: function (c) { return money(c) + ' EUR'; },
       money_without_trailing_zeros: function (c) { return money(c).replace(',00', ''); },
       handleize: function (s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); },
+      handle: function (s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); },
       default_errors: function (e) { return e ? '<ul><li>Errore</li></ul>' : ''; },
       payment_type_svg_tag: function (type) { return '<svg class="payment-icon" viewBox="0 0 38 24" aria-label="' + type + '"><rect width="38" height="24" rx="3" fill="#fff"/><text x="19" y="16" text-anchor="middle" font-size="8" font-family="sans-serif" fill="#111">' + String(type).toUpperCase().slice(0, 4) + '</text></svg>'; },
       video_tag: function (v) { var o = kw([].slice.call(arguments, 1)); var src = v && v.sources && v.sources[0] ? v.sources[0].url : ''; return '<video' + (o.autoplay ? ' autoplay' : '') + (o.loop ? ' loop' : '') + (o.muted ? ' muted' : '') + ' playsinline preload="' + (o.preload || 'metadata') + '"><source src="' + src + '" type="video/mp4"></video>'; },

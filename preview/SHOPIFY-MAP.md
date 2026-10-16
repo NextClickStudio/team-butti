@@ -11,6 +11,13 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v1.2
+- **Hero ripulita**: panorama disegnato *Toscana → Milano* (colline, cipressi, borgo con torri → Duomo, Velasca, Pirellone, Bosco Verticale, UniCredit, CityLife) al posto dei palazzi con le palme; striscia-strada con bottone, percorso Toscana → Milano e suggerimento; mini Cadillac che attraversa la hero e salta quando cambi vibe. Il bottone vibe e le scritte al click sono gli stessi di prima.
+- **Video del brand** (nuova sezione, subito sotto la hero): fino a 6 clip, cornice da videocamera (REC, timecode, luogo, data), il video passa da card a schermo intero con lo scroll, tab per cambiare clip con effetto glitch, audio on/off, clip verticali (Reel) con sfondo sfocato. Nascosta sul negozio finché non c'è almeno un video.
+- **Cadillac a scroll** (ex *Moto a scroll*): la Cadillac del team (DeVille '66 rossa, scritta leopardata, tetto crema) viaggia dalla Toscana a Milano mentre scorri, con parallasse, cartelli A1 modificabili (blocchi), cielo giorno → tramonto rosa, contachilometri, ruote che girano, sospensioni, scia e fumo. Può usare uno **sprite Higgsfield** o un **video** a scroll: vedi `tools/higgsfield/README.md`.
+- **Il viaggio (Cadillac)** (ex *Racconto in moto*): tappe Toscana → A1 → Milano → Navigli, la Cadillac al posto della moto, colline toscane vere, strada asfaltata.
+- Testi: narrativa *dalla Toscana a Milano* (annuncio, hero, badge, manifesto, footer). La targa SoCal resta perché è un prodotto.
+
 ## Novità v1.1
 - **Default = concept approvato**: maglie fluttuanti con parallax nella hero e disegno maglie "flat". Stendino e maglie dettagliate restano disponibili (sezione Hero → *Maglie nella hero*; Impostazioni tema → *Maglie*).
 - **Video**: hero con video di sfondo, video per ogni tappa del racconto in moto, nuova sezione *Moto a scroll (video)* (clip Higgsfield che avanza con lo scroll; esportare con keyframe su ogni frame, `ffmpeg -i in.mp4 -g 1 -an -crf 24 out.mp4`), nuova sezione *La nostra storia (video)* (video Shopify o link YouTube/Vimeo, anteprima muta + Play con audio). Le sezioni video sono nascoste sul negozio finché manca il video.

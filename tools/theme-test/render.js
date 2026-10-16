@@ -31,6 +31,7 @@ const F = {
   placeholder_svg_tag: (n, c) => `<svg class="${c || ''}" viewBox="0 0 10 10"><rect width="10" height="10"/></svg>`,
   money, money_with_currency: c => money(c) + ' EUR', money_without_trailing_zeros: c => money(c).replace(',00', ''),
   handleize: s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+  handle: s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
   default_errors: e => e ? '<ul><li>err</li></ul>' : '',
   payment_type_svg_tag: () => '<svg class="payment-icon"></svg>',
   video_tag: (v) => `<video autoplay muted loop playsinline><source src="${v && v.sources ? v.sources[0].url : ''}"></video>`,

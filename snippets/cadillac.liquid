@@ -1,0 +1,85 @@
+{%- comment -%}
+  Team Butti custom Cadillac (1966 Sedan de Ville): red body, cream vinyl roof,
+  leopard "TEAM BUTTI" lettering, dark 5-spoke wheels. Side view, facing right.
+  Animated by theme.js (carRig): .wh = wheels, .car__body = suspension.
+  uid: unique id for the SVG defs (use section.id).
+{%- endcomment -%}
+{%- assign u = uid | default: 'car' | handle -%}
+<svg class="cad" viewBox="0 0 720 236" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="cad-paint-{{ u }}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2602e"/><stop offset=".42" stop-color="#d9381b"/><stop offset="1" stop-color="#981d0d"/>
+    </linearGradient>
+    <linearGradient id="cad-chrome-{{ u }}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#c9ced3"/><stop offset=".55" stop-color="#8d949a"/><stop offset="1" stop-color="#e9ecef"/>
+    </linearGradient>
+    <linearGradient id="cad-glass-{{ u }}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2c3a48"/><stop offset="1" stop-color="#121a22"/>
+    </linearGradient>
+    <pattern id="cad-leo-{{ u }}" width="34" height="30" patternUnits="userSpaceOnUse" patternTransform="rotate(-8)">
+      <rect width="34" height="30" fill="#e8b66c"/>
+      <g fill="#b9782f" stroke="#2a1608" stroke-width="2.6" stroke-dasharray="7 3" stroke-linecap="round">
+        <ellipse cx="8" cy="8" rx="5.5" ry="4.5"/><ellipse cx="25" cy="13" rx="5" ry="4"/><ellipse cx="13" cy="23" rx="5" ry="4.2"/><ellipse cx="31" cy="28" rx="4" ry="3.4"/>
+      </g>
+      <g fill="#2a1608"><circle cx="20" cy="4" r="1.6"/><circle cx="3" cy="17" r="1.4"/><circle cx="27" cy="22" r="1.2"/></g>
+    </pattern>
+    <clipPath id="cad-clip-{{ u }}"><path d="M12 120 L690 125 Q700 126 701 134 L703 166 Q703 182 692 186 L626 190 A52 52 0 0 0 522 190 L520 197 L230 197 L228 190 A52 52 0 0 0 124 190 L30 188 Q12 186 11 170 L10 132 Q10 121 12 120 Z"/></clipPath>
+    <g id="cad-wheel-{{ u }}">
+      <circle r="40" fill="#141414"/>
+      <circle r="35" fill="none" stroke="#2c2c2c" stroke-width="2"/>
+      <circle r="29" fill="url(#cad-chrome-{{ u }})"/>
+      <circle r="25.5" fill="#1f1f1f"/>
+      <g fill="#46494d" stroke="#0d0d0d" stroke-width="1.4" stroke-linejoin="round">
+        <path d="M-4 -7 L-8 -24 L8 -24 L4 -7 Z"/>
+        <path d="M-4 -7 L-8 -24 L8 -24 L4 -7 Z" transform="rotate(72)"/>
+        <path d="M-4 -7 L-8 -24 L8 -24 L4 -7 Z" transform="rotate(144)"/>
+        <path d="M-4 -7 L-8 -24 L8 -24 L4 -7 Z" transform="rotate(216)"/>
+        <path d="M-4 -7 L-8 -24 L8 -24 L4 -7 Z" transform="rotate(288)"/>
+      </g>
+      <g stroke="#9aa1a7" stroke-width="1.2" stroke-linecap="round" opacity=".8">
+        <path d="M-6 -22 L-3 -9"/><path d="M-6 -22 L-3 -9" transform="rotate(72)"/><path d="M-6 -22 L-3 -9" transform="rotate(144)"/><path d="M-6 -22 L-3 -9" transform="rotate(216)"/><path d="M-6 -22 L-3 -9" transform="rotate(288)"/>
+      </g>
+      <circle r="8" fill="url(#cad-chrome-{{ u }})" stroke="#0d0d0d" stroke-width="1.5"/>
+      <circle r="2.4" fill="#0d0d0d"/>
+    </g>
+  </defs>
+
+  <ellipse class="cad__shadow" cx="360" cy="229" rx="338" ry="7" fill="#000" opacity=".28"/>
+
+  <g class="car__body">
+    {%- comment -%} roof + pillars (cream vinyl) {%- endcomment -%}
+    <path d="M196 122 C214 96 230 70 254 64 L448 60 C462 60 470 64 478 72 L524 122 Z" fill="#efe6cf" stroke="#0d0d0d" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M246 70 Q300 64 440 62" fill="none" stroke="#d9cfb6" stroke-width="3" stroke-linecap="round"/>
+    {%- comment -%} glass {%- endcomment -%}
+    <path d="M262 117 L268 78 Q270 72 277 72 L358 70 L358 117 Z" fill="url(#cad-glass-{{ u }})" stroke="#c9ced3" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M366 117 L366 70 L444 68 Q452 68 458 74 L500 117 Z" fill="url(#cad-glass-{{ u }})" stroke="#c9ced3" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M282 117 L318 72 L336 71 L300 117 Z M392 117 L428 69 L440 69 L404 117 Z" fill="#fff" opacity=".1"/>
+    {%- comment -%} driver: cap + shoulder {%- endcomment -%}
+    <g fill="#0b0f14"><circle cx="422" cy="95" r="11"/><path d="M410 92 Q412 80 424 80 Q434 80 436 90 L446 92 Q446 95 440 95 L410 95 Z"/><path d="M402 117 Q406 104 422 104 Q438 104 444 117 Z"/></g>
+
+    {%- comment -%} body {%- endcomment -%}
+    <path d="M12 120 L690 125 Q700 126 701 134 L703 166 Q703 182 692 186 L626 190 A52 52 0 0 0 522 190 L520 197 L230 197 L228 190 A52 52 0 0 0 124 190 L30 188 Q12 186 11 170 L10 132 Q10 121 12 120 Z" fill="url(#cad-paint-{{ u }})"/>
+    <g clip-path="url(#cad-clip-{{ u }})">
+      <path d="M0 136 L720 141" stroke="#fff" stroke-width="5" opacity=".28"/>
+      <path d="M0 176 L720 181 L720 240 L0 240 Z" fill="#000" opacity=".16"/>
+      <text class="cad__txt" x="375" y="189" font-size="66" text-anchor="middle" textLength="292" lengthAdjust="spacingAndGlyphs" fill="url(#cad-leo-{{ u }})" stroke="#2a1608" stroke-width="2.4" paint-order="stroke">TEAM BUTTI</text>
+    </g>
+    <path d="M12 120 L690 125 Q700 126 701 134 L703 166 Q703 182 692 186 L626 190 A52 52 0 0 0 522 190 L520 197 L230 197 L228 190 A52 52 0 0 0 124 190 L30 188 Q12 186 11 170 L10 132 Q10 121 12 120 Z" fill="none" stroke="#0d0d0d" stroke-width="3" stroke-linejoin="round"/>
+    {%- comment -%} chrome: beltline, rockers {%- endcomment -%}
+    <path d="M16 123 L688 128" stroke="url(#cad-chrome-{{ u }})" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M236 191 L516 191 M34 183 L118 185 M632 185 L688 182" stroke="url(#cad-chrome-{{ u }})" stroke-width="4" stroke-linecap="round"/>
+    {%- comment -%} tail light, rear bumper, front face, front bumper {%- endcomment -%}
+    <rect class="cad__tail" x="7" y="124" width="9" height="46" rx="3" fill="#ff2b2b" stroke="#0d0d0d" stroke-width="2"/>
+    <rect x="2" y="166" width="54" height="14" rx="6" fill="url(#cad-chrome-{{ u }})" stroke="#0d0d0d" stroke-width="2.5"/>
+    <path d="M698 130 L705 132 L707 164 L700 166 Z" fill="url(#cad-chrome-{{ u }})" stroke="#0d0d0d" stroke-width="2"/>
+    <ellipse class="cad__head" cx="704" cy="140" rx="3.5" ry="7" fill="#fff6d6" stroke="#0d0d0d" stroke-width="1.5"/>
+    <rect x="684" y="148" width="10" height="5" rx="2" fill="#ffb21c" stroke="#0d0d0d" stroke-width="1.2"/>
+    <rect x="652" y="166" width="64" height="15" rx="6" fill="url(#cad-chrome-{{ u }})" stroke="#0d0d0d" stroke-width="2.5"/>
+    <path d="M40 182 L26 183" stroke="#3a3a3a" stroke-width="5" stroke-linecap="round"/>
+    {%- comment -%} antenna {%- endcomment -%}
+    <path d="M610 125 L622 62" stroke="#2a2a2a" stroke-width="1.6" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(176 186)"><g class="wh"><use href="#cad-wheel-{{ u }}"/></g></g>
+  <g transform="translate(574 186)"><g class="wh"><use href="#cad-wheel-{{ u }}"/></g></g>
+</svg>

@@ -42,7 +42,7 @@
         "v4": {
           "type": "vibe",
           "settings": {
-            "name": "Night NYC",
+            "name": "Night Milano",
             "bg": "#0D0D0D",
             "fg": "#F4F1EA",
             "pattern": "halftone-pink",
@@ -141,7 +141,7 @@
         "s3": {
           "type": "sticker",
           "settings": {
-            "text": "Los Angeles",
+            "text": "Milano",
             "style": "c",
             "x": 58,
             "y": 46,
@@ -187,7 +187,9 @@
         "s5",
         "s6"
       ],
-      "settings": {}
+      "settings": {
+        "sub": "Est. Toscana · Milano"
+      }
     },
     "custom": {
       "type": "jersey-customizer",
@@ -323,16 +325,6 @@
         "r1": {
           "type": "stop",
           "settings": {
-            "label": "Il Market",
-            "title": "Milano",
-            "style": "halftone",
-            "bg": "#FF2E93",
-            "fg": "#0D0D0D"
-          }
-        },
-        "r2": {
-          "type": "stop",
-          "settings": {
             "label": "Lo sterrato",
             "title": "Toscana",
             "text": "Colline, polvere, due tempi. Le maglie MX non sono un costume: ci cadiamo dentro ogni weekend.",
@@ -341,30 +333,42 @@
             "fg": "#0D0D0D"
           }
         },
-        "r3": {
+        "r2": {
           "type": "stop",
           "settings": {
-            "label": "La targa",
-            "title": "SoCal",
-            "text": "Lowrider, pickup, sole che spacca. L'America che sognavamo da bambini, presa e portata a casa.",
+            "label": "La strada",
+            "title": "A1",
+            "text": "Cadillac carica di maglie, autogrill alle sette, Appennino a finestrini giù. Trecento chilometri di musica alta.",
             "style": "flat",
             "bg": "#FFD400",
             "fg": "#E3191B",
             "deco": "plate",
-            "deco_text": "MERDE"
+            "deco_text": "MERDE",
+            "plate_top": "Toscana",
+            "plate_bottom": "Milano"
+          }
+        },
+        "r3": {
+          "type": "stop",
+          "settings": {
+            "label": "Il Market",
+            "title": "Milano",
+            "style": "halftone",
+            "bg": "#FF2E93",
+            "fg": "#0D0D0D"
           }
         },
         "r4": {
           "type": "stop",
           "settings": {
             "label": "Le luci",
-            "title": "NYC",
-            "text": "Il nostro nome su Times Square. Prossima fermata: ovunque ci sia una crew.",
+            "title": "Navigli",
+            "text": "Insegne al neon e una crew che non va a dormire. Prossima fermata: ovunque ci sia una crew.",
             "style": "night",
             "bg": "#0D0D0D",
             "fg": "#F4F1EA",
             "deco": "neon",
-            "deco_text": "Team Butti on Broadway"
+            "deco_text": "Team Butti Merde"
           }
         }
       },
@@ -383,14 +387,6 @@
     "drop_countdown": {
       "type": "drop-countdown",
       "settings": {}
-    },
-    "moto_scroll": {
-      "type": "video-scroll",
-      "settings": {
-        "kicker": "Sterrato · Toscana",
-        "title": "Gas aperto",
-        "text": "Scorri e dai gas. Il resto lo fa la polvere."
-      }
     },
     "story": {
       "type": "story-video",
@@ -423,13 +419,116 @@
         "f3"
       ],
       "settings": {}
+    },
+    "cadillac": {
+      "type": "video-scroll",
+      "blocks": {
+        "sign-a1": {
+          "type": "sign",
+          "settings": {
+            "title": "A1",
+            "sub": "Firenze · Bologna",
+            "style": "green",
+            "pos": 12
+          }
+        },
+        "sign-bo": {
+          "type": "sign",
+          "settings": {
+            "title": "Bologna",
+            "sub": "102 km",
+            "style": "green",
+            "pos": 34
+          }
+        },
+        "sign-mi": {
+          "type": "sign",
+          "settings": {
+            "title": "Milano",
+            "sub": "196 km",
+            "style": "green",
+            "pos": 56
+          }
+        },
+        "sign-city": {
+          "type": "sign",
+          "settings": {
+            "title": "Milano",
+            "sub": "",
+            "style": "city",
+            "pos": 76
+          }
+        },
+        "sign-market": {
+          "type": "sign",
+          "settings": {
+            "title": "Market 26.09",
+            "sub": "Team Butti →",
+            "style": "pink",
+            "pos": 93
+          }
+        }
+      },
+      "block_order": [
+        "sign-a1",
+        "sign-bo",
+        "sign-mi",
+        "sign-city",
+        "sign-market"
+      ],
+      "settings": {
+        "kicker": "A1 · Toscana → Milano",
+        "title": "Si parte",
+        "text": "Finestrini giù, maglie al vento. Scorri e portaci al Market.",
+        "places": "Toscana,A1 · Appennino,Emilia,Milano",
+        "km": 300,
+        "length": 325,
+        "theme": "light",
+        "show_without_video": true
+      }
+    },
+    "reel": {
+      "type": "brand-reel",
+      "blocks": {
+        "c1": {
+          "type": "clip",
+          "settings": {
+            "title": "Sterrato",
+            "place": "Toscana",
+            "date": "Estate 2026"
+          }
+        },
+        "c2": {
+          "type": "clip",
+          "settings": {
+            "title": "Il Market",
+            "place": "Milano",
+            "date": "26.09.2026"
+          }
+        },
+        "c3": {
+          "type": "clip",
+          "settings": {
+            "title": "La Cadillac",
+            "place": "A1",
+            "date": "2026"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "hero",
+    "reel",
     "tapes",
     "drop",
-    "moto_scroll",
+    "cadillac",
     "manifesto",
     "story",
     "custom",

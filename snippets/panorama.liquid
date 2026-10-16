@@ -1,0 +1,70 @@
+{%- comment -%}
+  "Dalla Toscana a Milano" panorama, drawn in currentColor.
+  Left: Tuscan hills, cypresses, towered borgo, farmhouse, umbrella pine.
+  Right: Milano — Duomo, Galleria, Torre Velasca, Pirellone, Bosco Verticale, UniCredit, CityLife towers.
+  .pano__far / .pano__mid / .pano__near are separate layers so CSS can tint them.
+{%- endcomment -%}
+<svg class="pano" viewBox="{{ view | default: '0 0 1440 220' }}" preserveAspectRatio="{{ fit | default: 'xMidYMax slice' }}" aria-hidden="true" focusable="false">
+  <g class="pano__far">
+    <path d="M0 150 C110 112 210 118 310 136 S500 98 640 126 S760 150 820 160 L1440 168 V220 H0 Z"/>
+  </g>
+  <g class="pano__mid">
+    {%- comment -%} borgo with towers on the far hill {%- endcomment -%}
+    <path d="M286 136 V112 h10 v-6 h3 v6 h4 v-6 h3 v6 V136 Z"/>
+    <path d="M300 136 V84 h3 v-5 h3 v5 h3 v-5 h3 v5 h2 V136 Z"/>
+    <path d="M318 136 V98 h14 V136 Z"/>
+    <path d="M336 136 V72 h3 v-5 h3 v5 h3 v-5 h3 v5 h2 V136 Z"/>
+    <path d="M356 136 V104 h12 V136 Z"/>
+    <path d="M372 136 V114 l14 -10 l14 10 V136 Z"/>
+    <path d="M392 136 V88 h8 V136 Z"/>
+    <path d="M404 136 V118 h26 V136 Z"/>
+    {%- comment -%} capannoni (sheds) between Tuscany and Milano {%- endcomment -%}
+    <path d="M640 168 V150 l20 -8 l20 8 l20 -8 l20 8 l20 -8 l20 8 V168 Z"/>
+    <path d="M700 168 V138 h4 V130 h4 v8 h4 V168 Z"/>
+  </g>
+  <g class="pano__near">
+    {%- comment -%} near hills + ground {%- endcomment -%}
+    <path d="M0 182 C70 160 160 158 250 172 S420 156 520 174 S640 168 720 186 L1440 190 V220 H0 Z"/>
+    {%- comment -%} cypress row climbing the hill {%- endcomment -%}
+    <path d="M70 172 C62 160 63 132 70 112 C77 132 78 160 70 172 Z"/>
+    <path d="M96 168 C89 157 90 132 96 114 C102 132 103 157 96 168 Z"/>
+    <path d="M120 165 C114 155 115 134 120 118 C125 134 126 155 120 165 Z"/>
+    <path d="M142 163 C137 154 138 137 142 123 C146 137 147 154 142 163 Z"/>
+    <path d="M162 162 C158 154 158 140 162 128 C166 140 166 154 162 162 Z"/>
+    <path d="M180 163 C177 156 177 144 180 134 C183 144 183 156 180 163 Z"/>
+    {%- comment -%} farmhouse with tower {%- endcomment -%}
+    <path d="M462 170 V146 l26 -14 l26 14 V170 Z"/>
+    <path d="M500 170 V122 l9 -6 l9 6 V170 Z"/>
+    <path d="M538 172 C534 160 535 140 540 124 C545 140 546 160 542 172 Z"/>
+    {%- comment -%} umbrella pine {%- endcomment -%}
+    <path d="M598 178 L601 148 L604 148 L607 178 Z"/>
+    <path d="M572 150 C574 136 594 130 604 132 C616 128 638 134 640 148 C630 154 584 156 572 150 Z"/>
+    {%- comment -%} DUOMO: facade, pinnacles, main spire + Madonnina {%- endcomment -%}
+    <path d="M790 190 V150 L855 120 L920 150 V190 Z"/>
+    <path d="M787 150 l3 -36 l3 36 Z M809 140 l3 -32 l3 32 Z M831 130 l3 -30 l3 30 Z M873 130 l3 -30 l3 30 Z M895 140 l3 -32 l3 32 Z M917 150 l3 -36 l3 36 Z"/>
+    <path d="M846 120 V86 h18 V120 Z"/>
+    <path d="M850 86 l5 -46 l5 46 Z"/>
+    <circle cx="855" cy="36" r="3.4"/>
+    <path d="M926 190 V156 h52 V190 Z M930 156 l2 -18 l2 18 Z M944 156 l2 -14 l2 14 Z M958 156 l2 -14 l2 14 Z M972 156 l2 -18 l2 18 Z"/>
+    {%- comment -%} Galleria dome {%- endcomment -%}
+    <path d="M984 190 V160 h8 A22 22 0 0 1 1036 160 h8 V190 Z"/>
+    {%- comment -%} Torre Velasca {%- endcomment -%}
+    <path d="M1056 190 V106 L1048 96 V56 h52 V96 L1092 106 V190 Z"/>
+    <path d="M1060 56 l14 -10 l14 10 Z"/>
+    {%- comment -%} Pirellone + roof slab {%- endcomment -%}
+    <path d="M1112 190 L1114 44 H1150 L1152 190 Z"/>
+    <path d="M1108 36 H1156 V41 H1108 Z"/>
+    {%- comment -%} Bosco Verticale (two towers with trees) {%- endcomment -%}
+    <path d="M1168 190 V92 h24 V190 Z M1198 190 V112 h22 V190 Z"/>
+    <g><circle cx="1168" cy="100" r="4"/><circle cx="1168" cy="116" r="4"/><circle cx="1168" cy="132" r="4"/><circle cx="1168" cy="148" r="4"/><circle cx="1168" cy="164" r="4"/><circle cx="1168" cy="180" r="4"/><circle cx="1192" cy="108" r="4"/><circle cx="1192" cy="124" r="4"/><circle cx="1192" cy="140" r="4"/><circle cx="1192" cy="156" r="4"/><circle cx="1192" cy="172" r="4"/><circle cx="1198" cy="120" r="4"/><circle cx="1198" cy="136" r="4"/><circle cx="1198" cy="152" r="4"/><circle cx="1198" cy="168" r="4"/><circle cx="1220" cy="128" r="4"/><circle cx="1220" cy="144" r="4"/><circle cx="1220" cy="160" r="4"/><circle cx="1220" cy="176" r="4"/></g>
+    {%- comment -%} UniCredit tower with spire {%- endcomment -%}
+    <path d="M1234 190 V78 Q1250 56 1276 46 L1280 6 L1284 46 L1286 190 Z"/>
+    <path d="M1226 190 V140 h70 V190 Z"/>
+    {%- comment -%} CityLife: Isozaki (dritto), Hadid (storto), Libeskind (curvo) {%- endcomment -%}
+    <path d="M1304 190 V24 L1332 20 V190 Z"/>
+    <path d="M1344 190 L1348 124 Q1350 76 1360 44 L1382 48 Q1376 92 1382 140 L1384 190 Z"/>
+    <path d="M1396 190 L1398 128 Q1404 86 1428 62 L1432 190 Z"/>
+    {%- comment -%} city blocks filling the skyline {%- endcomment -%}
+    <path d="M760 190 V168 h28 V190 Z M1040 190 V170 h14 V190 Z M1096 190 V164 h14 V190 Z M1154 190 V158 h12 V190 Z M1296 190 V160 h8 V190 Z M1332 190 V166 h12 V190 Z M1386 190 V170 h10 V190 Z M1432 190 V176 h8 V190 Z"/>
+  </g>
+</svg>

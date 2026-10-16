@@ -12,7 +12,9 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
   ok(bg1 !== bg2, `hero: cambia vibe (${bg1} → ${bg2})`);
   await p.mouse.click(700, 520); await p.waitForTimeout(120);
   ok(await p.$$eval('[data-tb=hero] .brap', x => x.length) >= 1, 'hero: scritte a vignetta al click (invariate)');
-  ok(!(await p.$('[data-tb=story]')) && !(await p.$('[data-tb=vscroll]')), 'negozio vero: sezioni video nascoste finché non si carica il video');
+  ok(!(await p.$('[data-tb=story]')) && !(await p.$('[data-tb=reel]')), 'negozio vero: storia e video del brand nascosti finché non si carica un video');
+  ok(!!(await p.$('[data-tb=hero] .hero__land .pano')) && !!(await p.$('[data-hero-car] .cad')), 'hero: panorama Toscana → Milano + Cadillac sulla strada');
+  ok(!(await p.$('.skyline')), 'hero: vecchio skyline con palme rimosso');
   await p.screenshot({ path: __dirname + '/out/th-hero.png' });
   ok(await p.$$eval('.grid .card svg.tbj-svg', x => x.length) >= 16, 'griglia: maglie demo disegnate (fronte+retro)');
   await p.evaluate(() => document.querySelector('[data-tb=customizer]').scrollIntoView()); await p.waitForTimeout(900);
@@ -40,9 +42,15 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
   await p.evaluate(() => document.querySelector('[data-tb=plate]').scrollIntoView()); await p.waitForTimeout(600);
   await p.fill('[data-plate-in]', 'BUTTI');
   ok(await p.textContent('[data-plate-txt]') === 'BUTTI', 'targa: anteprima live');
+  // Cadillac journey (visible without video: illustrated car)
+  await p.evaluate(() => { const r = document.querySelector('[data-tb=vscroll]'); scrollTo(0, r.offsetTop + (r.offsetHeight - innerHeight) * 0.25); }); await p.waitForTimeout(300);
+  await p.evaluate(() => { const r = document.querySelector('[data-tb=vscroll]'); scrollTo(0, r.offsetTop + (r.offsetHeight - innerHeight) * 0.5); }); await p.waitForTimeout(1200);
+  const jr = await p.evaluate(() => ({ car: document.querySelector('[data-tb=vscroll] [data-car]').style.transform, wheel: document.querySelector('[data-tb=vscroll] .wh').style.transform, km: +document.querySelector('[data-km-out]').textContent, far: document.querySelector('[data-far]').style.transform }));
+  ok(/translate3d\((\d{3,})/.test(jr.car) && /rotate\(\d/.test(jr.wheel) && jr.km > 100 && jr.far.includes('-'), `Cadillac: avanza con lo scroll, ruote che girano, km ${jr.km}, parallasse attiva`);
+  await p.screenshot({ path: __dirname + '/out/th-cadillac.png' });
   // ride
-  await p.evaluate(() => { const r = document.querySelector('[data-tb=ride]'); scrollTo(0, r.offsetTop + (r.offsetHeight - innerHeight) * 0.5); }); await p.waitForTimeout(500);
-  ok((await p.$eval('[data-ride-track]', t => t.style.transform)).includes('translateX(-'), 'ride: scorrimento orizzontale attivo');
+  await p.evaluate(() => { const r = document.querySelector('[data-tb=ride]'); scrollTo(0, r.offsetTop + (r.offsetHeight - innerHeight) * 0.5); }); await p.waitForTimeout(1000);
+  ok((await p.$eval('[data-ride-track]', t => t.style.transform)).includes('translate3d(-') && !!(await p.$('[data-tb=ride] [data-car] .cad')), 'ride: scorrimento orizzontale attivo con la Cadillac');
   await p.screenshot({ path: __dirname + '/out/th-ride.png' });
   ok(await p.$$eval('[data-countdown] [data-u=d]', x => x[0].textContent !== '00' || x[0].textContent === '00'), 'drop: countdown attivo');
   // collection + quick view

@@ -50,3 +50,9 @@ Badge rotondo del logo, numeri da maglia, targhe, sticker, date stile poster, "S
 3. Ride: scroll orizzontale Milano → Toscana → SoCal → NYC con la moto che attraversa lo schermo.
 4. Targa personalizzata stile SoCal.
 5. Sticker trascinabili + "BRAAAP!" al click.
+
+## Aggiornamento ottobre 2026
+- **Narrativa**: *dalla Toscana a Milano* (non più Los Angeles/SoCal). Il viaggio del brand è sterrato toscano → A1 → Market di Milano.
+- **La Cadillac**: DeVille '66 custom (post IG del 23 settembre, foto 5/6): rosso arancio, tetto in vinile crema, scritta **TEAM BUTTI** leopardata gigante sulle portiere, cerchi neri a 5 razze col bordo lucido. È il nuovo "oggetto che si muove" del sito al posto della moto (`snippets/cadillac.liquid`, sprite Higgsfield in arrivo).
+- **Leopardato** = texture firma (scritte auto, vibe "Leopardo" della hero).
+- In attesa: cartella "Prodotti e-commerce" (foto e video) per l'identità definitiva e le clip della sezione *Video del brand*.

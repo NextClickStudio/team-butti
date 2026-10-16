@@ -146,6 +146,66 @@
     });
   }
 
+  /* ---------------- car rig: the Team Butti Cadillac (SVG or Higgsfield sprite) ----------------
+     set(x, dist, dt): x = horizontal position in px, dist = road travelled in px (spins the wheels).
+     Speed drives the trail, exhaust and suspension (squat on throttle, dive on brake). */
+  function carRig(car) {
+    var wheels = $$('.wh', car), sprite = $('[data-car-sprite]', car), body = $('.car__body', car) || sprite, fx = $$('.car__fx i', car);
+    var sp = sprite ? { n: +sprite.dataset.frames || 1, c: +sprite.dataset.cols || 1, r: +sprite.dataset.rows || 1, step: +sprite.dataset.step || 14 } : null;
+    var lastDist = null, v = 0, vPrev = 0, pitch = 0, pv = 0, puffAcc = 0;
+    function puff(x) {
+      if (reduce || !car.parentNode) return;
+      var p = document.createElement('i'), w = car.offsetWidth, h = car.offsetHeight;
+      p.className = 'puff';
+      p.style.left = (x + (car.classList.contains('rev') ? w * 0.95 : w * 0.03)) + 'px';
+      p.style.top = (car.offsetTop + h * 0.72) + 'px';
+      car.parentNode.appendChild(p); setTimeout(function () { p.remove(); }, 1150);
+    }
+    return {
+      set: function (x, dist, dt) {
+        dt = Math.min(0.05, Math.max(0.001, dt || 0.016));
+        var w = car.offsetWidth || 1;
+        if (lastDist === null) lastDist = dist;
+        var raw = (dist - lastDist) / dt; lastDist = dist;
+        vPrev = v; v += (raw - v) * 0.2;
+        var acc = (v - vPrev) / dt, s = Math.abs(v), dir = v < 0 ? -1 : 1;
+        car.style.transform = 'translate3d(' + x.toFixed(1) + 'px,0,0)';
+        if (sp) {
+          var f = ((Math.floor(dist / sp.step) % sp.n) + sp.n) % sp.n, col = f % sp.c, row = Math.floor(f / sp.c);
+          sprite.style.backgroundPosition = (sp.c > 1 ? col / (sp.c - 1) * 100 : 0) + '% ' + (sp.r > 1 ? row / (sp.r - 1) * 100 : 0) + '%';
+        } else {
+          var deg = dist / (w * 40 / 720) * 57.2958;
+          wheels.forEach(function (wh) { wh.style.transform = 'rotate(' + deg.toFixed(1) + 'deg)'; });
+        }
+        if (reduce) return;
+        // suspension: spring towards a pitch set by acceleration, plus road bumps at speed
+        var target = Math.max(-2.6, Math.min(2.6, -acc * 0.0008));
+        pv += ((target - pitch) * 140 - pv * 14) * dt; pitch += pv * dt;
+        var bump = Math.sin(dist / 37) * Math.min(1.6, s / 900) + Math.sin(dist / 13) * Math.min(0.6, s / 2500);
+        if (body) body.style.transform = 'translateY(' + bump.toFixed(2) + 'px) rotate(' + pitch.toFixed(2) + 'deg)';
+        // speed trail ("scia") + chromatic ghost
+        car.classList.toggle('rev', v < -30);
+        var k = Math.min(1, s / 1400);
+        fx.forEach(function (l, i) { l.style.setProperty('--len', (k * w * [0.62, 0.42, 0.3][i]).toFixed(0) + 'px'); l.style.setProperty('--op', (k * [1, 0.9, 0.7][i]).toFixed(2)); });
+        var g = Math.min(34, s * 0.02);
+        car.style.filter = g > 3 ? 'drop-shadow(' + (-dir * g).toFixed(0) + 'px 0 0 rgba(255,46,147,.5)) drop-shadow(' + (-dir * g * 0.8).toFixed(0) + 'px 0 0 rgba(255,212,0,.38))' : '';
+        puffAcc += Math.abs(raw * dt);
+        if (s > 120 && puffAcc > 70) { puffAcc = 0; puff(x); }
+      }
+    };
+  }
+  // run fn(dt) on every frame while el is on screen
+  function whileVisible(el, fn) {
+    var on = false, t0 = 0;
+    function loop(t) { if (!on) return; var dt = t0 ? (t - t0) / 1000 : 0.016; t0 = t; fn(dt); requestAnimationFrame(loop); }
+    if (!('IntersectionObserver' in window)) { on = true; requestAnimationFrame(loop); return; }
+    new IntersectionObserver(function (es) {
+      var vis = es[0].isIntersecting;
+      if (vis && !on) { on = true; t0 = 0; requestAnimationFrame(loop); } else if (!vis) on = false;
+    }).observe(el);
+    fn(0.016);
+  }
+
   /* ---------------- section initialisers ---------------- */
   var VIBE_PATTERNS = {
     halftone: 'radial-gradient(circle,rgba(0,0,0,.28) 1.3px,transparent 1.8px) 0 0/9px 9px',
@@ -194,7 +254,7 @@
       hero.dataset.ready = '1';
       hero._setVibe = function (i) { vi = i; setVibe(i); };
       var btn = $('[data-vibe-btn]', hero);
-      if (btn) btn.addEventListener('click', function (e) { e.stopPropagation(); vi = (vi + 1) % vibes.length; setVibe(vi); });
+      if (btn) btn.addEventListener('click', function (e) { e.stopPropagation(); vi = (vi + 1) % vibes.length; setVibe(vi); hero._hop(); });
       hero.addEventListener('pointermove', function (e) {
         if (reduce) return;
         var hr = hero.getBoundingClientRect();
@@ -206,22 +266,23 @@
           if (f > 0) p.s.kick((e.movementX || 0) * 1.3 * f);
         });
       });
-      // skyline
-      var sky = $('[data-skyline]', hero);
-      if (sky) {
-        var s = '', x = 0, seed = 7, rnd = function () { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
-        while (x < 1440) {
-          var w = 40 + rnd() * 90, h = 50 + rnd() * 150;
-          s += '<rect x="' + x + '" y="' + (240 - h) + '" width="' + w + '" height="' + h + '" fill="currentColor"/>';
-          if (rnd() > 0.6) s += '<rect x="' + (x + w / 2 - 2) + '" y="' + (240 - h - 26) + '" width="4" height="26" fill="currentColor"/>';
-          x += w + 2;
-        }
-        var palm = function (px) {
-          return '<g fill="currentColor"><path d="M' + px + ' 240 C' + (px + 4) + ' 180 ' + (px + 14) + ' 120 ' + (px + 10) + ' 60 L' + (px + 18) + ' 60 C' + (px + 22) + ' 120 ' + (px + 12) + ' 180 ' + (px + 10) + ' 240Z"/>' +
-            [-60, -25, 15, 50, 85, 130].map(function (a) { return '<ellipse cx="' + (px + 14) + '" cy="60" rx="46" ry="9" transform="rotate(' + a + ' ' + (px + 14) + ' 60) translate(30 0)"/>'; }).join('') + '</g>';
+      // rotating badge: spread the text evenly around the circle, whatever its length
+      $$('.spin-badge__t', hero).forEach(function (t) {
+        var fit = function () {
+          try {
+            var n = t.textContent.length, len = t.getComputedTextLength(); if (!n || !len) return;
+            var ls = parseFloat(getComputedStyle(t).letterSpacing) || 0;
+            t.style.letterSpacing = Math.max(0, ls + (2 * Math.PI * 80 - 2 - len) / n) + 'px';
+          } catch (e) {}
         };
-        sky.innerHTML = s + palm(180) + palm(260) + palm(1120) + palm(1300);
-      }
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); else fit();
+      });
+      // Cadillac crossing the panorama: hops on every vibe change
+      var heroCar = $('[data-hero-car]', hero);
+      hero._hop = function () {
+        if (!heroCar || reduce) return;
+        heroCar.classList.remove('hop'); void heroCar.offsetWidth; heroCar.classList.add('hop');
+      };
       // BRAAAP
       var words = (hero.dataset.braps || '').split(',').map(function (w) { return w.trim(); }).filter(Boolean);
       var pop = ['#ffd400', '#39ff14', '#f4f1ea', '#ff2e93', '#1d3fbf', '#e3191b'];
@@ -363,56 +424,129 @@
     },
 
     ride: function (root) {
-      var track = $('[data-ride-track]', root), bike = $('[data-bike]', root), bar = $('[data-ride-bar]', root), sticky = $('.ride__s', root);
-      var wheels = $$('.wh', bike), lastDust = 0;
-      function onScroll() {
-        var vh = window.innerHeight, r = root.getBoundingClientRect();
-        var total = root.offsetHeight - vh, p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
-        track.style.transform = 'translateX(' + (-p * (track.scrollWidth - window.innerWidth)) + 'px)';
-        var bx = 20 + p * (window.innerWidth - bike.offsetWidth - 40);
-        bike.style.transform = 'translate(' + bx + 'px,' + (Math.sin(p * 90) * 4) + 'px) rotate(' + (Math.sin(p * 45) * 3) + 'deg)';
-        wheels.forEach(function (w) { w.style.transform = 'rotate(' + (p * 5400) + 'deg)'; });
-        bar.style.width = (p * 100) + '%';
-        if (!reduce && r.top < 0 && r.bottom > vh && Math.abs(p - lastDust) > 0.006) {
-          lastDust = p;
-          var d = document.createElement('i'); d.className = 'dust'; d.style.left = (bx + 10) + 'px';
-          sticky.appendChild(d); setTimeout(function () { d.remove(); }, 900);
-        }
-      }
-      window.addEventListener('scroll', function () { requestAnimationFrame(onScroll); }, { passive: true });
-      window.addEventListener('resize', onScroll);
-      onScroll();
-    },
-
-    vscroll: function (root) {
-      var video = $('video', root), bike = $('[data-bike]', root), bar = $('[data-vbar]', root);
-      var wheels = bike ? $$('.wh', bike) : [];
-      var target = 0, shown = 0, raf = 0;
-      if (video) {
-        video.pause(); video.muted = true;
-        video.addEventListener('loadedmetadata', function () { onScroll(); });
-      }
+      var track = $('[data-ride-track]', root), car = $('[data-car]', root), bar = $('[data-ride-bar]', root), road = $('.road', root);
+      var rig = car ? carRig(car) : null, shown = -1;
       function progress() {
         var r = root.getBoundingClientRect(), total = root.offsetHeight - window.innerHeight;
         return total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
       }
-      function step() {
-        raf = 0;
-        shown += (target - shown) * (reduce ? 1 : 0.18);
-        if (Math.abs(target - shown) < 0.0005) shown = target;
+      whileVisible(root, function (dt) {
+        var p = progress(); shown = shown < 0 || reduce ? p : shown + (p - shown) * Math.min(1, dt * 9);
+        var W = window.innerWidth, travel = track.scrollWidth - W;
+        track.style.transform = 'translate3d(' + (-shown * travel).toFixed(1) + 'px,0,0)';
         bar.style.width = (shown * 100) + '%';
-        if (video && video.duration) { try { video.currentTime = shown * (video.duration - 0.05); } catch (e) {} }
-        if (bike) {
-          var w = root.clientWidth;
-          bike.style.transform = 'translate(' + (20 + shown * (w - bike.offsetWidth - 40)) + 'px,' + (Math.sin(shown * 80) * 4) + 'px)';
-          wheels.forEach(function (wh) { wh.style.transform = 'rotate(' + (shown * 4800) + 'deg)'; });
-        }
-        if (shown !== target) raf = requestAnimationFrame(step);
+        if (road) road.style.setProperty('--road-x', (-shown * travel * 0.35).toFixed(1) + 'px');
+        if (rig) { var x = W * 0.03 + shown * (W - car.offsetWidth - W * 0.06); rig.set(x, x + shown * travel * 0.35, dt); }
+      });
+    },
+
+    vscroll: function (root) {
+      var video = $('video', root), bar = $('[data-vbar]', root), journey = $('[data-journey]', root);
+      function progress() {
+        var r = root.getBoundingClientRect(), total = root.offsetHeight - window.innerHeight;
+        return total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
       }
-      function onScroll() { target = progress(); if (!raf) raf = requestAnimationFrame(step); }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll);
-      onScroll();
+      if (video) {
+        video.pause(); video.muted = true;
+        var vShown = 0;
+        whileVisible(root, function (dt) {
+          var p = progress(); vShown += (p - vShown) * (reduce ? 1 : Math.min(1, dt * 11));
+          bar.style.width = (vShown * 100) + '%';
+          if (video.duration) { try { video.currentTime = vShown * (video.duration - 0.05); } catch (e) {} }
+        });
+        return;
+      }
+      if (!journey) return;
+      var car = $('[data-car]', journey), rig = carRig(car), far = $('[data-far]', journey), mid = $('[data-mid]', journey);
+      var dash = $('[data-road] i', journey), skies = $$('[data-sky]', journey), sun = $('[data-sun]', journey);
+      var kmOut = $('[data-km-out]', journey), placeOut = $('[data-place]', journey);
+      var places = (root.dataset.places || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean), kmTot = +root.dataset.km || 300;
+      var shown = -1, lastPlace = '';
+      var clamp01 = function (x) { return Math.max(0, Math.min(1, x)); };
+      whileVisible(root, function (dt) {
+        var p = progress(); shown = shown < 0 || reduce ? p : shown + (p - shown) * Math.min(1, dt * 7);
+        var W = journey.clientWidth, cw = car.offsetWidth;
+        // the car crosses the screen while the landscape scrolls by (parallax: far < mid < road)
+        var x = W * 0.02 + shown * (W - cw - W * 0.04);
+        var farT = shown * Math.max(0, far.offsetWidth - W), midT = shown * Math.max(0, mid.offsetWidth - W), roadT = midT * 1.5;
+        far.style.transform = 'translate3d(' + (-farT).toFixed(1) + 'px,0,0)';
+        mid.style.transform = 'translate3d(' + (-midT).toFixed(1) + 'px,0,0)';
+        dash.style.transform = 'translate3d(' + (-(roadT % 140)).toFixed(1) + 'px,0,0)';
+        rig.set(x, x + roadT, dt);
+        // day → golden hour → Milano pink night
+        skies[1].style.opacity = clamp01(1 - Math.abs(shown - 0.5) * 2.6).toFixed(3);
+        skies[2].style.opacity = clamp01((shown - 0.55) * 2.6).toFixed(3);
+        sun.style.transform = 'translate3d(' + (shown * 8) + 'vw,' + (shown * 34) + 'vh,0)';
+        root.classList.toggle('is-dusk', shown > 0.62);
+        bar.style.width = (shown * 100) + '%';
+        if (kmOut) kmOut.textContent = String(Math.round(shown * kmTot)).padStart(3, '0');
+        if (placeOut && places.length) {
+          var pl = places[Math.min(places.length - 1, Math.floor(shown * places.length))];
+          if (pl !== lastPlace) { lastPlace = pl; placeOut.textContent = pl; }
+        }
+      });
+    },
+
+    reel: function (root) {
+      var frame = $('[data-reel-frame]', root), clips = $$('[data-clip]', root), chips = $$('[data-chip]', root);
+      var tc = $('[data-tc]', root), placeOut = $('[data-place-out]', root), dateOut = $('[data-date-out]', root), sound = $('[data-sound]', root);
+      var auto = (+root.dataset.auto || 0) * 1000, cur = 0, muted = true, visible = false, timer = 0, t0 = performance.now(), lastTc = '';
+      root.style.setProperty('--auto', (auto / 1000) + 's');
+      var vid = function (i) { return clips[i] ? $('video', clips[i]) : null; };
+      var pad = function (n) { return String(Math.floor(n)).padStart(2, '0'); };
+      function playCur() {
+        clips.forEach(function (c, i) {
+          var v = vid(i); if (!v) return;
+          if (i === cur && visible) { v.muted = muted; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } else v.pause();
+        });
+      }
+      function runChip() {
+        chips.forEach(function (c, k) {
+          var bar = $('i', c); if (!bar) return;
+          bar.classList.remove('run'); if (k === cur && auto && clips.length > 1) { void bar.offsetWidth; bar.classList.add('run'); }
+        });
+      }
+      function schedule() {
+        clearTimeout(timer);
+        if (auto && clips.length > 1 && visible) timer = setTimeout(function () { show(cur + 1); }, auto);
+      }
+      function show(i) {
+        cur = (i + clips.length) % clips.length;
+        clips.forEach(function (c, k) { c.classList.toggle('on', k === cur); });
+        chips.forEach(function (c, k) { c.classList.toggle('on', k === cur); c.setAttribute('aria-pressed', k === cur ? 'true' : 'false'); });
+        if (placeOut) placeOut.textContent = clips[cur].dataset.place || '';
+        if (dateOut) dateOut.textContent = clips[cur].dataset.date || '';
+        if (!reduce) { frame.classList.remove('glitch'); void frame.offsetWidth; frame.classList.add('glitch'); }
+        var v = vid(cur); if (v) { try { v.currentTime = 0; } catch (e) {} }
+        t0 = performance.now(); playCur(); runChip(); schedule();
+      }
+      root._show = show;
+      chips.forEach(function (c) { c.addEventListener('click', function (e) { e.stopPropagation(); show(+c.dataset.chip); }); });
+      function toggleSound() {
+        if (!sound) return;
+        muted = !muted; sound.setAttribute('aria-pressed', muted ? 'false' : 'true');
+        $('[data-label-off]', sound).hidden = !muted; $('[data-label-on]', sound).hidden = muted;
+        playCur();
+      }
+      if (sound) sound.addEventListener('click', function (e) { e.stopPropagation(); toggleSound(); });
+      frame.addEventListener('click', toggleSound);
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          visible = es[0].isIntersecting; playCur();
+          if (visible) { runChip(); schedule(); } else clearTimeout(timer);
+        }, { threshold: 0.25 }).observe(frame);
+      } else { visible = true; playCur(); schedule(); }
+      // scroll: the frame grows from a card to full screen; HUD timecode follows the clip
+      whileVisible(root, function () {
+        var r = root.getBoundingClientRect(), total = root.offsetHeight - window.innerHeight;
+        var p = total > 0 ? Math.min(1, Math.max(0, -r.top / (total * 0.7))) : 1;
+        var x = reduce ? 1 : 1 - Math.pow(1 - p, 3);
+        root.style.setProperty('--x', x.toFixed(4));
+        if (!reduce) frame.style.transform = 'translateY(' + ((1 - x) * 7).toFixed(3) + 'vh) scale(' + (0.58 + 0.42 * x).toFixed(4) + ')';
+        var v = vid(cur), s = v && !v.paused ? v.currentTime : (performance.now() - t0) / 1000;
+        var out = pad(s / 60) + ':' + pad(s % 60) + ':' + pad((s % 1) * 25);
+        if (out !== lastTc) { lastTc = out; tc.textContent = out; }
+      });
     },
 
     story: function (root) {
@@ -583,6 +717,8 @@
   /* ---------------- theme editor support ---------------- */
   document.addEventListener('shopify:section:load', function (e) { init(e.target); });
   document.addEventListener('shopify:block:select', function (e) {
+    var reel = e.target.closest('[data-tb="reel"]');
+    if (reel && reel._show && e.target.hasAttribute('data-clip')) reel._show($$('[data-clip]', reel).indexOf(e.target));
     var hero = e.target.closest('[data-tb="hero"]');
     if (hero && e.target.hasAttribute('data-vibe')) {
       if (hero._setVibe) hero._setVibe($$('[data-vibe]', hero).indexOf(e.target));

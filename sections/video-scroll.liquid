@@ -1,25 +1,49 @@
 {%- comment -%}
-  Scroll-scrubbed video (e.g. a Higgsfield clip of the bike): the video advances as you scroll.
-  For smooth scrubbing export the clip with a keyframe every frame (ffmpeg: -g 1) and keep it short (3–8 s).
-  Without a video, the illustrated bike rides across instead.
+  Cadillac scroll journey: Toscana → Milano.
+  1) Default: the illustrated Team Butti Cadillac drives across a parallax landscape as you scroll
+     (wheels, suspension, speed trail, exhaust). A Higgsfield sprite sheet can replace the drawing.
+  2) With a video (e.g. a Higgsfield clip) the video is scrubbed by the scroll instead.
+     For smooth scrubbing export the clip with a keyframe every frame (ffmpeg: -g 1) and keep it short (3–8 s).
 {%- endcomment -%}
 {%- liquid
   assign show = false
   if section.settings.video != blank or request.design_mode or section.settings.show_without_video
     assign show = true
   endif
+  assign signs = section.blocks | where: 'type', 'sign'
 -%}
 {%- if show -%}
-<section class="vscroll vscroll--{{ section.settings.theme }}" data-tb="vscroll" style="height: {{ section.settings.length }}vh">
+<section class="vscroll vscroll--{{ section.settings.theme }}{% if section.settings.video == blank %} vscroll--journey{% endif %}" data-tb="vscroll" data-km="{{ section.settings.km }}" data-places="{{ section.settings.places | escape }}" style="height: {{ section.settings.length }}vh">
   <div class="vscroll__s">
     {%- if section.settings.video != blank -%}
       <div class="vscroll__media">{{ section.settings.video | video_tag: autoplay: false, loop: false, muted: true, controls: false, playsinline: true, preload: 'auto', image_size: '1920x' }}</div>
     {%- else -%}
-      <div class="vscroll__media vscroll__media--fallback" aria-hidden="true">
-        <svg class="hills" viewBox="0 0 1440 500" preserveAspectRatio="none"><path d="M0 220 C200 120 380 140 560 200 S900 90 1100 160 S1360 140 1440 120 V500 H0Z" fill="#c4a05a"/><path d="M0 300 C240 220 420 260 640 300 S1000 220 1240 270 S1400 260 1440 250 V500 H0Z" fill="#b08a45"/></svg>
-        <div class="road"></div>
-        <div class="bike" data-bike>{% render 'bike' %}</div>
-        <span class="vscroll__slot label">{{ 'vscroll.slot' | t }}</span>
+      <div class="journey" data-journey aria-hidden="true">
+        <div class="journey__sky"><i data-sky="0"></i><i data-sky="1"></i><i data-sky="2"></i></div>
+        <div class="journey__sun" data-sun></div>
+        <div class="journey__far" data-far>{% render 'panorama', fit: 'none' %}</div>
+        <div class="journey__mid" data-mid>
+          {%- for b in signs -%}
+            <div class="jsign jsign--{{ b.settings.style }}" style="left: {{ b.settings.pos }}%" {{ b.shopify_attributes }}>
+              <div class="jsign__board"><b>{{ b.settings.title | escape }}</b>{%- if b.settings.sub != blank -%}<span>{{ b.settings.sub | escape }}</span>{%- endif -%}</div>
+              <i class="jsign__pole"></i>
+            </div>
+          {%- endfor -%}
+          {%- for i in (1..14) -%}<i class="jtree" style="left: {{ i | times: 7 | minus: 3 }}%; --s: {{ i | modulo: 3 | times: 0.18 | plus: 0.7 }}"></i>{%- endfor -%}
+        </div>
+        <div class="journey__road" data-road><i></i></div>
+        <div class="car car--xl" data-car>
+          <div class="car__fx"><i></i><i></i><i></i></div>
+          {%- if section.settings.car_sprite != blank -%}
+            <div class="car__sprite" data-car-sprite data-frames="{{ section.settings.sprite_frames }}" data-cols="{{ section.settings.sprite_cols }}" data-rows="{{ section.settings.sprite_rows }}" data-step="{{ section.settings.sprite_speed }}" style="background-image: url('{{ section.settings.car_sprite | image_url: width: 3840 }}'); --cols: {{ section.settings.sprite_cols }}; --rows: {{ section.settings.sprite_rows }}; aspect-ratio: {{ section.settings.car_sprite.width | divided_by: section.settings.sprite_cols }} / {{ section.settings.car_sprite.height | divided_by: section.settings.sprite_rows }};"></div>
+          {%- else -%}
+            {% render 'cadillac', uid: section.id %}
+          {%- endif -%}
+        </div>
+        <div class="journey__hud label"><span>{{ 'vscroll.km' | t }} <b data-km-out>000</b></span><span data-place>{{ section.settings.places | split: ',' | first | strip }}</span></div>
+        {%- if request.design_mode and section.settings.car_sprite == blank -%}
+          <span class="vscroll__slot label">{{ 'vscroll.slot' | t }}</span>
+        {%- endif -%}
       </div>
     {%- endif -%}
     <div class="vscroll__txt">
@@ -34,19 +58,58 @@
 
 {% schema %}
 {
-  "name": "Moto a scroll (video)",
+  "name": "Cadillac a scroll",
+  "max_blocks": 8,
   "settings": [
-    { "type": "video", "id": "video", "label": "Video", "info": "Il video avanza con lo scroll. Consigliato: 3–8 s, senza audio, keyframe su ogni frame." },
-    { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Sterrato · Toscana" },
-    { "type": "text", "id": "title", "label": "Titolo", "default": "Gas aperto" },
-    { "type": "textarea", "id": "text", "label": "Testo", "default": "Scorri e dai gas. Il resto lo fa la polvere." },
-    { "type": "range", "id": "length", "label": "Lunghezza dello scroll", "min": 150, "max": 500, "step": 25, "unit": "vh", "default": 300 },
+    { "type": "header", "content": "Testi" },
+    { "type": "text", "id": "kicker", "label": "Etichetta", "default": "A1 · Toscana → Milano" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Si parte" },
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "Finestrini giù, maglie al vento. Scorri e portaci al Market." },
+    { "type": "text", "id": "places", "label": "Tappe nel contachilometri", "info": "Separate da virgola, in ordine", "default": "Toscana,A1 · Appennino,Emilia,Milano" },
+    { "type": "range", "id": "km", "label": "Chilometri totali", "min": 50, "max": 1000, "step": 10, "default": 300 },
+    { "type": "range", "id": "length", "label": "Lunghezza dello scroll", "min": 150, "max": 500, "step": 25, "unit": "vh", "default": 325 },
     { "type": "select", "id": "theme", "label": "Testo", "default": "light", "options": [
-      { "value": "light", "label": "Chiaro su video" },
-      { "value": "dark", "label": "Scuro su video" }
+      { "value": "light", "label": "Chiaro" },
+      { "value": "dark", "label": "Scuro" }
     ] },
-    { "type": "checkbox", "id": "show_without_video", "label": "Mostra anche senza video (moto disegnata)", "default": false, "info": "Di default la sezione resta nascosta sul negozio finché non carichi la clip." }
+    { "type": "header", "content": "Cadillac animata (Higgsfield)" },
+    { "type": "image_picker", "id": "car_sprite", "label": "Sprite della Cadillac", "info": "PNG/WebP con sfondo trasparente: tutti i frame del giro ruote in una griglia. Vuoto = Cadillac disegnata." },
+    { "type": "range", "id": "sprite_cols", "label": "Sprite: colonne", "min": 1, "max": 12, "step": 1, "default": 6 },
+    { "type": "range", "id": "sprite_rows", "label": "Sprite: righe", "min": 1, "max": 12, "step": 1, "default": 4 },
+    { "type": "range", "id": "sprite_frames", "label": "Sprite: frame usati", "min": 1, "max": 96, "step": 1, "default": 24 },
+    { "type": "range", "id": "sprite_speed", "label": "Sprite: pixel di strada per frame", "min": 2, "max": 40, "step": 1, "default": 14 },
+    { "type": "header", "content": "Oppure video intero" },
+    { "type": "video", "id": "video", "label": "Video che avanza con lo scroll", "info": "Sostituisce il paesaggio disegnato. Consigliato: 3–8 s, senza audio, keyframe su ogni frame." },
+    { "type": "checkbox", "id": "show_without_video", "label": "Mostra la Cadillac disegnata se non c'è il video", "default": true }
   ],
-  "presets": [{ "name": "Moto a scroll (video)" }]
+  "blocks": [
+    {
+      "type": "sign",
+      "name": "Cartello",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Testo grande", "default": "Milano" },
+        { "type": "text", "id": "sub", "label": "Testo piccolo", "default": "196 km" },
+        { "type": "select", "id": "style", "label": "Stile", "default": "green", "options": [
+          { "value": "green", "label": "Autostrada (verde)" },
+          { "value": "blue", "label": "Statale (blu)" },
+          { "value": "city", "label": "Città (bianco)" },
+          { "value": "pink", "label": "Team Butti (rosa)" }
+        ] },
+        { "type": "range", "id": "pos", "label": "Posizione lungo il viaggio", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cadillac a scroll",
+      "blocks": [
+        { "type": "sign", "settings": { "title": "A1", "sub": "Firenze · Bologna", "style": "green", "pos": 12 } },
+        { "type": "sign", "settings": { "title": "Bologna", "sub": "102 km", "style": "green", "pos": 34 } },
+        { "type": "sign", "settings": { "title": "Milano", "sub": "196 km", "style": "green", "pos": 56 } },
+        { "type": "sign", "settings": { "title": "Milano", "sub": "", "style": "city", "pos": 76 } },
+        { "type": "sign", "settings": { "title": "Market 26.09", "sub": "Team Butti →", "style": "pink", "pos": 93 } }
+      ]
+    }
+  ]
 }
 {% endschema %}

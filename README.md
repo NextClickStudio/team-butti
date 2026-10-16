@@ -22,10 +22,10 @@ Su Vercel ci sono solo `index.html` (da `tools/theme-test/demo-shell.js /cdn/ /l
 - Online: GitHub Pages (Settings → Pages → branch, cartella `/`) e apri `/preview/`, oppure trascina la cartella `preview` su Vercel/Netlify.
 
 ## Mettere il tema su Shopify (pronto da caricare)
-1. Online Store → Temi → Aggiungi tema → **Carica file .zip** (`Team Butti-1.1.0.zip`, generato con `shopify theme package`).
+1. Online Store → Temi → Aggiungi tema → **Carica file .zip** (`Team Butti-1.2.0.zip`, generato con `shopify theme package`).
 2. Prodotti → Importa → `import/prodotti-team-butti.csv` (10 prodotti di esempio con varianti, taglie e disegni maglia via tag).
 3. Pubblica il tema. Griglia, configuratore (`maglia-custom`) e targa (`targa-socal`) si collegano da soli.
-4. Video: Personalizza → sezione **Moto a scroll (video)** per la clip Higgsfield, sezione **La nostra storia (video)** per il vostro video. Restano nascoste sul negozio finché il video non c'è.
+4. Video: Personalizza → **Video del brand** (le clip subito sotto la hero) e **La nostra storia (video)** per il vostro video: restano nascoste sul negozio finché il video non c'è. **Cadillac a scroll** è già visibile con la Cadillac disegnata; per la versione Higgsfield vedi `tools/higgsfield/README.md`.
 
 ## Dettagli setup
 Vedi la sezione *Setup sul negozio* in `preview/SHOPIFY-MAP.md`. In breve: Online Store → Temi → Aggiungi tema → Connetti da GitHub, poi prodotti, metafield e foto.

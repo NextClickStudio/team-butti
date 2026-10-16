@@ -97,6 +97,12 @@
     "play": "Guarda il video con l'audio"
   },
   "vscroll": {
-    "slot": "Slot video Higgsfield: la moto animata che avanza con lo scroll"
+    "slot": "Slot Higgsfield: qui andrà la Cadillac animata (sprite) o il video a scroll",
+    "km": "Km"
+  },
+  "reel": {
+    "slot": "Slot video",
+    "sound_on": "Audio on",
+    "sound_off": "Audio off"
   }
 }
