@@ -554,61 +554,176 @@
       var bike = $('[data-mxs-bike]', root), bar = $('[data-mxs-bar]', root), sticky = $('.mxs__s', root);
       var wheels = $$('.mx__wh', bike), body = $('.mx__body', bike), rider = $('.mx__rider', bike), shadow = $('.mx__shadow', bike);
       var braap = root.dataset.braap || '';
-      var chapters = $$('.mxs__ch', root).length || 1;
-      var STEP = 2, Y = [], ANG = [], AIR = [], LAND = [], TAKE = [], W = 0, H = 0, VW = 0, gx = 0;
+      var chEls = $$('.mxs__ch', root), chapters = chEls.length || 1, lastCh = -1;
       var dirt = getComputedStyle(root).getPropertyValue('--mxs-dirt').trim() || '#d2a55c';
-      // terrain: rollers + whoops, then per chapter a kicker (ramp with a sharp lip) and a long landing dune
-      function terrain(x) {
-        var base = H * 0.8, y = base - Math.sin(x / (VW * 0.37)) * H * 0.012 - Math.sin(x / (VW * 0.11) + 1.3) * H * 0.006;
-        var hump = function (c, a, w) { var u = (x - c) / w; if (u > -1 && u < 1) y -= a * (1 + Math.cos(Math.PI * u)) / 2; };
-        var kick = function (c, a, wUp, wDown) {
-          var u = x < c ? (x - c) / wUp : (x - c) / wDown;
-          if (u > -1 && u < 1) y -= a * (u < 0 ? (u + 1) * (u + 1) : (1 - u) * (1 - u));
-        };
-        for (var k = 0; k < chapters + 1; k++) {
-          var o = k * VW;
-          hump(o + VW * 0.1, H * 0.022, VW * 0.06); hump(o + VW * 0.2, H * 0.026, VW * 0.06);
-          if (k < chapters) { kick(o + VW * 0.55, H * 0.16, VW * 0.3, VW * 0.09); kick(o + VW * 0.8, H * 0.15, VW * 0.1, VW * 0.3); }
+      var STEP = 2, G, Y, ANG, AIR, LAND = [], TAKE = [], PROPS = [], W = 0, H = 0, VW = 0, gx = 0, wb = 0, hu = 0, L = 0;
+      // seeded random: the same track on every visit, but every chapter is different
+      function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+      var ease = function (t) { return t * t * (3 - 2 * t); };
+      // cubic Hermite between (x0,h0,m0) and (x1,h1,m1), slopes in height per px
+      var herm = function (x, x0, h0, m0, x1, h1, m1) {
+        var d = x1 - x0, t = (x - x0) / d, t2 = t * t, t3 = t2 * t;
+        return (2 * t3 - 3 * t2 + 1) * h0 + (t3 - 2 * t2 + t) * d * m0 + (-2 * t3 + 3 * t2) * h1 + (t3 - t2) * d * m1;
+      };
+      var idx = function (x) { return Math.max(0, Math.min(G.length - 1, Math.round(x / STEP))); };
+      var hAt = function (x) { var f = x / STEP, i = Math.max(0, Math.min(G.length - 2, Math.floor(f))), r = Math.min(1, Math.max(0, f - i)); return G[i] * (1 - r) + G[i + 1] * r; };
+      var T = function (x) { return H * 0.8 - hAt(x); };
+      var S = function (x) { return (T(x - wb / 2) + T(x + wb / 2)) / 2; };
+
+      /* ---- track builder: continuous ground segments; jumps compute their flight first, the ground under it is built from the flight ---- */
+      var FL = [];
+      var Sg = function (x) { return (hAt(x - wb / 2) + hAt(x + wb / 2)) / 2; };
+      function seg(x0, x1, fn) { for (var i = Math.max(0, Math.ceil(x0 / STEP)); i <= Math.min(G.length - 1, Math.floor(x1 / STEP)); i++) G[i] = fn(i * STEP); }
+      function Track(R) { this.x = VW * 0.36; this.h = 0; this.R = R; }
+      Track.prototype.flat = function (len) { var h = this.h; seg(this.x, this.x + len, function () { return h; }); this.x += len; return this; };
+      Track.prototype.waves = function (len, n, amp) {
+        var x0 = this.x, h = this.h;
+        seg(x0, x0 + len, function (x) { return h + amp * (1 - Math.cos(2 * Math.PI * n * (x - x0) / len)) / 2; });
+        this.x += len; return this;
+      };
+      Track.prototype.climb = function (len, dh) {
+        var x0 = this.x, h = this.h; seg(x0, x0 + len, function (x) { return herm(x, x0, h, 0, x0 + len, h + dh, 0); });
+        this.x += len; this.h += dh; return this;
+      };
+      Track.prototype.prop = function (t, dx) { PROPS.push({ t: t, x: this.x + (dx || 0) }); return this; };
+      // kind: table | double | dune | drop ; o.h lip height, o.s take-off slope, o.land landing height (share of the apex)
+      Track.prototype.jump = function (kind, o) {
+        var R = this.R, x0 = this.x, h0 = this.h, hl = hu * o.h * (0.9 + R() * 0.2), s = o.s * (0.95 + R() * 0.1);
+        var ramp = 1.7 * hl / s, xL = x0 + ramp, hLip = h0 + hl;
+        var rampH = function (x) { return x <= x0 ? h0 : herm(Math.min(x, xL), x0, h0, 0, xL, hLip, s); };
+        seg(x0, xL + STEP, rampH);
+        // flight from the bike's support (mean of both wheels) when the front wheel reaches the lip
+        var xT = xL - wb / 2, sup = function (x) { return (rampH(x - wb / 2) + rampH(x + wb / 2)) / 2; };
+        var hT = sup(xT), sT = (sup(xT) - sup(xT - 4)) / 4;
+        var f = function (x) { return hT + sT * (x - xT) - gx / 2 * (x - xT) * (x - xT); };
+        var xa = xT + sT / gx, hA = f(xa), hd = Math.max(hu * 0.03, (hA - 0) * o.land), xD = xa + Math.sqrt(2 * (hA - hd) / gx), mD = -gx * (xD - xT) + sT;
+        var clr = hu * 0.06, span = xD - xL;
+        // clearance: zero on the lip, opens up quickly, closes to zero at the landing (tangent touch-down)
+        var under = function (x) { return f(x) - clr * Math.min(1, (x - xL) / (span * 0.12)) * Math.pow(Math.max(0, xD - x) / span, 1.2); };
+        var shape;
+        if (kind === 'table') shape = function () { return hLip; };
+        else if (kind === 'drop') shape = function () { return h0 + hl * 0.25; };
+        else {
+          // gap after the lip (a pit for doubles, a saddle for dunes), then a sloped face up to the landing
+          var pit = kind === 'double' ? h0 - hu * (o.pit || 0.04) : h0 + hl * 0.4;
+          var xp0 = xL + Math.min(span * 0.24, hu * 0.3), xp1 = Math.max(xp0 + 4, xL + span * 0.4), xf = Math.max(xp1 + span * 0.25, xL + span * 0.78);
+          var hF = under(xf), dF = (under(xf + 2) - under(xf - 2)) / 4;
+          shape = function (x) {
+            if (x < xp0) return herm(x, xL, hLip, 0, xp0, pit, 0);
+            if (x < xp1) return pit;
+            if (x < xf) return herm(x, xp1, pit, 0, xf, hF, dF);
+            return under(x);
+          };
         }
-        return y;
+        seg(xL + STEP, xD, function (x) { return Math.min(shape(x), under(x)); });
+        var xE = xD + Math.min(hu * 1.2, 2 * hd / Math.max(0.15, -mD));
+        seg(xD, xE, function (x) { return hd * Math.pow((xE - x) / (xE - xD), 2); });
+        FL.push({ xT: xT, f: f, xD: xD });
+        PROPS.push({ t: 'flag', x: xL - 6 });
+        PROPS.push({ t: kind === 'double' ? 'tyres' : 'hay', x: xE + hu * 0.12 });
+        this.x = xE; this.h = 0; return this;
+      };
+
+      var PLANS = [
+        function (t) { return t.flat(L * 0.05).waves(L * 0.26, 3, hu * 0.035).flat(L * 0.05).jump('table', { h: 0.12, s: 0.6, land: 0.45 }); },
+        function (t) { return t.flat(L * 0.04).waves(L * 0.3, 6, hu * 0.02).prop('cones', -L * 0.15).flat(L * 0.05).jump('double', { h: 0.16, s: 0.72, land: 0.4, pit: 0.05 }); },
+        function (t) { return t.flat(L * 0.04).climb(L * 0.26, hu * 0.18).flat(L * 0.06).prop('hay', -L * 0.03).jump('drop', { h: 0.04, s: 0.38, land: 0.1 }); },
+        function (t) { return t.flat(L * 0.05).waves(L * 0.14, 1, hu * 0.05).flat(L * 0.04).jump('dune', { h: 0.21, s: 0.8, land: 0.42 }); },
+        function (t) { return t.flat(L * 0.04).jump('double', { h: 0.1, s: 0.55, land: 0.45, pit: 0.03 }).flat(L * 0.04).waves(L * 0.2, 5, hu * 0.018).flat(L * 0.06).prop('finish', L * 0.1); }
+      ];
+
+      function buildTrack() {
+        G = new Float32Array(Math.ceil(W / STEP) + 2); PROPS = []; FL = [];
+        var t = new Track(rng(1969)), CH = (W - VW * 0.6) / chapters;
+        for (var k = 0; k < chapters; k++) {
+          if (t.x > W - L * 0.6) break;
+          if (t.x < k * CH + L * 0.25) t.flat(k * CH + L * 0.25 - t.x);
+          PLANS[k % PLANS.length](t);
+        }
+        if (t.x < W) t.flat(W - t.x + STEP);
       }
-      function build() {
-        VW = window.innerWidth; H = sticky.clientHeight; W = world.offsetWidth; gx = 3 / VW;
-        var n = Math.ceil(W / STEP) + 2, y = terrain(0), sl = 0, air = false, t0 = 0, a0 = 0;
-        Y = new Float32Array(n); ANG = new Float32Array(n); AIR = new Uint8Array(n); LAND = []; TAKE = [];
-        // the bike rests on both wheels: support = mean of the ground under each wheel, pitch = line between them
-        var wb = (bike.offsetWidth || 300) * 226 / 420, T = function (x) { return terrain(x); };
-        var S = function (x) { return (T(x - wb / 2) + T(x + wb / 2)) / 2; }, pitch = function (x) { return Math.atan2(T(x + wb / 2) - T(x - wb / 2), wb); };
-        var d1 = function (x) { return (S(x + 1) - S(x - 1)) / 2; }, d2 = function (x) { return S(x + 1) - 2 * S(x) + S(x - 1); };
-        for (var i = 0; i < n; i++) {
-          var x = i * STEP, g = S(x);
-          if (!air) {
-            y = g; sl = d1(x);
-            // y grows downwards: the bike leaves the ground where the terrain drops away faster than gravity
-            if (d2(x) > gx && sl < 0.02) { air = true; t0 = i; a0 = pitch(x); TAKE.push(i); }
-          } else {
-            sl += gx * STEP; y += sl * STEP;
-            if (y >= g) {
-              y = g; air = false;
-              var a1 = pitch(x), len = i - t0;
-              // in the air the bike levels out, then noses down to match the landing
-              for (var j = t0; j < i; j++) { var t = (j - t0) / len, e = t * t * (3 - 2 * t); ANG[j] = a0 + (a1 - a0) * e - Math.sin(Math.PI * t) * 0.05; }
-              LAND.push({ i: i, v: Math.min(1, Math.abs(sl - d1(x)) * 1.6) });
-            }
+
+      function buildPath() {
+        var n = G.length; Y = new Float32Array(n); ANG = new Float32Array(n); AIR = new Uint8Array(n); LAND = []; TAKE = [];
+        var base = H * 0.8;
+        for (var i = 0; i < n; i++) { var x = i * STEP; Y[i] = base - Sg(x); ANG[i] = Math.atan2(hAt(x - wb / 2) - hAt(x + wb / 2), wb); }
+        FL.forEach(function (fl) {
+          var i0 = Math.ceil(fl.xT / STEP), j = i0 + 4;
+          // land where the flight meets the support again, after the apex
+          while (j < n && (fl.f(j * STEP) > Sg(j * STEP) || j * STEP < fl.xT + 40)) j++;
+          var a0 = ANG[i0 - 1] || 0, a1 = ANG[Math.min(n - 1, j)], len = j - i0;
+          TAKE.push(i0);
+          for (var q = i0; q < j && q < n; q++) {
+            var t = (q - i0) / len;
+            Y[q] = base - fl.f(q * STEP); AIR[q] = 1; ANG[q] = a0 + (a1 - a0) * ease(t) - Math.sin(Math.PI * t) * 0.05;
           }
-          Y[i] = y; AIR[i] = air ? 1 : 0; if (!air) ANG[i] = pitch(x);
-        }
-        // ground drawing: dune body, darker crest line, tyre ruts, grass tufts
-        var pts = [], rut = [], grass = '';
-        var Td = function (x) { return (T(x - 14) + T(x - 7) + T(x) + T(x + 7) + T(x + 14)) / 5; };
+          var vf = fl.f(j * STEP) - fl.f(j * STEP - 2), vg = Sg(j * STEP) - Sg(j * STEP - 2);
+          LAND.push({ i: j, v: Math.min(1, 0.3 + Math.abs(vf - vg) * 0.8) });
+        });
+      }
+
+      function drawGround() {
+        var pts = [], rut = [], grass = '', props = '';
+        var Td = function (x) { return (T(x - 8) + T(x - 4) + T(x) + T(x + 4) + T(x + 8)) / 5; };
         for (var xx = 0; xx <= W; xx += 6) { var ty = Td(xx); pts.push(xx.toFixed(0) + ' ' + ty.toFixed(1)); rut.push(xx.toFixed(0) + ' ' + (ty + H * 0.03).toFixed(1)); }
-        for (var gq = VW * 0.05; gq < W; gq += VW * (0.09 + (gq % 7) / 100)) { var gy = Td(gq); grass += 'M' + gq.toFixed(0) + ' ' + gy.toFixed(0) + 'l-4 -12M' + gq.toFixed(0) + ' ' + gy.toFixed(0) + 'l2 -15M' + gq.toFixed(0) + ' ' + gy.toFixed(0) + 'l7 -10'; }
+        var R = rng(77);
+        for (var gq = VW * 0.05; gq < W; gq += VW * (0.05 + R() * 0.08)) { var gy = Td(gq); grass += 'M' + gq.toFixed(0) + ' ' + gy.toFixed(0) + 'l-4 -12M' + gq.toFixed(0) + ' ' + gy.toFixed(0) + 'l2 -15M' + gq.toFixed(0) + ' ' + gy.toFixed(0) + 'l7 -10'; }
+        var u = Math.max(0.7, H / 900);
+        PROPS.forEach(function (p) {
+          var x = p.x, y = Td(x);
+          if (p.t === 'flag') props += '<g transform="translate(' + x.toFixed(0) + ' ' + y.toFixed(0) + ') scale(' + u + ')"><path d="M0 0V-70" stroke="#0d0d0d" stroke-width="3"/><path d="M0 -70L30 -62L0 -54Z" fill="#ff2e93" stroke="#0d0d0d" stroke-width="2.5" stroke-linejoin="round"/></g>';
+          if (p.t === 'hay') props += '<g transform="translate(' + x.toFixed(0) + ' ' + y.toFixed(0) + ') scale(' + u + ')"><rect x="-34" y="-34" width="68" height="36" rx="8" fill="#e8c66f" stroke="#0d0d0d" stroke-width="2.5"/><path d="M-26 -24h52M-26 -14h52" stroke="#b98d35" stroke-width="2"/><rect x="-14" y="-31" width="28" height="22" fill="#f4f1ea" stroke="#0d0d0d" stroke-width="2"/><text x="0" y="-14" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="16" fill="#0d0d0d">69</text></g>';
+          if (p.t === 'tyres') props += '<g transform="translate(' + x.toFixed(0) + ' ' + y.toFixed(0) + ') scale(' + u + ')"><g fill="#1a1a1a" stroke="#0d0d0d" stroke-width="2"><rect x="-26" y="-14" width="52" height="15" rx="7"/><rect x="-24" y="-27" width="48" height="14" rx="7"/><rect x="-22" y="-40" width="44" height="14" rx="7"/></g><path d="M-20 -33h40M-22 -20h44" stroke="#ffd400" stroke-width="3"/></g>';
+          if (p.t === 'cones') for (var c = -1; c <= 1; c++) props += '<path transform="translate(' + (x + c * VW * 0.09).toFixed(0) + ' ' + Td(x + c * VW * 0.09).toFixed(0) + ') scale(' + u + ')" d="M-8 0L0 -24L8 0Z" fill="#ff7a1a" stroke="#0d0d0d" stroke-width="2" stroke-linejoin="round"/>';
+          if (p.t === 'finish') props += '<g transform="translate(' + x.toFixed(0) + ' ' + y.toFixed(0) + ') scale(' + u + ')"><path d="M-110 0V-150M110 0V-150" stroke="#0d0d0d" stroke-width="6"/><rect x="-118" y="-170" width="236" height="44" fill="#ff2e93" stroke="#0d0d0d" stroke-width="3"/><text x="0" y="-136" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="30" fill="#0d0d0d">TEAM BUTTI</text><g fill="#0d0d0d">' + (function () { var s = ''; for (var q = 0; q < 12; q++) s += '<rect x="' + (-118 + q * 19.7).toFixed(1) + '" y="' + (q % 2 ? -126 : -118) + '" width="19.7" height="8"/>'; return s; })() + '</g></g>';
+        });
         ground.setAttribute('viewBox', '0 0 ' + W + ' ' + H); ground.setAttribute('width', W); ground.setAttribute('height', H);
         ground.innerHTML = '<defs><linearGradient id="mxs-dirt-' + root.id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + dirt + '"/><stop offset="1" stop-color="#8a5a2b"/></linearGradient></defs>' +
           '<path d="M0 ' + H + 'L' + pts.join('L') + 'L' + W + ' ' + H + 'Z" fill="url(#mxs-dirt-' + root.id + ')"/>' +
           '<path d="M' + pts.join('L') + '" fill="none" stroke="#0d0d0d" stroke-width="3"/>' +
           '<path d="M' + rut.join('L') + '" fill="none" stroke="rgba(90,56,22,.35)" stroke-width="3" stroke-dasharray="26 18"/>' +
-          '<path d="' + grass + '" fill="none" stroke="#5f6f2e" stroke-width="3" stroke-linecap="round"/>';
+          '<path d="' + grass + '" fill="none" stroke="#5f6f2e" stroke-width="3" stroke-linecap="round"/>' + props;
+      }
+
+      // far Tuscany, generated: rolling hills with borghi, cypress alleys, farmhouses, pines, vineyards and hay rolls
+      function drawFar() {
+        if (!far) return;
+        var fw = far.offsetWidth, fh = far.offsetHeight; if (!fw || !fh) return;
+        var R = rng(2019), back = [], front = [], items = '', bi = '', vines = '';
+        var hill = function (x, ph, amp, base) { return fh * base - fh * amp * (0.55 * Math.sin(x / (fw * 0.07) + ph) + 0.3 * Math.sin(x / (fw * 0.031) + ph * 2.1) + 0.15 * Math.sin(x / (fw * 0.013) + ph * 3.7)); };
+        for (var x = 0; x <= fw; x += 8) { back.push(x + ' ' + hill(x, 0.4, 0.16, 0.42).toFixed(1)); front.push(x + ' ' + hill(x, 2.2, 0.12, 0.7).toFixed(1)); }
+        var cyp = function (cx, by, h, col) { cx = +cx; by = +by; var w = h * 0.13, n = function (v) { return v.toFixed(1); }; return '<path d="M' + n(cx) + ' ' + n(by) + 'C' + n(cx - w) + ' ' + n(by - h * 0.32) + ' ' + n(cx - w * 0.6) + ' ' + n(by - h * 0.86) + ' ' + n(cx) + ' ' + n(by - h) + 'C' + n(cx + w * 0.6) + ' ' + n(by - h * 0.86) + ' ' + n(cx + w) + ' ' + n(by - h * 0.32) + ' ' + n(cx) + ' ' + n(by) + 'Z" fill="' + col + '"/>'; };
+        for (var px = fw * 0.03; px < fw; px += fw * (0.06 + R() * 0.07)) {
+          var kind = Math.floor(R() * 6), by = hill(px, 0.4, 0.16, 0.42) + 3, fy = hill(px, 2.2, 0.12, 0.7) + 3, s = fh / 300;
+          if (kind === 0) { // borgo with towers on the back hill
+            var t = '';
+            for (var q = 0; q < 5; q++) { var tw = (8 + R() * 6) * s, th = (30 + R() * 50) * s, tx = px + q * 14 * s; t += '<rect x="' + tx.toFixed(1) + '" y="' + (by - th).toFixed(1) + '" width="' + tw.toFixed(1) + '" height="' + (th + 6).toFixed(1) + '"/>'; }
+            bi += '<g fill="#b3b97f">' + t + '<rect x="' + (px - 6 * s).toFixed(1) + '" y="' + (by - 18 * s).toFixed(1) + '" width="' + (84 * s).toFixed(1) + '" height="' + (24 * s).toFixed(1) + '"/></g>';
+          } else if (kind === 1) { // cypress alley climbing to a villa
+            for (var c = 0; c < 6; c++) { var cx = px + c * 16 * s; items += cyp(cx.toFixed(1), (hill(cx, 2.2, 0.12, 0.7) + 4).toFixed(1), (38 + c * 4) * s, '#5c6f30'); }
+            items += '<path d="M' + (px + 100 * s) + ' ' + (fy + 2) + 'v' + (-26 * s) + 'l' + (22 * s) + ' ' + (-12 * s) + 'l' + (22 * s) + ' ' + (12 * s) + 'v' + (26 * s) + 'Z" fill="#6d7c3a"/>';
+          } else if (kind === 2) { // umbrella pine pair
+            for (var pp = 0; pp < 2; pp++) { var ux = px + pp * 46 * s, uy = hill(ux, 2.2, 0.12, 0.7) + 4; items += '<path d="M' + (ux - 2 * s) + ' ' + uy + 'l' + (2 * s) + ' ' + (-34 * s) + 'h' + (4 * s) + 'l' + (2 * s) + ' ' + (34 * s) + 'Z" fill="#4f6129"/><ellipse cx="' + (ux + 2 * s) + '" cy="' + (uy - 38 * s) + '" rx="' + (30 * s) + '" ry="' + (10 * s) + '" fill="#4f6129"/>'; }
+          } else if (kind === 3) { // vineyard rows on the front hill
+            for (var v = 0; v < 7; v++) vines += 'M' + (px + v * 9 * s).toFixed(1) + ' ' + (fy + 14 * s).toFixed(1) + 'l' + (26 * s).toFixed(1) + ' ' + (-20 * s).toFixed(1);
+          } else if (kind === 4) { // hay rolls
+            for (var hr = 0; hr < 3; hr++) { var hx = px + hr * 24 * s; items += '<circle cx="' + hx.toFixed(1) + '" cy="' + (hill(hx, 2.2, 0.12, 0.7) - 6 * s).toFixed(1) + '" r="' + (8 * s).toFixed(1) + '" fill="#d8b866" stroke="#a88a3f" stroke-width="2"/>'; }
+          } else { // lone cypress pair on the back hill
+            items += cyp(px.toFixed(1), (by + 2).toFixed(1), 40 * s, '#97a160') + cyp((px + 12 * s).toFixed(1), (by + 2).toFixed(1), 32 * s, '#97a160');
+          }
+        }
+        far.style.background = 'none';
+        far.innerHTML = '<svg width="' + fw + '" height="' + fh + '" viewBox="0 0 ' + fw + ' ' + fh + '" aria-hidden="true" focusable="false" style="display:block">' +
+          '<path d="M0 ' + fh + 'L' + back.join('L') + 'L' + fw + ' ' + fh + 'Z" fill="#c3c68e"/>' + bi +
+          '<path d="M0 ' + fh + 'L' + front.join('L') + 'L' + fw + ' ' + fh + 'Z" fill="#93a057"/>' +
+          '<path d="' + vines + '" stroke="#6f7f3a" stroke-width="3" stroke-linecap="round"/>' + items + '</svg>';
+      }
+
+      function build() {
+        // everything scales with the bike: same jumps (relative to the bike) on a phone and on a big screen
+        VW = window.innerWidth; H = sticky.clientHeight; W = world.offsetWidth;
+        var bw0 = bike.offsetWidth || 300; wb = bw0 * 226 / 420; L = bw0 * 4.5; hu = Math.min(H * 0.95, bw0 * 3.2); gx = 0.62 / bw0;
+        buildTrack(); buildPath(); drawGround(); drawFar();
       }
       build();
       var rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(function () { build(); last = -1; }, 150); });
@@ -630,12 +745,17 @@
         world.style.transform = 'translate3d(' + (-tx).toFixed(1) + 'px,0,0)';
         far.style.transform = 'translate3d(' + (-shown * Math.max(0, far.offsetWidth - VW)).toFixed(1) + 'px,0,0)';
         bar.style.width = (shown * 100) + '%';
+        // phones: the chapters are far apart, so the current one stays pinned on screen and cross-fades
+        if (VW < 800) {
+          var CH = (W - VW * 0.6) / chapters, act = Math.max(0, Math.min(chapters - 1, Math.floor((tx + VW * 0.5) / CH)));
+          chEls.forEach(function (c, k) { c.style.transform = 'translate3d(' + (tx - k * CH).toFixed(1) + 'px,0,0)'; if (act !== lastCh) c.classList.toggle('on', k === act); });
+          lastCh = act;
+        } else if (lastCh !== -1) { chEls.forEach(function (c) { c.style.transform = ''; c.classList.remove('on'); }); lastCh = -1; }
         var bw = bike.offsetWidth, bx = VW * (VW < 800 ? 0.3 : 0.24), wx = tx + bx;
-        var i = Math.max(0, Math.min(Y.length - 1, Math.round(wx / STEP)));
-        var y = Y[i], ang = ANG[i] * 57.2958, inAir = AIR[i] === 1;
-        // events while riding forward: take-off (BRAAAP), landing (suspension + dust)
+        var i = idx(wx), y = Y[i], ang = ANG[i] * 57.2958, inAir = AIR[i] === 1;
+        // events while riding forward: take-off (BRAAAP), landing (suspension + dust), roost on the ground
         if (last >= 0 && i > last && i - last < 400) {
-          TAKE.forEach(function (t) { if (t > last && t <= i && braap && Y[t] < H * 0.7) fx('braap', bx + bw * 0.1, y - bw * 0.6, null, 1000); });
+          TAKE.forEach(function (t) { if (t > last && t <= i && braap) fx('braap', bx + bw * 0.1, y - bw * 0.6, null, 1000); });
           LAND.forEach(function (l) {
             if (l.i > last && l.i <= i) {
               compV += 260 * l.v;
@@ -649,7 +769,6 @@
           }
         }
         last = i;
-        // suspension spring (compression in px of the chassis)
         compV += (-comp * 180 - compV * 16) * dt; comp += compV * dt; comp = Math.max(-6, Math.min(16, comp));
         var bump = inAir ? 0 : Math.sin(wx / 23) * 1.2;
         bike.style.transform = 'translate3d(' + (bx - bw * 0.488).toFixed(1) + 'px,' + (y - bike.offsetHeight * 0.967).toFixed(1) + 'px,0) rotate(' + ang.toFixed(2) + 'deg)';
@@ -659,6 +778,7 @@
         var deg = wx / (bw * 48 / 420) * 57.2958;
         wheels.forEach(function (w) { w.style.transform = 'rotate(' + deg.toFixed(1) + 'deg)'; });
       });
+      root._mx = { get: function () { return { G: G, Y: Y, AIR: AIR, TAKE: TAKE, LAND: LAND, FL: FL, W: W, STEP: STEP, base: H * 0.8, S: S, T: T, Sg: Sg, gx: gx, wb: wb, hu: hu }; } };
     },
 
     story: function (root) {
