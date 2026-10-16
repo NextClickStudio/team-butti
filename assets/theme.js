@@ -549,6 +549,118 @@
       });
     },
 
+    mxs: function (root) {
+      var world = $('[data-mxs-world]', root), ground = $('[data-mxs-ground]', root), far = $('[data-mxs-far]', root);
+      var bike = $('[data-mxs-bike]', root), bar = $('[data-mxs-bar]', root), sticky = $('.mxs__s', root);
+      var wheels = $$('.mx__wh', bike), body = $('.mx__body', bike), rider = $('.mx__rider', bike), shadow = $('.mx__shadow', bike);
+      var braap = root.dataset.braap || '';
+      var chapters = $$('.mxs__ch', root).length || 1;
+      var STEP = 2, Y = [], ANG = [], AIR = [], LAND = [], TAKE = [], W = 0, H = 0, VW = 0, gx = 0;
+      var dirt = getComputedStyle(root).getPropertyValue('--mxs-dirt').trim() || '#d2a55c';
+      // terrain: rollers + whoops, then per chapter a kicker (ramp with a sharp lip) and a long landing dune
+      function terrain(x) {
+        var base = H * 0.8, y = base - Math.sin(x / (VW * 0.37)) * H * 0.012 - Math.sin(x / (VW * 0.11) + 1.3) * H * 0.006;
+        var hump = function (c, a, w) { var u = (x - c) / w; if (u > -1 && u < 1) y -= a * (1 + Math.cos(Math.PI * u)) / 2; };
+        var kick = function (c, a, wUp, wDown) {
+          var u = x < c ? (x - c) / wUp : (x - c) / wDown;
+          if (u > -1 && u < 1) y -= a * (u < 0 ? (u + 1) * (u + 1) : (1 - u) * (1 - u));
+        };
+        for (var k = 0; k < chapters + 1; k++) {
+          var o = k * VW;
+          hump(o + VW * 0.1, H * 0.022, VW * 0.06); hump(o + VW * 0.2, H * 0.026, VW * 0.06);
+          if (k < chapters) { kick(o + VW * 0.55, H * 0.16, VW * 0.3, VW * 0.09); kick(o + VW * 0.8, H * 0.15, VW * 0.1, VW * 0.3); }
+        }
+        return y;
+      }
+      function build() {
+        VW = window.innerWidth; H = sticky.clientHeight; W = world.offsetWidth; gx = 3 / VW;
+        var n = Math.ceil(W / STEP) + 2, y = terrain(0), sl = 0, air = false, t0 = 0, a0 = 0;
+        Y = new Float32Array(n); ANG = new Float32Array(n); AIR = new Uint8Array(n); LAND = []; TAKE = [];
+        // the bike rests on both wheels: support = mean of the ground under each wheel, pitch = line between them
+        var wb = (bike.offsetWidth || 300) * 226 / 420, T = function (x) { return terrain(x); };
+        var S = function (x) { return (T(x - wb / 2) + T(x + wb / 2)) / 2; }, pitch = function (x) { return Math.atan2(T(x + wb / 2) - T(x - wb / 2), wb); };
+        var d1 = function (x) { return (S(x + 1) - S(x - 1)) / 2; }, d2 = function (x) { return S(x + 1) - 2 * S(x) + S(x - 1); };
+        for (var i = 0; i < n; i++) {
+          var x = i * STEP, g = S(x);
+          if (!air) {
+            y = g; sl = d1(x);
+            // y grows downwards: the bike leaves the ground where the terrain drops away faster than gravity
+            if (d2(x) > gx && sl < 0.02) { air = true; t0 = i; a0 = pitch(x); TAKE.push(i); }
+          } else {
+            sl += gx * STEP; y += sl * STEP;
+            if (y >= g) {
+              y = g; air = false;
+              var a1 = pitch(x), len = i - t0;
+              // in the air the bike levels out, then noses down to match the landing
+              for (var j = t0; j < i; j++) { var t = (j - t0) / len, e = t * t * (3 - 2 * t); ANG[j] = a0 + (a1 - a0) * e - Math.sin(Math.PI * t) * 0.05; }
+              LAND.push({ i: i, v: Math.min(1, Math.abs(sl - d1(x)) * 1.6) });
+            }
+          }
+          Y[i] = y; AIR[i] = air ? 1 : 0; if (!air) ANG[i] = pitch(x);
+        }
+        // ground drawing: dune body, darker crest line, tyre ruts, grass tufts
+        var pts = [], rut = [], grass = '';
+        var Td = function (x) { return (T(x - 14) + T(x - 7) + T(x) + T(x + 7) + T(x + 14)) / 5; };
+        for (var xx = 0; xx <= W; xx += 6) { var ty = Td(xx); pts.push(xx.toFixed(0) + ' ' + ty.toFixed(1)); rut.push(xx.toFixed(0) + ' ' + (ty + H * 0.03).toFixed(1)); }
+        for (var gq = VW * 0.05; gq < W; gq += VW * (0.09 + (gq % 7) / 100)) { var gy = Td(gq); grass += 'M' + gq.toFixed(0) + ' ' + gy.toFixed(0) + 'l-4 -12M' + gq.toFixed(0) + ' ' + gy.toFixed(0) + 'l2 -15M' + gq.toFixed(0) + ' ' + gy.toFixed(0) + 'l7 -10'; }
+        ground.setAttribute('viewBox', '0 0 ' + W + ' ' + H); ground.setAttribute('width', W); ground.setAttribute('height', H);
+        ground.innerHTML = '<defs><linearGradient id="mxs-dirt-' + root.id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + dirt + '"/><stop offset="1" stop-color="#8a5a2b"/></linearGradient></defs>' +
+          '<path d="M0 ' + H + 'L' + pts.join('L') + 'L' + W + ' ' + H + 'Z" fill="url(#mxs-dirt-' + root.id + ')"/>' +
+          '<path d="M' + pts.join('L') + '" fill="none" stroke="#0d0d0d" stroke-width="3"/>' +
+          '<path d="M' + rut.join('L') + '" fill="none" stroke="rgba(90,56,22,.35)" stroke-width="3" stroke-dasharray="26 18"/>' +
+          '<path d="' + grass + '" fill="none" stroke="#5f6f2e" stroke-width="3" stroke-linecap="round"/>';
+      }
+      build();
+      var rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(function () { build(); last = -1; }, 150); });
+      var shown = -1, last = -1, comp = 0, compV = 0, roostAcc = 0;
+      function fx(cls, x, y, vars, ms) {
+        if (reduce) return;
+        var el = document.createElement('i'); el.className = cls; el.style.left = x + 'px'; el.style.top = y + 'px';
+        Object.keys(vars || {}).forEach(function (k) { el.style.setProperty(k, vars[k]); });
+        sticky.appendChild(el); setTimeout(function () { el.remove(); }, ms || 900);
+      }
+      function progress() {
+        var r = root.getBoundingClientRect(), total = root.offsetHeight - window.innerHeight;
+        return total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
+      }
+      whileVisible(root, function (dt) {
+        dt = Math.min(0.05, dt || 0.016);
+        var p = progress(); shown = shown < 0 || reduce ? p : shown + (p - shown) * Math.min(1, dt * 8);
+        var travel = Math.max(0, W - VW), tx = shown * travel;
+        world.style.transform = 'translate3d(' + (-tx).toFixed(1) + 'px,0,0)';
+        far.style.transform = 'translate3d(' + (-shown * Math.max(0, far.offsetWidth - VW)).toFixed(1) + 'px,0,0)';
+        bar.style.width = (shown * 100) + '%';
+        var bw = bike.offsetWidth, bx = VW * (VW < 800 ? 0.3 : 0.24), wx = tx + bx;
+        var i = Math.max(0, Math.min(Y.length - 1, Math.round(wx / STEP)));
+        var y = Y[i], ang = ANG[i] * 57.2958, inAir = AIR[i] === 1;
+        // events while riding forward: take-off (BRAAAP), landing (suspension + dust)
+        if (last >= 0 && i > last && i - last < 400) {
+          TAKE.forEach(function (t) { if (t > last && t <= i && braap && Y[t] < H * 0.7) fx('braap', bx + bw * 0.1, y - bw * 0.6, null, 1000); });
+          LAND.forEach(function (l) {
+            if (l.i > last && l.i <= i) {
+              compV += 260 * l.v;
+              for (var q = 0; q < 4; q++) fx('dustb', bx + (q - 1.5) * bw * 0.22, y - 4, { '--dx': ((q - 1.5) * 34) + 'px', '--sz': (bw * (0.28 + l.v * 0.22)).toFixed(0) + 'px' }, 1100);
+            }
+          });
+          roostAcc += (i - last) * STEP;
+          if (!inAir && roostAcc > 26) {
+            roostAcc = 0;
+            for (var r = 0; r < 3; r++) fx('roost', bx - bw * 0.27, y - 8 - Math.random() * 10, { '--dx': (-60 - Math.random() * 90) + 'px', '--dy': (-30 - Math.random() * 60) + 'px', '--sz': (5 + Math.random() * 7) + 'px', '--c': ['#a9783a', '#8a5a2b', '#c9a46a'][r] }, 700);
+          }
+        }
+        last = i;
+        // suspension spring (compression in px of the chassis)
+        compV += (-comp * 180 - compV * 16) * dt; comp += compV * dt; comp = Math.max(-6, Math.min(16, comp));
+        var bump = inAir ? 0 : Math.sin(wx / 23) * 1.2;
+        bike.style.transform = 'translate3d(' + (bx - bw * 0.488).toFixed(1) + 'px,' + (y - bike.offsetHeight * 0.967).toFixed(1) + 'px,0) rotate(' + ang.toFixed(2) + 'deg)';
+        if (body) body.style.transform = 'translateY(' + (comp * 0.5 + bump).toFixed(2) + 'px)';
+        if (shadow) shadow.style.opacity = inAir ? '0' : '';
+        if (rider) rider.style.transform = inAir ? 'translateY(-3px) rotate(-4deg)' : 'translateY(' + (comp * 0.4).toFixed(2) + 'px)';
+        var deg = wx / (bw * 48 / 420) * 57.2958;
+        wheels.forEach(function (w) { w.style.transform = 'rotate(' + deg.toFixed(1) + 'deg)'; });
+      });
+    },
+
     story: function (root) {
       var frame = $('[data-story-frame]', root), play = $('[data-story-play]', root);
       if (frame && !reduce && window.matchMedia('(hover:hover)').matches) {

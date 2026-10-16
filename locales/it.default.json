@@ -104,5 +104,8 @@
     "slot": "Slot video",
     "sound_on": "Audio on",
     "sound_off": "Audio off"
+  },
+  "mxs": {
+    "photo": "Foto o video del capitolo"
   }
 }

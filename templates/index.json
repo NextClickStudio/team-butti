@@ -319,67 +319,6 @@
       ],
       "settings": {}
     },
-    "ride": {
-      "type": "ride",
-      "blocks": {
-        "r1": {
-          "type": "stop",
-          "settings": {
-            "label": "Lo sterrato",
-            "title": "Toscana",
-            "text": "Colline, polvere, due tempi. Le maglie MX non sono un costume: ci cadiamo dentro ogni weekend.",
-            "style": "hills",
-            "bg": "#9EC9EF",
-            "fg": "#0D0D0D"
-          }
-        },
-        "r2": {
-          "type": "stop",
-          "settings": {
-            "label": "La strada",
-            "title": "A1",
-            "text": "Cadillac carica di maglie, autogrill alle sette, Appennino a finestrini giù. Trecento chilometri di musica alta.",
-            "style": "flat",
-            "bg": "#FFD400",
-            "fg": "#E3191B",
-            "deco": "plate",
-            "deco_text": "MERDE",
-            "plate_top": "Toscana",
-            "plate_bottom": "Milano"
-          }
-        },
-        "r3": {
-          "type": "stop",
-          "settings": {
-            "label": "Il Market",
-            "title": "Milano",
-            "style": "halftone",
-            "bg": "#FF2E93",
-            "fg": "#0D0D0D"
-          }
-        },
-        "r4": {
-          "type": "stop",
-          "settings": {
-            "label": "Le luci",
-            "title": "Navigli",
-            "text": "Insegne al neon e una crew che non va a dormire. Prossima fermata: ovunque ci sia una crew.",
-            "style": "night",
-            "bg": "#0D0D0D",
-            "fg": "#F4F1EA",
-            "deco": "neon",
-            "deco_text": "Team Butti Merde"
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3",
-        "r4"
-      ],
-      "settings": {}
-    },
     "plate": {
       "type": "plate-builder",
       "settings": {}
@@ -521,6 +460,69 @@
         "c3"
       ],
       "settings": {}
+    },
+    "storia_mx": {
+      "type": "mx-story",
+      "blocks": {
+        "ch1": {
+          "type": "chapter",
+          "settings": {
+            "year": "2019",
+            "place": "Toscana",
+            "title": "Il primo due tempi",
+            "text": "Un 125 preso a rate, uno sterrato dietro casa e una crew che cade più di quanto guida. Nasce tutto lì.",
+            "caption": "Lo sterrato"
+          }
+        },
+        "ch2": {
+          "type": "chapter",
+          "settings": {
+            "year": "2021",
+            "place": "Toscana",
+            "title": "Le prime maglie",
+            "text": "Maglie da hockey e da cross disegnate per noi, venti pezzi stampati. Le chiedono gli amici, poi gli amici degli amici.",
+            "caption": "Drop zero"
+          }
+        },
+        "ch3": {
+          "type": "chapter",
+          "settings": {
+            "year": "2024",
+            "place": "Ovunque",
+            "title": "Team Butti Merde",
+            "text": "Il nome diventa un coro. Poster rosa, leopardato, numeri sulla schiena: lo stile prende forma.",
+            "caption": "La crew"
+          }
+        },
+        "ch4": {
+          "type": "chapter",
+          "settings": {
+            "year": "26.09",
+            "place": "Milano",
+            "title": "Il Market",
+            "text": "Piazzale Cantore 10: banchetti pieni, DJ set e la fila fuori. Dalla Toscana a Milano in Cadillac.",
+            "caption": "Market Milano"
+          }
+        },
+        "ch5": {
+          "type": "chapter",
+          "settings": {
+            "year": "Oggi",
+            "place": "Drop 02",
+            "title": "Gas aperto",
+            "text": "Nuove maglie, nuovi colori, stessa crew. Il prossimo salto lo facciamo insieme.",
+            "caption": "Drop 02"
+          }
+        }
+      },
+      "block_order": [
+        "ch1",
+        "ch2",
+        "ch3",
+        "ch4",
+        "ch5"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -530,9 +532,9 @@
     "drop",
     "cadillac",
     "manifesto",
-    "story",
     "custom",
-    "ride",
+    "storia_mx",
+    "story",
     "plate",
     "drop_countdown"
   ]

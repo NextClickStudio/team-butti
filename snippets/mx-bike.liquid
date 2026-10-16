@@ -1,0 +1,105 @@
+{%- comment -%}
+  Team Butti motocross bike + rider (2-stroke), side view facing right.
+  Colors come from CSS variables on a parent: --mx-plastic, --mx-jersey, --mx-pants, --mx-helmet.
+  Animated by theme.js: .mx__wh = wheels, .mx__body = chassis + rider (suspension), .mx__rider = rider pose.
+  num: race number (default 69). uid: unique id for the SVG defs.
+{%- endcomment -%}
+{%- assign u = uid | default: 'mx' | handle -%}
+{%- assign n = num | default: '69' -%}
+<svg class="mx" viewBox="0 0 420 300" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="mx-alu-{{ u }}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef1f3"/><stop offset=".5" stop-color="#a9b0b6"/><stop offset="1" stop-color="#d9dde0"/></linearGradient>
+    <linearGradient id="mx-pipe-{{ u }}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9ecef"/><stop offset=".45" stop-color="#8d949a"/><stop offset="1" stop-color="#5d6368"/></linearGradient>
+    <g id="mx-wheel-{{ u }}">
+      <circle r="44" fill="#151515"/>
+      <circle r="46.5" fill="none" stroke="#151515" stroke-width="7" stroke-dasharray="5.2 4.4"/>
+      <circle r="35.5" fill="none" stroke="#0d0d0d" stroke-width="6"/>
+      <circle r="35.5" fill="none" stroke="#c9ced3" stroke-width="2.4"/>
+      <g stroke="#b9c0c6" stroke-width="1.3">
+        <path d="M0-33V33M-33 0H33M-23.3-23.3L23.3 23.3M23.3-23.3L-23.3 23.3"/>
+        <path d="M0-33V33M-33 0H33M-23.3-23.3L23.3 23.3M23.3-23.3L-23.3 23.3" transform="rotate(22.5)"/>
+      </g>
+      <circle r="16" fill="none" stroke="#9aa1a7" stroke-width="3" stroke-dasharray="3 2"/>
+      <circle r="8" fill="url(#mx-alu-{{ u }})" stroke="#0d0d0d" stroke-width="1.6"/>
+      <circle r="2.6" fill="#0d0d0d"/>
+    </g>
+  </defs>
+
+  <ellipse class="mx__shadow" cx="205" cy="294" rx="170" ry="5" fill="#000" opacity=".22"/>
+
+  <g class="mx__body">
+    {%- comment -%} swingarm, chain, shock {%- endcomment -%}
+    <path d="M182 199 L95 235 L92 249 L186 213 Z" fill="url(#mx-alu-{{ u }})" stroke="#0d0d0d" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M92 226 L190 199 M92 258 L192 212" stroke="#2a2a2a" stroke-width="2.4" fill="none"/>
+    <path d="M186 148 l-6 9 l8 4 l-8 4 l8 4 l-8 4 l8 4 l-8 4 l8 4 l-6 9" fill="none" stroke="#ffd400" stroke-width="3.4" stroke-linejoin="round"/>
+    {%- comment -%} frame rails + engine (2 stroke) {%- endcomment -%}
+    <path d="M270 136 L230 196 M252 120 L182 150 L180 206" fill="none" stroke="#2c2f33" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M196 178 h46 v34 q0 12 -12 12 h-24 q-14 0 -14 -14 Z" fill="#3a3d41" stroke="#0d0d0d" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M204 150 h30 v30 h-30 Z" fill="#55595e" stroke="#0d0d0d" stroke-width="2.5"/>
+    <path d="M204 156 h30 M204 162 h30 M204 168 h30 M204 174 h30" stroke="#2a2d31" stroke-width="2"/>
+    <circle cx="224" cy="204" r="12" fill="url(#mx-alu-{{ u }})" stroke="#0d0d0d" stroke-width="2"/>
+    {%- comment -%} expansion chamber + silencer {%- endcomment -%}
+    <path d="M236 168 C266 176 262 210 238 212 C214 214 198 200 180 182 C168 168 152 158 128 154" fill="none" stroke="#0d0d0d" stroke-width="17" stroke-linecap="round"/>
+    <path d="M236 168 C266 176 262 210 238 212 C214 214 198 200 180 182 C168 168 152 158 128 154" fill="none" stroke="url(#mx-pipe-{{ u }})" stroke-width="12" stroke-linecap="round"/>
+    <path d="M132 156 L76 142" stroke="#0d0d0d" stroke-width="16" stroke-linecap="round"/>
+    <path d="M132 156 L76 142" stroke="#2f3236" stroke-width="11" stroke-linecap="round"/>
+    <path d="M84 140 L80 148" stroke="#c9ced3" stroke-width="3"/>
+    {%- comment -%} rear fender + side number plate {%- endcomment -%}
+    <path d="M128 140 L52 124 L54 134 L126 156 Z" class="mx-plastic" stroke="#0d0d0d" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M118 150 L178 142 L186 184 L134 192 Z" fill="#f4f1ea" stroke="#0d0d0d" stroke-width="2.6" stroke-linejoin="round"/>
+    <text class="mx__num" x="153" y="183" font-size="34" text-anchor="middle" transform="rotate(-8 153 170)">{{ n | escape }}</text>
+    {%- comment -%} seat {%- endcomment -%}
+    <path d="M120 140 L250 113 Q257 113 256 121 L128 150 Q118 151 120 140 Z" fill="#141414" stroke="#0d0d0d" stroke-width="2"/>
+    <path d="M140 140 L240 119" stroke="#3a3a3a" stroke-width="2" stroke-dasharray="4 4"/>
+    {%- comment -%} radiator shroud with graphics {%- endcomment -%}
+    <path d="M250 116 L280 124 L266 178 L222 186 L214 150 Z" class="mx-plastic" stroke="#0d0d0d" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M224 170 L262 160 L258 174 L226 180 Z" fill="#0d0d0d"/>
+    <text class="mx__tag" x="243" y="176" font-size="9.5" text-anchor="middle" transform="rotate(-14 243 172)">BUTTI</text>
+    {%- comment -%} fork (USD), clamps, front fender, number plate, bars {%- endcomment -%}
+    <path d="M262 102 L292 176" stroke="#0d0d0d" stroke-width="17" stroke-linecap="round"/>
+    <path d="M262 102 L292 176" stroke="#d4a017" stroke-width="12" stroke-linecap="round"/>
+    <path d="M290 170 L318 240" stroke="#0d0d0d" stroke-width="12" stroke-linecap="round"/>
+    <path d="M290 170 L318 240" stroke="#c9ced3" stroke-width="7" stroke-linecap="round"/>
+    <path d="M252 98 l22 -6 l3 9 l-22 6 Z M262 128 l22 -6 l3 9 l-22 6 Z" fill="#2c2f33" stroke="#0d0d0d" stroke-width="2"/>
+    <path d="M270 152 Q306 136 360 148 L356 158 Q308 152 276 166 Z" class="mx-plastic" stroke="#0d0d0d" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M266 88 L292 96 L298 144 L280 150 Z" fill="#f4f1ea" stroke="#0d0d0d" stroke-width="2.6" stroke-linejoin="round"/>
+    <text class="mx__num" x="284" y="132" font-size="22" text-anchor="middle" transform="rotate(14 284 124)">{{ n | escape }}</text>
+    <path d="M258 96 L254 84 L246 84" fill="none" stroke="#0d0d0d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M242 85 h10" stroke="#2a2a2a" stroke-width="8" stroke-linecap="round"/>
+
+    {%- comment -%} rider: standing attack position (boots on pegs, knees on the shrouds, elbows up) {%- endcomment -%}
+    <g class="mx__rider">
+      {%- comment -%} legs: baggy pants, knee brace {%- endcomment -%}
+      <path d="M182 118 L228 160" class="mx-pants-s" stroke-width="27" stroke-linecap="round"/>
+      <path d="M228 160 L196 198" class="mx-pants-s" stroke-width="22" stroke-linecap="round"/>
+      <path d="M170 110 Q160 124 176 136 L218 172 Q236 178 240 160 Q238 148 226 146 L194 112 Z" fill="none" stroke="#0d0d0d" stroke-width="2.4" stroke-linejoin="round" opacity="0"/>
+      <path d="M210 150 L232 170" class="mx-jersey-s" stroke-width="4" opacity=".9"/>
+      <circle cx="229" cy="161" r="8" fill="#2a2a2a" stroke="#0d0d0d" stroke-width="2"/>
+      {%- comment -%} boot {%- endcomment -%}
+      <path d="M184 186 L206 182 L210 214 Q216 216 216 222 L176 224 Q172 218 178 214 Z" fill="#f4f1ea" stroke="#0d0d0d" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M180 194 L208 190 M180 204 L210 200" stroke="#0d0d0d" stroke-width="2.2"/>
+      <path d="M174 222 L218 222 L218 228 L172 228 Z" fill="#0d0d0d"/>
+      {%- comment -%} torso: jersey over chest protector, number on the back {%- endcomment -%}
+      <path d="M168 120 Q164 100 182 86 L204 66 Q218 56 232 66 L240 80 Q244 92 232 100 L206 128 Q194 140 180 136 Q170 132 168 120 Z" class="mx-jersey" stroke="#0d0d0d" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M172 116 Q176 98 192 86 L210 70" fill="none" stroke="#0d0d0d" stroke-width="7" stroke-linecap="round"/>
+      <text class="mx__back" x="190" y="112" font-size="20" text-anchor="middle" transform="rotate(-42 190 104)">{{ n | escape }}</text>
+      <path d="M176 130 Q190 136 204 126" fill="none" stroke="#0d0d0d" stroke-width="5" opacity=".85"/>
+      {%- comment -%} arm: elbow up, glove on the grip {%- endcomment -%}
+      <path d="M220 74 L240 98" class="mx-jersey-s" stroke-width="15" stroke-linecap="round"/>
+      <path d="M240 98 L248 86" class="mx-jersey-s" stroke-width="12" stroke-linecap="round"/>
+      <path d="M220 74 L240 98 L248 86" fill="none" stroke="#0d0d0d" stroke-width="1.8" stroke-linejoin="round" opacity=".45"/>
+      <path d="M232 92 L244 104" stroke="#0d0d0d" stroke-width="4" opacity=".9"/>
+      <circle cx="248" cy="85" r="6.5" fill="#0d0d0d"/>
+      {%- comment -%} helmet: peak, chin bar, goggles + strap {%- endcomment -%}
+      <path d="M206 50 C204 28 230 18 248 30 L276 28 L274 37 L254 40 C260 50 258 62 250 68 L232 72 C218 70 208 62 206 50 Z" class="mx-helmet" stroke="#0d0d0d" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M210 40 C220 32 238 30 252 36" fill="none" stroke="#0d0d0d" stroke-width="5"/>
+      <path d="M212 50 L246 44" class="mx-plastic-s" stroke-width="4"/>
+      <path d="M246 42 L261 42 L261 55 L246 55 Q242 48 246 42 Z" fill="#ff7a1a" stroke="#0d0d0d" stroke-width="2.2"/>
+      <path d="M248 45 L257 45" stroke="#fff" stroke-width="2" opacity=".75"/>
+      <path d="M246 55 L258 68" stroke="#0d0d0d" stroke-width="2.4"/>
+    </g>
+  </g>
+
+  <g transform="translate(92 242)"><g class="mx__wh"><use href="#mx-wheel-{{ u }}"/></g></g>
+  <g transform="translate(318 242)"><g class="mx__wh"><use href="#mx-wheel-{{ u }}"/></g></g>
+</svg>

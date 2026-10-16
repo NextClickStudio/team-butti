@@ -11,6 +11,12 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v1.3
+- **Storia in moto (cross)** (nuova sezione, al posto di *Il viaggio* in home): una moto da cross Team Butti (2 tempi, numero 69, pilota con la maglia del team) salta le dune toscane mentre scorri. Il terreno e i salti si generano al caricamento; la fisica dipende solo dalla posizione, quindi tornando indietro il salto si ripete identico. Ruote, sospensioni, terra sollevata, polvere all'atterraggio, "BRAAAP!" al decollo. Un capitolo per schermata, come blocco: anno, luogo, titolo, testo, foto o video, didascalia. Colori di moto e pilota modificabili. I testi dei capitoli sono provvisori: vanno sostituiti con la storia vera.
+- **Cadillac v2**: assetto più basso, vernice candy con riflessi, cromature sui passaruota, scritta leopardata in rilievo, fanale acceso, braccio fuori dal finestrino, cerchi con il riflesso fisso e le razze che girano.
+- **Panorama ridisegnato**: un'unica sagoma per livello con la stessa base, nessun pezzo staccato (Madonnina sulla guglia, tetto del Pirellone attaccato, Bosco Verticale a terrazzi, borgo toscano fuso con la collina).
+- La sezione *Il viaggio (Cadillac)* resta disponibile nel tema, ma non è più in home.
+
 ## Novità v1.2
 - **Hero ripulita**: panorama disegnato *Toscana → Milano* (colline, cipressi, borgo con torri → Duomo, Velasca, Pirellone, Bosco Verticale, UniCredit, CityLife) al posto dei palazzi con le palme; striscia-strada con bottone, percorso Toscana → Milano e suggerimento; mini Cadillac che attraversa la hero e salta quando cambi vibe. Il bottone vibe e le scritte al click sono gli stessi di prima.
 - **Video del brand** (nuova sezione, subito sotto la hero): fino a 6 clip, cornice da videocamera (REC, timecode, luogo, data), il video passa da card a schermo intero con lo scroll, tab per cambiare clip con effetto glitch, audio on/off, clip verticali (Reel) con sfondo sfocato. Nascosta sul negozio finché non c'è almeno un video.

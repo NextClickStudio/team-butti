@@ -22,6 +22,9 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     await p.$eval('[data-tb=vscroll]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.98, behavior: 'instant' })); await p.waitForTimeout(1500);
     ok(+(await p.textContent('[data-km-out]')) >= 280 && (await p.textContent('[data-tb=vscroll] [data-place]')) === 'Milano', `[${name}] Cadillac: arrivo a Milano dopo ~300 km`);
     await shot('cadillac');
+    await p.$eval('[data-tb=mxs]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.5, behavior: 'instant' })); await p.waitForTimeout(1200);
+    ok((await p.$$('.mxs__ch')).length === 5 && (await p.$eval('[data-mxs-bike]', b => b.style.transform)).includes('rotate('), `[${name}] storia in moto: 5 capitoli, moto sulle dune`);
+    await shot('mx');
     await p.$eval('#shopify-section-manifesto', el => el.scrollIntoView()); await p.waitForTimeout(300);
     await p.$eval('#shopify-section-drop', el => el.scrollIntoView()); await p.waitForTimeout(900);
     ok(await p.$$eval('#shopify-section-drop .sec__title.split-in .ch', x => x.length) > 3, `[${name}] titoli animati lettera per lettera`);
