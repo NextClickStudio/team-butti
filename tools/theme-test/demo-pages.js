@@ -9,7 +9,8 @@
   'use strict';
 
   var BAR = '<div class="demo-bar">Anteprima demo del tema Shopify Team Butti · prodotti e prezzi di esempio · checkout disattivato</div>';
-  var CSS = '<style>.demo-bar{background:#0d0d0d;color:#ffd400;text-align:center;padding:6px 16px;font:700 10px/1.4 "Space Mono",monospace;letter-spacing:.14em;text-transform:uppercase}' +
+  // the boot screen of the CDN shell must never survive the page write (Safari keeps parsing the shell after it)
+  var CSS = '<style>html{background:#f4f1ea}html::after{content:none!important;display:none!important}[data-boot]{display:none!important}.demo-bar{background:#0d0d0d;color:#ffd400;text-align:center;padding:6px 16px;font:700 10px/1.4 "Space Mono",monospace;letter-spacing:.14em;text-transform:uppercase}' +
     '.demo-checkout{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.6);display:none;place-items:center;padding:16px}.demo-checkout.on{display:grid}' +
     '.demo-checkout__box{background:var(--paper);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--pink);padding:28px;max-width:460px;display:grid;gap:14px}.demo-checkout__box h2{font-size:44px;margin:0}.demo-checkout__box p{margin:0;font-size:13px}</style>';
   var SPEDIZIONI = '<p>Italia 2–4 giorni lavorativi, gratis sopra 100€. Europa 4–7 giorni.</p><p>Resi gratuiti entro 14 giorni dalla consegna. Le maglie personalizzate non sono rimborsabili.</p><table><tr><th>Taglia</th><th>Lunghezza</th><th>Larghezza</th></tr><tr><td>S</td><td>66</td><td>56</td></tr><tr><td>M</td><td>70</td><td>60</td></tr><tr><td>L</td><td>74</td><td>64</td></tr><tr><td>XL</td><td>78</td><td>68</td></tr><tr><td>XXL</td><td>82</td><td>72</td></tr></table>';
