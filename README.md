@@ -15,7 +15,7 @@ Concept e tema Shopify per **Team Butti** (Instagram: [@team_butti](https://www.
 
 ## Negozio demo online
 https://team-butti-demo.vercel.app — il tema Shopify reso nel browser con un catalogo di esempio (carrello funzionante, checkout disattivato).
-Su Vercel ci sono solo `index.html` (da `tools/theme-test/demo-shell.js /cdn/ /lib/liquid.js`) e `vercel.json`, che inoltra `/cdn/*` ai file di questo repo su jsDelivr (commit fissato) e tutto il resto a `/index.html`.
+Su Vercel ci sono solo `index.html` (da `tools/theme-test/demo-shell.js /v/<commit>/ /lib/liquid.js`) e `vercel.json`, che inoltra `/v/<commit>/*` ai file di questo repo su jsDelivr e tutto il resto a `/index.html` (senza cache). Il commit nell'indirizzo cambia a ogni aggiornamento, quindi i browser non restano sulla versione vecchia: jsDelivr risponde con una cache di un anno.
 
 ## Vedere la preview
 - In locale: doppio click su `preview/index.html` (usa `../assets/tb-jersey.js`, tieni la cartella del repo intera).
