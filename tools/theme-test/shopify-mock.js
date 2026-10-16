@@ -9,7 +9,8 @@
   var env = window.LiquidShopify.create(window.liquidjs, {
     read: function (p) { return D.templates[p]; },
     exists: function (p) { return Object.prototype.hasOwnProperty.call(D.templates, p); },
-    locale: D.locale, menus: CAT.menus, globals: D.globals, assetBase: window.TB_ASSET_BASE
+    locale: D.locale, menus: CAT.menus, globals: D.globals, assetBase: window.TB_ASSET_BASE,
+    media: { base: window.TB_ASSET_BASE ? window.TB_ASSET_BASE + 'demo/media/' : '/media/', list: D.media || {} }
   });
   var products = CAT.products.map(env.product);
   var KEY = 'tb-demo-cart';

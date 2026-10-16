@@ -1,0 +1,66 @@
+{%- comment -%}
+  "Tutto può entrarci": a list of big words (moto, vestiti, oggetti, persone, esperienze…).
+  Desktop: the photo of the word under the pointer follows the cursor as a taped polaroid.
+  Phones: the photo opens under the word that reaches the middle of the screen.
+{%- endcomment -%}
+{%- assign rows = section.blocks | where: 'type', 'word' -%}
+{%- if rows.size > 0 -%}
+<section class="mix mix--{{ section.settings.style }}" data-tb="mix">
+  <div class="mix__head">
+    <p class="label rv">{{ section.settings.kicker | escape }}</p>
+    {%- if section.settings.title != blank -%}<h2 class="mix__title d rv">{{ section.settings.title | escape }}</h2>{%- endif -%}
+  </div>
+  <ol class="mix__list">
+    {%- for b in rows -%}
+      <li class="mix__row rv" data-mix-row {{ b.shopify_attributes }}>
+        <span class="mix__n label">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+        <span class="mix__w d">{{ b.settings.word | escape }}</span>
+        <span class="mix__c label">{{ b.settings.caption | escape }}</span>
+        {%- if b.settings.image != blank -%}
+          <span class="mix__pic" data-mix-pic>{{ b.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,500,700', sizes: '(min-width: 990px) 22vw, 70vw', alt: b.settings.word }}</span>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ol>
+  <div class="mix__float" data-mix-float aria-hidden="true"></div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Tutto può entrarci",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Tutto quello che ci interessa può entrarci" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Senza un'unica direzione" },
+    { "type": "select", "id": "style", "label": "Sfondo", "default": "dark", "options": [
+      { "value": "dark", "label": "Scuro" },
+      { "value": "paper", "label": "Carta" },
+      { "value": "pink", "label": "Rosa poster" }
+    ] }
+  ],
+  "blocks": [
+    {
+      "type": "word",
+      "name": "Parola",
+      "settings": [
+        { "type": "text", "id": "word", "label": "Parola", "default": "Moto" },
+        { "type": "text", "id": "caption", "label": "Nota", "default": "Due tempi, sterrato" },
+        { "type": "image_picker", "id": "image", "label": "Foto" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tutto può entrarci",
+      "blocks": [
+        { "type": "word", "settings": { "word": "Moto", "caption": "Due tempi, sterrato" } },
+        { "type": "word", "settings": { "word": "Vestiti", "caption": "Maglie con il nome sopra" } },
+        { "type": "word", "settings": { "word": "Oggetti", "caption": "Quello che resta in officina" } },
+        { "type": "word", "settings": { "word": "Persone", "caption": "La crew, a modo suo" } },
+        { "type": "word", "settings": { "word": "Esperienze", "caption": "Market, palchi, luna park" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -76,3 +76,42 @@ warm 35mm film grain, streetwear campaign look.
 Le generazioni Higgsfield stanno su `d8j0ntlcm91z4.cloudfront.net`. L'ambiente cloud di Claude oggi blocca quel dominio. Puoi:
 1. aggiungerlo ai domini consentiti dell'ambiente (menu dell'ambiente cloud nel titolo della sessione → Edit → Network access → Allowed domains). Così Claude scarica le generazioni direttamente dallo storico; oppure
 2. caricare i file nel repository GitHub, cartella `media/`.
+
+---
+
+# Moto da cross con Higgsfield (sezione *Storia in moto*)
+
+La moto disegnata (`snippets/mx-bike.liquid`) funziona già. Per una versione più "vera" si genera la moto con il pilota in Higgsfield e il tema la anima uguale: la moto salta le dune, si inclina sulle rampe e i frame dello sprite avanzano con la strada percorsa.
+
+### 1. Immagine base (Nano Banana 2 / Higgsfield Image), 16:9
+Come riferimento puoi caricare una foto del team in moto (es. la KTM arancione con la maglia rosa #85, o la Suzuki gialla).
+
+```
+Exact side profile (90 degrees) of a motocross rider in standing attack position on a 2-stroke dirt bike,
+facing right. Pink plastics, plain white front number plate with NO number, white side number board with
+the number 69, gold upside-down fork, chrome expansion chamber, knobby tyres. Rider in a yellow jersey with
+"TEAM BUTTI" and number 69 on the back, blue pants, white boots, white motocross helmet with pink peak,
+orange mirrored goggles. Stylized premium illustration: bold clean black outlines, flat cel-shaded colors
+with subtle glossy highlights, streetwear poster style. Bike and rider fully visible with margin, wheels
+not cropped. Perfectly flat pure green background #00FF00, no ground, no shadow, no dust, no extra text.
+```
+Variante realistica: al posto di *Stylized premium illustration…* scrivi `Photorealistic studio render, soft even light`.
+
+### 2. Loop (Seedance), 4 s, start image = end image = immagine del passo 1, audio off
+
+```
+Locked-off static camera, strict side view. The rider rides in place: both wheels spin forward
+continuously at constant speed, the suspension works slightly over small bumps and the rider moves
+naturally with the bike. The bike does not move across the frame and stays perfectly centered.
+Background stays flat pure green #00FF00 for the whole clip: no camera movement, no zoom, no dust,
+no motion blur on the background. Seamless loop, the last frame matches the first.
+```
+
+### 3. Sprite
+```
+./make-car-sprite.sh moto-loop.mp4 moto-sprite.webp 6 4 640
+```
+In Shopify: **Personalizza → Storia in moto (cross) → Sprite della moto**, colonne 6, righe 4, frame 24.
+"Dove toccano le ruote" sposta la moto in su o in giù finché le gomme appoggiano sulla pista (92% di solito).
+
+Il connettore Higgsfield di Claude legge lo storico delle generazioni: quando il loop è pronto basta dirlo e lo sprite si prepara da qui.

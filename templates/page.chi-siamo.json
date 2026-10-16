@@ -191,10 +191,64 @@
         "style": "pink",
         "text": "<p>Ventiquattro secondi d'estate, girati col telefono: lo sterrato, le crete, il pick-up, la bandiera giù. Nessun attore, nessun set.</p>"
       }
+    },
+    "mix": {
+      "type": "about-mix",
+      "blocks": {
+        "w1": {
+          "type": "word",
+          "settings": {
+            "word": "Moto",
+            "caption": "Due tempi, sterrato, Valdera",
+            "image": "shopify://shop_images/tb-crew-02.jpg"
+          }
+        },
+        "w2": {
+          "type": "word",
+          "settings": {
+            "word": "Vestiti",
+            "caption": "Maglie con il nome sopra",
+            "image": "shopify://shop_images/tb-crew-14.jpg"
+          }
+        },
+        "w3": {
+          "type": "word",
+          "settings": {
+            "word": "Oggetti",
+            "caption": "La moneta, la Cadillac, il pick-up",
+            "image": "shopify://shop_images/tb-crew-18.jpg"
+          }
+        },
+        "w4": {
+          "type": "word",
+          "settings": {
+            "word": "Persone",
+            "caption": "La crew, ognuno a modo suo",
+            "image": "shopify://shop_images/tb-crew-01.jpg"
+          }
+        },
+        "w5": {
+          "type": "word",
+          "settings": {
+            "word": "Esperienze",
+            "caption": "Market, palchi, luna park",
+            "image": "shopify://shop_images/tb-crew-12.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4",
+        "w5"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "about",
+    "mix",
     "story"
   ]
 }

@@ -12,7 +12,10 @@
             "pattern": "halftone",
             "jersey_1": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d",
             "jersey_2": "#f4f1ea,#0d0d0d,#9a9a9a,#0d0d0d",
-            "jersey_3": "#39ff14,#ff2e93,#0d0d0d,#ff2e93"
+            "jersey_3": "#39ff14,#ff2e93,#0d0d0d,#ff2e93",
+            "photo_1": "shopify://shop_images/tb-maglia-hockey-merde00-nero-back.png",
+            "photo_2": "shopify://shop_images/tb-maglia-hockey-merde00-verde-front.png",
+            "photo_3": "shopify://shop_images/tb-maglia-cross-merde62-bianco-rosso-front.png"
           }
         },
         "v2": {
@@ -24,7 +27,10 @@
             "pattern": "leopard",
             "jersey_1": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13",
             "jersey_2": "#f4f1ea,#0d0d0d,#9a9a9a,#0d0d0d",
-            "jersey_3": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d"
+            "jersey_3": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d",
+            "photo_1": "shopify://shop_images/tb-maglia-hockey-merdex-nero-arancio-back.png",
+            "photo_2": "shopify://shop_images/tb-maglia-hockey-merde00-bianco-front.png",
+            "photo_3": "shopify://shop_images/tb-maglia-cross-merde62-nero-back.png"
           }
         },
         "v3": {
@@ -36,7 +42,10 @@
             "pattern": "halftone",
             "jersey_1": "#f4f1ea,#e3191b,#1d3fbf,#e3191b",
             "jersey_2": "#ffd400,#e3191b,#0d0d0d,#e3191b",
-            "jersey_3": "#1d3fbf,#1d3fbf,#e3191b,#f4f1ea"
+            "jersey_3": "#1d3fbf,#1d3fbf,#e3191b,#f4f1ea",
+            "photo_1": "shopify://shop_images/tb-maglia-cross-merde62-bluette-giallo-front.png",
+            "photo_2": "shopify://shop_images/tb-maglia-hockey-merde00-bluette-back.png",
+            "photo_3": "shopify://shop_images/tb-maglia-cross-merde62-bianco-rosso-back.png"
           }
         },
         "v4": {
@@ -48,7 +57,10 @@
             "pattern": "halftone-pink",
             "jersey_1": "#39ff14,#ff2e93,#0d0d0d,#ff2e93",
             "jersey_2": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d",
-            "jersey_3": "#1d3fbf,#1d3fbf,#e3191b,#f4f1ea"
+            "jersey_3": "#1d3fbf,#1d3fbf,#e3191b,#f4f1ea",
+            "photo_1": "shopify://shop_images/tb-maglia-hockey-merde00-verde-back.png",
+            "photo_2": "shopify://shop_images/tb-maglia-pettorina-front.png",
+            "photo_3": "shopify://shop_images/tb-maglia-hockey-merdex-nero-arancio-front.png"
           }
         },
         "v5": {
@@ -60,7 +72,10 @@
             "pattern": "halftone",
             "jersey_1": "#c9a46a,#7a5a2c,#f4f1ea,#0d0d0d",
             "jersey_2": "#39ff14,#ff2e93,#0d0d0d,#ff2e93",
-            "jersey_3": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13"
+            "jersey_3": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13",
+            "photo_1": "shopify://shop_images/tb-maglia-hockey-merde00-nero-front.png",
+            "photo_2": "shopify://shop_images/tb-maglia-hockey-merde00-giallo-back.png",
+            "photo_3": "shopify://shop_images/tb-maglia-cross-merde62-bianco-back.png"
           }
         },
         "j1": {

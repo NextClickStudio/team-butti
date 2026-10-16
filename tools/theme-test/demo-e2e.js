@@ -10,7 +10,11 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     const shot = n => p.screenshot({ path: `${__dirname}/out/demo-${name}-${n}.png` });
     await p.goto(BASE + '/'); await p.waitForTimeout(2500); await shot('home');
     ok(await p.$$eval('#shopify-section-drop .card[data-quick]', x => x.length) === 8, `[${name}] home: 8 prodotti veri nella griglia`);
-    ok(await p.$$eval('[data-float] svg.tbj-svg--flat', x => x.length) >= 2, `[${name}] hero: maglie fluttuanti in stile flat (concept approvato)`);
+    ok(await p.$$eval('[data-float].has-photo .hero__photo', x => x.filter(i => /tb-maglia-/.test(i.src) && i.complete && i.naturalWidth > 0).length) >= 2, `[${name}] hero: maglie vere (still life) al posto dei disegni`);
+    const ph1 = await p.$eval('[data-float] .hero__photo', i => i.src);
+    await p.click('[data-vibe-btn]'); await p.waitForTimeout(500);
+    ok((await p.$eval('[data-float] .hero__photo', i => i.src)) !== ph1, `[${name}] hero: cambiando vibe cambiano anche le maglie`);
+    ok(await p.$$eval('#shopify-section-drop .card img', x => x.length) >= 8, `[${name}] griglia: foto vere dei prodotti`);
     ok(!/nextclick/i.test(await p.content()), `[${name}] nessun riferimento a NextClick nella pagina`);
     ok((await p.$$('[data-tb=reel] [data-clip] video')).length === 4 && !(await p.$('[data-tb=reel] .reel__slot')) && !!(await p.$('[data-tb=story] video')) && !!(await p.$('[data-tb=vscroll] .vscroll__slot')), `[${name}] video veri: 4 clip nel video del brand + storia (slot solo per la Cadillac Higgsfield)`);
     ok(!(await p.content()).includes('SoCal') && (await p.textContent('#shopify-section-manifesto')).replace(/\s+/g, ' ').includes('Non siamo nati a Los Angeles'), `[${name}] narrativa Toscana → Milano, manifesto "Non siamo nati a Los Angeles"`);
@@ -56,14 +60,15 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     await shot('quick');
     await p.click('#modal [data-add]'); await p.waitForTimeout(900);
     ok(await p.$eval('#CartDrawer', d => d.classList.contains('on')), `[${name}] aggiunto → carrello laterale aperto`);
-    ok((await p.textContent('#CartDrawer')).includes('Kings'), `[${name}] carrello contiene la maglia`);
+    ok((await p.textContent('#CartDrawer')).includes('MERDE X'), `[${name}] carrello contiene la maglia`);
     await shot('drawer');
     // reload persists
     await p.goto(BASE + '/collections/all'); await p.waitForTimeout(900);
     ok((await p.textContent('[data-cart-count]')).trim() === '1', `[${name}] carrello persistente dopo navigazione (bag 1)`);
     await shot('collection');
     // product page add with size
-    await p.goto(BASE + '/products/mx-jersey-hawaii-2003'); await p.waitForTimeout(900);
+    await p.goto(BASE + '/products/cross-merde-62-bluette-giallo'); await p.waitForTimeout(900);
+    ok(await p.$$eval('.pdp__slide img', x => x.length === 2 && x[0].complete && x[0].naturalWidth > 0), `[${name}] pagina prodotto: foto fronte e retro della still life`);
     ok(await p.$eval('.size[data-v="XXL"]', b => b.classList.contains('na')), `[${name}] pagina prodotto: taglia sold out barrata`);
     await p.click('.pdp .size[data-v="M"]'); await p.click('.pdp [data-add]'); await p.waitForTimeout(900);
     ok((await p.textContent('[data-cart-count]')).trim() === '2', `[${name}] pagina prodotto: aggiunto (bag 2)`);
@@ -76,6 +81,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(ab.lines === 12 && ab.pics === 2 && ab.first === "Prima c'erano gli amici." && ab.last === 'Team Butti è un nome.' && ab.tape && ab.video, `[${name}] Chi siamo: testo del brand a righe (12) + 2 foto + nastro "il resto è in movimento" + video`);
     await p.$eval('.ab__l:nth-of-type(7)', el => el.scrollIntoView({ block: 'center' })); await p.waitForTimeout(1100);
     ok(await p.$eval('.ab__l:nth-of-type(7)', el => el.classList.contains('in')), `[${name}] Chi siamo: le righe entrano con lo scroll`);
+    ok((await p.$$('[data-tb=mix] .mix__row')).length === 5 && (await p.$$('[data-tb=mix] .mix__pic img')).length === 5, `[${name}] Chi siamo: "Tutto può entrarci" con 5 parole e foto`);
     await shot('chi-siamo');
     // cart page: update + checkout
     await p.goto(BASE + '/cart'); await p.waitForTimeout(1000);
@@ -88,7 +94,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(await p.$$eval('.cart-page .ln', x => x.length) === 1, `[${name}] pagina carrello: rimozione riga`);
     // search
     await p.goto(BASE + '/search?q=hockey'); await p.waitForTimeout(1000);
-    ok(await p.$$eval('.grid .card', x => x.length) === 3, `[${name}] ricerca "hockey": 3 risultati`);
+    ok(await p.$$eval('.grid .card', x => x.length) === 7 && await p.$$eval('.grid .card img', x => x.length) >= 7, `[${name}] ricerca "hockey": 7 maglie hockey con foto`);
     // 404 + password
     const before = errs.length;
     await p.goto(BASE + '/pagina-che-non-esiste'); await p.waitForTimeout(500);

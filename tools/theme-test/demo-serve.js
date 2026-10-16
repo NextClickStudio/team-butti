@@ -1,7 +1,7 @@
 // Static server for demo-site emulating Vercel cleanUrls (used by demo-e2e.js).
 const http = require('http'), fs = require('fs'), path = require('path');
 const ROOT = path.join(__dirname, 'demo-site');
-const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.json': 'application/json', '.jpg': 'image/jpeg', '.mp4': 'video/mp4' };
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.json': 'application/json', '.jpg': 'image/jpeg', '.png': 'image/png', '.mp4': 'video/mp4' };
 http.createServer((req, res) => {
   const p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
   const cands = p === '/' ? ['index.html'] : [p, p + '.html', path.join(p, 'index.html')];

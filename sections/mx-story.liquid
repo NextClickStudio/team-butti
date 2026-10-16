@@ -38,7 +38,19 @@
         </article>
       {%- endfor -%}
     </div>
-    <div class="mxs__bike" data-mxs-bike>{% render 'mx-bike', uid: section.id, num: section.settings.number %}</div>
+    {%- if section.settings.bike_sprite != blank -%}
+      {%- liquid
+        assign bs = section.settings.bike_sprite
+        assign ar = bs.aspect_ratio | times: section.settings.bike_rows | divided_by: section.settings.bike_cols
+      -%}
+      <div class="mxs__bike" data-mxs-bike style="transform-origin: 50% {{ section.settings.bike_ground }}%">
+        <div class="mx mx--sprite" style="aspect-ratio: {{ ar }}">
+          <div class="mx__sprite" data-bike-sprite data-frames="{{ section.settings.bike_frames }}" data-cols="{{ section.settings.bike_cols }}" data-rows="{{ section.settings.bike_rows }}" data-step="{{ section.settings.bike_step }}" data-ground="{{ section.settings.bike_ground }}" style="background-image: url('{{ bs | image_url: width: 4000 }}'); background-size: {{ section.settings.bike_cols | times: 100 }}% {{ section.settings.bike_rows | times: 100 }}%"></div>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="mxs__bike" data-mxs-bike>{% render 'mx-bike', uid: section.id, num: section.settings.number %}</div>
+    {%- endif -%}
     <div class="mxs__head">
       <p class="label">{{ section.settings.kicker | escape }}</p>
       <h2 class="mxs__h d">{{ section.settings.title | escape }} <span class="out">{{ section.settings.title_outline | escape }}</span></h2>
@@ -66,6 +78,14 @@
     { "type": "color", "id": "jersey", "label": "Maglia", "default": "#FFD400" },
     { "type": "color", "id": "pants", "label": "Pantaloni", "default": "#1D3FBF" },
     { "type": "color", "id": "helmet", "label": "Casco", "default": "#F4F1EA" },
+    { "type": "header", "content": "Moto generata con Higgsfield (facoltativo)" },
+    { "type": "paragraph", "content": "Sprite WebP trasparente fatto con tools/higgsfield/make-car-sprite.sh (vedi tools/higgsfield/README.md). Vuoto = moto disegnata." },
+    { "type": "image_picker", "id": "bike_sprite", "label": "Sprite della moto" },
+    { "type": "range", "id": "bike_cols", "label": "Colonne", "min": 1, "max": 8, "step": 1, "default": 6 },
+    { "type": "range", "id": "bike_rows", "label": "Righe", "min": 1, "max": 8, "step": 1, "default": 4 },
+    { "type": "number", "id": "bike_frames", "label": "Frame", "default": 24 },
+    { "type": "range", "id": "bike_step", "label": "Pixel di pista per frame", "min": 4, "max": 40, "step": 1, "default": 10 },
+    { "type": "range", "id": "bike_ground", "label": "Dove toccano le ruote (dall'alto)", "min": 70, "max": 100, "step": 1, "unit": "%", "default": 92 },
     { "type": "header", "content": "Paesaggio" },
     { "type": "color", "id": "sky", "label": "Cielo", "default": "#9EC9EF" },
     { "type": "color", "id": "dirt", "label": "Terra delle dune", "default": "#D2A55C" }

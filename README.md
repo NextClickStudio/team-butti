@@ -15,15 +15,15 @@ Concept e tema Shopify per **Team Butti** (Instagram: [@team_butti](https://www.
 
 ## Negozio demo online
 https://team-butti-demo.vercel.app — il tema Shopify reso nel browser con un catalogo di esempio (carrello funzionante, checkout disattivato).
-Su Vercel ci sono solo `index.html` (da `tools/theme-test/demo-shell.js /v/<commit>/ /lib/liquid.js`) e `vercel.json`, che inoltra `/v/<commit>/*` ai file di questo repo su jsDelivr e tutto il resto a `/index.html` (senza cache). Il commit nell'indirizzo cambia a ogni aggiornamento, quindi i browser non restano sulla versione vecchia: jsDelivr risponde con una cache di un anno.
+Su Vercel ci sono solo `index.html` (da `tools/theme-test/demo-shell.js /v/<commit>/ /lib/liquid.js`), `vercel.json` e `api/media.js` (in `tools/theme-test/vercel/`). I file del repo arrivano da jsDelivr tramite `/v/<commit>/*`; foto e video di `demo/media` passano dalla funzione `api/media.js`, che rispetta le richieste a pezzi dei video senza metterle in cache. Tutto il resto va a `/index.html`, senza cache. Il commit nell'indirizzo cambia a ogni aggiornamento, quindi i browser non restano sulla versione vecchia: jsDelivr risponde con una cache di un anno.
 
 ## Vedere la preview
 - In locale: doppio click su `preview/index.html` (usa `../assets/tb-jersey.js`, tieni la cartella del repo intera).
 - Online: GitHub Pages (Settings → Pages → branch, cartella `/`) e apri `/preview/`, oppure trascina la cartella `preview` su Vercel/Netlify.
 
 ## Mettere il tema su Shopify (pronto da caricare)
-1. Contenuti → **File** → carica tutte le foto e i video del pacchetto *media pronti per Shopify* (`tb-*.jpg`, `tb-*.mp4`) **senza rinominarli**: la home li trova da sola per nome (video del brand, storia in moto, foto della crew, la nostra storia).
-2. Online Store → Temi → Aggiungi tema → **Carica file .zip** (`Team Butti-1.4.0.zip`, generato con `shopify theme package`).
+1. Contenuti → **File** → carica tutte le foto e i video del pacchetto *media pronti per Shopify* (`tb-*.jpg`, `tb-*.png`, `tb-*.mp4`) **senza rinominarli**: la home li trova da sola per nome (video del brand, storia in moto, foto della crew, la nostra storia).
+2. Online Store → Temi → Aggiungi tema → **Carica file .zip** (`Team Butti-1.5.0.zip`, generato con `shopify theme package`).
 3. Prodotti → Importa → `import/prodotti-team-butti.csv` (8 maglie di esempio con taglie e disegni maglia via tag; da sostituire con i prodotti veri).
 4. Online Store → Pagine → crea **Chi siamo** con il modello `chi-siamo` e aggiungila al menu.
 5. Pubblica il tema. La griglia mostra da sola tutti i prodotti. Niente prodotti personalizzati online: la maglia custom si fa solo dal vivo ai market.

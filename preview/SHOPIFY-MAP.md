@@ -11,6 +11,15 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v1.5
+- **Fluidità**: il sito andava a scatti per l'effetto "grunge" dei titoli, un filtro SVG ricalcolato a ogni frame. Ora è una texture fissa con lo stesso aspetto (`assets/grunge-mask.png`). In più: grana di sfondo ferma, cursore senza fusione colori, ombre delle maglie calcolate una volta, animazioni attive solo quando sono a schermo. Scroll misurato in Chromium: home da circa 145 ms a circa 20 ms per frame su desktop, 16,7 ms (60 fps) su telefono.
+- **Video**: partono da soli quando entrano a schermo e si fermano quando escono, per non sprecare batteria. Se il telefono blocca l'autoplay (risparmio energetico iPhone) compare ▶ e basta un tocco. Nella demo i video passavano da una cache che restituiva sempre i primi 2 byte, e Safari e Chrome non li avviavano. Ora passano da `tools/theme-test/vercel/api/media.js`, verificato con Chrome vero.
+- **Maglie vere (still life)**: le 33 foto del Drive sono scontornate. Nella hero ogni vibe ha le sue 3 maglie abbinate ai colori (blocco Vibe → *Foto maglia 1/2/3*). Nella demo il catalogo è fatto con i pezzi veri: fronte e retro sulle card, nella vista rapida e nella pagina prodotto. Nuova impostazione tema *Foto prodotto*: intere su colore (still life) oppure a tutto riquadro.
+- **Moto ridisegnata**: forcella con l'inclinazione giusta, tabella anteriore pulita senza numero, casco vero (visiera, occhiali a specchio, mentoniera), 69 pulito sulla schiena. Ruote, telaio e pilota sono livelli separati. In più c'è l'opzione **Sprite della moto** per la versione generata con Higgsfield (prompt in `tools/higgsfield/README.md`).
+- **Cadillac più precisa**: doppi fari sovrapposti ('66), linee delle portiere sopra le scritte, maniglie cromate, stemma sul cofano, scritta DeVille, pinna, pinze freno rosse. La scia colorata ora sono due sagome che si spostano: niente più filtro per frame.
+- **Chi siamo**: nuova sezione *Tutto può entrarci* (Moto, Vestiti, Oggetti, Persone, Esperienze). Su desktop la foto segue il mouse; su telefono si apre sotto la parola al centro dello schermo.
+- **Bug corretto**: un prodotto con una sola foto risultava invisibile nella card.
+
 ## Novità v1.4
 - **Foto e video veri del team** (dal Drive): 4 clip nel *Video del brand* (Sterrato, Le crete, Ferragosto, Il pick-up), foto o video in ogni capitolo della *Storia in moto*, e *La nostra storia* con un montaggio di 24 secondi (tre clip verticali affiancate, con l'audio). I video iPhone sono HDR: convertiti in colori standard per il web, compressi per caricarsi veloci.
 - **Foto della crew** (nuova sezione, dopo il manifesto): 20 polaroid con lo scotch e la scritta a pennarello, su due file che scorrono in direzioni opposte con lo scroll; tocchi una foto e si apre grande (frecce, swipe, Esc). Si possono aggiungere adesivi tra le foto.
@@ -29,6 +38,9 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | `tb-crew-01.jpg` … `tb-crew-21.jpg` | Foto della crew → foto 1–21 (nello stesso ordine) |
 | `tb-storia-estate.mp4` | La nostra storia (video) → Video (in home e in Chi siamo) |
 | `tb-mx-officina.jpg`, `tb-crew-04.jpg` | Chi siamo → le due foto tra le righe |
+| `tb-crew-02/14/18/01/12.jpg` | Chi siamo → Tutto può entrarci (Moto, Vestiti, Oggetti, Persone, Esperienze) |
+| `tb-maglia-*.png` (15 di 33) | Hero → ogni Vibe → Foto maglia 1/2/3 (abbinamenti in `templates/index.json`) |
+| `tb-maglia-*.png` (tutte) | Foto dei prodotti (fronte = prima foto, retro = seconda) |
 
 ## Novità v1.3.1
 - **Storia in moto, percorso nuovo.** Ogni capitolo ha un salto diverso: tabletop, doppio con fossa, step-down dall'altopiano, duna gigante, doppio piccolo con whoops e arrivo sotto lo striscione TEAM BUTTI. Il volo si calcola prima del terreno; la zona sotto la traiettoria viene costruita apposta e l'atterraggio è tangente alla discesa, quindi la moto non entra mai nella fossa e non decolla uscendone. Ci sono bandierine sui labbri, balle di fieno, pile di gomme e coni, e lo sfondo toscano è generato senza ripetizioni (borghi, viali di cipressi, pini, vigne, rotoballe).

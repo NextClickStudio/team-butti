@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Team Butti",
-    "theme_version": "1.4.0",
+    "theme_version": "1.5.0",
     "theme_author": "Team Butti",
     "theme_documentation_url": "https://www.instagram.com/team_butti/",
     "theme_support_url": "https://www.instagram.com/team_butti/"
@@ -79,6 +79,23 @@
   {
     "name": "Maglie",
     "settings": [
+      {
+        "type": "select",
+        "id": "product_image_fit",
+        "label": "Foto prodotto",
+        "default": "contain",
+        "options": [
+          {
+            "value": "contain",
+            "label": "Intere su colore (still life scontornate)"
+          },
+          {
+            "value": "cover",
+            "label": "A tutto riquadro (foto ambientate)"
+          }
+        ],
+        "info": "Con le still life la maglia resta intera e la card prende il colore del tag bg: (es. bg:ffd400)."
+      },
       {
         "type": "select",
         "id": "jersey_style",

@@ -161,11 +161,12 @@
       var variants = p.variants.map(function (v) { return Object.assign({ title: v.options.join(' / ') }, v); });
       var first = variants.filter(function (v) { return v.available; })[0] || variants[0];
       var prices = variants.map(function (v) { return v.price; });
+      var imgs = (p.images || []).map(function (n) { var o = fileRef('shopify://shop_images/' + n); if (o) o.alt = p.title; return o; }).filter(Boolean);
       return {
         id: p.id, title: p.title, handle: p.handle, url: '/products/' + p.handle, type: p.type, vendor: 'Team Butti',
         price: Math.min.apply(null, prices), price_varies: Math.min.apply(null, prices) !== Math.max.apply(null, prices),
         compare_at_price: p.compare_at_price || null, available: variants.some(function (v) { return v.available; }),
-        images: [], featured_image: null, tags: p.tags || [], description: p.description || '',
+        images: imgs, featured_image: imgs[0] || null, tags: p.tags || [], description: p.description || '',
         has_only_default_variant: !p.options,
         options_with_values: opts2.map(function (name, i) {
           var vals = [];
