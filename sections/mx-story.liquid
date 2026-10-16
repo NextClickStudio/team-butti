@@ -12,7 +12,16 @@
     <div class="mxs__world" data-mxs-world style="width: calc({{ chapters.size }} * var(--chw) + 60vw)">
       <svg class="mxs__ground" data-mxs-ground aria-hidden="true" focusable="false"></svg>
       {%- for c in chapters -%}
-        <article class="mxs__ch{% if c.settings.image != blank or c.settings.video != blank %} mxs__ch--media{% endif %}" style="left: calc({{ forloop.index0 }} * var(--chw))" {{ c.shopify_attributes }}>
+        {%- liquid
+          assign media = c.settings.video | default: c.settings.image
+          assign fr = '4/3'
+          if media != blank and media.aspect_ratio < 0.95
+            assign fr = '4/5'
+          elsif media != blank and media.aspect_ratio < 1.15
+            assign fr = '1/1'
+          endif
+        -%}
+        <article class="mxs__ch{% if media != blank %} mxs__ch--media{% endif %}" style="left: calc({{ forloop.index0 }} * var(--chw)); --fr: {{ fr }}" {{ c.shopify_attributes }}>
           <div class="mxs__txt">
             <p class="mxs__year d" aria-hidden="true">{{ c.settings.year | escape }}</p>
             <p class="label mxs__place">{{ forloop.index | prepend: '0' | slice: -2, 2 }} / {{ forloop.length | prepend: '0' | slice: -2, 2 }}{% if c.settings.place != blank %} — {{ c.settings.place | escape }}{% endif %}</p>

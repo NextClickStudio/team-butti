@@ -12,36 +12,12 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
   ok(bg1 !== bg2, `hero: cambia vibe (${bg1} → ${bg2})`);
   await p.mouse.click(700, 520); await p.waitForTimeout(120);
   ok(await p.$$eval('[data-tb=hero] .brap', x => x.length) >= 1, 'hero: scritte a vignetta al click (invariate)');
-  ok(!(await p.$('[data-tb=story]')) && !(await p.$('[data-tb=reel]')), 'negozio vero: storia e video del brand nascosti finché non si carica un video');
+  ok(!(await p.$('[data-tb=story]')) && !(await p.$('[data-tb=reel]')) && !(await p.$('[data-tb=crew]')) && !(await p.$('.mxs__pic')), 'negozio appena installato: video del brand, storia e foto crew nascosti finché i file non sono caricati');
   ok(!!(await p.$('[data-tb=hero] .hero__land .pano')) && !!(await p.$('[data-hero-car] .cad')), 'hero: panorama Toscana → Milano + Cadillac sulla strada');
   ok(!(await p.$('.skyline')), 'hero: vecchio skyline con palme rimosso');
   await p.screenshot({ path: __dirname + '/out/th-hero.png' });
   ok(await p.$$eval('.grid .card svg.tbj-svg', x => x.length) >= 16, 'griglia: maglie demo disegnate (fronte+retro)');
-  await p.evaluate(() => document.querySelector('[data-tb=customizer]').scrollIntoView()); await p.waitForTimeout(900);
-  await p.click('[data-model="Motocross"]'); await p.waitForTimeout(700);
-  ok(await p.$eval('[data-face=front] .tbj-svg', s => s.getAttribute('aria-label').includes('mx')), 'configuratore: cambio modello → Motocross');
-  await p.fill('[data-tb=customizer] [data-name-input]', 'ROSSI'); await p.fill('[data-tb=customizer] [data-num-input]', '91');
-  await p.click('[data-tb=customizer] [data-size="XL"]');
-  const vid = await p.$eval('[data-cfg-form] input[name=id]', i => i.value);
-  ok(vid === '108', `configuratore: variante Motocross/XL selezionata (id ${vid})`);
-  await p.click('[data-tb=customizer] .sw:nth-child(3)'); await p.waitForTimeout(700);
-  await p.screenshot({ path: __dirname + '/out/th-custom.png' });
-  await p.click('[data-cfg-form] [data-add]'); await p.waitForTimeout(900);
-  const log = await (await p.request.get('http://localhost:8787/__log')).json();
-  const add = log.find(l => l.path === '/cart/add.js');
-  ok(add && /name="id"\r\n\r\n108/.test(add.body) && /properties\[Nome\]"\r\n\r\nROSSI/.test(add.body) && /properties\[Numero\]"\r\n\r\n91/.test(add.body) && /properties\[Colori\]"\r\n\r\nUSA/.test(add.body) && /name="sections"\r\n\r\ncart-drawer/.test(add.body), 'carrello: POST /cart/add.js con id + Nome/Numero/Colori + sections');
-  ok(await p.$eval('#CartDrawer', d => d.classList.contains('on')), 'carrello: drawer aperto dopo aggiunta');
-  ok(await p.$eval('[data-cart-count]', e => e.textContent.trim()) === '1', 'carrello: contatore bag aggiornato a 1');
-  ok((await p.textContent('#CartDrawer')).includes('Nome: ROSSI'), 'carrello: proprietà personalizzate mostrate nella riga');
-  await p.screenshot({ path: __dirname + '/out/th-drawer.png' });
-  await p.click('#CartDrawer [data-line][data-qty="0"]'); await p.waitForTimeout(600);
-  const log2 = await (await p.request.get('http://localhost:8787/__log')).json();
-  ok(log2.some(l => l.path === '/cart/change.js' && l.body.includes('"quantity":0')), 'carrello: POST /cart/change.js per rimuovere');
-  await p.keyboard.press('Escape');
-  // plate
-  await p.evaluate(() => document.querySelector('[data-tb=plate]').scrollIntoView()); await p.waitForTimeout(600);
-  await p.fill('[data-plate-in]', 'BUTTI');
-  ok(await p.textContent('[data-plate-txt]') === 'BUTTI', 'targa: anteprima live');
+  ok(!(await p.$('[data-tb=customizer]')) && !(await p.$('[data-tb=plate]')) && !(await p.$('#custom')), 'home: niente prodotti custom (configuratore maglia e targa tolti, solo offline ai market)');
   // Cadillac journey (visible without video: illustrated car)
   await p.evaluate(() => { const r = document.querySelector('[data-tb=vscroll]'); scrollTo(0, r.offsetTop + (r.offsetHeight - innerHeight) * 0.25); }); await p.waitForTimeout(300);
   await p.evaluate(() => { const r = document.querySelector('[data-tb=vscroll]'); scrollTo(0, r.offsetTop + (r.offsetHeight - innerHeight) * 0.5); }); await p.waitForTimeout(1200);
@@ -68,10 +44,22 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
   await p.$$eval('#modal [data-opt]', os => { os[1].querySelector('[data-v="L"]').click(); });
   ok(await p.$eval('#modal input[name=id]', i => i.value) === '102', 'vista rapida: varianti Hockey/L → id 102');
   await p.screenshot({ path: __dirname + '/out/th-quick.png' });
-  // product page
+  // product page: options → variant → AJAX add → drawer
   await p.goto('http://localhost:8787/products/custom-jersey'); await p.waitForTimeout(800);
   ok(await p.$$eval('.pdp .tbj-svg', x => x.length) === 2, 'pagina prodotto: maglia fronte/retro (senza foto)');
   await p.screenshot({ path: __dirname + '/out/th-product.png' });
+  await p.$$eval('.pdp [data-opt]', os => { os[0].querySelector('[data-v="Motocross"]').click(); os[1].querySelector('[data-v="XL"]').click(); });
+  ok(await p.$eval('.pdp input[name=id]', i => i.value) === '108', 'pagina prodotto: Motocross/XL → variante 108');
+  await p.click('.pdp [data-add]'); await p.waitForTimeout(900);
+  const log = await (await p.request.get('http://localhost:8787/__log')).json();
+  const add = log.find(l => l.path === '/cart/add.js');
+  ok(add && /name="id"\r\n\r\n108/.test(add.body) && /name="sections"\r\n\r\ncart-drawer/.test(add.body), 'carrello: POST /cart/add.js con id variante + sections');
+  ok(await p.$eval('#CartDrawer', d => d.classList.contains('on')), 'carrello: drawer aperto dopo aggiunta');
+  ok(await p.$eval('[data-cart-count]', e => e.textContent.trim()) === '1', 'carrello: contatore bag aggiornato a 1');
+  await p.screenshot({ path: __dirname + '/out/th-drawer.png' });
+  await p.click('#CartDrawer [data-line][data-qty="0"]'); await p.waitForTimeout(600);
+  const log2 = await (await p.request.get('http://localhost:8787/__log')).json();
+  ok(log2.some(l => l.path === '/cart/change.js' && l.body.includes('"quantity":0')), 'carrello: POST /cart/change.js per rimuovere');
   ok(errs.length === 0, 'console: nessun errore JS ' + JSON.stringify(errs));
   await b.close();
 })();

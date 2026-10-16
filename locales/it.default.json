@@ -28,16 +28,9 @@
     "full_details": "Tutti i dettagli"
   },
   "customizer": {
-    "model": "Modello",
-    "colors": "Colori",
-    "name": "Nome",
-    "size": "Taglia",
     "turn": "Gira",
     "drag": "← trascina per girarla →",
     "setup": "Collega un prodotto nel theme editor"
-  },
-  "plate": {
-    "label": "Scrivi la tua (max 7)"
   },
   "countdown": {
     "days": "GG",
@@ -107,5 +100,12 @@
   },
   "mxs": {
     "photo": "Foto o video del capitolo"
+  },
+  "crew": {
+    "open": "Apri la foto",
+    "close": "Chiudi",
+    "prev": "Foto precedente",
+    "next": "Foto successiva",
+    "slot": "Foto della crew"
   }
 }

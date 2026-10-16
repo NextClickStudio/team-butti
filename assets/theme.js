@@ -107,7 +107,7 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeAll(); toggleMenu(false); } });
   document.addEventListener('submit', function (e) {
     var f = e.target;
-    if (f.matches('[data-product-form]') || f.matches('[data-cfg-form]') || f.matches('[data-plate-form]')) {
+    if (f.matches('[data-product-form]')) {
       if (!TB.cartDrawer) return;
       e.preventDefault();
       addToCart(f, $('[data-add]', f), $('[data-error]', f));
@@ -366,61 +366,6 @@
           s.style.rotate = ((e.clientX - sx) * 0.08) + 'deg';
         });
       });
-    },
-
-    customizer: function (root) {
-      var stage = $('[data-stage]', root), flip = $('[data-flip]', root);
-      var front = $('[data-face="front"]', root), back = $('[data-face="back"]', root);
-      var nameIn = $('[data-name-input]', root), numIn = $('[data-num-input]', root);
-      var form = $('[data-cfg-form]', root), btn = $('[data-add]', form), idIn = $('input[name="id"]', form);
-      var vjson = $('[data-variants]', root), variants = vjson ? JSON.parse(vjson.textContent) : null;
-      var st = { model: null, type: 'hockey', colors: null, cwName: '', size: null };
-      var m0 = $('[data-model].on', root) || $('[data-model]', root); if (m0) { st.model = m0.dataset.model; st.type = m0.dataset.type; }
-      var c0 = $('.sw.on', root) || $('.sw', root); if (c0) { st.colors = c0.dataset.colors; st.cwName = c0.dataset.name; }
-      var s0 = $('[data-size].on', root) || $('[data-size]', root); if (s0) st.size = s0.dataset.size;
-      var rot = J.rotator(stage, flip);
-      $('[data-turn]', root).addEventListener('click', function () { rot.toggle(); });
-
-      function draw(only) {
-        var c = J.parse(st.colors);
-        J.apply(stage, c);
-        var sw = $('.sw.on', root); if (sw) stage.style.setProperty('--cfg-bg', sw.dataset.bg);
-        if (only === 'colors') return;
-        var o = { name: nameIn.value.trim() || 'BUTTI', num: numIn.value || '00', capt: true };
-        front.innerHTML = J.svg(st.type, 'front', o); back.innerHTML = J.svg(st.type, 'back', o);
-      }
-      function sync() {
-        $('[data-prop-name]', form).value = nameIn.value.trim() || 'BUTTI';
-        $('[data-prop-num]', form).value = numIn.value || '00';
-        $('[data-prop-colors]', form).value = st.cwName;
-        if (!variants) return;
-        var hasModel = variants.some(function (v) { return v.options.indexOf(st.model) > -1; });
-        var v = variants.filter(function (x) { return x.options.indexOf(st.size) > -1 && (!hasModel || x.options.indexOf(st.model) > -1); })[0];
-        if (!v) { btn.disabled = true; btn.textContent = TB.strings.unavailable; return; }
-        idIn.value = v.id; btn.disabled = !v.available;
-        btn.textContent = v.available ? TB.strings.add + ' — ' + v.price : TB.strings.soldOut;
-        var price = $('[data-cfg-price]', root); if (price) price.textContent = v.price;
-      }
-      var sewT;
-      function sew() { back.classList.remove('tbj-new'); void back.offsetWidth; back.classList.add('tbj-new'); clearTimeout(sewT); sewT = setTimeout(function () { back.classList.remove('tbj-new'); }, 1200); }
-      draw(); sync();
-      root.addEventListener('click', function (e) {
-        var m = e.target.closest('[data-model]'), c = e.target.closest('.sw'), s = e.target.closest('[data-size]');
-        if (m && m.dataset.model !== st.model) {
-          $$('[data-model]', root).forEach(function (x) { x.classList.toggle('on', x === m); });
-          st.model = m.dataset.model; st.type = m.dataset.type; sync();
-          var out = flip.animate([{ opacity: 1, scale: 1 }, { opacity: 0, scale: 0.9 }], { duration: 180, easing: 'ease-in' });
-          out.finished.then(function () { draw(); flip.animate([{ opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1 }], { duration: 420, easing: 'cubic-bezier(.2,1.4,.4,1)' }); });
-        } else if (c) {
-          $$('.sw', root).forEach(function (x) { x.classList.toggle('on', x === c); });
-          st.colors = c.dataset.colors; st.cwName = c.dataset.name; draw('colors'); sync();
-        } else if (s) {
-          $$('[data-size]', root).forEach(function (x) { x.classList.toggle('on', x === s); });
-          st.size = s.dataset.size; sync();
-        }
-      });
-      nameIn.addEventListener('input', function () { nameIn.value = nameIn.value.toUpperCase().replace(/[^A-Z0-9 .'-]/g, ''); draw(); rot.show(true); sew(); sync(); });
-      numIn.addEventListener('input', function () { numIn.value = numIn.value.replace(/\D/g, ''); draw(); rot.show(true); sew(); sync(); });
     },
 
     ride: function (root) {
@@ -807,13 +752,39 @@
       });
     },
 
-    plate: function (root) {
-      var input = $('[data-plate-in]', root), txt = $('[data-plate-txt]', root), plate = $('[data-plate]', root);
-      input.addEventListener('input', function () {
-        input.value = input.value.toUpperCase().replace(/[^A-Z0-9 ]/g, '');
-        txt.textContent = input.value || ' ';
-        if (plate.animate) plate.animate([{ transform: 'rotate(-3deg) scale(1)' }, { transform: 'rotate(-1deg) scale(1.03)' }, { transform: 'rotate(-3deg) scale(1)' }], { duration: 250 });
+    crew: function (root) {
+      var rows = $$('[data-crew-row]', root), pols = $$('[data-pol]', root), lb = $('[data-crew-lb]', root);
+      if (root.dataset.motion === 'false' || reduce) root.classList.add('crew--static');
+      else {
+        // first row slides left, second row right, as the wall crosses the screen
+        var shown = -1;
+        whileVisible(root, function (dt) {
+          var r = root.getBoundingClientRect(), vh = window.innerHeight;
+          var p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+          shown = shown < 0 ? p : shown + (p - shown) * Math.min(1, dt * 8);
+          var W = root.clientWidth;
+          rows.forEach(function (row) {
+            var travel = Math.max(0, row.scrollWidth - W), x = row.hasAttribute('data-reverse') ? -travel * (1 - shown) : -travel * shown;
+            row.style.transform = 'translate3d(' + x.toFixed(1) + 'px,0,0)';
+          });
+        });
+      }
+      if (!lb || !lb.showModal) return;
+      var img = $('[data-lb-img]', lb), cap = $('[data-lb-cap]', lb), fig = $('.crew__lbf', lb), cur = 0, sx = null;
+      function show(i) {
+        cur = (i + pols.length) % pols.length;
+        var b = pols[cur]; img.width = +b.dataset.iw || 4; img.height = +b.dataset.ih || 5; img.src = b.dataset.full; img.alt = b.dataset.cap || ''; cap.textContent = b.dataset.cap || '';
+        fig.style.animation = 'none'; void fig.offsetWidth; fig.style.animation = '';
+      }
+      pols.forEach(function (b, i) { b.addEventListener('click', function () { show(i); lb.showModal(); }); });
+      lb.addEventListener('click', function (e) {
+        var st = e.target.closest('[data-lb-step]');
+        if (st) show(cur + +st.dataset.lbStep);
+        else if (e.target === lb || e.target.closest('[data-lb-close]')) lb.close();
       });
+      lb.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') show(cur + 1); else if (e.key === 'ArrowLeft') show(cur - 1); });
+      fig.addEventListener('pointerdown', function (e) { sx = e.clientX; });
+      fig.addEventListener('pointerup', function (e) { if (sx !== null && Math.abs(e.clientX - sx) > 50) show(cur + (e.clientX < sx ? 1 : -1)); sx = null; });
     },
 
     product: function (root) { initProduct(root); },

@@ -22,7 +22,7 @@ for (const p of CAT.products) {
     rows.push([
       p.handle, first ? p.title : '', first ? (p.description || '') : '', first ? 'Team Butti' : '', first ? p.type : '', first ? tags.join(', ') : '', first ? 'TRUE' : '',
       first ? opts[0] : '', v.options[0], first && opts[1] ? opts[1] : '', v.options[1] || '',
-      sku, p.handle === 'targa-socal' ? 600 : 350, 'shopify', v.available ? 20 : 0, 'deny', 'manual',
+      sku, 350, 'shopify', v.available ? 20 : 0, 'deny', 'manual',
       money(v.price), p.compare_at_price ? money(p.compare_at_price) : '', 'TRUE', 'TRUE', first ? 'FALSE' : '', first ? 'active' : ''
     ]);
   });

@@ -22,10 +22,12 @@ Su Vercel ci sono solo `index.html` (da `tools/theme-test/demo-shell.js /v/<comm
 - Online: GitHub Pages (Settings → Pages → branch, cartella `/`) e apri `/preview/`, oppure trascina la cartella `preview` su Vercel/Netlify.
 
 ## Mettere il tema su Shopify (pronto da caricare)
-1. Online Store → Temi → Aggiungi tema → **Carica file .zip** (`Team Butti-1.3.0.zip`, generato con `shopify theme package`).
-2. Prodotti → Importa → `import/prodotti-team-butti.csv` (10 prodotti di esempio con varianti, taglie e disegni maglia via tag).
-3. Pubblica il tema. Griglia, configuratore (`maglia-custom`) e targa (`targa-socal`) si collegano da soli.
-4. Video: Personalizza → **Video del brand** (le clip subito sotto la hero) e **La nostra storia (video)** per il vostro video: restano nascoste sul negozio finché il video non c'è. **Cadillac a scroll** è già visibile con la Cadillac disegnata; per la versione Higgsfield vedi `tools/higgsfield/README.md`.
+1. Contenuti → **File** → carica tutte le foto e i video del pacchetto *media pronti per Shopify* (`tb-*.jpg`, `tb-*.mp4`) **senza rinominarli**: la home li trova da sola per nome (video del brand, storia in moto, foto della crew, la nostra storia).
+2. Online Store → Temi → Aggiungi tema → **Carica file .zip** (`Team Butti-1.4.0.zip`, generato con `shopify theme package`).
+3. Prodotti → Importa → `import/prodotti-team-butti.csv` (8 maglie di esempio con taglie e disegni maglia via tag; da sostituire con i prodotti veri).
+4. Online Store → Pagine → crea **Chi siamo** con il modello `chi-siamo` e aggiungila al menu.
+5. Pubblica il tema. La griglia mostra da sola tutti i prodotti. Niente prodotti personalizzati online: la maglia custom si fa solo dal vivo ai market.
+6. Se una foto o un video non compare (file rinominato da Shopify), sceglilo a mano in Personalizza: la tabella *Media* in `preview/SHOPIFY-MAP.md` dice quale file va in quale sezione. Video del brand, storia e foto della crew restano nascosti finché i file non ci sono. **Cadillac a scroll** è già visibile con la Cadillac disegnata; per la versione Higgsfield vedi `tools/higgsfield/README.md`.
 
 ## Dettagli setup
 Vedi la sezione *Setup sul negozio* in `preview/SHOPIFY-MAP.md`. In breve: Online Store → Temi → Aggiungi tema → Connetti da GitHub, poi prodotti, metafield e foto.

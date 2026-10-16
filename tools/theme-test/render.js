@@ -58,14 +58,16 @@ engine.registerTag('paginate', {
   parse(tok, rem) { this.tpls = []; const s = this.liquid.parser.parseStream(rem); s.on('tag:endpaginate', () => s.stop()).on('template', t => this.tpls.push(t)).on('end', () => { throw new Error('paginate not closed'); }); s.start(); },
   * render(ctx, emitter) { ctx.push({ paginate: { pages: 1 } }); yield this.liquid.renderer.renderTemplates(this.tpls, ctx, emitter); ctx.pop(); }
 });
+// a fresh store: the photos/videos the template points to (shopify://...) are not uploaded yet → blank
+const noFiles = o => { for (const k in o) if (typeof o[k] === 'string' && o[k].startsWith('shopify://')) o[k] = null; return o; };
 function sectionObj(type, id, conf = {}) {
   const src = read(`sections/${type}.liquid`), sch = schemaOf(src);
   const defs = {}; (sch.settings || []).forEach(s => { if ('default' in s) defs[s.id] = s.default; });
   const settings = { ...defs, ...(conf.settings || {}) };
   (sch.settings || []).forEach(s => { if (s.type === 'link_list' && settings[s.id]) settings[s.id] = MENUS[settings[s.id]] || null; if (s.type === 'collection' || s.type === 'product') settings[s.id] = conf.settings && conf.settings[s.id + '__obj'] || null; });
   const order = conf.block_order || Object.keys(conf.blocks || {});
-  const blocks = order.map(bid => { const b = conf.blocks[bid]; const bs = (sch.blocks || []).find(x => x.type === b.type); const bd = {}; (bs.settings || []).forEach(s => { if ('default' in s) bd[s.id] = s.default; }); return { id: bid, type: b.type, settings: { ...bd, ...(b.settings || {}) }, shopify_attributes: '' }; });
-  return { src, section: { id: id, settings, blocks } };
+  const blocks = order.map(bid => { const b = conf.blocks[bid]; const bs = (sch.blocks || []).find(x => x.type === b.type); const bd = {}; (bs.settings || []).forEach(s => { if ('default' in s) bd[s.id] = s.default; }); return { id: bid, type: b.type, settings: noFiles({ ...bd, ...(b.settings || {}) }), shopify_attributes: '' }; });
+  return { src, section: { id: id, settings: noFiles(settings), blocks } };
 }
 async function renderSection(type, id, conf, extra = {}) {
   const { src, section } = sectionObj(type, id, conf);
@@ -78,7 +80,7 @@ engine.registerTag('sections', {
   * render() { const g = JSON.parse(read(`sections/${this.name}.json`)); let out = ''; for (const id of g.order) out += yield renderSection(g.sections[id].type, id, g.sections[id]); return out; }
 });
 
-const MENUS = { 'main-menu': { title: 'Shop', links: [{ title: 'Shop', url: '/collections/all' }, { title: 'Custom', url: '#custom' }, { title: 'Drop', url: '#drop' }] }, footer: { title: 'Info', links: [{ title: 'Spedizioni', url: '/pages/spedizioni' }] } };
+const MENUS = { 'main-menu': { title: 'Shop', links: [{ title: 'Shop', url: '/collections/all' }, { title: 'Drop', url: '#drop' }] }, footer: { title: 'Info', links: [{ title: 'Spedizioni', url: '/pages/spedizioni' }] } };
 const sizes = ['S', 'M', 'L', 'XL', 'XXL'], models = ['Hockey', 'Motocross', 'Football'];
 let vid = 100;
 const variants = models.flatMap(m => sizes.map(s => ({ id: vid++, options: [m, s], available: !(m === 'Football' && s === 'XXL'), price: 9900, title: `${m} / ${s}` })));
@@ -89,7 +91,6 @@ const PRODUCT = {
   variants, selected_or_first_available_variant: variants[0],
   metafields: { custom: { jersey_type: { value: 'hockey' }, jersey_colors: { value: '#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d' }, jersey_number: { value: '10' } } }
 };
-const PLATE = { ...PRODUCT, id: 2, title: 'Targa SoCal', price: 3900, selected_or_first_available_variant: { id: 999, available: true, price: 3900 } };
 const schema = JSON.parse(read('config/settings_schema.json'));
 const settings = {}; schema.forEach(g => (g.settings || []).forEach(s => { if ('default' in s) settings[s.id] = s.default; }));
 const GLOBALS = {
@@ -103,8 +104,6 @@ engine.options.globals = { settings: GLOBALS.settings, shop: GLOBALS.shop, route
 (async () => {
   // index template
   const tpl = JSON.parse(read('templates/index.json'));
-  tpl.sections.custom.settings = { product__obj: PRODUCT };
-  tpl.sections.plate.settings = { product__obj: PLATE };
   let body = '';
   for (const id of tpl.order) body += await renderSection(tpl.sections[id].type, id, tpl.sections[id]);
   const layout = await engine.parseAndRender(read('layout/theme.liquid').replace('{{ content_for_layout }}', '%%CONTENT%%'), GLOBALS);

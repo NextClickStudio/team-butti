@@ -16,7 +16,7 @@ JSON.parse(rd('config/settings_schema.json')).forEach(g => (g.settings || []).fo
 settings.social_instagram = 'https://www.instagram.com/team_butti/';
 const globals = {
   settings,
-  shop: { name: 'Team Butti', description: 'Maglie da hockey, MX e football dalla Toscana a SoCal.', enabled_payment_types: ['visa', 'master', 'paypal', 'apple_pay'], password_message: 'Drop 02 in arrivo. Entra nel team per il link anticipato.' },
+  shop: { name: 'Team Butti', description: 'Maglie da hockey, MX e football dalla Toscana a Milano.', enabled_payment_types: ['visa', 'master', 'paypal', 'apple_pay'], password_message: 'Drop 02 in arrivo. Entra nel team per il link anticipato.' },
   routes: { root_url: '/', cart_url: '/cart', cart_add_url: '/cart/add', cart_change_url: '/cart/change', search_url: '/search', all_products_collection_url: '/collections/all' },
   cart: { item_count: 0, items: [], total_price: 0 },
   // design_mode: empty video slots (story, Higgsfield bike) are shown, as in the Shopify theme editor
@@ -30,10 +30,12 @@ for (const dir of ['layout', 'sections', 'snippets', 'templates']) {
   for (const f of fs.readdirSync(path.join(T, dir))) templates[`${dir}/${f}`] = rd(`${dir}/${f}`);
 }
 fs.mkdirSync(path.join(T, 'demo'), { recursive: true });
-const dataJs = 'window.TB_DEMO = ' + JSON.stringify({ templates, locale, globals }) + ';\n';
+// real Team Butti photos / videos (demo/media): the home template points to them by file name, like a store with them uploaded in Files
+const media = JSON.parse(rd('demo/media/manifest.json'));
+const dataJs = 'window.TB_DEMO = ' + JSON.stringify({ templates, locale, globals, media }) + ';\n';
 fs.writeFileSync(path.join(T, 'demo', 'demo-data.js'), dataJs);
 
-const env = LS.create(liquidjs, { read: rel => (fs.existsSync(path.join(T, rel)) ? rd(rel) : null), exists: rel => fs.existsSync(path.join(T, rel)), locale, menus: CAT.menus, globals });
+const env = LS.create(liquidjs, { read: rel => (fs.existsSync(path.join(T, rel)) ? rd(rel) : null), exists: rel => fs.existsSync(path.join(T, rel)), locale, menus: CAT.menus, globals, media: { base: '/media/', list: media } });
 const pages = Pages.create({ env, read: rd, catalog: CAT, src: f => '/assets/' + f });
 
 (async () => {
@@ -46,6 +48,8 @@ const pages = Pages.create({ env, read: rd, catalog: CAT, src: f => '/assets/' +
   }
   fs.writeFileSync(path.join(OUT, '404.html'), await pages.render('/404'));
   for (const f of fs.readdirSync(path.join(T, 'assets'))) fs.copyFileSync(path.join(T, 'assets', f), path.join(OUT, 'assets', f));
+  fs.mkdirSync(path.join(OUT, 'media'));
+  for (const f of fs.readdirSync(path.join(T, 'demo', 'media'))) fs.copyFileSync(path.join(T, 'demo', 'media', f), path.join(OUT, 'media', f));
   fs.copyFileSync(require.resolve('liquidjs/dist/liquid.browser.min.js'), path.join(OUT, 'assets', 'liquid.browser.min.js'));
   for (const f of ['liquid-shopify.js', 'demo-catalog.js', 'shopify-mock.js']) fs.copyFileSync(path.join(__dirname, f), path.join(OUT, 'assets', f));
   fs.writeFileSync(path.join(OUT, 'assets', 'demo-data.js'), dataJs);

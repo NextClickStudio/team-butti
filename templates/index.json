@@ -191,138 +191,6 @@
         "sub": "Est. Toscana · Milano"
       }
     },
-    "custom": {
-      "type": "jersey-customizer",
-      "blocks": {
-        "m1": {
-          "type": "model",
-          "settings": {
-            "label": "Hockey",
-            "type": "hockey"
-          }
-        },
-        "m2": {
-          "type": "model",
-          "settings": {
-            "label": "Motocross",
-            "type": "mx"
-          }
-        },
-        "m3": {
-          "type": "model",
-          "settings": {
-            "label": "Football",
-            "type": "football"
-          }
-        },
-        "c1": {
-          "type": "colorway",
-          "settings": {
-            "name": "Rosa",
-            "base": "#FF2E93",
-            "sleeve": "#0D0D0D",
-            "trim": "#F4F1EA",
-            "text": "#0D0D0D",
-            "bg": "#FFD400"
-          }
-        },
-        "c2": {
-          "type": "colorway",
-          "settings": {
-            "name": "Kings",
-            "base": "#F4F1EA",
-            "sleeve": "#0D0D0D",
-            "trim": "#9A9A9A",
-            "text": "#0D0D0D",
-            "bg": "#E8E4DA"
-          }
-        },
-        "c3": {
-          "type": "colorway",
-          "settings": {
-            "name": "USA",
-            "base": "#F4F1EA",
-            "sleeve": "#E3191B",
-            "trim": "#1D3FBF",
-            "text": "#E3191B",
-            "bg": "#FFD400"
-          }
-        },
-        "c4": {
-          "type": "colorway",
-          "settings": {
-            "name": "Navy",
-            "base": "#1D3FBF",
-            "sleeve": "#1D3FBF",
-            "trim": "#E3191B",
-            "text": "#F4F1EA",
-            "bg": "#FF2E93"
-          }
-        },
-        "c5": {
-          "type": "colorway",
-          "settings": {
-            "name": "Neon",
-            "base": "#39FF14",
-            "sleeve": "#FF2E93",
-            "trim": "#0D0D0D",
-            "text": "#FF2E93",
-            "bg": "#0D0D0D"
-          }
-        },
-        "c6": {
-          "type": "colorway",
-          "settings": {
-            "name": "Giallo",
-            "base": "#FFD400",
-            "sleeve": "#E3191B",
-            "trim": "#0D0D0D",
-            "text": "#E3191B",
-            "bg": "#1D3FBF"
-          }
-        },
-        "c7": {
-          "type": "colorway",
-          "settings": {
-            "name": "Night",
-            "base": "#0D0D0D",
-            "sleeve": "#FF6A13",
-            "trim": "#F4F1EA",
-            "text": "#FF6A13",
-            "bg": "#F4F1EA"
-          }
-        },
-        "c8": {
-          "type": "colorway",
-          "settings": {
-            "name": "Desert",
-            "base": "#C9A46A",
-            "sleeve": "#7A5A2C",
-            "trim": "#F4F1EA",
-            "text": "#0D0D0D",
-            "bg": "#39FF14"
-          }
-        }
-      },
-      "block_order": [
-        "m1",
-        "m2",
-        "m3",
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5",
-        "c6",
-        "c7",
-        "c8"
-      ],
-      "settings": {}
-    },
-    "plate": {
-      "type": "plate-builder",
-      "settings": {}
-    },
     "drop_countdown": {
       "type": "drop-countdown",
       "settings": {}
@@ -333,8 +201,8 @@
         "f1": {
           "type": "fact",
           "settings": {
-            "value": "2019",
-            "label": "Primo due tempi"
+            "value": "1",
+            "label": "Nome. Il resto è in movimento"
           }
         },
         "f2": {
@@ -357,7 +225,13 @@
         "f2",
         "f3"
       ],
-      "settings": {}
+      "settings": {
+        "video": "shopify://files/videos/tb-storia-estate.mp4",
+        "rec_label": "Valdera · Estate 2025–26",
+        "link": "/pages/chi-siamo",
+        "link_label": "Chi siamo",
+        "text": "<p>Prima c'erano gli amici. Poi è arrivato il nome. Team Butti nasce in un'officina dove ci si trova, si prova e si inventa: moto, vestiti, oggetti, persone, esperienze.</p><p>Essere un team non vuol dire essere tutti uguali. Vuol dire avere qualcosa che ti tiene insieme mentre ognuno fa a modo suo.</p>"
+      }
     },
     "cadillac": {
       "type": "video-scroll",
@@ -432,32 +306,45 @@
         "c1": {
           "type": "clip",
           "settings": {
+            "video": "shopify://files/videos/tb-reel-sterrato.mp4",
             "title": "Sterrato",
-            "place": "Toscana",
-            "date": "Estate 2026"
+            "place": "Valdera",
+            "date": "06.08.2025"
           }
         },
         "c2": {
           "type": "clip",
           "settings": {
-            "title": "Il Market",
-            "place": "Milano",
-            "date": "26.09.2026"
+            "video": "shopify://files/videos/tb-reel-crete.mp4",
+            "title": "Le crete",
+            "place": "Toscana",
+            "date": "25.08.2026"
           }
         },
         "c3": {
           "type": "clip",
           "settings": {
-            "title": "La Cadillac",
-            "place": "A1",
-            "date": "2026"
+            "video": "shopify://files/videos/tb-reel-ferragosto.mp4",
+            "title": "Ferragosto",
+            "place": "Valdera",
+            "date": "16.08.2026"
+          }
+        },
+        "c4": {
+          "type": "clip",
+          "settings": {
+            "video": "shopify://files/videos/tb-reel-pickup.mp4",
+            "title": "Il pick-up",
+            "place": "Toscana",
+            "date": "18.06.2026"
           }
         }
       },
       "block_order": [
         "c1",
         "c2",
-        "c3"
+        "c3",
+        "c4"
       ],
       "settings": {}
     },
@@ -467,31 +354,34 @@
         "ch1": {
           "type": "chapter",
           "settings": {
-            "year": "2019",
-            "place": "Toscana",
-            "title": "Il primo due tempi",
-            "text": "Un 125 preso a rate, uno sterrato dietro casa e una crew che cade più di quanto guida. Nasce tutto lì.",
-            "caption": "Lo sterrato"
+            "year": "Prima",
+            "place": "Valdera",
+            "title": "Gli amici",
+            "text": "Prima c'erano gli amici. Uno sterrato dietro casa, un due tempi che va spinto più che guidato e nessun piano. Nessuno sapeva ancora cosa sarebbe diventato.",
+            "video": "shopify://files/videos/tb-mx-spinta.mp4",
+            "caption": "Valdera · 06.08.2025"
           }
         },
         "ch2": {
           "type": "chapter",
           "settings": {
-            "year": "2021",
-            "place": "Toscana",
-            "title": "Le prime maglie",
-            "text": "Maglie da hockey e da cross disegnate per noi, venti pezzi stampati. Le chiedono gli amici, poi gli amici degli amici.",
-            "caption": "Drop zero"
+            "year": "Poi",
+            "place": "Nel grano",
+            "title": "Il nome",
+            "text": "Poi è arrivato il nome. TEAM BUTTI sulla schiena, su maglie da cross, da hockey e da football. Le chiedono gli amici, poi gli amici degli amici.",
+            "image": "shopify://shop_images/tb-mx-maglie.jpg",
+            "caption": "Due tempi nel grano"
           }
         },
         "ch3": {
           "type": "chapter",
           "settings": {
-            "year": "2024",
-            "place": "Ovunque",
-            "title": "Team Butti Merde",
-            "text": "Il nome diventa un coro. Poster rosa, leopardato, numeri sulla schiena: lo stile prende forma.",
-            "caption": "La crew"
+            "year": "Qui",
+            "place": "L'officina",
+            "title": "L'officina",
+            "text": "Un'officina dove ci si trova, si parla, si prova, si inventa. Moto, maglie, una Cadillac leopardata: qui le cose partono senza sapere cosa diventeranno.",
+            "image": "shopify://shop_images/tb-mx-officina.jpg",
+            "caption": "La crew e la DeVille"
           }
         },
         "ch4": {
@@ -499,19 +389,21 @@
           "settings": {
             "year": "26.09",
             "place": "Milano",
-            "title": "Il Market",
-            "text": "Piazzale Cantore 10: banchetti pieni, DJ set e la fila fuori. Dalla Toscana a Milano in Cadillac.",
-            "caption": "Market Milano"
+            "title": "Fuori posto",
+            "text": "Non è questione di andare lontano: è non stare dove ci si aspetta. Il pick-up col cofano arancione in mezzo a Milano, le maglie da cross al Market di Piazzale Cantore 10.",
+            "image": "shopify://shop_images/tb-mx-pickup-milano.jpg",
+            "caption": "Big ahh truck around Milano"
           }
         },
         "ch5": {
           "type": "chapter",
           "settings": {
             "year": "Oggi",
-            "place": "Drop 02",
+            "place": "In movimento",
             "title": "Gas aperto",
-            "text": "Nuove maglie, nuovi colori, stessa crew. Il prossimo salto lo facciamo insieme.",
-            "caption": "Drop 02"
+            "text": "Moto, vestiti, oggetti, persone, esperienze: se ci piace, ci entra. Senza un'unica direzione. Team Butti è un nome, il resto è in movimento.",
+            "video": "shopify://files/videos/tb-mx-via.mp4",
+            "caption": "Via! · 29.08.2026"
           }
         }
       },
@@ -523,6 +415,198 @@
         "ch5"
       ],
       "settings": {}
+    },
+    "crew": {
+      "type": "crew-wall",
+      "blocks": {
+        "p01": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-01.jpg",
+            "caption": "La crew e la DeVille"
+          }
+        },
+        "p02": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-02.jpg",
+            "caption": "Senza maglia, gas aperto"
+          }
+        },
+        "p03": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-03.jpg",
+            "caption": "Cadillac DeVille '66"
+          }
+        },
+        "p04": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-04.jpg",
+            "caption": "La bandiera la porta lei"
+          }
+        },
+        "p05": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-05.jpg",
+            "caption": "Interni leopardati, ovvio"
+          }
+        },
+        "s1": {
+          "type": "sticker",
+          "settings": {
+            "text": "MERDE",
+            "style": "a"
+          }
+        },
+        "p06": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-06.jpg",
+            "caption": "Anche il cavallo ha il cappellino"
+          }
+        },
+        "p07": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-07.jpg",
+            "caption": "MERDE X"
+          }
+        },
+        "p08": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-08.jpg",
+            "caption": "Numero 45"
+          }
+        },
+        "p09": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-09.jpg",
+            "caption": "Pieno e si parte"
+          }
+        },
+        "p10": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-10.jpg",
+            "caption": "Il guardiano"
+          }
+        },
+        "p11": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-11.jpg",
+            "caption": "Milano in maglia rossa"
+          }
+        },
+        "p12": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-12.jpg",
+            "caption": "Luna park"
+          }
+        },
+        "p13": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-13.jpg",
+            "caption": "Team Butti Merde"
+          }
+        },
+        "p14": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-14.jpg",
+            "caption": "Bomber verde"
+          }
+        },
+        "p15": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-15.jpg",
+            "caption": "Rosa e verde"
+          }
+        },
+        "s2": {
+          "type": "sticker",
+          "settings": {
+            "text": "69",
+            "style": "e"
+          }
+        },
+        "p16": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-16.jpg",
+            "caption": "I ❤ Team Butti"
+          }
+        },
+        "p17": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-17.jpg",
+            "caption": "Polamalu"
+          }
+        },
+        "p18": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-18.jpg",
+            "caption": "La moneta"
+          }
+        },
+        "p19": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-19.jpg",
+            "caption": "Al mare col cappellino"
+          }
+        },
+        "p20": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-20.jpg",
+            "caption": "Sotto il palco"
+          }
+        },
+        "p21": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-21.jpg",
+            "caption": "Milano, numero 10"
+          }
+        }
+      },
+      "block_order": [
+        "p01",
+        "p02",
+        "p03",
+        "p04",
+        "p05",
+        "s1",
+        "p06",
+        "p07",
+        "p08",
+        "p09",
+        "p10",
+        "p11",
+        "p12",
+        "p13",
+        "p14",
+        "p15",
+        "s2",
+        "p16",
+        "p17",
+        "p18",
+        "p19",
+        "p20",
+        "p21"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -532,10 +616,9 @@
     "drop",
     "cadillac",
     "manifesto",
-    "custom",
+    "crew",
     "storia_mx",
     "story",
-    "plate",
     "drop_countdown"
   ]
 }

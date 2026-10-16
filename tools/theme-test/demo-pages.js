@@ -13,7 +13,7 @@
   var CSS = '<style>html{background:#f4f1ea}html::after{content:none!important;display:none!important}[data-boot]{display:none!important}.demo-bar{background:#0d0d0d;color:#ffd400;text-align:center;padding:6px 16px;font:700 10px/1.4 "Space Mono",monospace;letter-spacing:.14em;text-transform:uppercase}' +
     '.demo-checkout{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.6);display:none;place-items:center;padding:16px}.demo-checkout.on{display:grid}' +
     '.demo-checkout__box{background:var(--paper);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--pink);padding:28px;max-width:460px;display:grid;gap:14px}.demo-checkout__box h2{font-size:44px;margin:0}.demo-checkout__box p{margin:0;font-size:13px}</style>';
-  var SPEDIZIONI = '<p>Italia 2–4 giorni lavorativi, gratis sopra 100€. Europa 4–7 giorni.</p><p>Resi gratuiti entro 14 giorni dalla consegna. Le maglie personalizzate non sono rimborsabili.</p><table><tr><th>Taglia</th><th>Lunghezza</th><th>Larghezza</th></tr><tr><td>S</td><td>66</td><td>56</td></tr><tr><td>M</td><td>70</td><td>60</td></tr><tr><td>L</td><td>74</td><td>64</td></tr><tr><td>XL</td><td>78</td><td>68</td></tr><tr><td>XXL</td><td>82</td><td>72</td></tr></table>';
+  var SPEDIZIONI = '<p>Italia 2–4 giorni lavorativi, gratis sopra 100€. Europa 4–7 giorni.</p><p>Resi gratuiti entro 14 giorni dalla consegna.</p><table><tr><th>Taglia</th><th>Lunghezza</th><th>Larghezza</th></tr><tr><td>S</td><td>66</td><td>56</td></tr><tr><td>M</td><td>70</td><td>60</td></tr><tr><td>L</td><td>74</td><td>64</td></tr><tr><td>XL</td><td>78</td><td>68</td></tr><tr><td>XXL</td><td>82</td><td>72</td></tr></table>';
 
   // o: { env, read(rel), catalog, src(name) -> url for demo runtime scripts }
   function create(o) {
@@ -26,7 +26,7 @@
       return { handle: handle, title: title, url: '/collections/' + handle, products: list, products_count: list.length, all_types: types, description: '', featured_image: null };
     };
     var collections = {
-      all: coll('all', 'Shop', products.filter(function (p) { return p.handle !== 'targa-socal'; })),
+      all: coll('all', 'Shop', products),
       'drop-01': coll('drop-01', 'Drop 01', products.slice(0, 8))
     };
     var tpl = function (name) { return JSON.parse(o.read('templates/' + name + '.json')); };
@@ -53,8 +53,7 @@
       home: function () {
         var home = tpl('index');
         home.sections.drop.settings = Object.assign({}, home.sections.drop.settings, { collection__obj: collections['drop-01'] });
-        // customizer + plate find their products by handle, exactly as on a fresh store
-        var extra = { all_products: { 'maglia-custom': byHandle('maglia-custom'), 'targa-socal': byHandle('targa-socal') }, collections: { all: collections.all } };
+        var extra = { collections: { all: collections.all } };
         return seq(home.order, function (id) { return sec(home.sections[id].type, id, home.sections[id], extra); })
           .then(function (b) { return page(b, { template: { name: 'index' }, page_title: 'Team Butti', request: req('index') }); });
       },
@@ -81,6 +80,11 @@
         return sec('main-list-collections', 'main', {}, { collections: [collections.all, collections['drop-01']] })
           .then(function (b) { return page(b, { template: { name: 'list-collections' }, page_title: 'Collezioni', request: req('list-collections') }); });
       },
+      chiSiamo: function () {
+        var t = tpl('page.chi-siamo');
+        return seq(t.order, function (id) { return sec(t.sections[id].type, id, t.sections[id]); })
+          .then(function (b) { return page(b, { template: { name: 'page', suffix: 'chi-siamo' }, page_title: 'Chi siamo', request: req('page') }); });
+      },
       spedizioni: function () {
         return sec('main-page', 'main', {}, { page: { title: 'Spedizioni e resi', content: SPEDIZIONI } })
           .then(function (b) { return page(b, { template: { name: 'page' }, page_title: 'Spedizioni e resi', request: req('page') }); });
@@ -103,11 +107,12 @@
       else if (p === '/cart') out = routes.cart();
       else if (p === '/search') out = routes.search();
       else if (p === '/pages/spedizioni') out = routes.spedizioni();
+      else if (p === '/pages/chi-siamo') out = routes.chiSiamo();
       else if (p === '/password') out = routes.password();
       return out || routes.notFound();
     }
 
-    var paths = ['/', '/collections', '/cart', '/search', '/pages/spedizioni', '/password']
+    var paths = ['/', '/collections', '/cart', '/search', '/pages/spedizioni', '/pages/chi-siamo', '/password']
       .concat(Object.keys(collections).map(function (h) { return '/collections/' + h; }))
       .concat(products.map(function (p) { return '/products/' + p.handle; }));
 

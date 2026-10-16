@@ -65,7 +65,7 @@
       handle: function (s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); },
       default_errors: function (e) { return e ? '<ul><li>Errore</li></ul>' : ''; },
       payment_type_svg_tag: function (type) { return '<svg class="payment-icon" viewBox="0 0 38 24" aria-label="' + type + '"><rect width="38" height="24" rx="3" fill="#fff"/><text x="19" y="16" text-anchor="middle" font-size="8" font-family="sans-serif" fill="#111">' + String(type).toUpperCase().slice(0, 4) + '</text></svg>'; },
-      video_tag: function (v) { var o = kw([].slice.call(arguments, 1)); var src = v && v.sources && v.sources[0] ? v.sources[0].url : ''; return '<video' + (o.autoplay ? ' autoplay' : '') + (o.loop ? ' loop' : '') + (o.muted ? ' muted' : '') + ' playsinline preload="' + (o.preload || 'metadata') + '"><source src="' + src + '" type="video/mp4"></video>'; },
+      video_tag: function (v) { var o = kw([].slice.call(arguments, 1)); var src = v && v.sources && v.sources[0] ? v.sources[0].url : ''; var poster = v && v.preview_image ? ' poster="' + v.preview_image.src + '"' : ''; return '<video' + (o.autoplay ? ' autoplay' : '') + (o.loop ? ' loop' : '') + (o.muted ? ' muted' : '') + ' playsinline preload="' + (o.preload || 'metadata') + '"' + poster + '><source src="' + src + '" type="video/mp4"></video>'; },
       default_pagination: function () { return '<span class="current">1</span>'; },
       json: function (v) { var x = v && typeof v.valueOf === 'function' ? v.valueOf() : v; return JSON.stringify(x); }
     };
@@ -102,6 +102,16 @@
     }));
 
     var globals = opts.globals || {};
+    // files referenced by the template JSON (shopify://shop_images/x.jpg, shopify://files/videos/x.mp4) → image / video objects,
+    // from opts.media = { base: url prefix, list: { name: { w, h } } }; missing files are blank, as on a store without them
+    function fileRef(u) {
+      var M = opts.media, k = String(u).match(/^shopify:\/\/(shop_images|files\/videos)\/(.+)$/), m = M && k && M.list[k[2]];
+      if (!m) return null;
+      var img = function (name) { return { src: M.base + name, width: m.w, height: m.h, aspect_ratio: m.w / m.h, alt: '' }; };
+      if (k[1] === 'shop_images') return img(k[2]);
+      return { sources: [{ url: M.base + k[2], mime_type: 'video/mp4' }], aspect_ratio: m.w / m.h, preview_image: img(k[2].replace(/\.mp4$/, '.jpg')), alt: '' };
+    }
+    function files(o) { Object.keys(o).forEach(function (k) { if (typeof o[k] === 'string' && o[k].indexOf('shopify://') === 0) o[k] = fileRef(o[k]); }); return o; }
     function sectionObj(type, id, conf) {
       conf = conf || {};
       var src = read('sections/' + type + '.liquid'), sch = schemaOf(src);
@@ -116,9 +126,9 @@
       var blocks = order.map(function (bid) {
         var b = conf.blocks[bid], bs = (sch.blocks || []).filter(function (x) { return x.type === b.type; })[0] || {}, bd = {};
         (bs.settings || []).forEach(function (s) { if ('default' in s) bd[s.id] = s.default; });
-        return { id: bid, type: b.type, settings: Object.assign(bd, b.settings || {}), shopify_attributes: '' };
+        return { id: bid, type: b.type, settings: files(Object.assign(bd, b.settings || {})), shopify_attributes: '' };
       });
-      return { src: src, section: { id: id, settings: settings, blocks: blocks } };
+      return { src: src, section: { id: id, settings: files(settings), blocks: blocks } };
     }
     function renderSection(type, id, conf, extra) {
       var so = sectionObj(type, id, conf);

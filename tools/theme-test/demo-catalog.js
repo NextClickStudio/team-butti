@@ -29,24 +29,12 @@
   var products = raw.map(function (p, i) {
     return Object.assign({ id: 1000 + i, options: ['Taglia'], variants: sized(p.price, p.sold) }, p);
   });
-  var models = ['Hockey', 'Motocross', 'Football'];
-  products.push({
-    id: 2001, handle: 'maglia-custom', title: 'Maglia custom', type: 'Custom', jersey: ['hockey', '#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d', '00'], bg: '#ffd400',
-    description: '<p>Scegli modello, colori, nome e numero. Stampati e ricamati a mano.</p>',
-    options: ['Modello', 'Taglia'],
-    variants: models.reduce(function (acc, m) { return acc.concat(SIZES.map(function (s) { return { id: vid++, options: [m, s], available: !(m === 'Football' && s === 'XXL'), price: 9900 }; })); }, [])
-  });
-  products.push({
-    id: 2002, handle: 'targa-socal', title: 'Targa SoCal custom', type: 'Accessori',
-    description: '<p>Targa in alluminio stampata con la tua scritta. 30×15 cm.</p>',
-    options: null, variants: [{ id: vid++, options: ['Default Title'], available: true, price: 3900 }]
-  });
   var menus = {
     'main-menu': { title: 'Shop', links: [
-      { title: 'Shop', url: '/collections/all' }, { title: 'Drop 01', url: '/collections/drop-01' }, { title: 'Custom', url: '/#custom' }, { title: 'Spedizioni', url: '/pages/spedizioni' }
+      { title: 'Shop', url: '/collections/all' }, { title: 'Drop 01', url: '/collections/drop-01' }, { title: 'Chi siamo', url: '/pages/chi-siamo' }, { title: 'Spedizioni', url: '/pages/spedizioni' }
     ] },
     footer: { title: 'Info', links: [
-      { title: 'Spedizioni e resi', url: '/pages/spedizioni' }, { title: 'Guida taglie', url: '/pages/spedizioni' }, { title: 'Cerca', url: '/search' }
+      { title: 'Chi siamo', url: '/pages/chi-siamo' }, { title: 'Spedizioni e resi', url: '/pages/spedizioni' }, { title: 'Guida taglie', url: '/pages/spedizioni' }, { title: 'Cerca', url: '/search' }
     ] }
   };
   return { products: products, menus: menus };

@@ -6,7 +6,7 @@
   var read = function (p) { return Object.prototype.hasOwnProperty.call(D.templates, p) ? D.templates[p] : null; };
   var env = window.LiquidShopify.create(window.liquidjs, {
     read: read, exists: function (p) { return read(p) !== null; },
-    locale: D.locale, menus: CAT.menus, globals: D.globals, assetBase: base + 'assets/'
+    locale: D.locale, menus: CAT.menus, globals: D.globals, assetBase: base + 'assets/', media: { base: base + 'demo/media/', list: D.media || {} }
   });
   var runtime = {
     'liquid.browser.min.js': window.TB_LIQUID_URL,

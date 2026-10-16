@@ -53,6 +53,9 @@
             <span class="label">{{ block.settings.label | escape }}</span>
           </div>
         {%- endfor -%}
+        {%- if section.settings.link != blank and section.settings.link_label != blank -%}
+          <a class="btn btn--pink story__link" href="{{ section.settings.link }}" data-h>{{ section.settings.link_label | escape }} →</a>
+        {%- endif -%}
       </div>
     </div>
   </section>
@@ -72,6 +75,8 @@
     { "type": "text", "id": "play_text", "label": "Testo intorno al Play", "default": "GUARDA LA STORIA ★ TEAM BUTTI ★ " },
     { "type": "text", "id": "rec_label", "label": "Etichetta REC", "default": "Toscana 2026" },
     { "type": "richtext", "id": "text", "label": "Testo", "default": "<p>Dal campetto dietro casa al Market di Milano. Moto, maglie e una crew che non si prende mai sul serio. Questa è la nostra storia, girata da noi.</p>" },
+    { "type": "text", "id": "link_label", "label": "Bottone", "default": "Chi siamo" },
+    { "type": "url", "id": "link", "label": "Link del bottone", "info": "Es. la pagina Chi siamo. Vuoto = niente bottone" },
     { "type": "select", "id": "style", "label": "Stile", "default": "dark", "options": [
       { "value": "dark", "label": "Scuro" },
       { "value": "light", "label": "Chiaro" },

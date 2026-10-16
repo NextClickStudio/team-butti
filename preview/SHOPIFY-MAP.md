@@ -11,6 +11,25 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v1.4
+- **Foto e video veri del team** (dal Drive): 4 clip nel *Video del brand* (Sterrato, Le crete, Ferragosto, Il pick-up), foto o video in ogni capitolo della *Storia in moto*, e *La nostra storia* con un montaggio di 24 secondi (tre clip verticali affiancate, con l'audio). I video iPhone sono HDR: convertiti in colori standard per il web, compressi per caricarsi veloci.
+- **Foto della crew** (nuova sezione, dopo il manifesto): 20 polaroid con lo scotch e la scritta a pennarello, su due file che scorrono in direzioni opposte con lo scroll; tocchi una foto e si apre grande (frecce, swipe, Esc). Si possono aggiungere adesivi tra le foto.
+- **Collegamento automatico**: la home punta ai file per nome (`shopify://shop_images/tb-crew-01.jpg`, `shopify://files/videos/tb-reel-sterrato.mp4`…). Caricati i file in *Contenuti → File* con lo stesso nome, le sezioni si riempiono da sole.
+- **Tolti i prodotti personalizzati** (configuratore "Fattela tua" e targa custom): la maglia custom si fa solo dal vivo, ai market.
+- **Manifesto**: torna "Non siamo nati a Los Angeles".
+- **Chi siamo** (nuova pagina, template `page.chi-siamo`): il testo del brand ("Prima c'erano gli amici. Poi è arrivato il nome…") riga per riga, a caratteri enormi che entrano con lo scroll, due polaroid, nastro finale "Il resto è in movimento" e il video della storia. Sezione `sections/about-lines.liquid`, ogni riga è un blocco (testo, parole evidenziate in rosa, grandezza, pieno/contorno/pennarello, allineamento).
+- **Storia in moto** riscritta sul testo del brand: Prima (gli amici) → Poi (il nome) → Qui (l'officina) → 26.09 (fuori posto, Milano) → Oggi (in movimento). *La nostra storia* in home ha il testo breve e il bottone **Chi siamo**.
+- Date e luoghi nelle didascalie presi dai metadati dei video (es. Valdera, 06.08.2025).
+
+## Media (file → sezione)
+| File | Sezione → impostazione |
+|---|---|
+| `tb-reel-sterrato.mp4`, `tb-reel-crete.mp4`, `tb-reel-ferragosto.mp4`, `tb-reel-pickup.mp4` | Video del brand → clip 1–4 |
+| `tb-mx-spinta.mp4` · `tb-mx-maglie.jpg` · `tb-mx-officina.jpg` · `tb-mx-pickup-milano.jpg` · `tb-mx-via.mp4` | Storia in moto → capitoli 1–5 |
+| `tb-crew-01.jpg` … `tb-crew-21.jpg` | Foto della crew → foto 1–21 (nello stesso ordine) |
+| `tb-storia-estate.mp4` | La nostra storia (video) → Video (in home e in Chi siamo) |
+| `tb-mx-officina.jpg`, `tb-crew-04.jpg` | Chi siamo → le due foto tra le righe |
+
 ## Novità v1.3.1
 - **Storia in moto, percorso nuovo.** Ogni capitolo ha un salto diverso: tabletop, doppio con fossa, step-down dall'altopiano, duna gigante, doppio piccolo con whoops e arrivo sotto lo striscione TEAM BUTTI. Il volo si calcola prima del terreno; la zona sotto la traiettoria viene costruita apposta e l'atterraggio è tangente alla discesa, quindi la moto non entra mai nella fossa e non decolla uscendone. Ci sono bandierine sui labbri, balle di fieno, pile di gomme e coni, e lo sfondo toscano è generato senza ripetizioni (borghi, viali di cipressi, pini, vigne, rotoballe).
 - **Su telefono** i salti sono in scala con la moto, i capitoli sono più distanziati e il testo del capitolo resta fisso in alto con una dissolvenza al cambio.
@@ -38,8 +57,8 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 1. **Carica il tema**: Online Store → Temi → Aggiungi tema → Connetti da GitHub (repo `team-butti`, branch) oppure Carica file .zip.
 2. **Metafield prodotto** (Impostazioni → Dati personalizzati → Prodotti), servono solo finché non ci sono foto:
    `custom.jersey_type` (testo: hockey / mx / football), `custom.jersey_colors` (testo: `base,maniche,bordi,scritte`), `custom.jersey_number` (testo).
-3. **Prodotto "Maglia custom"**: opzioni `Modello` (Hockey, Motocross, Football) × `Taglia` (S…XXL). Selezionalo nella sezione *Configuratore maglia*.
-4. **Prodotto "Targa SoCal"**: selezionalo nella sezione *Targa custom*.
+3. **Foto e video**: Contenuti → File → carica i file `tb-*` senza rinominarli (vedi la tabella *Media* sopra).
+4. **Pagina Chi siamo**: Online Store → Pagine → Aggiungi pagina, titolo *Chi siamo* (indirizzo `chi-siamo`), Modello tema **chi-siamo**. Poi Navigazione → menu principale → aggiungi *Chi siamo*.
 5. **Badge sulle card**: tag prodotto `badge:Nuovo`, `badge:Market`, …
 6. **Filtri della griglia**: usano il *Tipo prodotto* (Hockey, Motocross, Football).
 
@@ -53,9 +72,11 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Griglia "Drop 01" + filtri | `sections/featured-collection.liquid` / `main-collection.liquid` | collezione, n° prodotti, filtri | `collection.products`, filtri = `collection.all_types`; fronte/retro = 1ª e 2ª foto; senza foto = maglia dai metafield; senza collezione = 8 maglie demo |
 | Vista rapida | `sections/quick-view.liquid` via Section Rendering API (`?section_id=quick-view`) | — | `product.variants`, disponibilità per taglia |
 | Manifesto + sticker trascinabili | `sections/manifesto.liquid` | testo (richtext, parole evidenziate), blocchi sticker (testo/stile/posizione) | — |
-| Configuratore "Fattela tua" | `sections/jersey-customizer.liquid` | modelli e colori come blocchi | prodotto "Custom" con varianti modello×taglia; nome e numero come **line item properties** (`properties[Nome]`, `properties[Numero]`) |
+| Video del brand | `sections/brand-reel.liquid` | blocchi clip (video, titolo, luogo, data), sfondo, zoom con lo scroll | video da *File* (`video_tag`) |
+| Chi siamo (pagina) | `templates/page.chi-siamo.json` + `sections/about-lines.liquid` | blocchi riga (testo, evidenziato, grandezza, stile, allineamento) e foto, nastro finale | — |
+| Foto della crew | `sections/crew-wall.liquid` | blocchi foto (foto, scritta) e adesivi, sfondo, scorrimento on/off | immagini da *File* (`image_url`) |
+| Storia in moto | `sections/mx-story.liquid` | blocchi capitolo (anno, luogo, titolo, testo, foto o video, didascalia), colori moto e paesaggio | — |
 | Ride Milano→NYC | `sections/ride.liquid` | blocchi "tappa" (titolo, testo, colore, immagine) | — |
-| Targa custom | `sections/plate-builder.liquid` | testi fissi, prezzo dal prodotto | prodotto "Targa" + `properties[Testo]` |
 | Poster Market + countdown | `sections/drop-countdown.liquid` | data/ora drop, testi poster, stamp on/off | — |
 | Newsletter | `snippets/newsletter-form.liquid` | testi | `{% form 'customer' %}` → clienti con tag `newsletter` |
 | Carrello laterale | `sections/cart-drawer.liquid` | soglia spedizione gratis | Cart AJAX API (`/cart/add.js`, `/cart/change.js`) + Section Rendering API |
