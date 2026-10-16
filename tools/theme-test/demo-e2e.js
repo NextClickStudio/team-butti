@@ -14,12 +14,12 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(!/nextclick/i.test(await p.content()), `[${name}] nessun riferimento a NextClick nella pagina`);
     ok(!!(await p.$('[data-tb=story] .story__slot')) && !!(await p.$('[data-tb=vscroll] .vscroll__slot')) && (await p.$$('[data-tb=reel] .reel__slot')).length === 3, `[${name}] slot video pronti: video del brand (3 clip) + storia + Cadillac Higgsfield`);
     ok(!(await p.content()).match(/Los Angeles|SoCal/) || (await p.$$eval('[data-tb=plate]', x => x.length)) === 1, `[${name}] narrativa Toscana → Milano (LA solo sulla targa prodotto)`);
-    await p.$eval('[data-tb=reel]', el => scrollTo(0, el.offsetTop + (el.offsetHeight - innerHeight) * 0.6)); await p.waitForTimeout(900);
+    await p.$eval('[data-tb=reel]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.6, behavior: 'instant' })); await p.waitForTimeout(900);
     ok(+(await p.$eval('[data-tb=reel]', el => getComputedStyle(el).getPropertyValue('--x'))) > 0.5, `[${name}] video del brand: si espande con lo scroll`);
     await p.click('[data-tb=reel] [data-chip="1"]'); await p.waitForTimeout(400);
     ok((await p.textContent('[data-place-out]')) === 'Milano', `[${name}] video del brand: cambio clip (Milano)`);
     await shot('reel');
-    await p.$eval('[data-tb=vscroll]', el => scrollTo(0, el.offsetTop + (el.offsetHeight - innerHeight) * 0.98)); await p.waitForTimeout(1500);
+    await p.$eval('[data-tb=vscroll]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.98, behavior: 'instant' })); await p.waitForTimeout(1500);
     ok(+(await p.textContent('[data-km-out]')) >= 280 && (await p.textContent('[data-tb=vscroll] [data-place]')) === 'Milano', `[${name}] Cadillac: arrivo a Milano dopo ~300 km`);
     await shot('cadillac');
     await p.$eval('#shopify-section-manifesto', el => el.scrollIntoView()); await p.waitForTimeout(300);

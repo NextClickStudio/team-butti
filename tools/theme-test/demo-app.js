@@ -19,6 +19,9 @@
   pages.render(location.pathname).then(function (html) {
     html = html.replace('<script src="' + runtime['liquid.browser.min.js'] + '" defer></script>',
       '<script>window.TB_ASSET_BASE=' + JSON.stringify(base) + ';</script>\n    <script src="' + runtime['liquid.browser.min.js'] + '" defer></script>');
+    // drop the boot screen styles first: the page is written while the shell is still being parsed,
+    // so they would otherwise survive (body{display:grid} stretches every section on phones)
+    Array.prototype.slice.call(document.querySelectorAll('style,[data-boot]')).forEach(function (n) { n.remove(); });
     document.open(); document.write(html); document.close();
   }).catch(function (e) {
     document.body.innerHTML = '<pre style="padding:24px;font:14px monospace">Errore demo: ' + String(e && e.message || e) + '</pre>';

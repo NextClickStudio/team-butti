@@ -10,11 +10,11 @@ process.stdout.write(`<!doctype html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Team Butti — Demo</title>
-<style>html,body{margin:0;background:#ff2e93;height:100%}body{display:grid;place-items:center;font:700 12px monospace;letter-spacing:.2em;color:#0d0d0d}</style>
+<style data-boot>html{background:#ff2e93}body{margin:0}.boot{position:fixed;inset:0;display:grid;place-items:center;font:700 12px monospace;letter-spacing:.2em;color:#0d0d0d}</style>
 <script>window.TB_ASSET_BASE=${JSON.stringify(base)};window.TB_LIQUID_URL=${JSON.stringify(liq)};</script>
 <script src="${liq}"></script>
 ${['tools/theme-test/liquid-shopify.js', 'tools/theme-test/demo-catalog.js', 'demo/demo-data.js', 'tools/theme-test/demo-pages.js', 'tools/theme-test/demo-app.js'].map(s).join('\n')}
 </head>
-<body>TEAM BUTTI · CARICAMENTO…</body>
+<body><div class="boot" data-boot>TEAM BUTTI · CARICAMENTO…</div></body>
 </html>
 `);
