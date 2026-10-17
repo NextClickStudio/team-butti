@@ -127,9 +127,18 @@
         "l14": {
           "type": "line",
           "settings": {
-            "text": "Team Butti non è un brand.\nÈ uno stile di vita.",
-            "highlight": "stile di vita",
+            "text": "Team Butti non è un brand.",
             "strike": "brand",
+            "size": "xl",
+            "style": "fill",
+            "align": "center"
+          }
+        },
+        "l15": {
+          "type": "line",
+          "settings": {
+            "text": "È uno stile di vita.",
+            "highlight": "stile di vita",
             "size": "xl",
             "style": "fill",
             "align": "center"
@@ -150,7 +159,8 @@
         "l11",
         "l12",
         "l13",
-        "l14"
+        "l14",
+        "l15"
       ],
       "settings": {}
     },
