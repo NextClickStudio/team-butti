@@ -116,7 +116,12 @@
         "j2",
         "j3"
       ],
-      "settings": {}
+      "settings": {
+        "kicker": "Da <b>Chianni</b>, Toscana, a <b>Milano</b>. Maglie da hockey, MX e football per chi va di traverso.",
+        "route_from": "Chianni",
+        "route_to": "Milano",
+        "badge_text": "TEAM BUTTI ★ CHIANNI ★ MILANO ★ MERDE ★ "
+      }
     },
     "tapes": {
       "type": "tapes",
@@ -127,7 +132,8 @@
       "settings": {
         "title": "Drop",
         "title_outline": "01",
-        "limit": 8
+        "limit": 8,
+        "link_label": "Vedi tutto il drop →"
       }
     },
     "manifesto": {
@@ -203,7 +209,7 @@
         "s6"
       ],
       "settings": {
-        "sub": "Est. Toscana · Milano"
+        "sub": "Est. Chianni · Milano"
       }
     },
     "drop_countdown": {
@@ -217,7 +223,7 @@
           "type": "fact",
           "settings": {
             "value": "1",
-            "label": "Nome. Il resto è in movimento"
+            "label": "Stile di vita"
           }
         },
         "f2": {
@@ -242,7 +248,7 @@
       ],
       "settings": {
         "video": "shopify://files/videos/tb-storia-estate.mp4",
-        "rec_label": "Valdera · Estate 2025–26",
+        "rec_label": "Chianni · Estate 2025–26",
         "link": "/pages/chi-siamo",
         "link_label": "Chi siamo",
         "text": "<p>Prima c'erano gli amici. Poi è arrivato il nome. Team Butti nasce in un'officina dove ci si trova, si prova e si inventa: moto, vestiti, oggetti, persone, esperienze.</p><p>Essere un team non vuol dire essere tutti uguali. Vuol dire avere qualcosa che ti tiene insieme mentre ognuno fa a modo suo.</p>"
@@ -251,20 +257,29 @@
     "cadillac": {
       "type": "video-scroll",
       "blocks": {
+        "sign-ranch": {
+          "type": "sign",
+          "settings": {
+            "title": "Il Ranch",
+            "sub": "Chianni · Team Butti HQ",
+            "style": "brown",
+            "pos": 4
+          }
+        },
+        "sign-fipili": {
+          "type": "sign",
+          "settings": {
+            "title": "FI-PI-LI",
+            "sub": "Pontedera · Firenze",
+            "style": "blue",
+            "pos": 18
+          }
+        },
         "sign-a1": {
           "type": "sign",
           "settings": {
             "title": "A1",
-            "sub": "Firenze · Bologna",
-            "style": "green",
-            "pos": 12
-          }
-        },
-        "sign-bo": {
-          "type": "sign",
-          "settings": {
-            "title": "Bologna",
-            "sub": "102 km",
+            "sub": "Bologna · Milano",
             "style": "green",
             "pos": 34
           }
@@ -273,9 +288,9 @@
           "type": "sign",
           "settings": {
             "title": "Milano",
-            "sub": "196 km",
+            "sub": "215 km",
             "style": "green",
-            "pos": 56
+            "pos": 54
           }
         },
         "sign-city": {
@@ -298,18 +313,19 @@
         }
       },
       "block_order": [
+        "sign-ranch",
+        "sign-fipili",
         "sign-a1",
-        "sign-bo",
         "sign-mi",
         "sign-city",
         "sign-market"
       ],
       "settings": {
-        "kicker": "A1 · Toscana → Milano",
+        "kicker": "Chianni → Milano · 390 km",
         "title": "Si parte",
-        "text": "Finestrini giù, maglie al vento. Scorri e portaci al Market.",
-        "places": "Toscana,A1 · Appennino,Emilia,Milano",
-        "km": 300,
+        "text": "Dal Ranch di Chianni al Market di Milano. Finestrini giù, maglie al vento: scorri e portaci là.",
+        "places": "Chianni · Il Ranch,Valdera,FI-PI-LI,Firenze,A1 · Appennino,Bologna,Emilia,Milano",
+        "km": 390,
         "length": 325,
         "theme": "light",
         "show_without_video": true
@@ -321,37 +337,51 @@
         "c1": {
           "type": "clip",
           "settings": {
-            "video": "shopify://files/videos/tb-reel-sterrato.mp4",
-            "title": "Sterrato",
-            "place": "Valdera",
-            "date": "06.08.2025"
+            "video": "shopify://files/videos/tb-reel-deville.mp4",
+            "title": "La DeVille",
+            "place": "Milano",
+            "date": "Settembre 2026",
+            "bubbles": "Partita da Chianni.|\"Fa paura.\"|\"Alla Joker, frate.\""
           }
         },
         "c2": {
           "type": "clip",
           "settings": {
-            "video": "shopify://files/videos/tb-reel-crete.mp4",
-            "title": "Le crete",
-            "place": "Toscana",
-            "date": "25.08.2026"
+            "video": "shopify://files/videos/tb-reel-targa.mp4",
+            "title": "Los Angeles?",
+            "place": "Milano",
+            "date": "Settembre 2026",
+            "bubbles": "\"Il portatarga? Los Angeles, in gotico.\"|Non siamo nati a Los Angeles."
           }
         },
         "c3": {
           "type": "clip",
           "settings": {
-            "video": "shopify://files/videos/tb-reel-ferragosto.mp4",
-            "title": "Ferragosto",
-            "place": "Valdera",
-            "date": "16.08.2026"
+            "video": "shopify://files/videos/tb-reel-leopardo.mp4",
+            "title": "Leopardo",
+            "place": "Interni",
+            "date": "DeVille '66",
+            "bubbles": "Leopardo ovunque.|Anche sul cruscotto."
           }
         },
         "c4": {
           "type": "clip",
           "settings": {
-            "video": "shopify://files/videos/tb-reel-pickup.mp4",
-            "title": "Il pick-up",
-            "place": "Toscana",
-            "date": "18.06.2026"
+            "video": "shopify://files/videos/tb-reel-volante.mp4",
+            "title": "Al volante",
+            "place": "Milano",
+            "date": "Settembre 2026",
+            "bubbles": "Finestrini giù.|Il resto è in movimento."
+          }
+        },
+        "c5": {
+          "type": "clip",
+          "settings": {
+            "video": "shopify://files/videos/tb-reel-milano.mp4",
+            "title": "Milano",
+            "place": "Milano",
+            "date": "26.09.2026",
+            "bubbles": "\"Tira fuori un fumo nero, frate.\"|Prossima fermata: il Market."
           }
         }
       },
@@ -359,9 +389,16 @@
         "c1",
         "c2",
         "c3",
-        "c4"
+        "c4",
+        "c5"
       ],
-      "settings": {}
+      "settings": {
+        "kicker": "Girato da noi · nessun attore",
+        "cta_label": "Shop il drop",
+        "cta_note": "Spedizione gratis da 100€",
+        "length": 130,
+        "autoplay_next": 8
+      }
     },
     "storia_mx": {
       "type": "mx-story",
@@ -370,11 +407,11 @@
           "type": "chapter",
           "settings": {
             "year": "Prima",
-            "place": "Valdera",
+            "place": "Chianni",
             "title": "Gli amici",
             "text": "Prima c'erano gli amici. Uno sterrato dietro casa, un due tempi che va spinto più che guidato e nessun piano. Nessuno sapeva ancora cosa sarebbe diventato.",
             "video": "shopify://files/videos/tb-mx-spinta.mp4",
-            "caption": "Valdera · 06.08.2025"
+            "caption": "Chianni · 06.08.2025"
           }
         },
         "ch2": {
@@ -392,9 +429,9 @@
           "type": "chapter",
           "settings": {
             "year": "Qui",
-            "place": "L'officina",
+            "place": "Il Ranch",
             "title": "L'officina",
-            "text": "Un'officina dove ci si trova, si parla, si prova, si inventa. Moto, maglie, una Cadillac leopardata: qui le cose partono senza sapere cosa diventeranno.",
+            "text": "Il Ranch, a Chianni: un'officina dove ci si trova, si parla, si prova, si inventa. Moto, maglie, una Cadillac leopardata: qui le cose partono senza sapere cosa diventeranno.",
             "image": "shopify://shop_images/tb-mx-officina.jpg",
             "caption": "La crew e la DeVille"
           }
@@ -416,7 +453,7 @@
             "year": "Oggi",
             "place": "In movimento",
             "title": "Gas aperto",
-            "text": "Moto, vestiti, oggetti, persone, esperienze: se ci piace, ci entra. Senza un'unica direzione. Team Butti è un nome, il resto è in movimento.",
+            "text": "Moto, vestiti, oggetti, persone, esperienze: se ci piace, ci entra. Senza un'unica direzione. Team Butti non è un brand, è uno stile di vita.",
             "video": "shopify://files/videos/tb-mx-via.mp4",
             "caption": "Via! · 29.08.2026"
           }
@@ -622,6 +659,50 @@
         "p21"
       ],
       "settings": {}
+    },
+    "trust": {
+      "type": "trust-bar",
+      "blocks": {
+        "r1": {
+          "type": "reason",
+          "settings": {
+            "icon": "ship",
+            "title": "Spedizione gratis da {soglia}€",
+            "text": "In tutta Italia"
+          }
+        },
+        "r2": {
+          "type": "reason",
+          "settings": {
+            "icon": "return",
+            "title": "Reso entro 14 giorni",
+            "text": "Non ti sta? Ce la rimandi"
+          }
+        },
+        "r3": {
+          "type": "reason",
+          "settings": {
+            "icon": "secure",
+            "title": "Pagamento sicuro",
+            "text": "Checkout protetto"
+          }
+        },
+        "r4": {
+          "type": "reason",
+          "settings": {
+            "icon": "limited",
+            "title": "Pezzi limitati",
+            "text": "Finiti quelli, finito il drop"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -629,6 +710,7 @@
     "reel",
     "tapes",
     "drop",
+    "trust",
     "cadillac",
     "manifesto",
     "crew",

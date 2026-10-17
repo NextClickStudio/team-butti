@@ -235,21 +235,25 @@
   "w": 400,
   "h": 718
  },
- "tb-reel-crete.mp4": {
-  "w": 576,
-  "h": 1024
+ "tb-reel-deville.mp4": {
+  "w": 768,
+  "h": 576
  },
- "tb-reel-ferragosto.mp4": {
-  "w": 720,
-  "h": 1280
+ "tb-reel-leopardo.mp4": {
+  "w": 768,
+  "h": 576
  },
- "tb-reel-pickup.mp4": {
-  "w": 720,
-  "h": 1280
+ "tb-reel-milano.mp4": {
+  "w": 768,
+  "h": 576
  },
- "tb-reel-sterrato.mp4": {
-  "w": 720,
-  "h": 1280
+ "tb-reel-targa.mp4": {
+  "w": 768,
+  "h": 576
+ },
+ "tb-reel-volante.mp4": {
+  "w": 768,
+  "h": 576
  },
  "tb-storia-estate.mp4": {
   "w": 1280,

@@ -52,7 +52,8 @@ Badge rotondo del logo, numeri da maglia, targhe, sticker, date stile poster, "S
 5. Sticker trascinabili + "BRAAAP!" al click.
 
 ## Aggiornamento ottobre 2026
-- **Narrativa**: *dalla Toscana a Milano* (non più Los Angeles/SoCal). Il viaggio del brand è sterrato toscano → A1 → Market di Milano.
+- **Narrativa**: *da Chianni a Milano* (non più Los Angeles/SoCal). Tutto parte dal **Ranch**, il quartier generale a Chianni (colline pisane: borgo medievale di origine etrusca, circa 1.276 abitanti, castagni, vigne e ulivi). Il viaggio del brand è Ranch → FI-PI-LI → A1 → Market di Milano (circa 390 km).
+- **Frase di casa**: *"Team Butti non è un brand, è uno stile di vita."* La dicono sempre: chiude la pagina Chi siamo.
 - **La Cadillac**: DeVille '66 custom (post IG del 23 settembre, foto 5/6): rosso arancio, tetto in vinile crema, scritta **TEAM BUTTI** leopardata gigante sulle portiere, cerchi neri a 5 razze col bordo lucido. È il nuovo "oggetto che si muove" del sito al posto della moto (`snippets/cadillac.liquid`, sprite Higgsfield in arrivo).
 - **Leopardato** = texture firma (scritte auto, vibe "Leopardo" della hero).
 - In attesa: cartella "Prodotti e-commerce" (foto e video) per l'identità definitiva e le clip della sezione *Video del brand*.
@@ -69,6 +70,6 @@ Testo originale del team:
 
 > Prima c'erano gli amici. Poi è arrivato il nome. Team Butti nasce così: da persone, moto, idee e cose fatte insieme. Da un'officina dove ci si incontra, si parla, si prova, si inventa. Dove una cosa può iniziare senza sapere ancora cosa diventerà. Non è una questione di andare lontano. È una questione di non stare dove ci si aspetta. Team Butti è libertà di fare, cambiare, mescolare. Moto, vestiti, oggetti, persone, esperienze. Tutto quello che ci interessa può entrarci. Senza troppe definizioni e senza un'unica direzione. Perché essere parte di un team non significa essere tutti uguali. Significa avere qualcosa che ti tiene insieme mentre ognuno fa a modo suo. Team Butti è un nome. Il resto è in movimento.
 
-Versione sul sito (pagina *Chi siamo*), stesso contenuto con il ritmo del manifesto: frasi corte, una per riga, parole chiave in rosa (*amici*, *insieme*, *dove ci si aspetta*, *mescolare*, *tutti uguali*, *a modo suo*), chiusura "Team Butti è un nome." + nastro "Il resto è in movimento". Il manifesto in home resta "Non siamo nati a Los Angeles… Il resto è merde.": le due chiusure si rispondono.
+Versione sul sito (pagina *Chi siamo*), stesso contenuto con il ritmo del manifesto: frasi corte, una per riga, parole chiave in rosa (*amici*, *insieme*, *dove ci si aspetta*, *mescolare*, *tutti uguali*, *a modo suo*), chiusura "Team Butti non è un brand. È uno stile di vita." (con *brand* barrato a pennarello) + nastro "Il resto è in movimento". Il manifesto in home resta "Non siamo nati a Los Angeles… Il resto è merde.": le due chiusure si rispondono.
 
 Parole del brand: amici, officina, insieme, mescolare, fuori posto, a modo suo, in movimento. Da evitare: "community", "lifestyle brand", "passione", "eccellenza".

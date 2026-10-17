@@ -11,6 +11,19 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v1.6
+- **Tutto parte da Chianni.** Il quartier generale del team è il Ranch, a Chianni (colline pisane). La Cadillac a scroll ora parte da lì: cartello marrone *Il Ranch · Chianni · Team Butti HQ*, poi FI-PI-LI, A1, Bologna e Milano, 390 km sul contachilometri (tappe: Chianni, Valdera, FI-PI-LI, Firenze, Appennino, Bologna, Emilia, Milano). Chianni anche nella hero (testo, percorso, badge), nell'annuncio, nel manifesto, nel footer e nelle didascalie che prima dicevano Valdera. Nuovo stile cartello *Località turistica (marrone)*.
+- **Video del brand con la Cadillac** (dal secondo Drive, girato Sony): 5 clip, *La DeVille* (la fiancata leopardata nel traffico), *Los Angeles?* (il portatarga SOCAL / LOS ANGELES in gotico), *Leopardo* (cruscotto e sedili), *Al volante*, *Milano* (pavé e binari del tram). Niente più clip in moto.
+- **Fumetti sulle clip**: nuovo campo *Fumetti* nel blocco clip, fino a 3 separati da `|`. Escono uno dopo l'altro mentre gira la clip. Tra virgolette diventano un fumetto parlato (bianco, a pennarello). Senza virgolette diventano una didascalia gialla. Le frasi tra virgolette vengono dall'audio del girato ("Il portatarga? Los Angeles, in gotico", "Fa paura", "Alla Joker, frate", "Tira fuori un fumo nero, frate").
+- **Il video blocca meno e porta allo shop**: la sezione è lunga 130 invece di 200 (si resta fermi sul video circa un terzo dello schermo) e parte già grande. Sul video c'è sempre il bottone rosa **Shop il drop** con la nota *Spedizione gratis da 100€* (impostazioni *Bottone shop*, *Sotto il bottone*, *Link bottone*).
+- **Bottone Shop che segue lo scroll** (Impostazioni tema → Carrello): compare dopo la prima schermata su home e pagine, si toglie sopra le griglie prodotti, sul video del brand (che ha il suo bottone) e sul footer.
+- **Perché comprare qui** (nuova sezione, subito sotto il drop): spedizione gratis da {soglia}€ (prende la soglia dalle impostazioni del carrello), reso entro 14 giorni, pagamento sicuro, pezzi limitati. Da adattare alle policy vere del negozio.
+- **Card prodotto**: l'etichetta ora dice *Scegli la taglia +* (apre la vista rapida con le taglie). Il bottone sotto la griglia dice *Vedi tutto il drop →*.
+- **Chi siamo**: la riga finale ora è **"Team Butti non è un brand. È uno stile di vita."**, con *brand* barrato a pennarello rosso e *stile di vita* evidenziato. Nella parte bianca le parole salgono una dopo l'altra, le parole evidenziate si colorano con un tratto di evidenziatore, le polaroid si spostano appena con lo scroll. Nuovo campo riga *Parole barrate a pennarello*.
+- **Il Ranch (Chianni)** (nuova sezione in Chi siamo): testo sul quartier generale, i numeri (1.276 abitanti, 390 km, 1 Cadillac leopardata) e la mappa vera Chianni → Pontedera → Firenze → Bologna → Parma → Milano. La strada si disegna con lo scroll, un punto rosa la percorre e i chilometri salgono fino a 390.
+- *La nostra storia*: il primo numero ora è "1 · Stile di vita". Storia in moto, capitolo Oggi: "Team Butti non è un brand, è uno stile di vita".
+- Demo: niente più segnaposto Higgsfield, si vede come il negozio vero.
+
 ## Novità v1.5
 - **Fluidità**: il sito andava a scatti per l'effetto "grunge" dei titoli, un filtro SVG ricalcolato a ogni frame. Ora è una texture fissa con lo stesso aspetto (`assets/grunge-mask.png`). In più: grana di sfondo ferma, cursore senza fusione colori, ombre delle maglie calcolate una volta, animazioni attive solo quando sono a schermo. Scroll misurato in Chromium: home da circa 145 ms a circa 20 ms per frame su desktop, 16,7 ms (60 fps) su telefono.
 - **Video**: partono da soli quando entrano a schermo e si fermano quando escono, per non sprecare batteria. Se il telefono blocca l'autoplay (risparmio energetico iPhone) compare ▶ e basta un tocco. Nella demo i video passavano da una cache che restituiva sempre i primi 2 byte, e Safari e Chrome non li avviavano. Ora passano da `tools/theme-test/vercel/api/media.js`, verificato con Chrome vero.
@@ -23,7 +36,7 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 ## Novità v1.4
 - **Foto e video veri del team** (dal Drive): 4 clip nel *Video del brand* (Sterrato, Le crete, Ferragosto, Il pick-up), foto o video in ogni capitolo della *Storia in moto*, e *La nostra storia* con un montaggio di 24 secondi (tre clip verticali affiancate, con l'audio). I video iPhone sono HDR: convertiti in colori standard per il web, compressi per caricarsi veloci.
 - **Foto della crew** (nuova sezione, dopo il manifesto): 20 polaroid con lo scotch e la scritta a pennarello, su due file che scorrono in direzioni opposte con lo scroll; tocchi una foto e si apre grande (frecce, swipe, Esc). Si possono aggiungere adesivi tra le foto.
-- **Collegamento automatico**: la home punta ai file per nome (`shopify://shop_images/tb-crew-01.jpg`, `shopify://files/videos/tb-reel-sterrato.mp4`…). Caricati i file in *Contenuti → File* con lo stesso nome, le sezioni si riempiono da sole.
+- **Collegamento automatico**: la home punta ai file per nome (`shopify://shop_images/tb-crew-01.jpg`, `shopify://files/videos/tb-reel-deville.mp4`…). Caricati i file in *Contenuti → File* con lo stesso nome, le sezioni si riempiono da sole.
 - **Tolti i prodotti personalizzati** (configuratore "Fattela tua" e targa custom): la maglia custom si fa solo dal vivo, ai market.
 - **Manifesto**: torna "Non siamo nati a Los Angeles".
 - **Chi siamo** (nuova pagina, template `page.chi-siamo`): il testo del brand ("Prima c'erano gli amici. Poi è arrivato il nome…") riga per riga, a caratteri enormi che entrano con lo scroll, due polaroid, nastro finale "Il resto è in movimento" e il video della storia. Sezione `sections/about-lines.liquid`, ogni riga è un blocco (testo, parole evidenziate in rosa, grandezza, pieno/contorno/pennarello, allineamento).
@@ -33,7 +46,7 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 ## Media (file → sezione)
 | File | Sezione → impostazione |
 |---|---|
-| `tb-reel-sterrato.mp4`, `tb-reel-crete.mp4`, `tb-reel-ferragosto.mp4`, `tb-reel-pickup.mp4` | Video del brand → clip 1–4 |
+| `tb-reel-deville.mp4`, `tb-reel-targa.mp4`, `tb-reel-leopardo.mp4`, `tb-reel-volante.mp4`, `tb-reel-milano.mp4` | Video del brand → clip 1–5 (Cadillac) |
 | `tb-mx-spinta.mp4` · `tb-mx-maglie.jpg` · `tb-mx-officina.jpg` · `tb-mx-pickup-milano.jpg` · `tb-mx-via.mp4` | Storia in moto → capitoli 1–5 |
 | `tb-crew-01.jpg` … `tb-crew-21.jpg` | Foto della crew → foto 1–21 (nello stesso ordine) |
 | `tb-storia-estate.mp4` | La nostra storia (video) → Video (in home e in Chi siamo) |

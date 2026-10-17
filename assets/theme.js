@@ -446,7 +446,7 @@
     reel: function (root) {
       var frame = $('[data-reel-frame]', root), clips = $$('[data-clip]', root), chips = $$('[data-chip]', root);
       var tc = $('[data-tc]', root), placeOut = $('[data-place-out]', root), dateOut = $('[data-date-out]', root), sound = $('[data-sound]', root);
-      var auto = (+root.dataset.auto || 0) * 1000, cur = 0, muted = true, visible = false, timer = 0, t0 = performance.now(), lastTc = '';
+      var auto = (+root.dataset.auto || 0) * 1000, cur = 0, muted = true, visible = false, timer = 0, t0 = performance.now(), lastTc = '', bubT = [];
       root.style.setProperty('--auto', (auto / 1000) + 's');
       var vid = function (i) { return clips[i] ? $('video', clips[i]) : null; };
       var pad = function (n) { return String(Math.floor(n)).padStart(2, '0'); };
@@ -470,6 +470,16 @@
         clearTimeout(timer);
         if (auto && clips.length > 1 && visible) timer = setTimeout(function () { show(cur + 1); }, auto);
       }
+      // comic bubbles: they pop one after the other while the clip runs, and stay until the next clip
+      function bubbles() {
+        bubT.forEach(clearTimeout); bubT = [];
+        $$('[data-bub]', root).forEach(function (b) { b.classList.remove('on'); });
+        if (!visible) return;
+        var bs = $$('[data-bub]', clips[cur]), span = Math.max(1500, (auto || 9000) - 1800);
+        bs.forEach(function (b, k) {
+          bubT.push(setTimeout(function () { b.classList.add('on'); }, 600 + k * Math.min(2600, span / bs.length)));
+        });
+      }
       function show(i) {
         cur = (i + clips.length) % clips.length;
         clips.forEach(function (c, k) { c.classList.toggle('on', k === cur); });
@@ -478,7 +488,7 @@
         if (dateOut) dateOut.textContent = clips[cur].dataset.date || '';
         if (!reduce) { frame.classList.remove('glitch'); void frame.offsetWidth; frame.classList.add('glitch'); }
         var v = vid(cur); if (v) { try { v.currentTime = 0; } catch (e) {} }
-        t0 = performance.now(); playCur(); runChip(); schedule();
+        t0 = performance.now(); playCur(); runChip(); schedule(); bubbles();
       }
       root._show = show;
       chips.forEach(function (c) { c.addEventListener('click', function (e) { e.stopPropagation(); show(+c.dataset.chip); }); });
@@ -491,19 +501,21 @@
       if (sound) sound.addEventListener('click', function (e) { e.stopPropagation(); toggleSound(); });
       document.addEventListener('tb:gesture', function () { if (frame.classList.contains('vid-wait')) playCur(); });
       frame.addEventListener('click', toggleSound);
+      var cta = $('[data-reel-cta]', root);
+      if (cta) cta.addEventListener('click', function (e) { e.stopPropagation(); });
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (es) {
-          visible = es[0].isIntersecting; playCur();
-          if (visible) { runChip(); schedule(); } else clearTimeout(timer);
+          var was = visible; visible = es[0].isIntersecting; playCur();
+          if (visible) { runChip(); schedule(); if (!was) bubbles(); } else { clearTimeout(timer); bubbles(); }
         }, { threshold: 0.25 }).observe(frame);
-      } else { visible = true; playCur(); schedule(); }
+      } else { visible = true; playCur(); schedule(); bubbles(); }
       // scroll: the frame grows from a card to full screen; HUD timecode follows the clip
       whileVisible(root, function () {
         var r = root.getBoundingClientRect(), total = root.offsetHeight - window.innerHeight;
         var p = total > 0 ? Math.min(1, Math.max(0, -r.top / (total * 0.7))) : 1;
         var x = reduce ? 1 : 1 - Math.pow(1 - p, 3);
         root.style.setProperty('--x', x.toFixed(4));
-        if (!reduce) frame.style.transform = 'translateY(' + ((1 - x) * 7).toFixed(3) + 'vh) scale(' + (0.58 + 0.42 * x).toFixed(4) + ')';
+        if (!reduce) frame.style.transform = 'translateY(' + ((1 - x) * 5).toFixed(3) + 'vh) scale(' + (0.7 + 0.3 * x).toFixed(4) + ')';
         var v = vid(cur), s = v && !v.paused ? v.currentTime : (performance.now() - t0) / 1000;
         var out = pad(s / 60) + ':' + pad(s % 60) + ':' + pad((s % 1) * 25);
         if (out !== lastTc) { lastTc = out; tc.textContent = out; }
@@ -844,6 +856,65 @@
       }
     },
 
+    // Chi siamo lines: words rise one by one, highlighted words get a highlighter stroke, photos drift slightly
+    about: function (root) {
+      if (!reduce) {
+        root.classList.add('ab--words');
+        $$('.ab__l', root).forEach(function (l) {
+          var k = 0;
+          (function wrap(node) {
+            Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+              if (n.nodeType === 3) {
+                var f = document.createDocumentFragment();
+                n.textContent.split(/(\s+)/).forEach(function (w) {
+                  if (!w) return;
+                  if (/^\s+$/.test(w)) { f.appendChild(document.createTextNode(w)); return; }
+                  var o = document.createElement('span'), i = document.createElement('span');
+                  o.className = 'w'; i.textContent = w; i.style.setProperty('--d', k++); o.appendChild(i); f.appendChild(o);
+                });
+                n.parentNode.replaceChild(f, n);
+              } else if (n.nodeType === 1 && n.tagName !== 'BR') wrap(n);
+            });
+          })(l);
+          l.style.setProperty('--n', k);
+        });
+      }
+      var pics = $$('.ab__pic', root);
+      if (reduce || !pics.length) return;
+      whileVisible(root, function () {
+        var vh = window.innerHeight;
+        pics.forEach(function (p, i) {
+          var r = p.getBoundingClientRect(); if (r.bottom < -100 || r.top > vh + 100) return;
+          p.style.translate = '0 ' + (((r.top + r.height / 2) - vh / 2) * (i % 2 ? -0.09 : -0.14)).toFixed(1) + 'px';
+        });
+      });
+    },
+
+    // Il Ranch: the road from Chianni to Milano draws itself with the scroll
+    ranch: function (root) {
+      var map = $('[data-ranch-map]', root), road = $('[data-ranch-road]', root), car = $('[data-ranch-car]', root), kmOut = $('[data-ranch-km]', root);
+      if (!map || !road || !road.getTotalLength) return;
+      var L = road.getTotalLength(), km = +root.dataset.km || 390, shown = -1, lastKm = '';
+      var stops = $$('[data-stop]', root).map(function (g) {
+        var m = /translate\(([\d.-]+)[ ,]+([\d.-]+)\)/.exec(g.getAttribute('transform')) || [0, 0, 0], best = 0, bd = 1e9;
+        for (var i = 0; i <= 160; i++) { var q = road.getPointAtLength(L * i / 160), dd = (q.x - m[1]) * (q.x - m[1]) + (q.y - m[2]) * (q.y - m[2]); if (dd < bd) { bd = dd; best = i / 160; } }
+        return { g: g, at: best };
+      });
+      road.style.strokeDasharray = L; road.style.strokeDashoffset = L;
+      whileVisible(root, function (dt) {
+        var r = map.getBoundingClientRect(), vh = window.innerHeight;
+        var p = reduce ? 1 : Math.max(0, Math.min(1, (vh * 0.85 - r.top) / (r.height * 0.7)));
+        shown = shown < 0 || reduce ? p : shown + (p - shown) * Math.min(1, dt * 6);
+        road.style.strokeDashoffset = (L * (1 - shown)).toFixed(1);
+        var q = road.getPointAtLength(L * shown);
+        car.setAttribute('transform', 'translate(' + q.x.toFixed(1) + ' ' + q.y.toFixed(1) + ')');
+        stops.forEach(function (s) { s.g.classList.toggle('is-on', shown >= s.at - 0.004); });
+        var k = String(Math.round(shown * km)).padStart(3, '0');
+        if (k !== lastKm) { lastKm = k; kmOut.textContent = k; }
+        root.classList.toggle('is-arrived', shown > 0.995);
+      });
+    },
+
     product: function (root) { initProduct(root); },
 
     footer: function (root) {
@@ -1007,8 +1078,25 @@
     document.addEventListener('pointerover', function (e) { cur.classList.toggle('big', !!e.target.closest('a,button,.stk,[data-h]')); });
   }
 
+  // floating shop button: in after the first screen, out over product grids, the reel (own button) and the footer
+  function shopPill() {
+    var pill = $('[data-shop-pill]'); if (!pill) return;
+    var past = false, on = false, cover = [];
+    function set() {
+      var v = past && !cover.some(function (el) { return el._pillOver; });
+      if (v === on) return; on = v;
+      pill.classList.toggle('on', v); pill.setAttribute('aria-hidden', v ? 'false' : 'true'); pill.tabIndex = v ? 0 : -1;
+    }
+    window.addEventListener('scroll', function () { var p = window.scrollY > window.innerHeight * 0.8; if (p !== past) { past = p; set(); } }, { passive: true });
+    if ('IntersectionObserver' in window) {
+      var pio = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target._pillOver = e.isIntersecting; }); set(); }, { rootMargin: '0px 0px -12% 0px' });
+      cover = $$('[data-tb="grid"], [data-tb="reel"], [data-tb="footer"], .main-collection, .pdp');
+      cover.forEach(function (el) { pio.observe(el); });
+    }
+  }
+
   function boot() {
-    loader(); cursor(); magnetic(); pageWipe(); init(document);
+    loader(); cursor(); magnetic(); pageWipe(); shopPill(); init(document);
     if (TB.cartDrawer && $('#CartDrawer') && window.location.hash === '#cart') openCart();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();

@@ -13,7 +13,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
   await p.mouse.click(700, 520); await p.waitForTimeout(120);
   ok(await p.$$eval('[data-tb=hero] .brap', x => x.length) >= 1, 'hero: scritte a vignetta al click (invariate)');
   ok(!(await p.$('[data-tb=story]')) && !(await p.$('[data-tb=reel]')) && !(await p.$('[data-tb=crew]')) && !(await p.$('.mxs__pic')), 'negozio appena installato: video del brand, storia e foto crew nascosti finché i file non sono caricati');
-  ok(!!(await p.$('[data-tb=hero] .hero__land .pano')) && !!(await p.$('[data-hero-car] .cad')), 'hero: panorama Toscana → Milano + Cadillac sulla strada');
+  ok(!!(await p.$('[data-tb=hero] .hero__land .pano')) && !!(await p.$('[data-hero-car] .cad')), 'hero: panorama Chianni → Milano + Cadillac sulla strada');
   ok(!(await p.$('.skyline')), 'hero: vecchio skyline con palme rimosso');
   await p.screenshot({ path: __dirname + '/out/th-hero.png' });
   ok(await p.$$eval('.grid .card svg.tbj-svg', x => x.length) >= 16, 'griglia: maglie demo disegnate (fronte+retro)');

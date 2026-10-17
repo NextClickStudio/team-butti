@@ -1,6 +1,7 @@
 {%- comment -%}
-  "Chi siamo": the brand text one line at a time, big type sliding in as you scroll,
-  photos taped in between, and a final tape that never stops ("il resto è in movimento").
+  "Chi siamo": the brand text one line at a time, words rising in as you scroll, highlighted words
+  marked with a highlighter, crossed-out words struck with a marker, photos taped in between
+  (slight parallax), and a final tape that never stops ("il resto è in movimento").
 {%- endcomment -%}
 <section class="ab ab--{{ section.settings.style }}" id="chi-siamo" data-tb="about">
   <div class="ab__head">
@@ -16,6 +17,11 @@
           if hl != blank
             assign em = '<em>' | append: hl | append: '</em>'
             assign t = t | replace: hl, em
+          endif
+          assign st = b.settings.strike | escape
+          if st != blank
+            assign sx = '<s>' | append: st | append: '</s>'
+            assign t = t | replace: st, sx
           endif
         -%}
         <p class="ab__l ab__l--{{ b.settings.size }} ab__l--{{ b.settings.style }} ab__l--{{ b.settings.align }} rv" {{ b.shopify_attributes }}>{{ t }}</p>
@@ -75,6 +81,7 @@
       "settings": [
         { "type": "textarea", "id": "text", "label": "Testo", "default": "Prima c'erano gli amici." },
         { "type": "text", "id": "highlight", "label": "Parole evidenziate", "info": "Scrivile esattamente come nel testo" },
+        { "type": "text", "id": "strike", "label": "Parole barrate a pennarello", "info": "Scrivile esattamente come nel testo" },
         { "type": "select", "id": "size", "label": "Grandezza", "default": "xl", "options": [
           { "value": "xl", "label": "Enorme" },
           { "value": "l", "label": "Grande" },
@@ -111,7 +118,7 @@
       "blocks": [
         { "type": "line", "settings": { "text": "Prima c'erano gli amici.", "highlight": "amici", "size": "xl" } },
         { "type": "line", "settings": { "text": "Poi è arrivato il nome.", "size": "xl", "style": "outline", "align": "right" } },
-        { "type": "line", "settings": { "text": "Team Butti è un nome.", "size": "xl", "align": "center" } }
+        { "type": "line", "settings": { "text": "Team Butti non è un brand.\nÈ uno stile di vita.", "highlight": "stile di vita", "strike": "brand", "size": "xl", "align": "center" } }
       ]
     }
   ]

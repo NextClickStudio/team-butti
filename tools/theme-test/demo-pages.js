@@ -46,8 +46,8 @@
     function seq(ids, fn) {
       return ids.reduce(function (p, id) { return p.then(function (acc) { return fn(id).then(function (h) { return acc + h; }); }); }, Promise.resolve(''));
     }
-    // design_mode: show the empty video slots (story, Higgsfield bike) like the Shopify theme editor does
-    var req = function (type) { return { locale: { iso_code: 'it' }, page_type: type, origin: '', design_mode: true }; };
+    // design_mode off: the demo looks like the live store (no empty slots / Higgsfield placeholders)
+    var req = function (type) { return { locale: { iso_code: 'it' }, page_type: type, origin: '', design_mode: false }; };
 
     var routes = {
       home: function () {

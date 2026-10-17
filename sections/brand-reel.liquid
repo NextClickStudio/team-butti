@@ -1,6 +1,7 @@
 {%- comment -%}
   Brand videos right below the hero. The frame grows to full screen as you scroll,
-  with a camcorder HUD (REC, timecode, place, date) and clip tabs.
+  with a camcorder HUD (REC, timecode, place, date), clip tabs, comic speech bubbles per clip
+  and a shop button that is always on screen.
   Vertical clips (Reels 9:16) get a blurred backdrop so they also work full-width.
   Live store: hidden until at least one clip has a video. Theme editor: placeholders are shown.
 {%- endcomment -%}
@@ -29,6 +30,7 @@
     <div class="reel__frame" data-reel-frame>
       <div class="reel__clips">
         {%- for c in clips -%}
+          {%- assign bubbles = c.settings.bubbles | split: '|' -%}
           <div class="reel__clip{% if forloop.first %} on{% endif %}{% if c.settings.video != blank and c.settings.video.aspect_ratio < 1 %} reel__clip--tall{% endif %}" data-clip data-place="{{ c.settings.place | escape }}" data-date="{{ c.settings.date | escape }}" {{ c.shopify_attributes }}>
             {%- if c.settings.video != blank -%}
               {%- if c.settings.video.aspect_ratio < 1 and c.settings.video.preview_image -%}
@@ -39,6 +41,18 @@
               <div class="reel__empty">
                 <i class="reel__bars"></i>
                 <span class="reel__slot label">{{ 'reel.slot' | t }} {{ forloop.index }} · {{ c.settings.title | escape }}</span>
+              </div>
+            {%- endif -%}
+            {%- if bubbles.size > 0 -%}
+              <div class="reel__fx">
+                {%- for t in bubbles limit: 3 -%}
+                  {%- assign tt = t | strip -%}
+                  {%- if tt contains '"' or tt contains '«' -%}
+                    <span class="bub bub--say bub--{{ forloop.index }}" data-bub>{{ tt | remove: '"' | remove: '«' | remove: '»' | strip | escape }}</span>
+                  {%- elsif tt != blank -%}
+                    <span class="bub bub--{{ forloop.index }}" data-bub>{{ tt | escape }}</span>
+                  {%- endif -%}
+                {%- endfor -%}
               </div>
             {%- endif -%}
           </div>
@@ -52,6 +66,13 @@
         <span class="reel__bat"><i></i><i></i><i></i></span>
       </div>
       <p class="reel__kicker label">{{ section.settings.kicker | escape }}</p>
+      {%- if section.settings.cta_label != blank -%}
+        <a class="reel__cta" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" data-reel-cta data-h>
+          <b>{{ section.settings.cta_label | escape }}</b>
+          {%- if section.settings.cta_note != blank -%}<span>{{ section.settings.cta_note | escape }}</span>{%- endif -%}
+          <i aria-hidden="true">→</i>
+        </a>
+      {%- endif -%}
       {%- if section.settings.show_sound and has_video -%}
         <button class="reel__sound" type="button" data-sound aria-pressed="false" data-h>
           <i aria-hidden="true"></i><span data-label-off>{{ 'reel.sound_on' | t }}</span><span data-label-on hidden>{{ 'reel.sound_off' | t }}</span>
@@ -84,7 +105,10 @@
       { "value": "pink", "label": "Rosa poster" },
       { "value": "paper", "label": "Carta" }
     ] },
-    { "type": "range", "id": "length", "label": "Effetto zoom con lo scroll", "info": "100 = nessun effetto, il video è già a schermo intero", "min": 100, "max": 300, "step": 10, "unit": "vh", "default": 200 },
+    { "type": "text", "id": "cta_label", "label": "Bottone shop (sempre visibile sul video)", "default": "Shop il drop" },
+    { "type": "text", "id": "cta_note", "label": "Sotto il bottone", "default": "Pezzi limitati" },
+    { "type": "url", "id": "cta_link", "label": "Link bottone", "info": "Vuoto = tutti i prodotti" },
+    { "type": "range", "id": "length", "label": "Effetto zoom con lo scroll", "info": "100 = nessun effetto, il video è già a schermo intero. Più è basso, meno la pagina si ferma sul video.", "min": 100, "max": 300, "step": 10, "unit": "vh", "default": 130 },
     { "type": "range", "id": "autoplay_next", "label": "Passa alla clip successiva dopo", "info": "0 = mai", "min": 0, "max": 30, "step": 1, "unit": "s", "default": 9 },
     { "type": "checkbox", "id": "show_sound", "label": "Bottone audio", "default": true },
     { "type": "checkbox", "id": "show_without_video", "label": "Mostra anche senza video", "default": false, "info": "Di default la sezione resta nascosta sul negozio finché non carichi almeno un video." }
@@ -96,8 +120,9 @@
       "settings": [
         { "type": "video", "id": "video", "label": "Video", "info": "MP4 orizzontale o verticale (Reel). Max 20 MB consigliati, parte muto in loop." },
         { "type": "text", "id": "title", "label": "Titolo", "default": "Sterrato" },
-        { "type": "text", "id": "place", "label": "Luogo (in sovrimpressione)", "default": "Toscana" },
-        { "type": "text", "id": "date", "label": "Data (in sovrimpressione)", "default": "2026" }
+        { "type": "text", "id": "place", "label": "Luogo (in sovrimpressione)", "default": "Chianni" },
+        { "type": "text", "id": "date", "label": "Data (in sovrimpressione)", "default": "2026" },
+        { "type": "text", "id": "bubbles", "label": "Fumetti", "info": "Fino a 3, separati da | . Escono uno dopo l'altro mentre gira la clip. Tra virgolette = frase detta da qualcuno.", "default": "Partita da Chianni.|Destinazione Milano." }
       ]
     }
   ],
@@ -105,9 +130,9 @@
     {
       "name": "Video del brand",
       "blocks": [
-        { "type": "clip", "settings": { "title": "Sterrato", "place": "Toscana", "date": "Estate 2026" } },
-        { "type": "clip", "settings": { "title": "Il Market", "place": "Milano", "date": "26.09.2026" } },
-        { "type": "clip", "settings": { "title": "La Cadillac", "place": "A1", "date": "2026" } }
+        { "type": "clip", "settings": { "title": "La DeVille", "place": "Chianni", "date": "2026", "bubbles": "Partita da Chianni.|\"Fa paura.\"" } },
+        { "type": "clip", "settings": { "title": "La targa", "place": "Milano", "date": "2026", "bubbles": "Il portatarga dice Los Angeles.|In gotico." } },
+        { "type": "clip", "settings": { "title": "Milano", "place": "Milano", "date": "26.09.2026", "bubbles": "Destinazione Milano." } }
       ]
     }
   ]

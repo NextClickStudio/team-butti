@@ -127,7 +127,9 @@
         "l14": {
           "type": "line",
           "settings": {
-            "text": "Team Butti è un nome.",
+            "text": "Team Butti non è un brand.\nÈ uno stile di vita.",
+            "highlight": "stile di vita",
+            "strike": "brand",
             "size": "xl",
             "style": "fill",
             "align": "center"
@@ -159,7 +161,7 @@
           "type": "fact",
           "settings": {
             "value": "1",
-            "label": "Nome"
+            "label": "Stile di vita"
           }
         },
         "f2": {
@@ -187,7 +189,7 @@
         "title": "La nostra",
         "title_outline": "estate",
         "video": "shopify://files/videos/tb-storia-estate.mp4",
-        "rec_label": "Valdera · Estate 2025–26",
+        "rec_label": "Chianni · Estate 2025–26",
         "style": "pink",
         "text": "<p>Ventiquattro secondi d'estate, girati col telefono: lo sterrato, le crete, il pick-up, la bandiera giù. Nessun attore, nessun set.</p>"
       }
@@ -199,7 +201,7 @@
           "type": "word",
           "settings": {
             "word": "Moto",
-            "caption": "Due tempi, sterrato, Valdera",
+            "caption": "Due tempi, sterrato, Chianni",
             "image": "shopify://shop_images/tb-crew-02.jpg"
           }
         },
@@ -244,10 +246,43 @@
         "w5"
       ],
       "settings": {}
+    },
+    "ranch": {
+      "type": "about-ranch",
+      "blocks": {
+        "k1": {
+          "type": "fact",
+          "settings": {
+            "value": "1.276",
+            "label": "Abitanti a Chianni"
+          }
+        },
+        "k2": {
+          "type": "fact",
+          "settings": {
+            "value": "390 km",
+            "label": "Dal Ranch al Market"
+          }
+        },
+        "k3": {
+          "type": "fact",
+          "settings": {
+            "value": "1",
+            "label": "Cadillac leopardata"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "about",
+    "ranch",
     "mix",
     "story"
   ]

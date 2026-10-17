@@ -1,5 +1,5 @@
 {%- comment -%}
-  Cadillac scroll journey: Toscana → Milano.
+  Cadillac scroll journey: from the Ranch in Chianni (Tuscany) to Milano.
   1) Default: the illustrated Team Butti Cadillac drives across a parallax landscape as you scroll
      (wheels, suspension, speed trail, exhaust). A Higgsfield sprite sheet can replace the drawing.
   2) With a video (e.g. a Higgsfield clip) the video is scrubbed by the scroll instead.
@@ -62,11 +62,11 @@
   "max_blocks": 8,
   "settings": [
     { "type": "header", "content": "Testi" },
-    { "type": "text", "id": "kicker", "label": "Etichetta", "default": "A1 · Toscana → Milano" },
+    { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Chianni → Milano · 390 km" },
     { "type": "text", "id": "title", "label": "Titolo", "default": "Si parte" },
-    { "type": "textarea", "id": "text", "label": "Testo", "default": "Finestrini giù, maglie al vento. Scorri e portaci al Market." },
-    { "type": "text", "id": "places", "label": "Tappe nel contachilometri", "info": "Separate da virgola, in ordine", "default": "Toscana,A1 · Appennino,Emilia,Milano" },
-    { "type": "range", "id": "km", "label": "Chilometri totali", "min": 50, "max": 1000, "step": 10, "default": 300 },
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "Dal Ranch di Chianni al Market di Milano. Finestrini giù, maglie al vento: scorri e portaci là." },
+    { "type": "text", "id": "places", "label": "Tappe nel contachilometri", "info": "Separate da virgola, in ordine", "default": "Chianni · Il Ranch,Valdera,FI-PI-LI,Firenze,A1 · Appennino,Bologna,Emilia,Milano" },
+    { "type": "range", "id": "km", "label": "Chilometri totali", "min": 50, "max": 1000, "step": 10, "default": 390 },
     { "type": "range", "id": "length", "label": "Lunghezza dello scroll", "min": 150, "max": 500, "step": 25, "unit": "vh", "default": 325 },
     { "type": "select", "id": "theme", "label": "Testo", "default": "light", "options": [
       { "value": "light", "label": "Chiaro" },
@@ -93,6 +93,7 @@
           { "value": "green", "label": "Autostrada (verde)" },
           { "value": "blue", "label": "Statale (blu)" },
           { "value": "city", "label": "Città (bianco)" },
+          { "value": "brown", "label": "Località turistica (marrone)" },
           { "value": "pink", "label": "Team Butti (rosa)" }
         ] },
         { "type": "range", "id": "pos", "label": "Posizione lungo il viaggio", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 }
@@ -103,9 +104,10 @@
     {
       "name": "Cadillac a scroll",
       "blocks": [
-        { "type": "sign", "settings": { "title": "A1", "sub": "Firenze · Bologna", "style": "green", "pos": 12 } },
-        { "type": "sign", "settings": { "title": "Bologna", "sub": "102 km", "style": "green", "pos": 34 } },
-        { "type": "sign", "settings": { "title": "Milano", "sub": "196 km", "style": "green", "pos": 56 } },
+        { "type": "sign", "settings": { "title": "Il Ranch", "sub": "Chianni · Team Butti HQ", "style": "brown", "pos": 4 } },
+        { "type": "sign", "settings": { "title": "FI-PI-LI", "sub": "Pontedera · Firenze", "style": "blue", "pos": 18 } },
+        { "type": "sign", "settings": { "title": "A1", "sub": "Bologna · Milano", "style": "green", "pos": 34 } },
+        { "type": "sign", "settings": { "title": "Milano", "sub": "215 km", "style": "green", "pos": 54 } },
         { "type": "sign", "settings": { "title": "Milano", "sub": "", "style": "city", "pos": 76 } },
         { "type": "sign", "settings": { "title": "Market 26.09", "sub": "Team Butti →", "style": "pink", "pos": 93 } }
       ]

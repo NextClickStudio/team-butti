@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Team Butti",
-    "theme_version": "1.5.0",
+    "theme_version": "1.6.0",
     "theme_author": "Team Butti",
     "theme_documentation_url": "https://www.instagram.com/team_butti/",
     "theme_support_url": "https://www.instagram.com/team_butti/"
@@ -164,6 +164,25 @@
         "id": "cart_drawer",
         "label": "Carrello laterale",
         "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "shop_pill",
+        "label": "Bottone Shop che segue lo scroll",
+        "info": "Home e pagine (es. Chi siamo). Si nasconde sopra le griglie prodotti e il footer.",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "shop_pill_label",
+        "label": "Testo bottone Shop",
+        "default": "Shop il drop"
+      },
+      {
+        "type": "url",
+        "id": "shop_pill_link",
+        "label": "Link bottone Shop",
+        "info": "Vuoto = tutti i prodotti"
       },
       {
         "type": "range",
