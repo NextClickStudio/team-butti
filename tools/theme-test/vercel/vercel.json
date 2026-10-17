@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    { "source": "/v/:sha/demo/media/:file", "destination": "/api/media?sha=:sha&file=:file" },
+    { "source": "/v/:sha/:path*", "destination": "https://cdn.jsdelivr.net/gh/NextClickStudio/team-butti@:sha/:path*" },
+    { "source": "/lib/liquid.js", "destination": "https://cdn.jsdelivr.net/npm/liquidjs@10.30.0/dist/liquid.browser.min.js" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    { "source": "/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] },
+    { "source": "/((?!v/|lib/).*)", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
+  ]
+}

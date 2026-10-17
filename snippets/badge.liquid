@@ -1,0 +1,5 @@
+{%- comment -%} Round Team Butti badge. Accepts: class {%- endcomment -%}
+{%- assign lines = settings.badge_text | default: 'Team|Butti' | split: '|' -%}
+<span class="badge {{ class }}">
+  {%- for l in lines -%}{{ l | escape }}{%- unless forloop.last -%}<br>{%- endunless -%}{%- endfor -%}
+</span>

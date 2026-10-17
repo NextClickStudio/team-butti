@@ -1,0 +1,108 @@
+{%- comment -%}
+  Brand story with the team's own video. Accepts a Shopify-hosted video or a YouTube/Vimeo link.
+  Live store: hidden until a video is set (unless show_without_video). Theme editor: shows a placeholder.
+{%- endcomment -%}
+{%- liquid
+  assign has_video = false
+  if section.settings.video != blank or section.settings.video_url != blank
+    assign has_video = true
+  endif
+  assign show = has_video
+  if request.design_mode or section.settings.show_without_video
+    assign show = true
+  endif
+-%}
+{%- if show -%}
+  <section class="story story--{{ section.settings.style }}" id="storia" data-tb="story">
+    <div class="story__head">
+      <p class="label rv">{{ section.settings.kicker | escape }}</p>
+      <h2 class="sec__title d grunge rv">{{ section.settings.title | escape }} <span class="out">{{ section.settings.title_outline | escape }}</span></h2>
+    </div>
+    <div class="story__grid">
+      <div class="story__frame rv" data-story-frame>
+        {%- if section.settings.video != blank -%}
+          <div class="story__media" data-story-media>
+            {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1600x' }}
+          </div>
+        {%- elsif section.settings.video_url != blank -%}
+          <div class="story__media story__media--embed" data-story-embed data-provider="{{ section.settings.video_url.type }}" data-id="{{ section.settings.video_url.id }}">
+            {%- if section.settings.poster != blank -%}
+              {{ section.settings.poster | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '800,1200,1600', sizes: '(min-width: 990px) 60vw, 100vw', alt: section.settings.title }}
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <div class="story__media story__media--empty">
+            <span class="story__slot label">{{ 'story.slot' | t }}</span>
+          </div>
+        {%- endif -%}
+        <span class="story__tape story__tape--tl" aria-hidden="true"></span>
+        <span class="story__tape story__tape--br" aria-hidden="true"></span>
+        {%- if has_video -%}
+          <button class="story__play" type="button" data-story-play data-h aria-label="{{ 'story.play' | t }}">
+            <svg viewBox="0 0 200 200" aria-hidden="true"><defs><path id="story-circ-{{ section.id }}" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs><text><textPath href="#story-circ-{{ section.id }}">{{ section.settings.play_text | escape }}</textPath></text></svg>
+            <span class="story__play-icon">▶</span>
+          </button>
+        {%- endif -%}
+        <span class="story__rec label" aria-hidden="true"><i></i>REC · {{ section.settings.rec_label | escape }}</span>
+      </div>
+      <div class="story__txt rv">
+        <div class="rte">{{ section.settings.text }}</div>
+        {%- for block in section.blocks -%}
+          <div class="story__fact" {{ block.shopify_attributes }}>
+            <b class="d">{{ block.settings.value | escape }}</b>
+            <span class="label">{{ block.settings.label | escape }}</span>
+          </div>
+        {%- endfor -%}
+        {%- if section.settings.link != blank and section.settings.link_label != blank -%}
+          <a class="btn btn--pink story__link" href="{{ section.settings.link }}" data-h>{{ section.settings.link_label | escape }} →</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "La nostra storia (video)",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Chi siamo" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "La nostra" },
+    { "type": "text", "id": "title_outline", "label": "Titolo (contorno)", "default": "storia" },
+    { "type": "video", "id": "video", "label": "Video (caricato su Shopify)", "info": "In anteprima parte muto in loop; al clic su Play riparte con l'audio." },
+    { "type": "video_url", "id": "video_url", "label": "Oppure link YouTube / Vimeo", "accept": ["youtube", "vimeo"] },
+    { "type": "image_picker", "id": "poster", "label": "Copertina (per YouTube/Vimeo)" },
+    { "type": "text", "id": "play_text", "label": "Testo intorno al Play", "default": "GUARDA LA STORIA ★ TEAM BUTTI ★ " },
+    { "type": "text", "id": "rec_label", "label": "Etichetta REC", "default": "Chianni 2026" },
+    { "type": "richtext", "id": "text", "label": "Testo", "default": "<p>Dal campetto dietro casa al Market di Milano. Moto, maglie e una crew che non si prende mai sul serio. Questa è la nostra storia, girata da noi.</p>" },
+    { "type": "text", "id": "link_label", "label": "Bottone", "default": "Chi siamo" },
+    { "type": "url", "id": "link", "label": "Link del bottone", "info": "Es. la pagina Chi siamo. Vuoto = niente bottone" },
+    { "type": "select", "id": "style", "label": "Stile", "default": "dark", "options": [
+      { "value": "dark", "label": "Scuro" },
+      { "value": "light", "label": "Chiaro" },
+      { "value": "pink", "label": "Rosa poster" }
+    ] },
+    { "type": "checkbox", "id": "show_without_video", "label": "Mostra anche senza video", "default": false, "info": "Di default la sezione resta nascosta sul negozio finché non carichi il video." }
+  ],
+  "blocks": [
+    {
+      "type": "fact",
+      "name": "Numero",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Valore", "default": "2019" },
+        { "type": "text", "id": "label", "label": "Etichetta", "default": "Primo due tempi" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "La nostra storia (video)",
+      "blocks": [
+        { "type": "fact", "settings": { "value": "2019", "label": "Primo due tempi" } },
+        { "type": "fact", "settings": { "value": "26.09", "label": "Market Milano" } },
+        { "type": "fact", "settings": { "value": "00", "label": "Regole" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

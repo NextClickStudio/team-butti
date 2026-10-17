@@ -1,0 +1,134 @@
+{%- comment -%}
+  The crew's own photos as a wall of taped polaroids: two rows sliding in opposite directions with the scroll.
+  Tap a polaroid to open it big (prev / next, Esc to close). Stickers can sit between the photos.
+  Live store: hidden until at least one photo is set. Theme editor: empty polaroids are shown.
+{%- endcomment -%}
+{%- liquid
+  assign items = section.blocks
+  assign has_photo = false
+  for b in items
+    if b.type == 'photo' and b.settings.image != blank
+      assign has_photo = true
+      break
+    endif
+  endfor
+  assign show = has_photo
+  if request.design_mode
+    assign show = true
+  endif
+  assign half = items.size | plus: 1 | divided_by: 2
+  assign tilts = '-4,3,-2,5,-3,2,-5,4,-1,3' | split: ','
+-%}
+{%- if show and items.size > 0 -%}
+<section class="crew crew--{{ section.settings.style }}" id="crew" data-tb="crew" data-motion="{{ section.settings.motion }}">
+  <div class="crew__head">
+    <p class="label rv">{{ section.settings.kicker | escape }}</p>
+    <h2 class="sec__title d grunge rv">{{ section.settings.title | escape }} <span class="out">{{ section.settings.title_outline | escape }}</span></h2>
+    {%- if section.settings.text != blank -%}<p class="crew__txt rv">{{ section.settings.text | escape }}</p>{%- endif -%}
+  </div>
+  <div class="crew__rows">
+    {%- for row in (1..2) -%}
+      {%- if row == 1 -%}{%- assign off = 0 -%}{%- else -%}{%- assign off = half -%}{%- endif -%}
+      <div class="crew__row{% if row == 2 %} crew__row--b{% endif %}" data-crew-row{% if row == 2 %} data-reverse{% endif %}>
+        {%- for b in items limit: half offset: off -%}
+          {%- assign k = forloop.index0 | plus: off | modulo: 10 -%}
+          {%- assign tilt = tilts[k] -%}
+          {%- if b.type == 'sticker' -%}
+            <span class="crew__stk stk stk--{{ b.settings.style }}" style="--r: {{ tilt | times: -2 }}deg" {{ b.shopify_attributes }}>{{ b.settings.text | escape }}</span>
+          {%- elsif b.settings.image != blank -%}
+            {%- liquid
+              assign img = b.settings.image
+              assign ar = '4/5'
+              if img.aspect_ratio > 1.15
+                assign ar = '5/4'
+              elsif img.aspect_ratio > 0.9
+                assign ar = '1/1'
+              endif
+            -%}
+            <figure class="pol" style="--r: {{ tilt }}deg; --ar: {{ ar }}" {{ b.shopify_attributes }}>
+              <button class="pol__btn" type="button" data-pol data-full="{{ img | image_url: width: 1600 }}" data-iw="{{ img.width }}" data-ih="{{ img.height }}" data-cap="{{ b.settings.caption | escape }}" aria-label="{{ 'crew.open' | t }}: {{ b.settings.caption | default: section.settings.title | escape }}" data-h>
+                <span class="pol__img">{{ img | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,500,700', sizes: '(min-width: 990px) 22vw, 50vw', alt: b.settings.caption }}</span>
+                {%- if b.settings.caption != blank -%}<span class="pol__cap">{{ b.settings.caption | escape }}</span>{%- endif -%}
+              </button>
+              <i class="pol__tape" aria-hidden="true"></i>
+            </figure>
+          {%- elsif request.design_mode -%}
+            <figure class="pol pol--empty" style="--r: {{ tilt }}deg; --ar: 4/5" {{ b.shopify_attributes }}>
+              <span class="pol__btn"><span class="pol__img"><span class="label">{{ 'crew.slot' | t }}</span></span><span class="pol__cap">{{ b.settings.caption | escape }}</span></span>
+              <i class="pol__tape" aria-hidden="true"></i>
+            </figure>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+  <dialog class="crew__lb" data-crew-lb aria-label="{{ section.settings.title | escape }} {{ section.settings.title_outline | escape }}">
+    <figure class="crew__lbf">
+      <img alt="" width="4" height="5" data-lb-img>
+      <figcaption class="crew__lbc" data-lb-cap></figcaption>
+    </figure>
+    <button class="crew__lbb crew__lbb--x" type="button" data-lb-close aria-label="{{ 'crew.close' | t }}">✕</button>
+    <button class="crew__lbb crew__lbb--p" type="button" data-lb-step="-1" aria-label="{{ 'crew.prev' | t }}">←</button>
+    <button class="crew__lbb crew__lbb--n" type="button" data-lb-step="1" aria-label="{{ 'crew.next' | t }}">→</button>
+  </dialog>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Foto della crew",
+  "max_blocks": 30,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Foto vere · zero studio" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "La" },
+    { "type": "text", "id": "title_outline", "label": "Titolo (contorno)", "default": "crew" },
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "Lo sterrato, Milano, il mare, il luna park. Nessun fotografo e nessun set: le foto ce le facciamo da soli." },
+    { "type": "select", "id": "style", "label": "Sfondo", "default": "paper", "options": [
+      { "value": "paper", "label": "Carta" },
+      { "value": "dark", "label": "Scuro" },
+      { "value": "pink", "label": "Rosa poster" }
+    ] },
+    { "type": "checkbox", "id": "motion", "label": "Le file di foto scorrono con lo scroll", "default": true },
+    { "type": "paragraph", "content": "Le foto si dividono da sole in due file: la prima metà dei blocchi sopra, la seconda sotto." }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Foto",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Foto" },
+        { "type": "text", "id": "caption", "label": "Scritta a pennarello", "default": "La crew" }
+      ]
+    },
+    {
+      "type": "sticker",
+      "name": "Adesivo",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Testo", "default": "MERDE" },
+        { "type": "select", "id": "style", "label": "Stile", "default": "a", "options": [
+          { "value": "a", "label": "Giallo" },
+          { "value": "b", "label": "Bollino rosa" },
+          { "value": "c", "label": "Gotico" },
+          { "value": "d", "label": "Pennarello verde" },
+          { "value": "e", "label": "Numero blu" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Foto della crew",
+      "blocks": [
+        { "type": "photo", "settings": { "caption": "La crew e la DeVille" } },
+        { "type": "photo", "settings": { "caption": "Gas aperto" } },
+        { "type": "sticker", "settings": { "text": "MERDE", "style": "a" } },
+        { "type": "photo", "settings": { "caption": "Milano" } },
+        { "type": "photo", "settings": { "caption": "Luna park" } },
+        { "type": "photo", "settings": { "caption": "Team Butti Merde" } },
+        { "type": "sticker", "settings": { "text": "69", "style": "e" } },
+        { "type": "photo", "settings": { "caption": "Al mare" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

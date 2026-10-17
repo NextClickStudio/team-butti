@@ -1,0 +1,7 @@
+{%- comment -%}
+  Floating shop button for the home page and content pages: it slides in after the first screen
+  and steps aside over product grids, the brand reel (it has its own button) and the footer.
+{%- endcomment -%}
+<a class="pill" href="{{ settings.shop_pill_link | default: routes.all_products_collection_url }}" data-shop-pill data-h aria-hidden="true" tabindex="-1">
+  <i class="pill__dot" aria-hidden="true"></i><b>{{ settings.shop_pill_label | escape }}</b><span aria-hidden="true">→</span>
+</a>

@@ -1,0 +1,44 @@
+<section class="sec drop" data-tb="drop">
+  <div class="drop__in">
+    <div class="poster rv">
+      <h2 class="poster__t d grunge">{{ section.settings.poster_title | escape | replace: '|', '<br>' }}</h2>
+      <div class="poster__row">
+        <span class="d">{{ section.settings.poster_date | escape | replace: '|', '<br>' }}</span>
+        <div class="poster__info">{{ section.settings.poster_info }}</div>
+        <span class="d poster__brand">Team<br>Butti<br>Merde</span>
+      </div>
+      {%- if section.settings.stamp != blank -%}<span class="stamp">{{ section.settings.stamp | escape }}</span>{%- endif -%}
+    </div>
+    <div class="rv">
+      <p class="label">{{ section.settings.kicker | escape }}</p>
+      <h2 class="sec__title d grunge">{{ section.settings.title | escape }}</h2>
+      {%- if section.settings.date != blank -%}
+        <div class="count" data-countdown="{{ section.settings.date | escape }}">
+          <div><b data-u="d">00</b><small>{{ 'countdown.days' | t }}</small></div>
+          <div><b data-u="h">00</b><small>{{ 'countdown.hours' | t }}</small></div>
+          <div><b data-u="m">00</b><small>{{ 'countdown.minutes' | t }}</small></div>
+          <div><b data-u="s">00</b><small>{{ 'countdown.seconds' | t }}</small></div>
+        </div>
+      {%- endif -%}
+      <p class="drop__txt">{{ section.settings.text | escape }}</p>
+      {% render 'newsletter-form', form_id: 'DropNewsletter' %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Poster + countdown drop",
+  "settings": [
+    { "type": "text", "id": "poster_title", "label": "Titolo poster", "default": "Market|Milano", "info": "Usa | per andare a capo" },
+    { "type": "text", "id": "poster_date", "label": "Data poster", "default": "26.09|2026" },
+    { "type": "richtext", "id": "poster_info", "label": "Info poster", "default": "<p>Piazzale Antonio Cantore 10<br>20123 Milano<br>Orario 9:00–18:00<br>DJ set dalle 15:00</p>" },
+    { "type": "text", "id": "stamp", "label": "Timbro", "default": "Sold out · Grazie" },
+    { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Prossima tappa" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Drop 02" },
+    { "type": "text", "id": "date", "label": "Data e ora del drop", "info": "Formato 2026-11-14T18:00:00+01:00", "default": "2026-11-14T18:00:00+01:00" },
+    { "type": "text", "id": "text", "label": "Testo", "default": "Entra nel team e ricevi il link 1 ora prima di tutti." }
+  ],
+  "presets": [{ "name": "Poster + countdown drop" }]
+}
+{% endschema %}

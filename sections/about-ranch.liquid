@@ -1,0 +1,87 @@
+{%- comment -%}
+  "Il Ranch": the headquarters in Chianni (Tuscany) and the road to Milano.
+  The route draws itself as you scroll, a dot (the DeVille) follows it, the stops light up and the km count up.
+  The map is real geography (lat/lon projected), smoothed: Chianni → Pontedera → Firenze → A1 → Bologna → Emilia → Milano.
+{%- endcomment -%}
+{%- assign road = 'M278 495.6 C277.7 488.7 259.7 465.2 276.5 454.2 C293.3 443.3 359.4 461.7 378.8 429.9 C398.3 398 402.1 296.8 393.1 263.1 C384 229.4 352.3 239.7 324.5 227.9 C296.8 216.1 260.3 208 226.6 192.5 C193 177 153.6 160.2 122.5 134.8 C91.4 109.3 53.7 55.8 40 40' -%}
+<section class="ranch ranch--{{ section.settings.style }}" id="ranch" data-tb="ranch" data-km="{{ section.settings.km }}">
+  <div class="ranch__txt">
+    <p class="label rv">{{ section.settings.kicker | escape }}</p>
+    <h2 class="ranch__t d grunge rv">{{ section.settings.title | escape }} <span class="out">{{ section.settings.title_outline | escape }}</span></h2>
+    {%- if section.settings.text != blank -%}<div class="ranch__p rv">{{ section.settings.text }}</div>{%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <dl class="ranch__facts">
+        {%- for b in section.blocks -%}
+          <div class="ranch__f rv" {{ b.shopify_attributes }}><dt class="d">{{ b.settings.value | escape }}</dt><dd>{{ b.settings.label | escape }}</dd></div>
+        {%- endfor -%}
+      </dl>
+    {%- endif -%}
+  </div>
+  <figure class="ranch__map rv" data-ranch-map>
+    <svg viewBox="0 0 480 540" role="img" aria-label="{{ section.settings.from | escape }} → {{ section.settings.to | escape }}: {{ section.settings.km }} km">
+      <g class="ranch__mts" aria-hidden="true"><path d="M318 352l14-22 14 22M338 352l16-26 16 26M360 352l12-18 12 18"/><text x="300" y="372">Appennino</text></g>
+      <path class="ranch__ghost" d="{{ road }}"/>
+      <path class="ranch__road" d="{{ road }}" data-ranch-road/>
+      <g class="ranch__stop" data-stop transform="translate(276.5 454.2)"><circle r="4"/></g>
+      <g class="ranch__stop" data-stop transform="translate(378.8 429.9)"><circle r="5.5"/><text x="12" y="5">Firenze</text></g>
+      <g class="ranch__stop" data-stop transform="translate(393.1 263.1)"><circle r="5.5"/><text x="12" y="5">Bologna</text></g>
+      <g class="ranch__stop" data-stop transform="translate(324.5 227.9)"><circle r="4"/></g>
+      <g class="ranch__stop" data-stop transform="translate(226.6 192.5)"><circle r="4"/><text x="-2" y="-12" text-anchor="middle">Parma</text></g>
+      <g class="ranch__stop" data-stop transform="translate(122.5 134.8)"><circle r="4"/></g>
+      <g class="ranch__stop ranch__stop--hq is-on" data-stop transform="translate(278 495.6)">
+        <circle r="9"/><rect x="-128" y="-14" width="112" height="28" rx="3"/><text class="ranch__chip" x="-72" y="6" text-anchor="middle">{{ section.settings.hq_label | escape }}</text>
+        <text x="-14" y="38" text-anchor="end">{{ section.settings.from | escape }}</text>
+      </g>
+      <g class="ranch__stop ranch__stop--end" data-stop transform="translate(40 40)">
+        <circle r="9"/><text x="18" y="7">{{ section.settings.to | escape }}</text>
+        {%- if section.settings.end_label != blank -%}<rect x="16" y="16" width="98" height="26" rx="3"/><text class="ranch__chip" x="65" y="35" text-anchor="middle">{{ section.settings.end_label | escape }}</text>{%- endif -%}
+      </g>
+      <g class="ranch__car" data-ranch-car transform="translate(278 495.6)"><circle class="ranch__halo" r="16"/><circle r="7"/></g>
+      <g class="ranch__north" aria-hidden="true" transform="translate(440 500)"><path d="M0-22l7 18H-7z"/><text y="16" text-anchor="middle">N</text></g>
+    </svg>
+    <figcaption class="ranch__hud label"><span>km <b data-ranch-km>000</b> / {{ section.settings.km }}</span><span>{{ section.settings.coords | escape }}</span></figcaption>
+  </figure>
+</section>
+
+{% schema %}
+{
+  "name": "Il Ranch (Chianni)",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Quartier generale" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Il Ranch" },
+    { "type": "text", "id": "title_outline", "label": "Titolo (contorno)", "default": "Chianni" },
+    { "type": "richtext", "id": "text", "label": "Testo", "default": "<p>Tutto parte da qui. Chianni, sulle colline pisane: un borgo medievale di origine etrusca tra boschi di castagni, vigne e ulivi. Qui c'è il Ranch, l'officina dove si trovano le moto, le maglie e la Cadillac.</p><p>Da qui si parte per Milano.</p>" },
+    { "type": "text", "id": "from", "label": "Mappa: partenza", "default": "Chianni" },
+    { "type": "text", "id": "hq_label", "label": "Mappa: etichetta partenza", "default": "Il Ranch" },
+    { "type": "text", "id": "to", "label": "Mappa: arrivo", "default": "Milano" },
+    { "type": "text", "id": "end_label", "label": "Mappa: etichetta arrivo", "default": "Il Market" },
+    { "type": "range", "id": "km", "label": "Chilometri", "min": 50, "max": 1000, "step": 10, "default": 390 },
+    { "type": "text", "id": "coords", "label": "Coordinate", "default": "43°29′N · 10°38′E" },
+    { "type": "select", "id": "style", "label": "Sfondo", "default": "paper", "options": [
+      { "value": "paper", "label": "Carta" },
+      { "value": "dark", "label": "Scuro" }
+    ] }
+  ],
+  "blocks": [
+    {
+      "type": "fact",
+      "name": "Numero",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Numero", "default": "390 km" },
+        { "type": "text", "id": "label", "label": "Didascalia", "default": "Da Chianni a Milano" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Il Ranch (Chianni)",
+      "blocks": [
+        { "type": "fact", "settings": { "value": "1.276", "label": "Abitanti a Chianni" } },
+        { "type": "fact", "settings": { "value": "390 km", "label": "Dal Ranch al Market" } },
+        { "type": "fact", "settings": { "value": "1", "label": "Cadillac leopardata" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "size": { "type": "accordion", "settings": { "title": "Guida taglie", "content": "<p>S 66×56 · M 70×60 · L 74×64 · XL 78×68 · XXL 82×72 cm (lunghezza × larghezza)</p>" } },
+        "ship": { "type": "accordion", "settings": { "title": "Spedizioni e resi", "content": "<p>Italia 2–4 giorni, gratis sopra 100€. Resi entro 14 giorni.</p>" } }
+      },
+      "block_order": ["size", "ship"],
+      "settings": {}
+    },
+    "more": { "type": "featured-collection", "settings": { "title": "Completa", "title_outline": "il fit", "limit": 4, "show_tabs": false, "link_label": "" } }
+  },
+  "order": ["main", "more"]
+}
