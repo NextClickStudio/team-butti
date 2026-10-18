@@ -7,6 +7,7 @@
 @font-face{font-family:'Permanent Marker';font-style:normal;font-weight:400;font-display:swap;src:url('permanent-marker.woff2') format('woff2')}
 
 :root{
+  --tb-css:1;
   --ink:#0d0d0d;--paper:#f4f1ea;--pink:#ff2e93;--yellow:#ffd400;--red:#e3191b;--blue:#1d3fbf;--green:#39ff14;--sand:#c9a46a;
   --display:'Anton',Impact,'Arial Narrow',sans-serif;--mono:'Space Mono',ui-monospace,monospace;--goth:'UnifrakturCook',serif;--marker:'Permanent Marker',cursive;
   --g:clamp(14px,2.4vw,32px);--head:64px;

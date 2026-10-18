@@ -723,14 +723,21 @@
           '<path d="' + vines + '" stroke="#6f7f3a" stroke-width="3" stroke-linecap="round"/>' + items + '</svg>';
       }
 
+      var size = '';
       function build() {
         // everything scales with the bike: same jumps (relative to the bike) on a phone and on a big screen
         VW = window.innerWidth; H = sticky.clientHeight; W = world.offsetWidth;
         var bw0 = bike.offsetWidth || 300; wb = bw0 * 226 / 420; L = bw0 * 4.5; hu = Math.min(H * 0.95, bw0 * 3.2); gx = 0.62 / bw0;
+        size = [VW, H, W, bike.offsetWidth].join('x');
         buildTrack(); buildPath(); drawGround(); drawFar();
       }
       build();
-      var rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(function () { build(); last = -1; }, 150); });
+      // the track is rebuilt whenever the section really changes size: window resize, phone rotation,
+      // or a stylesheet that was applied after this ran (the first build would have measured an unstyled page)
+      var rz;
+      function rebuild() { clearTimeout(rz); rz = setTimeout(function () { if ([window.innerWidth, sticky.clientHeight, world.offsetWidth, bike.offsetWidth].join('x') !== size) { build(); last = -1; } }, 150); }
+      window.addEventListener('resize', rebuild);
+      if ('ResizeObserver' in window) { var ro = new ResizeObserver(rebuild); ro.observe(sticky); ro.observe(world); ro.observe(bike); }
       var shown = -1, last = -1, comp = 0, compV = 0, roostAcc = 0;
       function fx(cls, x, y, vars, ms) {
         if (reduce) return;
@@ -1150,9 +1157,22 @@
     }
   }
 
+  // the sections measure the page when they start, so they wait until base.css is applied
+  // (Safari can run this file before the stylesheet has arrived; base.css sets --tb-css on :root)
+  function whenStyled(fn) {
+    var t0 = Date.now();
+    (function check() {
+      if (getComputedStyle(document.documentElement).getPropertyValue('--tb-css').trim() || Date.now() - t0 > 5000) fn();
+      else setTimeout(check, 30);
+    })();
+  }
+
   function boot() {
-    loader(); cursor(); magnetic(); pageWipe(); shopPill(); init(document);
-    if (TB.cartDrawer && $('#CartDrawer') && window.location.hash === '#cart') openCart();
+    loader(); cursor(); magnetic(); pageWipe(); shopPill();
+    whenStyled(function () {
+      init(document);
+      if (TB.cartDrawer && $('#CartDrawer') && window.location.hash === '#cart') openCart();
+    });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
