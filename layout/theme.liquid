@@ -7,6 +7,10 @@
     <link rel="canonical" href="{{ canonical_url }}">
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+      <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+    {%- else -%}
+      <link rel="icon" type="image/png" href="{{ 'tb-favicon.png' | asset_url }}">
+      <link rel="apple-touch-icon" href="{{ 'tb-apple-touch-icon.png' | asset_url }}">
     {%- endif -%}
     <title>
       {{- page_title -}}
@@ -17,6 +21,7 @@
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}
     {% render 'meta-tags' %}
+    {% render 'structured-data' %}
     {{ 'anton.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {% render 'css-variables' %}
@@ -35,6 +40,8 @@
           unavailable: {{ 'products.unavailable' | t | json }},
           chooseSize: {{ 'products.choose_size' | t | json }},
           joined: {{ 'newsletter.success' | t | json }},
+          menu: {{ 'general.menu' | t | json }},
+          close: {{ 'general.close' | t | json }},
           setupProduct: {{ 'customizer.setup' | t | json }}
         }
       };

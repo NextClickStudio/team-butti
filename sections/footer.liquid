@@ -20,6 +20,7 @@
   <div class="ftr__bot">
     <span>© {{ 'now' | date: '%Y' }} {{ shop.name | escape }}</span>
     <span>{{ section.settings.tagline | escape }}</span>
+    {%- if section.settings.legal != blank -%}<span class="ftr__legal">{{ section.settings.legal | escape }}</span>{%- endif -%}
     <span class="payments">
       {%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'payment-icon' }}{%- endfor -%}
     </span>
@@ -36,7 +37,8 @@
     { "type": "link_list", "id": "menu_1", "label": "Menu 1", "default": "main-menu" },
     { "type": "link_list", "id": "menu_2", "label": "Menu 2", "default": "footer" },
     { "type": "text", "id": "wordmark", "label": "Scritta gigante", "default": "TEAM BUTTI" },
-    { "type": "text", "id": "tagline", "label": "Frase in basso", "default": "Made between Chianni & Milano" }
+    { "type": "text", "id": "tagline", "label": "Frase in basso", "default": "Made between Chianni & Milano" },
+    { "type": "text", "id": "legal", "label": "Dati legali", "info": "Obbligatori in Italia per chi vende online: ragione sociale, sede e Partita IVA. Es. \"Team Butti di Mario Rossi · Chianni (PI) · P.IVA 01234567890\"" }
   ],
   "enabled_on": { "groups": ["footer"] }
 }

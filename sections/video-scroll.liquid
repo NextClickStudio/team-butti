@@ -40,7 +40,7 @@
             {% render 'cadillac', uid: section.id %}
           {%- endif -%}
         </div>
-        <div class="journey__hud label"><span>{{ 'vscroll.km' | t }} <b data-km-out>000</b></span><span data-place>{{ section.settings.places | split: ',' | first | strip }}</span></div>
+        <div class="journey__hud label"><span>{{ 'vscroll.km' | t }} <b data-km-out>000</b></span><span data-place>{{ section.settings.places | split: ',' | first | strip | escape }}</span></div>
         {%- if request.design_mode and section.settings.car_sprite == blank -%}
           <span class="vscroll__slot label">{{ 'vscroll.slot' | t }}</span>
         {%- endif -%}
@@ -104,7 +104,7 @@
     {
       "name": "Cadillac a scroll",
       "blocks": [
-        { "type": "sign", "settings": { "title": "Il Ranch", "sub": "Chianni · Team Butti HQ", "style": "brown", "pos": 4 } },
+        { "type": "sign", "settings": { "title": "Il Ranch", "sub": "Chianni · Team Butti HQ", "style": "brown", "pos": 8 } },
         { "type": "sign", "settings": { "title": "FI-PI-LI", "sub": "Pontedera · Firenze", "style": "blue", "pos": 18 } },
         { "type": "sign", "settings": { "title": "A1", "sub": "Bologna · Milano", "style": "green", "pos": 34 } },
         { "type": "sign", "settings": { "title": "Milano", "sub": "215 km", "style": "green", "pos": 54 } },

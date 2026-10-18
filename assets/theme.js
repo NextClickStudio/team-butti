@@ -70,7 +70,7 @@
   function toggleMenu(force) {
     var m = $('#MobileMenu'); if (!m) return;
     var open = m.classList.toggle('open', force);
-    $$('[data-menu-toggle]').forEach(function (b) { b.setAttribute('aria-expanded', open); });
+    $$('[data-menu-toggle]').forEach(function (b) { b.setAttribute('aria-expanded', open); if (TB.strings.menu) b.textContent = open ? TB.strings.close : TB.strings.menu; });
     if (force === undefined) lock(open);
   }
 
@@ -135,8 +135,28 @@
       pf.addEventListener('click', function (e) {
         var b = e.target.closest('.size'); if (!b || b.classList.contains('na')) return;
         $$('.size', b.parentNode).forEach(function (x) { x.classList.toggle('on', x === b); });
-        update();
+        update(); syncBar();
       });
+      // phones: a bar at the bottom keeps "add to bag" in reach while the photos and the details scroll by
+      var bar = scope.classList.contains('pdp') ? $('[data-pbar]', scope) : null, barBtn = bar && $('[data-pbar-btn]', bar), barPrice = bar && $('[data-pbar-price]', bar);
+      function syncBar() {
+        if (!bar) return;
+        var ready = !btn.disabled;
+        barBtn.textContent = ready ? TB.strings.add : btn.textContent.trim();
+        barBtn.disabled = !ready && btn.textContent.trim() !== TB.strings.chooseSize;
+        var price = $('[data-price]', scope); if (price && barPrice) barPrice.innerHTML = price.innerHTML;
+      }
+      if (bar) {
+        syncBar();
+        barBtn.addEventListener('click', function () {
+          if (!btn.disabled) { btn.click(); return; }
+          var opt = $('[data-opt]', pf) || pf; opt.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+          opt.classList.remove('nudge'); void opt.offsetWidth; opt.classList.add('nudge');
+        });
+        if ('IntersectionObserver' in window) new IntersectionObserver(function (es) {
+          var off = !es[0].isIntersecting; bar.classList.toggle('on', off); bar.setAttribute('aria-hidden', off ? 'false' : 'true'); barBtn.tabIndex = off ? 0 : -1;
+        }).observe(form);
+      }
     });
     $$('[data-stage]', root).forEach(function (stage) {
       if (stage.dataset.ready || !J) return; stage.dataset.ready = '1';
@@ -509,12 +529,20 @@
           if (visible) { runChip(); schedule(); if (!was) bubbles(); } else { clearTimeout(timer); bubbles(); }
         }, { threshold: 0.25 }).observe(frame);
       } else { visible = true; playCur(); schedule(); bubbles(); }
-      // scroll: the frame grows from a card to full screen; HUD timecode follows the clip
+      // scroll: the frame grows from a card to full screen; HUD timecode follows the clip.
+      // Once it is full screen the "keep scrolling" hint shows, its bar filling until the page moves on.
+      var more = $('[data-reel-more]', root), moreOn = false, lastMp = -1;
       whileVisible(root, function () {
         var r = root.getBoundingClientRect(), total = root.offsetHeight - window.innerHeight;
         var p = total > 0 ? Math.min(1, Math.max(0, -r.top / (total * 0.7))) : 1;
         var x = reduce ? 1 : 1 - Math.pow(1 - p, 3);
         root.style.setProperty('--x', x.toFixed(4));
+        if (more) {
+          var on = x > 0.55;
+          if (on !== moreOn) { moreOn = on; root.classList.toggle('more-on', on); }
+          var mp = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 1;
+          if (Math.abs(mp - lastMp) > 0.004) { lastMp = mp; more.style.setProperty('--mp', mp.toFixed(3)); }
+        }
         if (!reduce) frame.style.transform = 'translateY(' + ((1 - x) * 5).toFixed(3) + 'vh) scale(' + (0.7 + 0.3 * x).toFixed(4) + ')';
         var v = vid(cur), s = v && !v.paused ? v.currentTime : (performance.now() - t0) / 1000;
         var out = pad(s / 60) + ':' + pad(s % 60) + ':' + pad((s % 1) * 25);
@@ -880,7 +908,8 @@
         });
       }
       var pics = $$('.ab__pic', root);
-      if (reduce || !pics.length) return;
+      // phones: one column, a drifting photo would slide over the lines above and below it
+      if (reduce || !pics.length || window.matchMedia('(max-width: 800px)').matches) return;
       whileVisible(root, function () {
         var vh = window.innerHeight;
         pics.forEach(function (p, i) {
@@ -915,7 +944,15 @@
       });
     },
 
-    product: function (root) { initProduct(root); },
+    product: function (root) {
+      initProduct(root);
+      // phones: the photos swipe sideways, the dots say which one you're on
+      var media = $('[data-pdp-media]', root), dots = $$('[data-pdp-dots] i', root), cur = 0;
+      if (media && dots.length) media.addEventListener('scroll', function () {
+        var i = Math.round(media.scrollLeft / Math.max(1, media.clientWidth));
+        if (i !== cur && dots[i]) { dots[cur].classList.remove('on'); dots[i].classList.add('on'); cur = i; }
+      }, { passive: true });
+    },
 
     footer: function (root) {
       var fw = $('[data-fit]', root); if (!fw) return;
@@ -1078,16 +1115,34 @@
     document.addEventListener('pointerover', function (e) { cur.classList.toggle('big', !!e.target.closest('a,button,.stk,[data-h]')); });
   }
 
-  // floating shop button: in after the first screen, out over product grids, the reel (own button) and the footer
+  // floating shop button: in after the first screen, out over product grids, the reel (own button) and the footer,
+  // and it steps aside whenever it would sit on top of a button, a link or a form field
   function shopPill() {
     var pill = $('[data-shop-pill]'); if (!pill) return;
-    var past = false, on = false, cover = [];
+    var past = false, on = false, cover = [], blocking = false, queued = false;
+    var TAP = 'a,button,input,select,textarea,label,summary,[role="button"],[data-h]';
     function set() {
-      var v = past && !cover.some(function (el) { return el._pillOver; });
+      var v = past && !blocking && !cover.some(function (el) { return el._pillOver; });
       if (v === on) return; on = v;
       pill.classList.toggle('on', v); pill.setAttribute('aria-hidden', v ? 'false' : 'true'); pill.tabIndex = v ? 0 : -1;
     }
-    window.addEventListener('scroll', function () { var p = window.scrollY > window.innerHeight * 0.8; if (p !== past) { past = p; set(); } }, { passive: true });
+    // hit-test a few points of the pill's slot: the first thing under it decides (offset* ignore the slide transform)
+    function check() {
+      queued = false;
+      var x = pill.offsetLeft, y = pill.offsetTop, w = pill.offsetWidth, h = pill.offsetHeight, hit = false;
+      [[0.08, 0.5], [0.5, 0.5], [0.92, 0.5], [0.5, 0.1], [0.5, 0.9]].some(function (q) {
+        var els = document.elementsFromPoint(x + w * q[0], y + h * q[1]);
+        for (var i = 0; i < els.length; i++) { if (pill.contains(els[i])) continue; hit = !!els[i].closest(TAP); break; }
+        return hit;
+      });
+      if (hit !== blocking) { blocking = hit; set(); }
+    }
+    var later = 0;
+    window.addEventListener('scroll', function () {
+      var p = window.scrollY > window.innerHeight * 0.8; if (p !== past) { past = p; set(); }
+      if (!queued) { queued = true; requestAnimationFrame(check); }
+      clearTimeout(later); later = setTimeout(check, 160);
+    }, { passive: true });
     if ('IntersectionObserver' in window) {
       var pio = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target._pillOver = e.isIntersecting; }); set(); }, { rootMargin: '0px 0px -12% 0px' });
       cover = $$('[data-tb="grid"], [data-tb="reel"], [data-tb="footer"], .main-collection, .pdp');

@@ -11,6 +11,36 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v1.7
+- **Fascia gialla tolta** dalla home. La sezione *Perché comprare qui* resta nel tema, se un giorno la vuoi rimettere.
+- **"Scorri giù · c'è il drop"**: quando il video del brand è a tutto schermo compare una scritta animata. Le lettere fanno l'onda, le frecce scendono e una barretta si riempie finché la pagina va avanti, così nessuno pensa che il sito sia bloccato. Il testo si cambia nel campo *Scritta "continua a scorrere"*.
+- **SEO nel codice**: dati strutturati per Google in ogni pagina (`snippets/structured-data.liquid`):
+  - il marchio con logo e social;
+  - il sito con la ricerca;
+  - i prodotti con un'offerta per taglia (prezzo, valuta, disponibilità);
+  - il percorso di navigazione su prodotti e collezioni;
+  - gli articoli.
+
+  Anteprime social complete (immagine, prezzo, testi), con un'immagine di condivisione col logo su rosa già inclusa. Favicon e icona per iPhone col logo. Nuova impostazione *SEO e condivisione* e campo *Dati legali* (P.IVA) nel footer.
+- **Logo ufficiale** ricostruito in vettoriale (`assets/tb-logo.svg` + PNG nero, bianco, quadrato, favicon). Il carattere più vicino all'originale è Oswald Bold, a righe della stessa larghezza.
+- **Sicurezza**: audit completo, nessun problema serio nel tema. Corretti:
+  - il colore di sfondo delle card da tag/metafield ora è sempre escapato;
+  - il testo delle tappe della Cadillac è escapato;
+  - la demo su Vercel serve solo il commit pubblicato e solo i tipi di file che usa, con intestazioni di sicurezza (`nosniff`, niente iframe esterni) e senza cache sugli errori.
+- **Mobile, controllato pagina per pagina a 360, 390 e 430 px** e in orizzontale:
+  - tutti i bottoni grandi almeno 44 px (menu, borsa, filtri, tab del video, link del footer);
+  - testi mai sotto 11 px; campi email e ricerca a 16 px, così l'iPhone non zooma;
+  - **bug corretto**: il menu mobile non si poteva richiudere, perché il bottone restava sotto il menu aperto. Ora diventa "Chiudi";
+  - il bottone Shop flottante si sposta da solo quando starebbe sopra un bottone, un link o un campo;
+  - **pagina prodotto**: barra "Aggiungi alla bag" fissa in basso finché il bottone vero non è a schermo (se non hai scelto la taglia ti porta alle taglie), e pallini sotto le foto per lo swipe fronte/retro;
+  - Chi siamo su telefono: le polaroid non scivolano più sopra il testo;
+  - cartello del Ranch intero all'inizio del viaggio;
+  - telefono in orizzontale: hero, video e storia in moto ridimensionati sull'altezza.
+
+  Scroll misurato sul telefono: 16,6 ms per frame (60 fps), nessun frame lento.
+- **Higgsfield**: guida per la moto custom col vostro personaggio (`tools/higgsfield/README.md`, ultima parte): Nano Banana Pro per l'immagine, AutoSprite Animation per lo sprite animato, più un secondo sprite per i trick in aria.
+- **Lancio**: lista completa in `LANCIO.md`.
+
 ## Novità v1.6
 - **Tutto parte da Chianni.** Il quartier generale del team è il Ranch, a Chianni (colline pisane). La Cadillac a scroll ora parte da lì: cartello marrone *Il Ranch · Chianni · Team Butti HQ*, poi FI-PI-LI, A1, Bologna e Milano, 390 km sul contachilometri (tappe: Chianni, Valdera, FI-PI-LI, Firenze, Appennino, Bologna, Emilia, Milano). Chianni anche nella hero (testo, percorso, badge), nell'annuncio, nel manifesto, nel footer e nelle didascalie che prima dicevano Valdera. Nuovo stile cartello *Località turistica (marrone)*.
 - **Video del brand con la Cadillac** (dal secondo Drive, girato Sony): 5 clip, *La DeVille* (la fiancata leopardata nel traffico), *Los Angeles?* (il portatarga SOCAL / LOS ANGELES in gotico), *Leopardo* (cruscotto e sedili), *Al volante*, *Milano* (pavé e binari del tram). Niente più clip in moto.
@@ -26,7 +56,7 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 
 ## Novità v1.5
 - **Fluidità**: il sito andava a scatti per l'effetto "grunge" dei titoli, un filtro SVG ricalcolato a ogni frame. Ora è una texture fissa con lo stesso aspetto (`assets/grunge-mask.png`). In più: grana di sfondo ferma, cursore senza fusione colori, ombre delle maglie calcolate una volta, animazioni attive solo quando sono a schermo. Scroll misurato in Chromium: home da circa 145 ms a circa 20 ms per frame su desktop, 16,7 ms (60 fps) su telefono.
-- **Video**: partono da soli quando entrano a schermo e si fermano quando escono, per non sprecare batteria. Se il telefono blocca l'autoplay (risparmio energetico iPhone) compare ▶ e basta un tocco. Nella demo i video passavano da una cache che restituiva sempre i primi 2 byte, e Safari e Chrome non li avviavano. Ora passano da `tools/theme-test/vercel/api/media.js`, verificato con Chrome vero.
+- **Video**: partono da soli quando entrano a schermo e si fermano quando escono, per non sprecare batteria. Se il telefono blocca l'autoplay (risparmio energetico iPhone) compare ▶ e basta un tocco. Nella demo i video passavano da una cache che restituiva sempre i primi 2 byte, e Safari e Chrome non li avviavano. Ora passano da una funzione edge (oggi `tools/theme-test/vercel/api/v.js`), verificata con Chrome vero.
 - **Maglie vere (still life)**: le 33 foto del Drive sono scontornate. Nella hero ogni vibe ha le sue 3 maglie abbinate ai colori (blocco Vibe → *Foto maglia 1/2/3*). Nella demo il catalogo è fatto con i pezzi veri: fronte e retro sulle card, nella vista rapida e nella pagina prodotto. Nuova impostazione tema *Foto prodotto*: intere su colore (still life) oppure a tutto riquadro.
 - **Moto ridisegnata**: forcella con l'inclinazione giusta, tabella anteriore pulita senza numero, casco vero (visiera, occhiali a specchio, mentoniera), 69 pulito sulla schiena. Ruote, telaio e pilota sono livelli separati. In più c'è l'opzione **Sprite della moto** per la versione generata con Higgsfield (prompt in `tools/higgsfield/README.md`).
 - **Cadillac più precisa**: doppi fari sovrapposti ('66), linee delle portiere sopra le scritte, maniglie cromate, stemma sul cofano, scritta DeVille, pinna, pinze freno rosse. La scia colorata ora sono due sagome che si spostano: niente più filtro per frame.

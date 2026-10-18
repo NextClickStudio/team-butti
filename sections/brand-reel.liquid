@@ -88,6 +88,14 @@
         {%- endfor -%}
       </div>
     {%- endif -%}
+    {%- if section.settings.scroll_hint != blank -%}
+      {%- assign hint = section.settings.scroll_hint | split: '' -%}
+      <div class="reel__more" data-reel-more aria-hidden="true">
+        <span class="reel__more-a"><i></i><i></i></span>
+        <span class="reel__more-t">{%- for c in hint -%}{%- if c == ' ' -%}<i>&nbsp;</i>{%- else -%}<i style="--i: {{ forloop.index0 }}">{{ c | escape }}</i>{%- endif -%}{%- endfor -%}</span>
+        <span class="reel__more-bar"><i></i></span>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 {%- endif -%}
@@ -108,6 +116,7 @@
     { "type": "text", "id": "cta_label", "label": "Bottone shop (sempre visibile sul video)", "default": "Shop il drop" },
     { "type": "text", "id": "cta_note", "label": "Sotto il bottone", "default": "Pezzi limitati" },
     { "type": "url", "id": "cta_link", "label": "Link bottone", "info": "Vuoto = tutti i prodotti" },
+    { "type": "text", "id": "scroll_hint", "label": "Scritta \"continua a scorrere\"", "info": "Compare quando il video è a tutto schermo, così si capisce che la pagina continua. Vuoto = nascosta.", "default": "Scorri giù · c'è il drop" },
     { "type": "range", "id": "length", "label": "Effetto zoom con lo scroll", "info": "100 = nessun effetto, il video è già a schermo intero. Più è basso, meno la pagina si ferma sul video.", "min": 100, "max": 300, "step": 10, "unit": "vh", "default": 130 },
     { "type": "range", "id": "autoplay_next", "label": "Passa alla clip successiva dopo", "info": "0 = mai", "min": 0, "max": 30, "step": 1, "unit": "s", "default": 9 },
     { "type": "checkbox", "id": "show_sound", "label": "Bottone audio", "default": true },

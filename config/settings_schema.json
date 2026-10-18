@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Team Butti",
-    "theme_version": "1.6.0",
+    "theme_version": "1.7.0",
     "theme_author": "Team Butti",
     "theme_documentation_url": "https://www.instagram.com/team_butti/",
     "theme_support_url": "https://www.instagram.com/team_butti/"
@@ -208,6 +208,21 @@
         "type": "url",
         "id": "social_tiktok",
         "label": "TikTok"
+      }
+    ]
+  },
+  {
+    "name": "SEO e condivisione",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Titolo e descrizione per Google della home si impostano in Negozio online → Preferenze. Per prodotti, collezioni e pagine: in fondo a ogni scheda, \"Anteprima nei motori di ricerca\"."
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Immagine di condivisione",
+        "info": "Compare quando il link del sito viene condiviso su WhatsApp, Instagram, Facebook (se la pagina non ha una sua foto). Consigliato 1200 × 630 px."
       }
     ]
   }

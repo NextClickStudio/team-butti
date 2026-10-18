@@ -263,7 +263,7 @@
             "title": "Il Ranch",
             "sub": "Chianni · Team Butti HQ",
             "style": "brown",
-            "pos": 4
+            "pos": 8
           }
         },
         "sign-fipili": {
@@ -272,7 +272,7 @@
             "title": "FI-PI-LI",
             "sub": "Pontedera · Firenze",
             "style": "blue",
-            "pos": 18
+            "pos": 21
           }
         },
         "sign-a1": {
@@ -659,50 +659,6 @@
         "p21"
       ],
       "settings": {}
-    },
-    "trust": {
-      "type": "trust-bar",
-      "blocks": {
-        "r1": {
-          "type": "reason",
-          "settings": {
-            "icon": "ship",
-            "title": "Spedizione gratis da {soglia}€",
-            "text": "In tutta Italia"
-          }
-        },
-        "r2": {
-          "type": "reason",
-          "settings": {
-            "icon": "return",
-            "title": "Reso entro 14 giorni",
-            "text": "Non ti sta? Ce la rimandi"
-          }
-        },
-        "r3": {
-          "type": "reason",
-          "settings": {
-            "icon": "secure",
-            "title": "Pagamento sicuro",
-            "text": "Checkout protetto"
-          }
-        },
-        "r4": {
-          "type": "reason",
-          "settings": {
-            "icon": "limited",
-            "title": "Pezzi limitati",
-            "text": "Finiti quelli, finito il drop"
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3",
-        "r4"
-      ],
-      "settings": {}
     }
   },
   "order": [
@@ -710,7 +666,6 @@
     "reel",
     "tapes",
     "drop",
-    "trust",
     "cadillac",
     "manifesto",
     "crew",

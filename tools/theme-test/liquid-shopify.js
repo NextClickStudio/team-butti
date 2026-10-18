@@ -60,6 +60,7 @@
       placeholder_svg_tag: function (n, c) { return '<svg class="' + (c || '') + '" viewBox="0 0 10 10" aria-hidden="true"><rect width="10" height="10"/></svg>'; },
       money: money,
       money_with_currency: function (c) { return money(c) + ' EUR'; },
+      money_without_currency: function (c) { return money(c).replace(' €', ''); },
       money_without_trailing_zeros: function (c) { return money(c).replace(',00', ''); },
       handleize: function (s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); },
       handle: function (s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); },

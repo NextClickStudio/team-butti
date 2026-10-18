@@ -9,7 +9,8 @@
   endif
 -%}
 <section class="pdp" data-tb="product">
-  <div class="pdp__media">
+  <div class="pdp__gal">
+  <div class="pdp__media" data-pdp-media>
     {%- if product.images.size > 0 -%}
       {%- for image in product.images -%}
         <div class="pdp__slide">
@@ -36,6 +37,10 @@
       <div class="pdp__slide">{{ 'product-apparel-1' | placeholder_svg_tag: 'card__ph' }}</div>
     {%- endif -%}
   </div>
+  {%- if product.images.size > 1 -%}
+    <div class="pdp__dots" data-pdp-dots aria-hidden="true">{%- for image in product.images -%}<i{% if forloop.first %} class="on"{% endif %}></i>{%- endfor -%}</div>
+  {%- endif -%}
+  </div>
   <div class="pdp__info">
     <div class="pdp__sticky">
       <span class="label">{{ product.type | default: product.vendor | escape }}</span>
@@ -52,6 +57,11 @@
         </details>
       {%- endfor -%}
     </div>
+  </div>
+  {%- assign current = product.selected_or_first_available_variant -%}
+  <div class="pbar" data-pbar aria-hidden="true">
+    <div class="pbar__i"><b>{{ product.title | escape }}</b><span data-pbar-price>{{ current.price | money }}</span></div>
+    <button type="button" class="btn btn--pink pbar__btn" data-pbar-btn tabindex="-1">{{ 'products.add' | t }}</button>
   </div>
 </section>
 

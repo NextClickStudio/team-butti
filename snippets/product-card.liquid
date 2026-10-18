@@ -27,7 +27,7 @@
   endfor
 -%}
 <a href="{{ product.url }}" class="card{% unless product.available %} sold{% endunless %}{% if img1 and img2 == blank %} card--single{% endif %}" data-type="{{ product.type | handleize }}" data-quick="{{ product.url }}" data-h>
-  <div class="card__m"{% if card_bg != blank %} style="background:{{ card_bg }}"{% endif %}>
+  <div class="card__m"{% if card_bg != blank %} style="background:{{ card_bg | escape }}"{% endif %}>
     {%- if badge != blank and product.available -%}<span class="card__tag">{{ badge | escape }}</span>{%- endif -%}
     {%- if img1 -%}
       <div class="flip flip--photo">

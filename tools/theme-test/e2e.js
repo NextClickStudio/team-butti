@@ -61,5 +61,13 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
   const log2 = await (await p.request.get('http://localhost:8787/__log')).json();
   ok(log2.some(l => l.path === '/cart/change.js' && l.body.includes('"quantity":0')), 'carrello: POST /cart/change.js per rimuovere');
   ok(errs.length === 0, 'console: nessun errore JS ' + JSON.stringify(errs));
+  // SEO: structured data (JSON-LD) is valid JSON with the right types on each page, plus social tags
+  const fs = require('fs'), ld = f => [...fs.readFileSync(__dirname + '/out/' + f, 'utf8').matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap(m => JSON.parse(m[1])['@graph']);
+  const types = f => ld(f).map(g => g['@type']).join(',');
+  const prod = ld('product.html').find(g => g['@type'] === 'Product');
+  ok(types('index.html') === 'Organization,WebSite' && types('collection.html') === 'Organization,WebSite,BreadcrumbList', 'SEO: dati strutturati marchio + sito (+ percorso sulle collezioni)');
+  ok(prod && prod.offers.length === 15 && prod.offers.every(o => o.price === 99 && o.priceCurrency === 'EUR' && /schema.org\/(InStock|OutOfStock)/.test(o.availability)) && prod.brand.name === 'Team Butti', 'SEO: pagina prodotto con Product, 15 taglie/modelli con prezzo, valuta e disponibilità');
+  const head = fs.readFileSync(__dirname + '/out/product.html', 'utf8');
+  ok(/og:type" content="product"/.test(head) && /og:price:amount" content="99/.test(head) && /og:image" content="https:/.test(head) && /rel="canonical"/.test(head), 'SEO: condivisione social (og:type, prezzo, immagine) e canonical');
   await b.close();
 })();

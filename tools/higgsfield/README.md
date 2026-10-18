@@ -115,3 +115,68 @@ In Shopify: **Personalizza → Storia in moto (cross) → Sprite della moto**, c
 "Dove toccano le ruote" sposta la moto in su o in giù finché le gomme appoggiano sulla pista (92% di solito).
 
 Il connettore Higgsfield di Claude legge lo storico delle generazioni: quando il loop è pronto basta dirlo e lo sprite si prepara da qui.
+
+---
+
+# Moto custom Team Butti con il TUO personaggio (v1.7)
+
+Obiettivo: sostituire la moto disegnata della *Storia in moto* con una moto custom Team Butti generata, guidata dal vostro personaggio (una persona della crew o una mascotte), animata e più "vera". Il tema la usa già: la moto salta le dune, si inclina sulle rampe e i frame avanzano con lo scroll.
+
+Modelli dell'account (verificati il 18.10.2026): **Nano Banana Pro** per l'immagine (accetta più foto di riferimento e scrive bene "TEAM BUTTI"), **AutoSprite Animation** per trasformarla direttamente in uno sprite animato, **Seedance 2.0** come alternativa video.
+
+## 0. Cosa preparare
+- 3–6 foto del personaggio: una di profilo, una frontale, una a figura intera, luce buona. Se è una persona vera, che sia d'accordo.
+- Come riferimento per i colori: 1–2 still life delle maglie (es. `tb-maglia-cross-merde62-bianco-rosso-front.png`) e il logo `tb-logo-nero.png`.
+
+## 1. Immagine base: Nano Banana Pro, 16:9, risoluzione 2k
+Carica le foto del personaggio + una maglia come *image references*. Sostituisci `[PERSONAGGIO]` con 1 riga che lo descrive (es. "a young man with curly dark hair and a thin moustache, from the reference photos").
+
+```
+Exact side profile (90 degrees) of a custom motocross bike with its rider, facing right, both fully visible
+with margin around them, wheels not cropped. The rider is [PERSONAGGIO], same face and build as in the
+reference photos, in standing attack position, elbows up, looking ahead.
+BIKE: 1990s-style 250cc two-stroke dirt bike, unbranded. Hot pink plastics (#FF2E93) with yellow (#FFD400)
+graphics, a leopard-print seat cover, black rims with gold hubs and gold upside-down fork, chrome expansion
+chamber, knobby tyres. "TEAM BUTTI" in bold black condensed letters on the radiator shrouds. Plain white
+front number plate with NO number. White side number plates with a black "69".
+RIDER GEAR: motocross jersey in the Team Butti style of the reference jersey, "TEAM BUTTI" and a big 69 on
+the back, matching pants, white boots, white helmet with leopard-print peak, orange mirrored goggles.
+STYLE: stylized premium illustration, bold clean black outlines, flat cel-shaded colours with subtle glossy
+highlights, streetwear poster look.
+BACKGROUND: perfectly flat pure white, no ground, no shadow, no dust, no extra text, no logos other than
+TEAM BUTTI.
+```
+Variante realistica: sostituisci la riga STYLE con `Photorealistic studio render, soft even light, sharp details`.
+Genera 4 varianti, tieni quella con il viso più somigliante e la grafica più pulita (il 69 deve essere solo sui lati, non davanti).
+
+## 2. Animazione: AutoSprite Animation (strada consigliata)
+Input: l'immagine scelta al passo 1. Impostazioni:
+- kind **custom**, name `ride`
+- frame_count **24**, frame_size **512**
+- remove_bg **ultra**, is_humanoid **off** (è moto + pilota)
+- video_tier **pro** (turbo per una prova veloce)
+
+Prompt:
+```
+The rider rides in place facing right: both wheels spin forward at constant speed, the suspension pumps
+over small bumps, the rider's body and arms move naturally with the bike, the helmet bobs slightly.
+The bike stays centred and does not travel across the frame. Seamless loop: the last frame matches the first.
+```
+Esce un PNG con tutti i frame in griglia (sfondo trasparente) + un file atlas. Mandami entrambi.
+
+**In più, per il "da Dio":** fai una seconda animazione con la stessa immagine per i salti:
+```
+Mid-air motocross trick facing right: the rider does a stylish whip, kicking the rear of the bike sideways
+and bringing it back straight, wheels spinning, body leaning into the trick. The bike stays centred.
+Seamless loop.
+```
+(name `air`, 16–24 frame). Quando la moto è in aria uso questo sprite, a terra il primo.
+
+## 2b. Alternativa video: Seedance 2.0
+Start image **e** end image = l'immagine del passo 1, 4 s, 720p, audio **off**, stesso prompt del loop "ride" qui sopra. Poi:
+```
+./make-car-sprite.sh moto-loop.mp4 moto-sprite.webp 6 4 640
+```
+
+## 3. Mandami i file
+Il modo più semplice: caricali in una cartella Google Drive condivisa con link (come avete fatto per foto e video) e mandami il link. Li scarico, li ripulisco, li converto e li collego al tema e alla demo. Nel tema finiscono in *Personalizza → Storia in moto (cross) → Sprite della moto* (colonne, righe e frame li imposto io).

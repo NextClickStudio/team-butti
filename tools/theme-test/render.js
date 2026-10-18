@@ -29,7 +29,7 @@ const F = {
   image_url: (img) => img && img.src ? img.src : '',
   image_tag: (u, ...a) => { const o = kw(a); return `<img src="${u}" alt="${o.alt || ''}" class="${o.class || ''}" loading="${o.loading || 'lazy'}">`; },
   placeholder_svg_tag: (n, c) => `<svg class="${c || ''}" viewBox="0 0 10 10"><rect width="10" height="10"/></svg>`,
-  money, money_with_currency: c => money(c) + ' EUR', money_without_trailing_zeros: c => money(c).replace(',00', ''),
+  money, money_with_currency: c => money(c) + ' EUR', money_without_currency: c => money(c).replace(' €', ''), money_without_trailing_zeros: c => money(c).replace(',00', ''),
   handleize: s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
   handle: s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
   default_errors: e => e ? '<ul><li>err</li></ul>' : '',
@@ -83,7 +83,7 @@ engine.registerTag('sections', {
 const MENUS = { 'main-menu': { title: 'Shop', links: [{ title: 'Shop', url: '/collections/all' }, { title: 'Drop', url: '#drop' }] }, footer: { title: 'Info', links: [{ title: 'Spedizioni', url: '/pages/spedizioni' }] } };
 const sizes = ['S', 'M', 'L', 'XL', 'XXL'], models = ['Hockey', 'Motocross', 'Football'];
 let vid = 100;
-const variants = models.flatMap(m => sizes.map(s => ({ id: vid++, options: [m, s], available: !(m === 'Football' && s === 'XXL'), price: 9900, title: `${m} / ${s}` })));
+const variants = models.flatMap(m => sizes.map(s => { const id = vid++; return { id, url: '/products/custom-jersey?variant=' + id, sku: 'TB-' + id, options: [m, s], available: !(m === 'Football' && s === 'XXL'), price: 9900, title: `${m} / ${s}` }; }));
 const PRODUCT = {
   id: 1, title: 'Custom Jersey', handle: 'custom-jersey', url: '/products/custom-jersey', price: 9900, price_varies: false, compare_at_price: null, available: true, type: 'Hockey', vendor: 'Team Butti',
   images: [], featured_image: null, has_only_default_variant: false, tags: ['badge:Nuovo'], description: '<p>Mesh pesante.</p>',
@@ -118,9 +118,16 @@ engine.options.globals = { settings: GLOBALS.settings, shop: GLOBALS.shop, route
   // a product page + a collection with real product cards
   const prodTpl = JSON.parse(read('templates/product.json'));
   let pbody = await renderSection('main-product', 'main', prodTpl.sections.main, { product: PRODUCT });
-  fs.writeFileSync(OUT + '/product.html', layout.replace('%%CONTENT%%', pbody));
+  // product and collection pages get their own <head> (structured data, og:type, price tags): product/collection are global objects there
+  const pageHead = async (type, extra) => {
+    const g = engine.options.globals;
+    engine.options.globals = { ...g, request: { ...g.request, page_type: type }, cart: { currency: { iso_code: 'EUR' } }, ...extra };
+    const html = await engine.parseAndRender(read('layout/theme.liquid').replace('{{ content_for_layout }}', '%%CONTENT%%'), { ...GLOBALS, ...extra, request: engine.options.globals.request, template: { name: type } });
+    engine.options.globals = g; return html;
+  };
+  fs.writeFileSync(OUT + '/product.html', (await pageHead('product', { product: PRODUCT, page_title: PRODUCT.title })).replace('%%CONTENT%%', pbody));
   const coll = { title: 'Drop 01', products_count: 2, products: [PRODUCT, { ...PRODUCT, id: 3, title: 'MX Jersey', type: 'Motocross', available: false, tags: [], metafields: { custom: { jersey_type: { value: 'mx' }, jersey_colors: { value: '#f4f1ea,#e3191b,#1d3fbf,#e3191b' }, jersey_number: { value: '03' } } } }], all_types: ['Hockey', 'Motocross'], description: '' };
   let cbody = await renderSection('main-collection', 'main', {}, { collection: coll });
-  fs.writeFileSync(OUT + '/collection.html', layout.replace('%%CONTENT%%', cbody));
+  fs.writeFileSync(OUT + '/collection.html', (await pageHead('collection', { collection: { ...coll, url: '/collections/drop-01' }, page_title: coll.title })).replace('%%CONTENT%%', cbody));
   console.log('rendered OK');
 })().catch(e => { console.error('RENDER ERROR', e.message); process.exit(1); });

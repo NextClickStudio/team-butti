@@ -20,7 +20,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(await p.$$eval('[data-tb=reel] source', s => s.every(x => /tb-reel-(deville|targa|leopardo|volante|milano)\.mp4/.test(x.src))), `[${name}] video del brand: solo clip della Cadillac (niente moto)`);
     ok(!(await p.content()).includes('SoCal') && (await p.textContent('#shopify-section-manifesto')).replace(/\s+/g, ' ').includes('Non siamo nati a Los Angeles') && (await p.textContent('.hero__route')).includes('Chianni'), `[${name}] narrativa Chianni → Milano, manifesto "Non siamo nati a Los Angeles"`);
     ok(await p.$eval('[data-tb=reel] [data-reel-cta]', a => a.getAttribute('href') === '/collections/all' && a.getBoundingClientRect().width > 100), `[${name}] video del brand: bottone "Shop il drop" sul video`);
-    ok(await p.$$eval('[data-tb=trust] .trust__i', x => x.length === 4 && x[0].textContent.includes('Spedizione gratis da 100€')), `[${name}] sotto il drop: 4 motivi per comprare (spedizione, reso, pagamento, pezzi limitati)`);
+    ok(!(await p.$('[data-tb=trust]')), `[${name}] niente fascia gialla sotto il drop`);
     ok(await p.$eval('#shopify-section-drop .card__quick', q => q.textContent.trim() === 'Scegli la taglia +'), `[${name}] card prodotto: "Scegli la taglia +"`);
     ok(!(await p.$eval('[data-shop-pill]', a => a.classList.contains('on'))), `[${name}] bottone Shop flottante: nascosto in cima alla pagina`);
     await p.$eval('#shopify-section-manifesto', el => scrollTo({ top: el.offsetTop, behavior: 'instant' })); await p.waitForTimeout(700);
@@ -30,6 +30,8 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(!(await p.$('[data-tb=customizer]')) && !(await p.$('[data-tb=plate]')), `[${name}] niente prodotti custom online`);
     await p.$eval('[data-tb=reel]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.6, behavior: 'instant' })); await p.waitForTimeout(900);
     ok(+(await p.$eval('[data-tb=reel]', el => getComputedStyle(el).getPropertyValue('--x'))) > 0.5, `[${name}] video del brand: si espande con lo scroll`);
+    await p.waitForTimeout(700);
+    ok(await p.$eval('[data-tb=reel]', el => el.classList.contains('more-on') && getComputedStyle(el.querySelector('.reel__more')).opacity === '1' && el.querySelector('.reel__more').textContent.replace(/\s+/g, ' ').includes('Scorri')), `[${name}] video del brand: a tutto schermo compare "Scorri giù · c'è il drop"`);
     await p.click('[data-tb=reel] [data-chip="1"]'); await p.waitForTimeout(400);
     ok((await p.textContent('[data-date-out]')) === 'Settembre 2026' && (await p.$eval('[data-tb=reel] [data-clip].on video', v => v.querySelector('source').src)).includes('tb-reel-targa.mp4'), `[${name}] video del brand: cambio clip (la targa Los Angeles)`);
     await p.waitForTimeout(3600);
@@ -79,6 +81,12 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     await shot('collection');
     // product page add with size
     await p.goto(BASE + '/products/cross-merde-62-bluette-giallo'); await p.waitForTimeout(900);
+    if (name === 'mob') {
+      ok(await p.$eval('[data-pbar]', b => b.classList.contains('on') && getComputedStyle(b).visibility === 'visible'), `[${name}] pagina prodotto: barra "Aggiungi alla bag" fissa in basso finché il bottone non è a schermo`);
+      await p.$eval('[data-product-form]', f => f.scrollIntoView({ block: 'center' })); await p.waitForTimeout(800);
+      ok(!(await p.$eval('[data-pbar]', b => b.classList.contains('on'))), `[${name}] pagina prodotto: la barra si toglie quando il bottone vero è a schermo`);
+      await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(500);
+    } else ok(await p.$eval('[data-pbar]', b => getComputedStyle(b).display === 'none'), `[${name}] pagina prodotto: niente barra fissa su desktop`);
     ok(await p.$$eval('.pdp__slide img', x => x.length === 2 && x[0].complete && x[0].naturalWidth > 0), `[${name}] pagina prodotto: foto fronte e retro della still life`);
     ok(await p.$eval('.size[data-v="XXL"]', b => b.classList.contains('na')), `[${name}] pagina prodotto: taglia sold out barrata`);
     await p.click('.pdp .size[data-v="M"]'); await p.click('.pdp [data-add]'); await p.waitForTimeout(900);
@@ -86,6 +94,12 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     await p.keyboard.press('Escape'); await shot('product');
     // chi siamo: brand text line by line, from the story button on the home
     await p.goto(BASE + '/'); await p.waitForTimeout(2200);
+    if (name === 'mob') {
+      await p.tap('[data-menu-toggle]'); await p.waitForTimeout(700);
+      const open = await p.$eval('#MobileMenu', m => m.classList.contains('open'));
+      await p.tap('[data-menu-toggle]'); await p.waitForTimeout(700);
+      ok(open && !(await p.$eval('#MobileMenu', m => m.classList.contains('open'))) && (await p.textContent('[data-menu-toggle]')).trim() === 'Menu', `[${name}] menu mobile: si apre e si richiude dallo stesso bottone (Menu / Chiudi)`);
+    }
     ok(await p.$eval('[data-tb=story] .story__link', a => a.getAttribute('href')) === '/pages/chi-siamo', `[${name}] home: "La nostra storia" porta a Chi siamo`);
     await p.goto(BASE + '/pages/chi-siamo'); await p.waitForTimeout(1800);
     const ab = await p.evaluate(() => ({ lines: document.querySelectorAll('.ab__l').length, pics: document.querySelectorAll('.ab__pic img').length, first: document.querySelector('.ab__l').textContent, last: [...document.querySelectorAll('.ab__l')].pop().textContent.replace(/\s+/g, ' '), tape: !!document.querySelector('.ab__tape'), video: !!document.querySelector('[data-tb=story] video') }));

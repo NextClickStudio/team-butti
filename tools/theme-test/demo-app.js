@@ -24,6 +24,7 @@
     Array.prototype.slice.call(document.querySelectorAll('style,[data-boot]')).forEach(function (n) { n.remove(); });
     document.open(); document.write(html); document.close();
   }).catch(function (e) {
-    document.body.innerHTML = '<pre style="padding:24px;font:14px monospace">Errore demo: ' + String(e && e.message || e) + '</pre>';
+    var pre = document.createElement('pre'); pre.style.cssText = 'padding:24px;font:14px monospace';
+    pre.textContent = 'Errore demo: ' + String(e && e.message || e); document.body.replaceChildren(pre);
   });
 })();
