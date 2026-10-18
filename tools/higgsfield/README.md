@@ -120,6 +120,8 @@ Il connettore Higgsfield di Claude legge lo storico delle generazioni: quando il
 
 # Moto custom Team Butti con il TUO personaggio (v1.7)
 
+> Dalla v1.8 la moto della *Storia in moto* ha già il look Team Butti: è l'illustrazione del brand ridisegnata di profilo in vettoriale (`tools/art/bike.py`), con ruote, sospensioni e pilota animati. Questa guida resta per chi vuole sostituirla con uno sprite generato.
+
 Obiettivo: sostituire la moto disegnata della *Storia in moto* con una moto custom Team Butti generata, guidata dal vostro personaggio (una persona della crew o una mascotte), animata e più "vera". Il tema la usa già: la moto salta le dune, si inclina sulle rampe e i frame avanzano con lo scroll.
 
 Modelli dell'account (verificati il 18.10.2026): **Nano Banana Pro** per l'immagine (accetta più foto di riferimento e scrive bene "TEAM BUTTI"), **AutoSprite Animation** per trasformarla direttamente in uno sprite animato, **Seedance 2.0** come alternativa video.

@@ -11,6 +11,13 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v1.8
+- **Moto Team Butti nella Storia in moto.** È l'illustrazione del brand ridisegnata di profilo, piatta in 2D, in vettoriale (`tools/art/bike.py` genera `snippets/mx-bike.liquid`):
+  - moto: plastiche rosa con fulmini gialli, sella leopardata, forcella e mozzi oro, scarico cromato, TEAM BUTTI sul convogliatore, 69 sulla tabella;
+  - pilota: maglia nera a bande bianche con TEAM BUTTI e 69, pantaloni neri, stivali bianchi, casco bianco con calotta e frontino leopardati, maschera arancione alzata, viso visibile.
+- Stessa geometria della moto precedente, quindi percorso e salti sono identici. Le ruote girano con lo scroll, le sospensioni lavorano all'atterraggio e il pilota si piega in volo.
+- Colori di partenza della sezione: maglia e pantaloni neri, casco bianco. Restano modificabili in *Personalizza → Storia in moto (cross)*.
+
 ## Novità v1.7.1
 - **Storia in moto di nuovo a posto su Safari.** Safari a volte faceva partire `theme.js` prima che `base.css` fosse applicato, così la sezione misurava una pagina senza stile. Risultato: un percorso largo quanto lo schermo, niente salti, la moto fuori schermo e i capitoli fermi su "Gli amici".
   - Ora le sezioni partono solo quando lo stile è applicato: `base.css` mette `--tb-css` su `:root` e `theme.js` lo aspetta.

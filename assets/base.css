@@ -647,8 +647,8 @@ details.acc p{margin:0 0 14px;font-size:12px}
 .mx-jersey-s{fill:none;stroke:var(--mx-jersey,#ffd400)}
 .mx-pants-s{fill:none;stroke:var(--mx-pants,#1d3fbf)}
 .mx-helmet{fill:var(--mx-helmet,#f4f1ea)}
-.mx__num,.mx__back{font-family:var(--display);fill:var(--ink)}
-.mx__tag{font-family:var(--display);fill:var(--paper);letter-spacing:.04em}
+.mx__num,.mx__decal{font-family:var(--display);fill:var(--ink)}
+.mx__back,.mx__yoke,.mx__sleeve{font-family:var(--display);fill:#fbfaf6}
 .mx__body{transform-origin:49% 80%;will-change:transform}
 .mx__rider{transform-origin:45% 74%;will-change:transform}
 .mxs{position:relative;background:var(--mxs-sky,#9ec9ef);--chw:100vw}
