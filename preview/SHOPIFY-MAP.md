@@ -11,6 +11,12 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v1.7.1
+- **Storia in moto di nuovo a posto su Safari.** Safari a volte faceva partire `theme.js` prima che `base.css` fosse applicato, così la sezione misurava una pagina senza stile. Risultato: un percorso largo quanto lo schermo, niente salti, la moto fuori schermo e i capitoli fermi su "Gli amici".
+  - Ora le sezioni partono solo quando lo stile è applicato: `base.css` mette `--tb-css` su `:root` e `theme.js` lo aspetta.
+  - Il percorso si ricostruisce ogni volta che la sezione cambia davvero misura: finestra ridimensionata, telefono ruotato, stile arrivato tardi.
+  - Verificato con WebKit (il motore di Safari) sulla demo online, con il foglio di stile ritardato apposta.
+
 ## Novità v1.7
 - **Fascia gialla tolta** dalla home. La sezione *Perché comprare qui* resta nel tema, se un giorno la vuoi rimettere.
 - **"Scorri giù · c'è il drop"**: quando il video del brand è a tutto schermo compare una scritta animata. Le lettere fanno l'onda, le frecce scendono e una barretta si riempie finché la pagina va avanti, così nessuno pensa che il sito sia bloccato. Il testo si cambia nel campo *Scritta "continua a scorrere"*.
