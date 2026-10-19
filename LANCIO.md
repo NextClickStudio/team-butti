@@ -8,14 +8,19 @@ Lista in ordine. Ogni punto dice dove cliccare nell'admin Shopify. Il tema è gi
 3. **Pagamenti.** In *Impostazioni → Pagamenti* attiva Shopify Payments: carte, Apple Pay e Google Pay. Se vuoi aggiungi PayPal. Fai un ordine di prova in modalità test e poi rimborsalo.
 4. **IVA.** In *Impostazioni → Imposte e dazi* attiva "Tutti i prezzi includono le imposte" e controlla l'IVA al 22% per l'Italia.
 5. **Spedizioni.** In *Impostazioni → Spedizione e consegna* crea le zone (Italia, UE) e le tariffe. Aggiungi la tariffa gratuita sopra 100 €: il sito la promette nel bottone del video, nel carrello e nella barra in alto. Se cambi la soglia, cambiala anche in *Personalizza → Impostazioni tema → Carrello* e nel testo della barra annunci.
-6. **Policy.** Compila *Impostazioni → Policy*: privacy, termini, rimborsi (il recesso di 14 giorni è obbligatorio per legge), spedizioni. Shopify ha dei modelli; falli controllare al commercialista.
-7. **Cookie.** In *Impostazioni → Privacy dei clienti* attiva il banner cookie. È obbligatorio in UE.
-8. **Email.** In *Impostazioni → Notifiche → Personalizza* metti logo e colori (rosa `#FF2E93`, nero `#0D0D0D`).
-9. **Checkout.** In *Impostazioni → Checkout → Personalizza* metti logo e colori, lingua italiana.
+6. **Policy.** I testi sono pronti nella cartella `legal/`, con i dati da compilare tra parentesi quadre. `legal/README.md` dice dove incollarli:
+   - *Impostazioni → Policy*: informazioni di contatto, termini di servizio, politica di rimborso, politica di spedizione, informativa sulla privacy;
+   - la Cookie policy va creata come pagina con l'indirizzo `cookie-policy`: il footer la collega da solo.
+
+   Falli controllare al commercialista prima di togliere la password.
+7. **Cookie.** In *Impostazioni → Privacy dei clienti* attiva il banner cookie per UE e Regno Unito, con "Accetta" e "Rifiuta" uguali. È obbligatorio in UE. Il link "Preferenze cookie" nel footer compare da solo e lo riapre.
+8. **Sicurezza account.** Attiva la verifica in due passaggi per te e per ogni collaboratore (*Impostazioni → Utenti*). Dai a ciascuno solo i permessi che servono.
+9. **Email.** In *Impostazioni → Notifiche → Personalizza* metti logo e colori (rosa `#FF2E93`, nero `#0D0D0D`).
+10. **Checkout.** In *Impostazioni → Checkout → Personalizza* metti logo e colori, lingua italiana.
 
 ## 2. Tema e contenuti
 1. **Foto e video.** Caricali da *Contenuti → File → Carica file* (pacchetti `Team-Butti-media-foto.zip` e `Team-Butti-media-video.zip`, estratti). **Non rinominare i file**: il tema li cerca per nome.
-2. **Tema.** In *Negozio online → Temi → Aggiungi tema → Carica file zip* scegli `Team-Butti-tema-shopify-1.8.0.zip`. Se Shopify si lamenta di file mancanti, carica `…-senza-media.zip` e scegli foto e video a mano in *Personalizza* (la tabella in `preview/SHOPIFY-MAP.md` dice cosa va dove).
+2. **Tema.** In *Negozio online → Temi → Aggiungi tema → Carica file zip* scegli `Team-Butti-tema-shopify-1.9.0.zip`. Se Shopify si lamenta di file mancanti, carica `…-senza-media.zip` e scegli foto e video a mano in *Personalizza* (la tabella in `preview/SHOPIFY-MAP.md` dice cosa va dove).
 3. **Pagine.** Da *Negozio online → Pagine* crea **Chi siamo** con il modello `chi-siamo`. Poi crea *Spedizioni e resi* e *Guida taglie*.
 4. **Menu.** In *Contenuti → Menu*:
    - menu principale: Shop, Drop 01, Chi siamo, Spedizioni;

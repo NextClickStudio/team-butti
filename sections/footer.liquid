@@ -17,6 +17,20 @@
     </nav>
   </div>
   <div class="ftr__word" aria-hidden="true"><span data-fit>{{ section.settings.wordmark | default: shop.name | escape }}</span></div>
+  {%- liquid
+    assign cookie_page = section.settings.cookie_page
+    assign has_legal = false
+    if shop.policies.size > 0 or cookie_page != blank or section.settings.cookie_prefs
+      assign has_legal = true
+    endif
+  -%}
+  {%- if has_legal -%}
+    <nav class="ftr__pol" aria-label="{{ 'legal.title' | t }}">
+      {%- for policy in shop.policies -%}<a href="{{ policy.url }}">{{ policy.title | escape }}</a>{%- endfor -%}
+      {%- if cookie_page != blank -%}<a href="{{ cookie_page.url }}">{{ cookie_page.title | escape }}</a>{%- endif -%}
+      {%- if section.settings.cookie_prefs -%}<button type="button" class="ftr__cookie" data-cookie-prefs hidden>{{ 'legal.cookie_prefs' | t }}</button>{%- endif -%}
+    </nav>
+  {%- endif -%}
   <div class="ftr__bot">
     <span>© {{ 'now' | date: '%Y' }} {{ shop.name | escape }}</span>
     <span>{{ section.settings.tagline | escape }}</span>
@@ -38,6 +52,9 @@
     { "type": "link_list", "id": "menu_2", "label": "Menu 2", "default": "footer" },
     { "type": "text", "id": "wordmark", "label": "Scritta gigante", "default": "TEAM BUTTI" },
     { "type": "text", "id": "tagline", "label": "Frase in basso", "default": "Made between Chianni & Milano" },
+    { "type": "header", "content": "Legale" },
+    { "type": "page", "id": "cookie_page", "label": "Pagina Cookie policy", "info": "Le policy di Impostazioni → Policy compaiono da sole accanto a questa." },
+    { "type": "checkbox", "id": "cookie_prefs", "label": "Link \"Preferenze cookie\"", "default": true, "info": "Riapre il banner cookie di Shopify. Compare solo se il banner è attivo in Impostazioni → Privacy dei clienti." },
     { "type": "text", "id": "legal", "label": "Dati legali", "info": "Obbligatori in Italia per chi vende online: ragione sociale, sede e Partita IVA. Es. \"Team Butti di Mario Rossi · Chianni (PI) · P.IVA 01234567890\"" }
   ],
   "enabled_on": { "groups": ["footer"] }

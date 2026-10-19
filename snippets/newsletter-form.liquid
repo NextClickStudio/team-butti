@@ -1,4 +1,4 @@
-{%- comment -%} Accepts: form_id {%- endcomment -%}
+{%- comment -%} Accepts: form_id. Under the field: what the email is for, and the link to the privacy policy once it is filled in. {%- endcomment -%}
 {%- form 'customer', id: form_id, class: 'nl-form' -%}
   <input type="hidden" name="contact[tags]" value="newsletter">
   {%- if form.posted_successfully? -%}
@@ -11,5 +11,6 @@
     {%- if form.errors -%}
       <div class="form-error">{{ form.errors | default_errors }}</div>
     {%- endif -%}
+    <p class="nl-note">{{ 'newsletter.note' | t: shop: shop.name }}{%- if shop.privacy_policy.body != blank %} <a href="{{ shop.privacy_policy.url }}">{{ 'legal.privacy' | t }}</a>{%- endif -%}</p>
   {%- endif -%}
 {%- endform -%}

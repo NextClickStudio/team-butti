@@ -122,6 +122,7 @@
       (sch.settings || []).forEach(function (s) {
         if (s.type === 'link_list') settings[s.id] = (opts.menus || {})[settings[s.id]] || null;
         if (s.type === 'collection' || s.type === 'product') settings[s.id] = (conf.settings && conf.settings[s.id + '__obj']) || null;
+        if (s.type === 'page') settings[s.id] = (globals.pages || {})[settings[s.id]] || null;
       });
       var order = conf.block_order || Object.keys(conf.blocks || {});
       var blocks = order.map(function (bid) {

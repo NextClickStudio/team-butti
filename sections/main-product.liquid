@@ -47,6 +47,12 @@
       <h1 class="modal__t d">{{ product.title | escape }}</h1>
       <div class="modal__p">{% render 'price', product: product, variant: product.selected_or_first_available_variant %}</div>
       {% render 'product-form', product: product %}
+      <p class="pdp__legal">
+        {%- if cart.taxes_included -%}{{ 'products.taxes_included' | t }} {% endif -%}
+        {%- if shop.shipping_policy.body != blank -%}{{ 'products.shipping_html' | t: url: shop.shipping_policy.url }}{%- else -%}{{ 'products.shipping' | t }}{%- endif -%}
+        <br>
+        {%- if shop.refund_policy.body != blank -%}{{ 'products.returns_html' | t: url: shop.refund_policy.url }}{%- else -%}{{ 'products.returns' | t }}{%- endif %} · {{ 'products.warranty' | t }}
+      </p>
       {%- if product.description != blank -%}
         <details class="acc" open><summary>{{ 'products.details' | t }}</summary><div class="rte">{{ product.description }}</div></details>
       {%- endif -%}

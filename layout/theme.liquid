@@ -13,9 +13,9 @@
       <link rel="apple-touch-icon" href="{{ 'tb-apple-touch-icon.png' | asset_url }}">
     {%- endif -%}
     <title>
-      {{- page_title -}}
+      {{- page_title | escape -}}
       {%- if current_page != 1 %} – {{ 'general.page' | t: page: current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} – {{ shop.name }}{% endunless -%}
+      {%- unless page_title contains shop.name %} – {{ shop.name | escape }}{% endunless -%}
     </title>
     {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">

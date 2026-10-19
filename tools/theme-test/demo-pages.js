@@ -89,6 +89,16 @@
         return sec('main-page', 'main', {}, { page: { title: 'Spedizioni e resi', content: SPEDIZIONI } })
           .then(function (b) { return page(b, { template: { name: 'page' }, page_title: 'Spedizioni e resi', request: req('page') }); });
       },
+      policy: function (handle) {
+        var pol = ((env.globals.shop || {}).policies || []).filter(function (x) { return x.handle === handle; })[0]; if (!pol) return null;
+        return sec('main-page', 'main', {}, { page: { title: pol.title, content: pol.body } })
+          .then(function (b) { return page(b, { template: { name: 'policy' }, page_title: pol.title, request: req('policy') }); });
+      },
+      legalPage: function (handle) {
+        var pg = (env.globals.pages || {})[handle]; if (!pg) return null;
+        return sec('main-page', 'main', {}, { page: pg })
+          .then(function (b) { return page(b, { template: { name: 'page' }, page_title: pg.title, request: req('page') }); });
+      },
       notFound: function () {
         return sec('main-404', 'main').then(function (b) { return page(b, { template: { name: '404' }, page_title: '404', request: req('404') }); });
       },
@@ -108,11 +118,14 @@
       else if (p === '/search') out = routes.search();
       else if (p === '/pages/spedizioni') out = routes.spedizioni();
       else if (p === '/pages/chi-siamo') out = routes.chiSiamo();
+      else if ((m = p.match(/^\/policies\/([\w-]+)$/))) out = routes.policy(m[1]);
+      else if (p === '/pages/cookie-policy') out = routes.legalPage('cookie-policy');
       else if (p === '/password') out = routes.password();
       return out || routes.notFound();
     }
 
     var paths = ['/', '/collections', '/cart', '/search', '/pages/spedizioni', '/pages/chi-siamo', '/password']
+      .concat(((env.globals.shop || {}).policies || []).map(function (x) { return x.url; })).concat(env.globals.pages ? Object.keys(env.globals.pages).map(function (h) { return '/pages/' + h; }) : [])
       .concat(Object.keys(collections).map(function (h) { return '/collections/' + h; }))
       .concat(products.map(function (p) { return '/products/' + p.handle; }));
 

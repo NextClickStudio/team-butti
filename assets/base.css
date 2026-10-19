@@ -237,7 +237,7 @@ body.has-grain::after{content:'';position:fixed;inset:0;z-index:900;pointer-even
 .nl input{flex:1;min-width:0;border:0;background:transparent;padding:16px 18px;font-family:var(--mono);font-size:13px;text-transform:uppercase;outline:none}
 .nl input::placeholder{color:inherit;opacity:.55}
 .nl button{background:currentColor;padding:0 22px}
-.nl button span{color:var(--ink);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;filter:invert(1)}
+.nl button span{color:var(--nl-on,var(--paper));font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
 .ftr{background:var(--ink);color:var(--paper);padding:64px var(--g) 22px;overflow:hidden}
 .ftr__top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:34px}
 @media(max-width:800px){.ftr__top{grid-template-columns:1fr}}
@@ -338,7 +338,7 @@ details.acc p{margin:0 0 14px;font-size:12px}
 .form-error ul{margin:0;padding-left:18px}
 .nl-ok{font-family:var(--display);font-size:28px;text-transform:uppercase;margin:0}
 .nl-form{width:100%}
-.ftr .nl{color:var(--paper)}
+.ftr .nl{color:var(--paper);--nl-on:var(--ink)}
 .ftr__txt{max-width:380px;font-size:12px;text-transform:uppercase;opacity:.75;margin:0 0 18px}
 .ftr__links .label{opacity:.5}
 .payments{display:flex;gap:6px;flex-wrap:wrap}
@@ -390,7 +390,7 @@ details.acc p{margin:0 0 14px;font-size:12px}
 .password__badge{width:min(60vw,260px);height:min(60vw,260px);font-size:min(17vw,74px)}
 .password .count{width:100%}
 .password .count div{background:var(--paper);color:var(--ink)}
-.password .nl{color:var(--paper)}
+.password .nl{color:var(--paper);--nl-on:var(--ink)}
 .password__enter summary{cursor:pointer;list-style:none;text-decoration:underline}
 .password__enter form{margin-top:12px}
 .password__msg{text-transform:uppercase;font-size:12px}
@@ -998,3 +998,14 @@ html[data-img-fit="contain"] .pdp__slide{background:var(--paper)}
   .mxs__pic{width:min(100%,24vw,var(--pw,320px));padding:7px 7px 5px}
   .mxs__head{top:calc(var(--head) - 8px)}
 }
+/* ===== v1.9: legal: policies in the footer, "Preferenze cookie", privacy note under the newsletter, VAT / returns on the product ===== */
+.ftr__pol{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:26px;padding:14px 0 4px;border-top:1px solid #333;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.ftr__pol a,.ftr__cookie{color:inherit;opacity:.8;text-decoration:none}
+.ftr__pol a:hover,.ftr__cookie:hover{opacity:1;color:var(--pink)}
+.ftr__cookie{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
+.ftr__cookie[hidden]{display:none}
+.nl-note{margin:10px 0 0;max-width:620px;font-size:11px;line-height:1.55;letter-spacing:.03em;opacity:.75}
+.nl-note a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.pdp__legal{margin:-4px 0 0;font-size:12px;line-height:1.7;opacity:.8}
+.pdp__legal a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:800px){.ftr__pol{gap:0 22px}.ftr__pol a,.ftr__cookie{display:inline-flex;align-items:center;min-height:44px}}

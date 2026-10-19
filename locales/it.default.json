@@ -26,7 +26,13 @@
     "demo": "Demo · collega una collezione",
     "details": "Dettagli",
     "full_details": "Tutti i dettagli",
-    "card_cta": "Scegli la taglia +"
+    "card_cta": "Scegli la taglia +",
+    "taxes_included": "IVA inclusa.",
+    "shipping": "Spedizione calcolata al checkout.",
+    "shipping_html": "<a href=\"{{ url }}\">Spedizione</a> calcolata al checkout.",
+    "returns": "Reso entro 14 giorni",
+    "returns_html": "<a href=\"{{ url }}\">Reso entro 14 giorni</a>",
+    "warranty": "Garanzia legale 24 mesi"
   },
   "customizer": {
     "turn": "Gira",
@@ -42,7 +48,8 @@
   "newsletter": {
     "placeholder": "La tua email",
     "submit": "Entra",
-    "success": "Sei nel team. Ci vediamo al drop."
+    "success": "Sei nel team. Ci vediamo al drop.",
+    "note": "Iscrivendoti accetti di ricevere le email di {{ shop }}. Puoi disiscriverti quando vuoi."
   },
   "collections": {
     "all": "Tutto",
@@ -108,5 +115,10 @@
     "prev": "Foto precedente",
     "next": "Foto successiva",
     "slot": "Foto della crew"
+  },
+  "legal": {
+    "title": "Informazioni legali",
+    "privacy": "Informativa privacy",
+    "cookie_prefs": "Preferenze cookie"
   }
 }

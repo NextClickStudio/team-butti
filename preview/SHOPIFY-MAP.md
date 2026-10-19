@@ -11,6 +11,18 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v1.9
+- **Parte legale**:
+  - testi pronti in `legal/`, con i dati da compilare tra parentesi quadre: informazioni legali, condizioni di vendita, recesso con modulo, spedizioni, privacy, cookie;
+  - `legal/README.md` dice dove incollarli in Shopify.
+- **Footer**: link a ogni policy compilata in *Impostazioni → Policy*, più la pagina `cookie-policy` e "Preferenze cookie", che riapre il banner di Shopify e compare solo se il banner è attivo.
+- **Newsletter**: avviso privacy con link all'informativa sotto ogni modulo. Corretto anche il pulsante "Entra" del footer e della pagina password, che aveva il testo invisibile (bianco su bianco).
+- **Scheda prodotto**: IVA inclusa, spedizione calcolata al checkout, reso entro 14 giorni e garanzia legale di 24 mesi, con i link alle policy.
+- **Sicurezza**:
+  - il titolo della pagina, che sulla ricerca contiene il testo cercato, e il nome del negozio ora sono sempre "escapati";
+  - la vista rapida carica solo pagine del negozio stesso, mai indirizzi esterni o `javascript:`.
+- **Prova completa su Shopify** passo per passo in `TEST-SHOPIFY.md`.
+
 ## Novità v1.8
 - **Moto Team Butti nella Storia in moto.** È l'illustrazione del brand ridisegnata di profilo, piatta in 2D, in vettoriale (`tools/art/bike.py` genera `snippets/mx-bike.liquid`):
   - moto: plastiche rosa con fulmini gialli, sella leopardata, forcella e mozzi oro, scarico cromato, TEAM BUTTI sul convogliatore, 69 sulla tabella;

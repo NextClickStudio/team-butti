@@ -21,6 +21,11 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(!(await p.content()).includes('SoCal') && (await p.textContent('#shopify-section-manifesto')).replace(/\s+/g, ' ').includes('Non siamo nati a Los Angeles') && (await p.textContent('.hero__route')).includes('Chianni'), `[${name}] narrativa Chianni → Milano, manifesto "Non siamo nati a Los Angeles"`);
     ok(await p.$eval('[data-tb=reel] [data-reel-cta]', a => a.getAttribute('href') === '/collections/all' && a.getBoundingClientRect().width > 100), `[${name}] video del brand: bottone "Shop il drop" sul video`);
     ok(!(await p.$('[data-tb=trust]')), `[${name}] niente fascia gialla sotto il drop`);
+    { const r = await p.context().newPage(); await r.goto(BASE + '/policies/refund-policy'); await r.waitForTimeout(500);
+      ok(await r.$eval('.page-rte', e => /Modulo di recesso/.test(e.textContent) && e.querySelectorAll('mark').length > 0), `[${name}] policy recesso: testo e modulo di recesso, dati da compilare evidenziati`); await r.close(); }
+    ok(await p.$$eval('.ftr__pol a', x => ['/policies/terms-of-service', '/policies/refund-policy', '/policies/shipping-policy', '/policies/privacy-policy', '/policies/contact-information', '/pages/cookie-policy'].every(h => x.some(a => a.getAttribute('href') === h))), `[${name}] footer: link a condizioni, recesso, spedizioni, privacy, info legali e cookie policy`);
+    ok(await p.$$eval('.nl-note', x => x.length > 0 && x.every(n => n.querySelector('a[href="/policies/privacy-policy"]'))), `[${name}] newsletter: avviso privacy con link all'informativa`);
+    ok(await p.$$eval('.nl button', x => x.every(b => getComputedStyle(b).backgroundColor !== getComputedStyle(b.querySelector('span')).color)), `[${name}] newsletter: testo del pulsante leggibile`);
     ok(await p.$eval('#shopify-section-drop .card__quick', q => q.textContent.trim() === 'Scegli la taglia +'), `[${name}] card prodotto: "Scegli la taglia +"`);
     ok(!(await p.$eval('[data-shop-pill]', a => a.classList.contains('on'))), `[${name}] bottone Shop flottante: nascosto in cima alla pagina`);
     await p.$eval('#shopify-section-manifesto', el => scrollTo({ top: el.offsetTop, behavior: 'instant' })); await p.waitForTimeout(700);
@@ -81,6 +86,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     await shot('collection');
     // product page add with size
     await p.goto(BASE + '/products/cross-merde-62-bluette-giallo'); await p.waitForTimeout(900);
+    ok(await p.$eval('.pdp__legal', e => /IVA inclusa/.test(e.textContent) && /Garanzia legale 24 mesi/.test(e.textContent) && !!e.querySelector('a[href="/policies/refund-policy"]') && !!e.querySelector('a[href="/policies/shipping-policy"]')), `[${name}] pagina prodotto: IVA inclusa, spedizione, reso 14 giorni e garanzia legale con i link alle policy`);
     if (name === 'mob') {
       ok(await p.$eval('[data-pbar]', b => b.classList.contains('on') && getComputedStyle(b).visibility === 'visible'), `[${name}] pagina prodotto: barra "Aggiungi alla bag" fissa in basso finché il bottone non è a schermo`);
       await p.$eval('[data-product-form]', f => f.scrollIntoView({ block: 'center' })); await p.waitForTimeout(800);

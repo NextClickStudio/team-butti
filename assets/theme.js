@@ -77,6 +77,10 @@
   /* ---------------- quick view ---------------- */
   function openQuick(url) {
     var modal = $('#modal'); if (!modal) { window.location.href = url; return; }
+    // only this store's own product pages go into the modal; anything else is a plain link
+    var u; try { u = new URL(url, window.location.href); } catch (e) { return; }
+    if (!/^https?:$/.test(u.protocol)) return;
+    if (u.origin !== window.location.origin) { window.location.href = u.href; return; }
     fetch(url + (url.indexOf('?') > -1 ? '&' : '?') + 'section_id=quick-view')
       .then(function (r) { if (!r.ok) throw new Error(); return r.text(); })
       .then(function (html) {
@@ -1157,6 +1161,15 @@
     }
   }
 
+  // footer "Preferenze cookie": reopens Shopify's cookie banner. Shown only when the store has the banner on.
+  function cookiePrefs() {
+    var btns = $$('[data-cookie-prefs]'); if (!btns.length) return;
+    var api = function () { return window.privacyBanner && typeof window.privacyBanner.showPreferences === 'function' ? window.privacyBanner : null; };
+    var reveal = function () { if (api()) btns.forEach(function (b) { b.hidden = false; }); };
+    reveal(); window.addEventListener('load', reveal); setTimeout(reveal, 3000);
+    btns.forEach(function (b) { b.addEventListener('click', function () { var p = api(); if (p) p.showPreferences(); }); });
+  }
+
   // the sections measure the page when they start, so they wait until base.css is applied
   // (Safari can run this file before the stylesheet has arrived; base.css sets --tb-css on :root)
   function whenStyled(fn) {
@@ -1168,7 +1181,7 @@
   }
 
   function boot() {
-    loader(); cursor(); magnetic(); pageWipe(); shopPill();
+    loader(); cursor(); magnetic(); pageWipe(); shopPill(); cookiePrefs();
     whenStyled(function () {
       init(document);
       if (TB.cartDrawer && $('#CartDrawer') && window.location.hash === '#cart') openCart();
