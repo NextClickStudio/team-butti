@@ -2,6 +2,8 @@
   Reasons to buy, right under the drop: shipping, returns, payments, limited pieces.
   "{soglia}" in a title becomes the free shipping threshold set in Theme settings > Carrello.
 {%- endcomment -%}
+{%- comment -%} a quoted '}' inside an output tag ends it early on Shopify, so the placeholder is captured as plain text {%- endcomment -%}
+{%- capture soglia_tag -%}{soglia}{%- endcapture -%}
 {%- if section.blocks.size > 0 -%}
 <section class="trust trust--{{ section.settings.style }}" data-tb="trust">
   <ul class="trust__l">
@@ -16,7 +18,7 @@
             {%- else -%}<path d="M12 21s-7.5-4.6-9.3-9.6C1.5 8 3.6 4.5 7.2 4.5c2 0 3.6 1.1 4.8 2.8 1.2-1.7 2.8-2.8 4.8-2.8 3.6 0 5.7 3.5 4.5 6.9C19.5 16.4 12 21 12 21z"/>
           {%- endcase -%}
         </svg></span>
-        <span class="trust__tx"><b>{{ b.settings.title | replace: '{soglia}', settings.free_shipping | escape }}</b>{%- if b.settings.text != blank -%}<span>{{ b.settings.text | escape }}</span>{%- endif -%}</span>
+        <span class="trust__tx"><b>{{ b.settings.title | replace: soglia_tag, settings.free_shipping | escape }}</b>{%- if b.settings.text != blank -%}<span>{{ b.settings.text | escape }}</span>{%- endif -%}</span>
       </li>
     {%- endfor -%}
   </ul>

@@ -11,6 +11,10 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.0.1
+- **Caricamento su Shopify corretto.** Shopify rifiutava lo zip con "file contains Liquid templates that can't be parsed". La causa era una parentesi graffa dentro un testo tra virgolette nella sezione *Perché comprare qui* (`{soglia}`): il server di Shopify la legge come fine del codice, mentre `shopify theme check` non se ne accorge.
+- Nuovo controllo `tools/theme-test/shopify-parse.rb`: legge ogni file con il motore Liquid di Shopify (la gemma Ruby `liquid`), in modalità rigorosa. Oggi passano tutti i 47 file.
+
 ## Novità v2.0
 - **Moto nuova nella Storia in moto**: è l'illustrazione Team Butti generata con Higgsfield, di profilo, al posto della moto disegnata.
   - È tagliata in 5 livelli (`assets/tb-moto-*.webp`, script in `tools/art/moto-higgsfield/`): ruote, corpo con il pilota, forcellone, forcella bassa.
