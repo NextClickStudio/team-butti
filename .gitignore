@@ -3,3 +3,4 @@ tools/theme-test/out/
 tools/theme-test/demo-site/
 *.zip
 tools/theme-test/package-lock.json
+__pycache__/

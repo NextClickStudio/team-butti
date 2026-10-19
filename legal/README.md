@@ -16,7 +16,7 @@ Bozze in italiano per vendere online in Italia e nell'UE a consumatori (B2C). So
 | `06-cookie.md` | *Negozio online → Pagine → Aggiungi pagina* | Cookie policy |
 
 Le policy compaiono da sole:
-- nel footer del sito, con il tema 1.9;
+- nel footer del sito, dal tema 1.9;
 - nel checkout;
 - nelle email d'ordine.
 
@@ -49,7 +49,7 @@ Ogni dato tra parentesi quadre va sostituito, lo stesso valore in tutti i file:
 
 Quando mi mandi questi dati, compilo io tutti i file e il campo *Dati legali* del footer.
 
-## Cosa è già nel tema (1.9)
+## Cosa è già nel tema (dalla 1.9)
 
 - **Footer**: link a tutte le policy compilate e alla Cookie policy, link "Preferenze cookie", dati legali (ragione sociale, sede, P.IVA).
 - **Newsletter**: avviso privacy con link all'informativa, sotto ogni modulo di iscrizione.

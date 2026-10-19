@@ -81,6 +81,8 @@ Le generazioni Higgsfield stanno su `d8j0ntlcm91z4.cloudfront.net`. L'ambiente c
 
 # Moto da cross con Higgsfield (sezione *Storia in moto*)
 
+> **Dal tema 2.0 la moto è già quella generata con Higgsfield**: un'immagine ferma di profilo, tagliata in livelli che il tema anima da solo (ruote, sospensioni, forcellone). Come rifarla: `tools/art/moto-higgsfield/README.md`. Quello che segue è l'alternativa a sprite animato, che resta possibile.
+
 La moto disegnata (`snippets/mx-bike.liquid`) funziona già. Per una versione più "vera" si genera la moto con il pilota in Higgsfield e il tema la anima uguale: la moto salta le dune, si inclina sulle rampe e i frame dello sprite avanzano con la strada percorsa.
 
 ### 1. Immagine base (Nano Banana 2 / Higgsfield Image), 16:9

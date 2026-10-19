@@ -52,6 +52,28 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     await p.$eval('[data-tb=mxs]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.5, behavior: 'instant' })); await p.waitForTimeout(1200);
     ok((await p.$$('.mxs__ch')).length === 5 && (await p.$eval('[data-mxs-bike]', b => b.style.transform)).includes('rotate('), `[${name}] storia in moto: 5 capitoli, moto sulle dune`);
     ok((await p.$$('.mxs__ch--media')).length === 5 && (await p.$$('.mxs__pic video')).length === 2 && (await p.$$('.mxs__pic img')).length === 3, `[${name}] storia in moto: ogni capitolo con foto/video veri (2 video + 3 foto)`);
+    // illustrated bike: every layer loaded, wheels spin, and on the ground both tyres sit on the drawn track
+    await p.waitForFunction(() => [...document.querySelectorAll('.mx--art img')].every(i => i.complete && i.naturalWidth > 0), null, { timeout: 8000 }).catch(() => {});
+    const art = [];
+    for (const f of [0.08, 0.2, 0.33, 0.47, 0.6, 0.74, 0.88]) {
+      await p.$eval('[data-tb=mxs]', (el, f) => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * f, behavior: 'instant' }), f); await p.waitForTimeout(900);
+      art.push(await p.evaluate(() => {
+        const root = document.querySelector('[data-tb=mxs]'), bike = root.querySelector('[data-mxs-bike]'), m = root._mx.get();
+        const st = root.querySelector('.mxs__s').getBoundingClientRect(), wl = root.querySelector('[data-mxs-world]').getBoundingClientRect().left;
+        const r = bike.offsetWidth * +root.querySelector('[data-bike-art]').dataset.r;
+        // distance from each axle to the nearest point of the track, minus the tyre radius (works on slopes too)
+        const gap = [...bike.querySelectorAll('.mxa__w')].map(w => {
+          const b = w.getBoundingClientRect(), cx = b.left + b.width / 2, cy = b.top + b.height / 2;
+          let d = 1e9; for (let x = cx - 2 * r; x <= cx + 2 * r; x++) d = Math.min(d, Math.hypot(x - cx, st.top + m.T(x - wl) - cy));
+          return Math.abs(d - r);
+        });
+        return { air: bike.querySelector('.mx__shadow').style.opacity === '0', gap, wheel: bike.querySelector('.mxa__w').style.transform, arm: bike.querySelector('.mxa__arm').style.transform };
+      }));
+    }
+    const grounded = art.filter(a => !a.air), worst = Math.max(...grounded.flatMap(a => a.gap));
+    ok((await p.$$('.mx--art img')).length === 5 && await p.$$eval('.mx--art img', is => is.every(i => i.complete && i.naturalWidth > 0)), `[${name}] storia in moto: moto illustrata, 5 livelli caricati`);
+    ok(new Set(art.map(a => a.wheel)).size === art.length && art.every(a => a.arm.includes('rotate(')), `[${name}] storia in moto: ruote che girano, forcellone che segue la sospensione`);
+    ok(grounded.length >= 3 && worst < 8, `[${name}] storia in moto: a terra le gomme toccano la pista (${grounded.length} punti, scarto max ${worst.toFixed(1)} px)`);
     await shot('mx');
     // crew wall: polaroids slide with the scroll, open big, step with the arrows
     await p.$eval('[data-tb=crew]', el => scrollTo({ top: el.offsetTop - innerHeight * 0.6, behavior: 'instant' })); await p.waitForTimeout(700);

@@ -13,8 +13,8 @@ Tempo: circa 1 ora per preparare il negozio e 1 ora per la prova.
    - un *development store* gratuito da partners.shopify.com, utile per provare senza piano a pagamento.
 2. **Sicurezza account.** *Impostazioni → Utenti → il tuo profilo → Sicurezza*: attiva la verifica in due passaggi.
 3. **Foto e video.** *Contenuti → File → Carica file*: tutto il contenuto di `Team-Butti-media-foto.zip` e `Team-Butti-media-video.zip`, estratti, senza rinominare niente.
-4. **Tema.** *Negozio online → Temi → Aggiungi tema → Carica file zip*: `Team-Butti-tema-shopify-1.9.0.zip`.
-   - Se dà errore, carica `…-1.9.0-senza-media.zip`.
+4. **Tema.** *Negozio online → Temi → Aggiungi tema → Carica file zip*: `Team-Butti-tema-shopify-2.0.0.zip`.
+   - Se dà errore, carica `…-2.0.0-senza-media.zip`.
    - **Non pubblicarlo ancora**: usa *Anteprima*.
 5. **Prodotti di prova.** *Prodotti → Importa*: `import/prodotti-team-butti.csv`. Poi crea la collezione *Drop 01* e mettici dentro le maglie.
 6. **Pagine.** *Negozio online → Pagine*, crea:
@@ -69,7 +69,8 @@ Spunta ogni riga. Se qualcosa non va, fai uno screenshot e annota dispositivo e 
 - [ ] Griglia drop: 8 maglie con foto; "Scegli la taglia +" apre la vista rapida.
 - [ ] Cadillac: scorrendo parte da Chianni e arriva a Milano, il contachilometri sale.
 - [ ] **Storia in moto**:
-  - [ ] la moto c'è e salta le dune;
+  - [ ] c'è la moto illustrata (rosa, 69) e salta le dune;
+  - [ ] le ruote girano, all'atterraggio la moto "affonda" sulle sospensioni;
   - [ ] i capitoli scorrono da "Gli amici" all'ultimo;
   - [ ] su Safari del Mac la moto non resta mai ferma.
 - [ ] Countdown del drop e iscrizione newsletter.

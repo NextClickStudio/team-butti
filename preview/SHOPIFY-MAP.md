@@ -11,6 +11,15 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.0
+- **Moto nuova nella Storia in moto**: è l'illustrazione Team Butti generata con Higgsfield, di profilo, al posto della moto disegnata.
+  - È tagliata in 5 livelli (`assets/tb-moto-*.webp`, script in `tools/art/moto-higgsfield/`): ruote, corpo con il pilota, forcellone, forcella bassa.
+  - Le ruote girano con lo scroll. All'atterraggio il corpo scende sulle sospensioni: gli steli oro scorrono nella forcella e il forcellone ruota sul perno dietro. A terra c'è una piccola vibrazione.
+  - Le parti nascoste dietro forcella e forcellone sono state ricostruite, quindi le ruote girano intere.
+- Stesso passo tra le ruote della moto di prima, quindi pista e salti sono identici.
+- Pesa 230 KB in tutto sul computer e 100 KB sul telefono (WebP). Si carica quando la sezione si avvicina.
+- In *Personalizza → Storia in moto (cross) → Moto* puoi tornare alla moto disegnata, che ha i colori modificabili.
+
 ## Novità v1.9
 - **Parte legale**:
   - testi pronti in `legal/`, con i dati da compilare tra parentesi quadre: informazioni legali, condizioni di vendita, recesso con modulo, spedizioni, privacy, cookie;

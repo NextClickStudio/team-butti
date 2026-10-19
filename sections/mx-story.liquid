@@ -48,8 +48,10 @@
           <div class="mx__sprite" data-bike-sprite data-frames="{{ section.settings.bike_frames }}" data-cols="{{ section.settings.bike_cols }}" data-rows="{{ section.settings.bike_rows }}" data-step="{{ section.settings.bike_step }}" data-ground="{{ section.settings.bike_ground }}" style="background-image: url('{{ bs | image_url: width: 4000 }}'); background-size: {{ section.settings.bike_cols | times: 100 }}% {{ section.settings.bike_rows | times: 100 }}%"></div>
         </div>
       </div>
-    {%- else -%}
+    {%- elsif section.settings.bike_style == 'drawn' -%}
       <div class="mxs__bike" data-mxs-bike>{% render 'mx-bike', uid: section.id, num: section.settings.number %}</div>
+    {%- else -%}
+      <div class="mxs__bike mxs__bike--art" data-mxs-bike>{% render 'mx-bike-art' %}</div>
     {%- endif -%}
     <div class="mxs__head">
       <p class="label">{{ section.settings.kicker | escape }}</p>
@@ -73,13 +75,21 @@
     { "type": "text", "id": "title_outline", "label": "Titolo (contorno)", "default": "veniamo" },
     { "type": "text", "id": "braap", "label": "Scritta al decollo", "info": "Vuoto = nessuna scritta", "default": "BRAAAP!" },
     { "type": "header", "content": "Moto e pilota" },
+    {
+      "type": "select", "id": "bike_style", "label": "Moto", "default": "art",
+      "options": [
+        { "value": "art", "label": "Illustrata (Team Butti 69)" },
+        { "value": "drawn", "label": "Disegnata (colori personalizzabili)" }
+      ]
+    },
+    { "type": "paragraph", "content": "Numero e colori qui sotto valgono solo per la moto disegnata." },
     { "type": "text", "id": "number", "label": "Numero di gara", "default": "69" },
     { "type": "color", "id": "plastic", "label": "Plastiche", "default": "#FF2E93" },
     { "type": "color", "id": "jersey", "label": "Maglia", "default": "#141414" },
     { "type": "color", "id": "pants", "label": "Pantaloni", "default": "#141414" },
     { "type": "color", "id": "helmet", "label": "Casco", "default": "#F7F6F1" },
-    { "type": "header", "content": "Moto generata con Higgsfield (facoltativo)" },
-    { "type": "paragraph", "content": "Sprite WebP trasparente fatto con tools/higgsfield/make-car-sprite.sh (vedi tools/higgsfield/README.md). Vuoto = moto disegnata." },
+    { "type": "header", "content": "Moto a sprite animato (facoltativo)" },
+    { "type": "paragraph", "content": "Sprite WebP trasparente fatto con tools/higgsfield/make-car-sprite.sh (vedi tools/higgsfield/README.md). Se c'è, prende il posto della moto scelta sopra." },
     { "type": "image_picker", "id": "bike_sprite", "label": "Sprite della moto" },
     { "type": "range", "id": "bike_cols", "label": "Colonne", "min": 1, "max": 8, "step": 1, "default": 6 },
     { "type": "range", "id": "bike_rows", "label": "Righe", "min": 1, "max": 8, "step": 1, "default": 4 },

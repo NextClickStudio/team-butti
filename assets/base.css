@@ -1009,3 +1009,14 @@ html[data-img-fit="contain"] .pdp__slide{background:var(--paper)}
 .pdp__legal{margin:-4px 0 0;font-size:12px;line-height:1.7;opacity:.8}
 .pdp__legal a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 @media(max-width:800px){.ftr__pol{gap:0 22px}.ftr__pol a,.ftr__cookie{display:inline-flex;align-items:center;min-height:44px}}
+/* ===== v2.0: illustrated Team Butti bike (snippets/mx-bike-art.liquid), same wheelbase as the drawn one ===== */
+.mx--art{aspect-ratio:1800/1594}
+.mx--art img{position:absolute;display:block;max-width:none;will-change:transform;-webkit-user-select:none;user-select:none;pointer-events:none}
+.mxa__l{left:0;top:0;width:100%;height:100%}
+.mxa__w{height:auto;aspect-ratio:1}
+.mxa__w--r{left:.041%;top:62.49%;width:33.111%}
+.mxa__w--f{left:66.235%;top:61.819%;width:33.667%}
+.mxa__arm{transform-origin:16.597% 81.185%}
+.mx--art .mx__body{transform-origin:50% 100%}
+.mxs__bike--art{width:calc(clamp(200px,22vw,360px) * .8095);transform-origin:49.833% 99.317%}
+@media(max-width:800px){.mxs__bike--art{width:calc(44vw * .8095)}}

@@ -560,7 +560,10 @@
       var wheels = $$('.mx__wh', bike), body = $('.mx__body', bike), rider = $('.mx__rider', bike), shadow = $('.mx__shadow', bike);
       // Higgsfield sprite instead of the drawn bike: frames advance with the distance ridden
       var spr = $('[data-bike-sprite]', bike), sp = spr ? { n: +spr.dataset.frames || 1, c: +spr.dataset.cols || 1, r: +spr.dataset.rows || 1, step: +spr.dataset.step || 10 } : null;
-      var GROUND = spr ? (+spr.dataset.ground || 92) / 100 : 0.967;
+      // illustrated bike (snippets/mx-bike-art.liquid): its geometry comes with it, as a share of its size
+      var art = spr ? null : $('[data-bike-art]', bike), arm = $('[data-bike-arm]', bike), ad = art ? art.dataset : {};
+      var GROUND = spr ? (+spr.dataset.ground || 92) / 100 : art ? +ad.ground : 0.967;
+      var CX = sp ? 0.5 : art ? +ad.cx : 0.488, WB = art ? +ad.wb : 226 / 420, WR = art ? +ad.r : 48 / 420, ARM = art ? +ad.arm : 0;
       var braap = root.dataset.braap || '';
       var chEls = $$('.mxs__ch', root), chapters = chEls.length || 1, lastCh = -1;
       var dirt = getComputedStyle(root).getPropertyValue('--mxs-dirt').trim() || '#d2a55c';
@@ -731,7 +734,8 @@
       function build() {
         // everything scales with the bike: same jumps (relative to the bike) on a phone and on a big screen
         VW = window.innerWidth; H = sticky.clientHeight; W = world.offsetWidth;
-        var bw0 = bike.offsetWidth || 300; wb = bw0 * 226 / 420; L = bw0 * 4.5; hu = Math.min(H * 0.95, bw0 * 3.2); gx = 0.62 / bw0;
+        // u = width of the drawn bike with the same wheelbase: the track is the same whichever bike rides it
+        var bw0 = bike.offsetWidth || 300, u = bw0 * WB / (226 / 420); wb = bw0 * WB; L = u * 4.5; hu = Math.min(H * 0.95, u * 3.2); gx = 0.62 / u;
         size = [VW, H, W, bike.offsetWidth].join('x');
         buildTrack(); buildPath(); drawGround(); drawFar();
       }
@@ -766,37 +770,41 @@
           chEls.forEach(function (c, k) { c.style.transform = 'translate3d(' + (tx - k * CH).toFixed(1) + 'px,0,0)'; if (act !== lastCh) c.classList.toggle('on', k === act); });
           lastCh = act;
         } else if (lastCh !== -1) { chEls.forEach(function (c) { c.style.transform = ''; c.classList.remove('on'); }); lastCh = -1; }
-        var bw = bike.offsetWidth, bx = VW * (VW < 800 ? 0.3 : 0.24), wx = tx + bx;
+        var bw = bike.offsetWidth, u = bw * WB / (226 / 420), bx = VW * (VW < 800 ? 0.3 : 0.24), wx = tx + bx;
         var i = idx(wx), y = Y[i], ang = ANG[i] * 57.2958, inAir = AIR[i] === 1;
         // events while riding forward: take-off (BRAAAP), landing (suspension + dust), roost on the ground
         if (last >= 0 && i > last && i - last < 400) {
-          TAKE.forEach(function (t) { if (t > last && t <= i && braap) fx('braap', bx + bw * 0.1, y - bw * 0.6, null, 1000); });
+          TAKE.forEach(function (t) { if (t > last && t <= i && braap) fx('braap', bx + u * 0.1, y - u * 0.6, null, 1000); });
           LAND.forEach(function (l) {
             if (l.i > last && l.i <= i) {
               compV += 260 * l.v;
-              for (var q = 0; q < 4; q++) fx('dustb', bx + (q - 1.5) * bw * 0.22, y - 4, { '--dx': ((q - 1.5) * 34) + 'px', '--sz': (bw * (0.28 + l.v * 0.22)).toFixed(0) + 'px' }, 1100);
+              for (var q = 0; q < 4; q++) fx('dustb', bx + (q - 1.5) * u * 0.22, y - 4, { '--dx': ((q - 1.5) * 34) + 'px', '--sz': (u * (0.28 + l.v * 0.22)).toFixed(0) + 'px' }, 1100);
             }
           });
           roostAcc += (i - last) * STEP;
           if (!inAir && roostAcc > 26) {
             roostAcc = 0;
-            for (var r = 0; r < 3; r++) fx('roost', bx - bw * 0.27, y - 8 - Math.random() * 10, { '--dx': (-60 - Math.random() * 90) + 'px', '--dy': (-30 - Math.random() * 60) + 'px', '--sz': (5 + Math.random() * 7) + 'px', '--c': ['#a9783a', '#8a5a2b', '#c9a46a'][r] }, 700);
+            for (var r = 0; r < 3; r++) fx('roost', bx - wb / 2, y - 8 - Math.random() * 10, { '--dx': (-60 - Math.random() * 90) + 'px', '--dy': (-30 - Math.random() * 60) + 'px', '--sz': (5 + Math.random() * 7) + 'px', '--c': ['#a9783a', '#8a5a2b', '#c9a46a'][r] }, 700);
           }
         }
         last = i;
         compV += (-comp * 180 - compV * 16) * dt; comp += compV * dt; comp = Math.max(-6, Math.min(16, comp));
         var bump = inAir ? 0 : Math.sin(wx / 23) * 1.2;
-        bike.style.transform = 'translate3d(' + (bx - bw * (sp ? 0.5 : 0.488)).toFixed(1) + 'px,' + (y - bike.offsetHeight * GROUND).toFixed(1) + 'px,0) rotate(' + ang.toFixed(2) + 'deg)';
+        bike.style.transform = 'translate3d(' + (bx - bw * CX).toFixed(1) + 'px,' + (y - bike.offsetHeight * GROUND).toFixed(1) + 'px,0) rotate(' + ang.toFixed(2) + 'deg)';
         if (sp) {
           var fr = ((Math.floor(wx / sp.step) % sp.n) + sp.n) % sp.n, col = fr % sp.c, row = Math.floor(fr / sp.c);
           spr.style.backgroundPosition = (sp.c > 1 ? col / (sp.c - 1) * 100 : 0) + '% ' + (sp.r > 1 ? row / (sp.r - 1) * 100 : 0) + '%';
         }
         // chassis, rider and wheels are separate layers: only transforms change, nothing is repainted
         var bodyY = comp * 0.5 + bump;
+        // illustrated bike: the body only ever goes down (the fork tubes slide into the lowers, no gap opens),
+        // travel scales with the bike, and the swingarm follows its pivot by turning around the rear axle
+        if (art) bodyY = Math.max(0, comp) * bw / 900 + (inAir ? 0 : (1 + Math.sin(wx / 23)) * bw / 500);
         if (body) body.style.transform = 'translate3d(0,' + bodyY.toFixed(2) + 'px,0)';
+        if (arm) arm.style.transform = 'rotate(' + (Math.atan2(bodyY, ARM * bw) * 57.2958).toFixed(3) + 'deg)';
         if (shadow) shadow.style.opacity = inAir ? '0' : '';
         if (rider) rider.style.transform = inAir ? 'translate3d(0,' + (bodyY - 3).toFixed(2) + 'px,0) rotate(-4deg)' : 'translate3d(0,' + (bodyY + comp * 0.4).toFixed(2) + 'px,0)';
-        var deg = wx / (bw * 48 / 420) * 57.2958;
+        var deg = wx / (bw * WR) * 57.2958;
         wheels.forEach(function (w) { w.style.transform = 'rotate(' + deg.toFixed(1) + 'deg)'; });
       });
       root._mx = { get: function () { return { G: G, Y: Y, AIR: AIR, TAKE: TAKE, LAND: LAND, FL: FL, W: W, STEP: STEP, base: H * 0.8, S: S, T: T, Sg: Sg, gx: gx, wb: wb, hu: hu }; } };
