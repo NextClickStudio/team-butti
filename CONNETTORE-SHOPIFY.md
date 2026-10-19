@@ -4,6 +4,24 @@ Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admi
 
 Prima di ogni scrittura, Claude legge lo stato attuale e non sovrascrive niente di già compilato senza chiedere.
 
+## Stato al 19 ottobre 2026
+Fatto:
+- pagina **Chi siamo** (modello `chi-siamo`);
+- menu principale (Shop · Chi siamo · Contatti) e menu footer (Chi siamo · Contatti · Cerca);
+- collezione **Drop 01**;
+- **18 prodotti in bozza**, prezzo 0, da `tools/shopify-setup/products.py`:
+  - dati presi dal foglio "PRODOTTI DISPONIBILI" di *WEBSITE / Prodotti E-commerce / TEAM BUTTI DROP 1 MAGAZZINO + PRODOTTI SOLD OUT.xlsx* sul Drive;
+  - foto = i file `tb-maglia-*.png` già nei File di Shopify.
+
+Dati letti:
+- P.IVA 09963340964;
+- indirizzo di fatturazione Corso Concordia 5, 20129 Milano;
+- spedizioni: Italia 7 € (gratis da 55 €), UE 14,99 €, resto del mondo 19,99 €.
+
+Le domande aperte per il team sono nel doc "Team Butti — cosa ci serve per il lancio".
+
+Il connettore non può scrivere sul tema pubblicato. Le modifiche al tema (soglia spedizione gratis, dati legali nel footer) vanno in una copia non pubblicata (`themeDuplicate` + `themeFilesUpsert`), che poi pubblica l'utente.
+
 ## 0. Dati del negozio
 Leggi con `shop { name email contactEmail billingAddress { company address1 address2 zip city province country phone } primaryDomain { host } }`.
 
