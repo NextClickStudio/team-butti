@@ -1,22 +1,27 @@
 # Cosa fa Claude dentro Shopify (connettore)
 
-Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Il tema 2.0.1 è già caricato e funziona.
+Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Il tema 2.0.1 è pubblicato; il 2.1.0 è in `pacchetti/`.
 
 Prima di ogni scrittura, Claude legge lo stato attuale e non sovrascrive niente di già compilato senza chiedere.
 
-## Stato al 19 ottobre 2026
+## Stato al 20 ottobre 2026
 Fatto:
 - pagina **Chi siamo** (modello `chi-siamo`);
-- menu principale (Shop · Chi siamo · Contatti) e menu footer (Chi siamo · Contatti · Cerca);
-- collezione **Drop 01**;
-- **18 prodotti in bozza**, prezzo 0, da `tools/shopify-setup/products.py`:
-  - dati presi dal foglio "PRODOTTI DISPONIBILI" di *WEBSITE / Prodotti E-commerce / TEAM BUTTI DROP 1 MAGAZZINO + PRODOTTI SOLD OUT.xlsx* sul Drive;
-  - foto = i file `tb-maglia-*.png` già nei File di Shopify.
+- menu principale (Shop · Drop 01 · Long sleeve · Chi siamo · Contatti) e menu footer (Chi siamo · Contatti · Cerca);
+- collezione **Drop 01** con 18 prodotti attivi:
+  - prezzi veri dal foglio *TEAM BUTTI DROP 1 MAGAZZINO + PRODOTTI SOLD OUT AGGIORNATO.xlsx* sul Drive;
+  - T-shirt 25 €, Tabacchi 29 €, Pettorina 35 €, Merde 62 e 00 Merde 45 €, Merde X 79 €;
+  - stock dal foglio;
+- collezione **Long sleeve**: 9 longsleeve sold out (taglie S/M e M/L), con il retro con la grafica come prima foto;
+- **Merde X Hockey bianco/rosso/blu**: sold out. I sold out hanno prezzo 0, che il tema 2.1 non mostra;
+- spedizioni Italia e UE: 10 € sotto i 100 €, gratis da 100 €. Resto del mondo invariato a 19,99 €.
 
-Dati letti:
+Dati dell'azienda:
+- Fradel S.a.s. (ragione sociale esatta da confermare);
+- Corso Concordia 5, 20129 Milano;
 - P.IVA 09963340964;
-- indirizzo di fatturazione Corso Concordia 5, 20129 Milano;
-- spedizioni: Italia 7 € (gratis da 55 €), UE 14,99 €, resto del mondo 19,99 €.
+- REA MI-2124928;
+- PEC Fradel.sas@pec.it.
 
 Le domande aperte per il team sono nel doc "Team Butti — cosa ci serve per il lancio".
 

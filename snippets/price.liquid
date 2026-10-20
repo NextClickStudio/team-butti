@@ -1,4 +1,4 @@
-{%- comment -%} Accepts: product, variant (optional) {%- endcomment -%}
+{%- comment -%} Accepts: product, variant (optional). Price 0 (e.g. sold-out pieces loaded without a price) shows no amount. {%- endcomment -%}
 {%- liquid
   assign target = product
   if variant != blank
@@ -7,7 +7,11 @@
   assign compare = target.compare_at_price
 -%}
 <span class="price" data-price>
-  {%- if variant == blank and product.price_varies -%}{{ 'products.from' | t }} {% endif -%}
-  {{- target.price | money -}}
-  {%- if compare > target.price %} <s>{{ compare | money }}</s>{%- endif -%}
+  {%- if target.price == 0 -%}
+    {%- unless target.available -%}{{ 'products.sold_out' | t }}{%- endunless -%}
+  {%- else -%}
+    {%- if variant == blank and product.price_varies -%}{{ 'products.from' | t }} {% endif -%}
+    {{- target.price | money -}}
+    {%- if compare > target.price %} <s>{{ compare | money }}</s>{%- endif -%}
+  {%- endif -%}
 </span>

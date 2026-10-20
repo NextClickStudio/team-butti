@@ -13,8 +13,8 @@ Tempo: circa 1 ora per preparare il negozio e 1 ora per la prova.
    - un *development store* gratuito da partners.shopify.com, utile per provare senza piano a pagamento.
 2. **Sicurezza account.** *Impostazioni → Utenti → il tuo profilo → Sicurezza*: attiva la verifica in due passaggi.
 3. **Foto e video.** *Contenuti → File → Carica file*: tutto il contenuto di `Team-Butti-media-foto.zip` e `Team-Butti-media-video.zip`, estratti, senza rinominare niente.
-4. **Tema.** *Negozio online → Temi → Aggiungi tema → Carica file zip*: `Team-Butti-tema-shopify-2.0.1.zip`.
-   - Se dà errore, carica `…-2.0.1-senza-media.zip`.
+4. **Tema.** *Negozio online → Temi → Aggiungi tema → Carica file zip*: `Team-Butti-tema-shopify-2.1.0.zip`.
+   - Se dà errore, carica `…-2.1.0-senza-media.zip`.
    - **Non pubblicarlo ancora**: usa *Anteprima*.
 5. **Prodotti di prova.** *Prodotti → Importa*: `import/prodotti-team-butti.csv`. Poi crea la collezione *Drop 01* e mettici dentro le maglie.
 6. **Pagine.** *Negozio online → Pagine*, crea:

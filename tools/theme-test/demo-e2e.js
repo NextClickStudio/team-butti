@@ -47,7 +47,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     }
     await shot('reel');
     await p.$eval('[data-tb=vscroll]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.98, behavior: 'instant' })); await p.waitForTimeout(1500);
-    ok(+(await p.textContent('[data-km-out]')) >= 375 && (await p.textContent('[data-tb=vscroll] [data-place]')) === 'Milano' && (await p.textContent('[data-tb=vscroll] .jsign--brown')).includes('Il Ranch'), `[${name}] Cadillac: parte dal Ranch di Chianni, arriva a Milano dopo ~390 km`);
+    ok(+(await p.textContent('[data-km-out]')) >= 575 && (await p.textContent('[data-tb=vscroll] [data-place]')) === 'Veneto' && (await p.textContent('[data-tb=vscroll] .jsign--brown')).includes('Il Ranch'), `[${name}] Cadillac: parte dal Ranch di Chianni, passa da Milano, arriva in Veneto dopo ~600 km`);
     await shot('cadillac');
     await p.$eval('[data-tb=mxs]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.5, behavior: 'instant' })); await p.waitForTimeout(1200);
     ok((await p.$$('.mxs__ch')).length === 5 && (await p.$eval('[data-mxs-bike]', b => b.style.transform)).includes('rotate('), `[${name}] storia in moto: 5 capitoli, moto sulle dune`);
@@ -154,7 +154,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(await p.$$eval('.cart-page .ln', x => x.length) === 1, `[${name}] pagina carrello: rimozione riga`);
     // search
     await p.goto(BASE + '/search?q=hockey'); await p.waitForTimeout(1000);
-    ok(await p.$$eval('.grid .card', x => x.length) === 7 && await p.$$eval('.grid .card img', x => x.length) >= 7, `[${name}] ricerca "hockey": 7 maglie hockey con foto`);
+    ok(await p.$$eval('.grid .card', x => x.length) === 8 && await p.$$eval('.grid .card img', x => x.length) >= 8, `[${name}] ricerca "hockey": 8 maglie hockey con foto (con la Merde X bianco/rosso/blu sold out)`);
     // 404 + password
     const before = errs.length;
     await p.goto(BASE + '/pagina-che-non-esiste'); await p.waitForTimeout(500);

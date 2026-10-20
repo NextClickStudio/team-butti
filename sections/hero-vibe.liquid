@@ -13,6 +13,7 @@
   {%- for v in vibes -%}
     <i hidden data-vibe data-name="{{ v.settings.name | escape }}" data-bg="{{ v.settings.bg }}" data-fg="{{ v.settings.fg }}" data-pattern="{{ v.settings.pattern }}" data-j="{{ v.settings.jersey_1 | escape }}|{{ v.settings.jersey_2 | escape }}|{{ v.settings.jersey_3 | escape }}" data-ph="{% if v.settings.photo_1 != blank %}{{ v.settings.photo_1 | image_url: width: 800 }}{% endif %}|{% if v.settings.photo_2 != blank %}{{ v.settings.photo_2 | image_url: width: 800 }}{% endif %}|{% if v.settings.photo_3 != blank %}{{ v.settings.photo_3 | image_url: width: 800 }}{% endif %}" {{ v.shopify_attributes }}></i>
   {%- endfor -%}
+  <div class="sfx" data-season-fx="26" aria-hidden="true"></div>
   <div class="hero__top">
     <div class="hero__kicker">{{ section.settings.kicker }}</div>
     {%- if vibes.size > 1 -%}
@@ -63,6 +64,10 @@
     {%- if section.settings.button_label != blank -%}
       <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn hero__cta" data-h>{{ section.settings.button_label | escape }}</a>
     {%- endif -%}
+    {%- if section.settings.count_label != blank -%}
+      {%- comment -%} countdown of the "Poster + countdown" section (#countdown) at the bottom of the page: the date is set there {%- endcomment -%}
+      <a href="#countdown" class="hero__count" data-hero-count hidden data-h><i aria-hidden="true"></i><span><small>{{ section.settings.count_label | escape }}</small><b data-hero-count-t>--</b></span></a>
+    {%- endif -%}
     <span class="hero__route label" aria-hidden="true"><b>{{ section.settings.route_from | escape }}</b><i></i><b>{{ section.settings.route_to | escape }}</b></span>
     <span class="hero__hint label"><i aria-hidden="true"></i>{{ section.settings.hint | escape }}</span>
   </div>
@@ -102,6 +107,13 @@
       "type": "url",
       "id": "button_link",
       "label": "Link bottone"
+    },
+    {
+      "type": "text",
+      "id": "count_label",
+      "label": "Bottone countdown",
+      "info": "Porta al countdown in fondo alla pagina (sezione Poster + countdown, dove si imposta la data). Vuoto = niente bottone. Sparisce da solo il giorno dopo la data.",
+      "default": "Market Veneto · 07.11"
     },
     {
       "type": "text",
@@ -199,7 +211,7 @@
           "type": "text",
           "id": "name",
           "label": "Nome",
-          "default": "Pink Market"
+          "default": "Fucsia"
         },
         {
           "type": "color",
@@ -344,15 +356,32 @@
         {
           "type": "vibe",
           "settings": {
-            "name": "Pink Market"
+            "name": "Fucsia"
           }
         },
         {
           "type": "vibe",
           "settings": {
-            "name": "Leopardo",
-            "bg": "#E0A54A",
-            "pattern": "leopard",
+            "name": "Rosso",
+            "bg": "#E3191B",
+            "fg": "#F4F1EA",
+            "jersey_1": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13"
+          }
+        },
+        {
+          "type": "vibe",
+          "settings": {
+            "name": "Giallo",
+            "bg": "#FFD400",
+            "fg": "#E3191B",
+            "jersey_1": "#f4f1ea,#e3191b,#1d3fbf,#e3191b"
+          }
+        },
+        {
+          "type": "vibe",
+          "settings": {
+            "name": "Verde",
+            "bg": "#39FF14",
             "jersey_1": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13"
           }
         },

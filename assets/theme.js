@@ -132,8 +132,8 @@
         if (!v || sel.indexOf(null) > -1) { btn.disabled = true; btn.textContent = v ? TB.strings.chooseSize : TB.strings.unavailable; return; }
         idIn.value = v.id;
         btn.disabled = !v.available;
-        btn.textContent = v.available ? TB.strings.add + ' — ' + v.price : TB.strings.soldOut;
-        var price = $('[data-price]', scope); if (price) price.innerHTML = v.price;
+        btn.textContent = v.available ? TB.strings.add + (v.price ? ' — ' + v.price : '') : TB.strings.soldOut;
+        var price = $('[data-price]', scope); if (price) price.innerHTML = v.price || (v.available ? '' : TB.strings.soldOut);
         if (scope.classList.contains('pdp')) history.replaceState(null, '', '?variant=' + v.id);
       }
       pf.addEventListener('click', function (e) {
@@ -242,6 +242,14 @@
     none: 'none'
   };
 
+  // Tuscany of the Storia in moto through the seasons (estate = the original palette)
+  var SEASON_LAND = {
+    estate: { back: '#c3c68e', front: '#93a057', borgo: '#b3b97f', tree: '#5c6f30', villa: '#6d7c3a', pine: '#4f6129', far: '#97a160', vines: '#6f7f3a', grass: '#5f6f2e', deep: '#8a5a2b', roost: ['#a9783a', '#8a5a2b', '#c9a46a'] },
+    inverno: { back: '#e3e9ef', front: '#cfd9e2', borgo: '#c0cad4', tree: '#3f5040', villa: '#b4bfca', pine: '#3a4a3a', far: '#7f8e86', vines: '#a3afb9', grass: '#f4f7fa', deep: '#6b5038', snow: '#f7fafc', roost: ['#f4f7fa', '#dfe6ec', '#c9d3db'] },
+    primavera: { back: '#b8d98a', front: '#86c057', borgo: '#c9d79c', tree: '#3f6a2a', villa: '#6f9a45', pine: '#3a6226', far: '#7fa456', vines: '#5e9a34', grass: '#4f8f2a', deep: '#8a5a2b', roost: ['#a9783a', '#8a5a2b', '#c9a46a'] },
+    autunno: { back: '#dcb67c', front: '#c58444', borgo: '#cfa874', tree: '#4c5a2a', villa: '#a8683a', pine: '#5a4a24', far: '#a0763a', vines: '#9a3b22', grass: '#8a6a2e', deep: '#7a4a24', roost: ['#a9783a', '#8a5a2b', '#b5561d'] }
+  };
+
   var inits = {
     hero: function (hero) {
       var vibes = $$('[data-vibe]', hero).map(function (v) { return { n: v.dataset.name, bg: v.dataset.bg, fg: v.dataset.fg, p: VIBE_PATTERNS[v.dataset.pattern] || 'none', j: v.dataset.j.split('|'), ph: (v.dataset.ph || '').split('|') }; });
@@ -312,6 +320,20 @@
         };
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); else fit();
       });
+      // countdown button: counts down to the date of the countdown section at the bottom (#countdown), gone the day after
+      var hc = $('[data-hero-count]', hero), hcd = $('#countdown [data-countdown]');
+      if (hc && hcd) {
+        var hcT = new Date(hcd.dataset.countdown).getTime(), hcOut = $('[data-hero-count-t]', hc), hcIv = 0;
+        var hcPad = function (n) { return String(n).padStart(2, '0'); };
+        var hcTick = function () {
+          var diff = hcT - Date.now();
+          hc.hidden = isNaN(diff) || diff < -864e5;
+          if (hc.hidden || diff <= 0) { if (!hc.hidden) hcOut.textContent = TB.strings.today; clearInterval(hcIv); return; }
+          var d = Math.floor(diff / 864e5);
+          hcOut.textContent = (d ? d + TB.strings.daysShort + ' ' : '') + hcPad(Math.floor(diff % 864e5 / 36e5)) + ':' + hcPad(Math.floor(diff % 36e5 / 6e4)) + ':' + hcPad(Math.floor(diff % 6e4 / 1e3));
+        };
+        hcTick(); if (!hc.hidden) hcIv = setInterval(hcTick, 1000);
+      }
       // Cadillac crossing the panorama: hops on every vibe change
       var heroCar = $('[data-hero-car]', hero);
       hero._hop = function () {
@@ -566,7 +588,7 @@
       var CX = sp ? 0.5 : art ? +ad.cx : 0.488, WB = art ? +ad.wb : 226 / 420, WR = art ? +ad.r : 48 / 420, ARM = art ? +ad.arm : 0;
       var braap = root.dataset.braap || '';
       var chEls = $$('.mxs__ch', root), chapters = chEls.length || 1, lastCh = -1;
-      var dirt = getComputedStyle(root).getPropertyValue('--mxs-dirt').trim() || '#d2a55c';
+      var dirt = getComputedStyle(root).getPropertyValue('--mxs-dirt').trim() || '#d2a55c', land = SEASON_LAND[document.documentElement.dataset.season] || SEASON_LAND.estate;
       var STEP = 2, G, Y, ANG, AIR, LAND = [], TAKE = [], PROPS = [], W = 0, H = 0, VW = 0, gx = 0, wb = 0, hu = 0, L = 0;
       // seeded random: the same track on every visit, but every chapter is different
       function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
@@ -689,11 +711,12 @@
           if (p.t === 'finish') props += '<g transform="translate(' + x.toFixed(0) + ' ' + y.toFixed(0) + ') scale(' + u + ')"><path d="M-110 0V-150M110 0V-150" stroke="#0d0d0d" stroke-width="6"/><rect x="-118" y="-170" width="236" height="44" fill="#ff2e93" stroke="#0d0d0d" stroke-width="3"/><text x="0" y="-136" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="30" fill="#0d0d0d">TEAM BUTTI</text><g fill="#0d0d0d">' + (function () { var s = ''; for (var q = 0; q < 12; q++) s += '<rect x="' + (-118 + q * 19.7).toFixed(1) + '" y="' + (q % 2 ? -126 : -118) + '" width="19.7" height="8"/>'; return s; })() + '</g></g>';
         });
         ground.setAttribute('viewBox', '0 0 ' + W + ' ' + H); ground.setAttribute('width', W); ground.setAttribute('height', H);
-        ground.innerHTML = '<defs><linearGradient id="mxs-dirt-' + root.id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + dirt + '"/><stop offset="1" stop-color="#8a5a2b"/></linearGradient></defs>' +
+        ground.innerHTML = '<defs><linearGradient id="mxs-dirt-' + root.id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + dirt + '"/><stop offset="1" stop-color="' + land.deep + '"/></linearGradient></defs>' +
           '<path d="M0 ' + H + 'L' + pts.join('L') + 'L' + W + ' ' + H + 'Z" fill="url(#mxs-dirt-' + root.id + ')"/>' +
+          (land.snow ? '<path d="M' + pts.join('L') + '" fill="none" stroke="' + land.snow + '" stroke-width="12" transform="translate(0 5)"/>' : '') +
           '<path d="M' + pts.join('L') + '" fill="none" stroke="#0d0d0d" stroke-width="3"/>' +
           '<path d="M' + rut.join('L') + '" fill="none" stroke="rgba(90,56,22,.35)" stroke-width="3" stroke-dasharray="26 18"/>' +
-          '<path d="' + grass + '" fill="none" stroke="#5f6f2e" stroke-width="3" stroke-linecap="round"/>' + props;
+          '<path d="' + grass + '" fill="none" stroke="' + land.grass + '" stroke-width="3" stroke-linecap="round"/>' + props;
       }
 
       // far Tuscany, generated: rolling hills with borghi, cypress alleys, farmhouses, pines, vineyards and hay rolls
@@ -709,25 +732,25 @@
           if (kind === 0) { // borgo with towers on the back hill
             var t = '';
             for (var q = 0; q < 5; q++) { var tw = (8 + R() * 6) * s, th = (30 + R() * 50) * s, tx = px + q * 14 * s; t += '<rect x="' + tx.toFixed(1) + '" y="' + (by - th).toFixed(1) + '" width="' + tw.toFixed(1) + '" height="' + (th + 6).toFixed(1) + '"/>'; }
-            bi += '<g fill="#b3b97f">' + t + '<rect x="' + (px - 6 * s).toFixed(1) + '" y="' + (by - 18 * s).toFixed(1) + '" width="' + (84 * s).toFixed(1) + '" height="' + (24 * s).toFixed(1) + '"/></g>';
+            bi += '<g fill="' + land.borgo + '">' + t + '<rect x="' + (px - 6 * s).toFixed(1) + '" y="' + (by - 18 * s).toFixed(1) + '" width="' + (84 * s).toFixed(1) + '" height="' + (24 * s).toFixed(1) + '"/></g>';
           } else if (kind === 1) { // cypress alley climbing to a villa
-            for (var c = 0; c < 6; c++) { var cx = px + c * 16 * s; items += cyp(cx.toFixed(1), (hill(cx, 2.2, 0.12, 0.7) + 4).toFixed(1), (38 + c * 4) * s, '#5c6f30'); }
-            items += '<path d="M' + (px + 100 * s) + ' ' + (fy + 2) + 'v' + (-26 * s) + 'l' + (22 * s) + ' ' + (-12 * s) + 'l' + (22 * s) + ' ' + (12 * s) + 'v' + (26 * s) + 'Z" fill="#6d7c3a"/>';
+            for (var c = 0; c < 6; c++) { var cx = px + c * 16 * s; items += cyp(cx.toFixed(1), (hill(cx, 2.2, 0.12, 0.7) + 4).toFixed(1), (38 + c * 4) * s, land.tree); }
+            items += '<path d="M' + (px + 100 * s) + ' ' + (fy + 2) + 'v' + (-26 * s) + 'l' + (22 * s) + ' ' + (-12 * s) + 'l' + (22 * s) + ' ' + (12 * s) + 'v' + (26 * s) + 'Z" fill="' + land.villa + '"/>';
           } else if (kind === 2) { // umbrella pine pair
-            for (var pp = 0; pp < 2; pp++) { var ux = px + pp * 46 * s, uy = hill(ux, 2.2, 0.12, 0.7) + 4; items += '<path d="M' + (ux - 2 * s) + ' ' + uy + 'l' + (2 * s) + ' ' + (-34 * s) + 'h' + (4 * s) + 'l' + (2 * s) + ' ' + (34 * s) + 'Z" fill="#4f6129"/><ellipse cx="' + (ux + 2 * s) + '" cy="' + (uy - 38 * s) + '" rx="' + (30 * s) + '" ry="' + (10 * s) + '" fill="#4f6129"/>'; }
+            for (var pp = 0; pp < 2; pp++) { var ux = px + pp * 46 * s, uy = hill(ux, 2.2, 0.12, 0.7) + 4; items += '<path d="M' + (ux - 2 * s) + ' ' + uy + 'l' + (2 * s) + ' ' + (-34 * s) + 'h' + (4 * s) + 'l' + (2 * s) + ' ' + (34 * s) + 'Z" fill="' + land.pine + '"/><ellipse cx="' + (ux + 2 * s) + '" cy="' + (uy - 38 * s) + '" rx="' + (30 * s) + '" ry="' + (10 * s) + '" fill="' + land.pine + '"/>'; }
           } else if (kind === 3) { // vineyard rows on the front hill
             for (var v = 0; v < 7; v++) vines += 'M' + (px + v * 9 * s).toFixed(1) + ' ' + (fy + 14 * s).toFixed(1) + 'l' + (26 * s).toFixed(1) + ' ' + (-20 * s).toFixed(1);
           } else if (kind === 4) { // hay rolls
             for (var hr = 0; hr < 3; hr++) { var hx = px + hr * 24 * s; items += '<circle cx="' + hx.toFixed(1) + '" cy="' + (hill(hx, 2.2, 0.12, 0.7) - 6 * s).toFixed(1) + '" r="' + (8 * s).toFixed(1) + '" fill="#d8b866" stroke="#a88a3f" stroke-width="2"/>'; }
           } else { // lone cypress pair on the back hill
-            items += cyp(px.toFixed(1), (by + 2).toFixed(1), 40 * s, '#97a160') + cyp((px + 12 * s).toFixed(1), (by + 2).toFixed(1), 32 * s, '#97a160');
+            items += cyp(px.toFixed(1), (by + 2).toFixed(1), 40 * s, land.far) + cyp((px + 12 * s).toFixed(1), (by + 2).toFixed(1), 32 * s, land.far);
           }
         }
         far.style.background = 'none';
         far.innerHTML = '<svg width="' + fw + '" height="' + fh + '" viewBox="0 0 ' + fw + ' ' + fh + '" aria-hidden="true" focusable="false" style="display:block">' +
-          '<path d="M0 ' + fh + 'L' + back.join('L') + 'L' + fw + ' ' + fh + 'Z" fill="#c3c68e"/>' + bi +
-          '<path d="M0 ' + fh + 'L' + front.join('L') + 'L' + fw + ' ' + fh + 'Z" fill="#93a057"/>' +
-          '<path d="' + vines + '" stroke="#6f7f3a" stroke-width="3" stroke-linecap="round"/>' + items + '</svg>';
+          '<path d="M0 ' + fh + 'L' + back.join('L') + 'L' + fw + ' ' + fh + 'Z" fill="' + land.back + '"/>' + bi +
+          '<path d="M0 ' + fh + 'L' + front.join('L') + 'L' + fw + ' ' + fh + 'Z" fill="' + land.front + '"/>' +
+          '<path d="' + vines + '" stroke="' + land.vines + '" stroke-width="3" stroke-linecap="round"/>' + items + '</svg>';
       }
 
       var size = '';
@@ -784,7 +807,7 @@
           roostAcc += (i - last) * STEP;
           if (!inAir && roostAcc > 26) {
             roostAcc = 0;
-            for (var r = 0; r < 3; r++) fx('roost', bx - wb / 2, y - 8 - Math.random() * 10, { '--dx': (-60 - Math.random() * 90) + 'px', '--dy': (-30 - Math.random() * 60) + 'px', '--sz': (5 + Math.random() * 7) + 'px', '--c': ['#a9783a', '#8a5a2b', '#c9a46a'][r] }, 700);
+            for (var r = 0; r < 3; r++) fx('roost', bx - wb / 2, y - 8 - Math.random() * 10, { '--dx': (-60 - Math.random() * 90) + 'px', '--dy': (-30 - Math.random() * 60) + 'px', '--sz': (5 + Math.random() * 7) + 'px', '--c': land.roost[r] }, 700);
           }
         }
         last = i;
@@ -1034,6 +1057,21 @@
   };
   ['touchend', 'click', 'keydown'].forEach(function (ev) { document.addEventListener(ev, function () { if (blocked.length) TB.retryVideos(); else document.dispatchEvent(new CustomEvent('tb:gesture')); }, { passive: true }); });
 
+  // season particles (snow, petals, golden dust, leaves) in the [data-season-fx] layers; the season is on <html data-season>
+  function seasonFx(root) {
+    if (reduce || !html.dataset.season) return;
+    $$('[data-season-fx]', root).forEach(function (el) {
+      if (el.childElementCount) return;
+      var n = Math.round((+el.dataset.seasonFx || 24) * (window.innerWidth < 700 ? 0.55 : 1)), frag = document.createDocumentFragment();
+      for (var i = 0; i < n; i++) {
+        var p = document.createElement('i');
+        p.style.cssText = 'left:' + (Math.random() * 100).toFixed(1) + '%;--s:' + (0.5 + Math.random() * 0.9).toFixed(2) + ';--t:' + (7 + Math.random() * 9).toFixed(1) + 's;--dl:-' + (Math.random() * 16).toFixed(1) +
+          's;--x:' + (Math.random() * 160 - 80).toFixed(0) + 'px;--r:' + (Math.random() * 900 - 450).toFixed(0) + 'deg';
+        frag.appendChild(p);
+      }
+      el.appendChild(frag);
+    });
+  }
   function init(root) {
     if (J) J.hydrate(root);
     initVideos(root);
@@ -1042,6 +1080,7 @@
       if (fn && !el.dataset.tbInit) { el.dataset.tbInit = '1'; try { fn(el); } catch (err) { console.error('[TB]', el.dataset.tb, err); } }
     });
     initCountdowns(root);
+    seasonFx(root);
     splitTitles(root);
     $$('.rv', root).forEach(function (el, i) { el.style.transitionDelay = ((i % 4) * 70) + 'ms'; if (io) io.observe(el); else el.classList.add('in'); });
   }
@@ -1108,18 +1147,44 @@
   }
 
   /* ---------------- loader + cursor ---------------- */
+  // opening: the Team Butti bike crosses the screen kicking up sand, the sand cloud covers everything and settles on the page
   function loader() {
     var l = $('#loader'); if (!l) return;
-    var done = function () { l.classList.add('done'); lock(false); setTimeout(function () { l.remove(); }, 1000); };
+    var out = false, done = function () {
+      if (out) return; out = true;
+      l.classList.add('done'); lock(false); setTimeout(function () { l.remove(); }, 900);
+    };
     if (reduce || window.Shopify && window.Shopify.designMode) { l.remove(); return; }
     lock(true);
-    var t0 = performance.now(), dur = 1500, rpm = $('[data-rpm]', l), bar = $('[data-rpmbar]', l);
-    (function step(now) {
-      var p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-      rpm.textContent = String(Math.round(e * 12000)).padStart(4, '0'); bar.style.width = (e * 100) + '%';
-      if (p < 1) requestAnimationFrame(step); else setTimeout(done, 200);
-    })(t0);
     l.addEventListener('click', done);
+    setTimeout(done, 5000);
+    var bike = $('[data-lbike]', l), sand = $('[data-lsand]', l), started = false;
+    function ride() {
+      if (started || out) return; started = true;
+      var W = l.clientWidth, bw = bike.offsetWidth, bh = bike.offsetHeight, t0 = performance.now(), dur = 1300, last = -bw, acc = 0;
+      var cols = ['#e8ce98', '#d9b77a', '#c9a46a', '#f0dcb0'];
+      (function step(now) {
+        if (out) return;
+        var p = Math.min(1, (now - t0) / dur), e = p * (0.55 + 0.45 * p), x = -bw + e * (W + bw * 1.15);
+        // front wheel up at the start, then the bike settles
+        bike.style.transform = 'translate3d(' + x.toFixed(1) + 'px,0,0) rotate(' + (-9 * Math.max(0, 1 - p * 2.4)).toFixed(2) + 'deg)';
+        acc += x - last; last = x;
+        // roost from the rear wheel: the faster the bike, the bigger the cloud
+        while (acc > 16) {
+          acc -= 16;
+          var s = document.createElement('i'), sz = bh * (0.18 + Math.random() * 0.3) * (0.6 + p);
+          s.style.cssText = 'left:' + (x + bw * 0.12).toFixed(0) + 'px;width:' + sz.toFixed(0) + 'px;background:' + cols[Math.floor(Math.random() * cols.length)] +
+            ';--dx:' + (-40 - Math.random() * 120).toFixed(0) + 'px;--dy:' + (-20 - Math.random() * bh * 0.7).toFixed(0) + 'px';
+          sand.appendChild(s);
+        }
+        if (p < 1) requestAnimationFrame(step);
+        else { l.classList.add('dust'); setTimeout(done, 420); }
+      })(t0);
+    }
+    // start once the bike layers are decoded (they are preloaded in <head>), or after 700 ms anyway
+    var imgs = $$('img', bike);
+    Promise.all(imgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : null; })).then(ride);
+    setTimeout(ride, 700);
   }
   function cursor() {
     var cur = $('#cur'); if (!cur || !window.matchMedia('(hover:hover)').matches) { if (cur) cur.remove(); return; }

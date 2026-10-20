@@ -1,9 +1,13 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}" data-jersey-style="{{ settings.jersey_style | default: 'flat' }}" data-img-fit="{{ settings.product_image_fit | default: 'contain' }}"{% if settings.page_transitions %} data-transitions{% endif %}{% if settings.magnetic_buttons %} data-magnetic{% endif %}{% if settings.split_titles %} data-split-titles{% endif %}>
+<html lang="{{ request.locale.iso_code }}"{% if settings.season != blank and settings.season != 'auto' and settings.season != 'off' %} data-season="{{ settings.season }}"{% endif %} data-jersey-style="{{ settings.jersey_style | default: 'flat' }}" data-img-fit="{{ settings.product_image_fit | default: 'contain' }}"{% if settings.page_transitions %} data-transitions{% endif %}{% if settings.magnetic_buttons %} data-magnetic{% endif %}{% if settings.split_titles %} data-split-titles{% endif %}>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="{{ settings.color_paper }}">
+    {%- if settings.season == 'auto' or settings.season == blank -%}
+      {%- comment -%} season from the visitor's date, before the first paint: Dec–Feb inverno, Mar–May primavera, Jun–Aug estate, Sep–Nov autunno {%- endcomment -%}
+      <script>(function (m) { document.documentElement.setAttribute('data-season', m < 2 || m > 10 ? 'inverno' : m < 5 ? 'primavera' : m < 8 ? 'estate' : 'autunno'); })(new Date().getMonth());</script>
+    {%- endif -%}
     <link rel="canonical" href="{{ canonical_url }}">
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
@@ -23,6 +27,13 @@
     {% render 'meta-tags' %}
     {% render 'structured-data' %}
     {{ 'anton.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {%- if settings.loader and template.name == 'index' -%}
+      {{ 'tb-moto-corpo-s.webp' | asset_url | preload_tag: as: 'image' }}
+      {{ 'tb-moto-ruota-post-s.webp' | asset_url | preload_tag: as: 'image' }}
+      {{ 'tb-moto-ruota-ant-s.webp' | asset_url | preload_tag: as: 'image' }}
+      {{ 'tb-moto-forcellone-s.webp' | asset_url | preload_tag: as: 'image' }}
+      {{ 'tb-moto-forcella-s.webp' | asset_url | preload_tag: as: 'image' }}
+    {%- endif -%}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {% render 'css-variables' %}
     <script>
@@ -42,7 +53,9 @@
           joined: {{ 'newsletter.success' | t | json }},
           menu: {{ 'general.menu' | t | json }},
           close: {{ 'general.close' | t | json }},
-          setupProduct: {{ 'customizer.setup' | t | json }}
+          setupProduct: {{ 'customizer.setup' | t | json }},
+          today: {{ 'countdown.today' | t | json }},
+          daysShort: {{ 'countdown.days_short' | t | json }}
         }
       };
     </script>
@@ -54,12 +67,21 @@
   <body class="template-{{ template.name }}{% if settings.grain %} has-grain{% endif %}">
     <a class="skip-link" href="#main">{{ 'general.skip' | t }}</a>
     {%- if settings.loader and template.name == 'index' -%}
+      {%- comment -%} the Team Butti bike crosses the screen and kicks up sand; the sand cloud covers everything, then settles on the page {%- endcomment -%}
       <div class="loader" id="loader" aria-hidden="true">
-        <div class="loader__in">
-          {% render 'badge' %}
-          <div class="loader__rpm"><span data-rpm>0000</span><small>RPM</small></div>
-          <div class="loader__bar"><i data-rpmbar></i></div>
+        <div class="loader__in">{% render 'badge' %}</div>
+        <div class="loader__ground"></div>
+        <div class="loader__bike" data-lbike>
+          <div class="mx mx--art">
+            <img class="mx__wh mxa__w mxa__w--r" src="{{ 'tb-moto-ruota-post-s.webp' | asset_url }}" width="199" height="199" alt="">
+            <img class="mx__wh mxa__w mxa__w--f" src="{{ 'tb-moto-ruota-ant-s.webp' | asset_url }}" width="202" height="202" alt="">
+            <img class="mxa__l mx__body" src="{{ 'tb-moto-corpo-s.webp' | asset_url }}" width="600" height="531" alt="">
+            <img class="mxa__l mxa__arm" src="{{ 'tb-moto-forcellone-s.webp' | asset_url }}" width="600" height="531" alt="">
+            <img class="mxa__l mxa__fork" src="{{ 'tb-moto-forcella-s.webp' | asset_url }}" width="600" height="531" alt="">
+          </div>
         </div>
+        <div class="loader__sand" data-lsand></div>
+        <div class="loader__cloud"></div>
       </div>
     {%- endif -%}
     {%- if settings.custom_cursor -%}<div class="cur" id="cur" aria-hidden="true"></div>{%- endif -%}
