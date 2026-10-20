@@ -1,6 +1,6 @@
 # Cosa fa Claude dentro Shopify (connettore)
 
-Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Il tema 2.0.1 è pubblicato; il 2.1.0 è in `pacchetti/`.
+Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Il tema 2.0.1 è pubblicato. Il 2.1.0 è già caricato da Claude come tema non pubblicato (*Team Butti 2.1.0*, `gid://shopify/OnlineStoreTheme/206147846485`): lo pubblica l'utente. Lo zip è in `pacchetti/`.
 
 Prima di ogni scrittura, Claude legge lo stato attuale e non sovrascrive niente di già compilato senza chiedere.
 
@@ -24,6 +24,8 @@ Dati dell'azienda:
 - PEC Fradel.sas@pec.it.
 
 Le domande aperte per il team sono nel doc "Team Butti — cosa ci serve per il lancio".
+
+Il connettore può creare un tema non pubblicato da uno zip pubblico (`themeCreate` con il link raw di GitHub) e scriverci (`themeFilesUpsert`). Se un template ha un valore che non rispetta lo schema, Shopify lo scarta senza errore: prima di caricare, lancia `tools/theme-test/check-templates.py`.
 
 Il connettore non può scrivere sul tema pubblicato. Le modifiche al tema (soglia spedizione gratis, dati legali nel footer) vanno in una copia non pubblicata (`themeDuplicate` + `themeFilesUpsert`), che poi pubblica l'utente.
 
