@@ -2,6 +2,8 @@
 
 1. `npm install`
 2. `npm run check` → Shopify Theme Check ufficiale (deve dire *no offenses found*).
+   Poi `ruby shopify-parse.rb` (il Liquid come lo legge Shopify al caricamento) e `python3 -I check-templates.py`
+   (valori dei template JSON contro gli schemi: Shopify scarta un template intero per un solo valore sbagliato). Entrambi devono dire 0 errori.
 3. `npm run e2e` → renderizza homepage, collezione, prodotto, vista rapida e carrello con liquidjs,
    li serve con un finto backend Shopify (`/cart/add.js`, `/cart/change.js`, `?sections=`, `?section_id=`)
    e li prova in Chromium: stendino, cambia vibe, configuratore (variante + proprietà Nome/Numero/Colori),
