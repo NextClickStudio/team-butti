@@ -33,10 +33,6 @@
     "returns": "Reso entro 14 giorni",
     "returns_html": "<a href=\"{{ url }}\">Reso entro 14 giorni</a>",
     "warranty": "Garanzia legale 24 mesi",
-    "soon": "Prossimo drop",
-    "soon_cta": "Avvisami +",
-    "soon_text": "Esce con il prossimo drop. Lascia la mail e ti avvisiamo appena è online.",
-    "soon_submit": "Avvisami",
     "model": "Il modello è alto {{ height }} e indossa la {{ size }}"
   },
   "customizer": {

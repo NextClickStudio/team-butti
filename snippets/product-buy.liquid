@@ -1,8 +1,7 @@
 {%- comment -%}
-  Buy box of the product page and the quick view.
-  Size picker + add to bag; with the product tag "prossimo-drop" the email signup for the next drop instead.
+  Buy box of the product page and the quick view: size picker + add to bag.
   Tag "modello:M" adds "the model is 1,80 m tall and wears M" (height in Theme settings > Maglie).
-  Accepts: product, id (unique id for the signup form)
+  Accepts: product
 {%- endcomment -%}
 {%- liquid
   assign model_size = ''
@@ -12,16 +11,7 @@
     endif
   endfor
 -%}
-{%- if product.tags contains 'prossimo-drop' -%}
-  <div class="soon">
-    <p class="soon__t d">{{ 'products.soon' | t }}</p>
-    <p class="soon__p">{{ 'products.soon_text' | t }}</p>
-    {%- assign soon_submit = 'products.soon_submit' | t -%}
-    {% render 'newsletter-form', form_id: id, tags: 'newsletter, prossimo-drop', submit: soon_submit %}
-  </div>
-{%- else -%}
-  {% render 'product-form', product: product %}
-{%- endif -%}
+{% render 'product-form', product: product %}
 {%- if model_size != blank and settings.model_height != blank -%}
   <p class="pdp__fit">{{ 'products.model' | t: height: settings.model_height, size: model_size }}</p>
 {%- endif -%}

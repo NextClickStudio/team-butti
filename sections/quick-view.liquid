@@ -30,7 +30,7 @@
     <span class="label">{{ product.type | escape }}</span>
     <h2 class="modal__t d">{{ product.title | escape }}</h2>
     <div class="modal__p">{% render 'price', product: product, variant: product.selected_or_first_available_variant %}</div>
-    {% render 'product-buy', product: product, id: 'SoonQuickView' %}
+    {% render 'product-buy', product: product %}
     <a href="{{ product.url }}" class="label qv__link">{{ 'products.full_details' | t }} →</a>
   </div>
 </div>

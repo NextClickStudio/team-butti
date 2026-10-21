@@ -11,32 +11,32 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
-## Novità v2.1.0 (modifiche dopo la call con il team)
+## Novità v2.2.0 (modifiche dopo la call con il team)
 **Home**
-- **Vibe della hero**: restano Fucsia (la prima), Rosso, Giallo e Verde. Leopardo e Night Milano sono tolti.
+- **Vibe della hero**: restano i primi tre, Pink Market (il primo), Leopardo e Giallo MX. Night Milano e Neon Dirt sono tolti.
 - **Loader nuovo**: su sfondo fucsia la moto Team Butti attraversa lo schermo e alza la sabbia, la nuvola copre tutto e si posa sulla pagina. Le 5 parti della moto sono precaricate (100 KB). Un clic lo salta.
-- **Sfondo di stagione** (*Impostazioni tema → Effetti → Sfondo di stagione*), automatico dalla data o fisso.
-  - Neve d'inverno, petali in primavera, polvere d'oro d'estate, foglie d'autunno: su hero, viaggio in Cadillac e Storia in moto.
-  - Nella Storia in moto cambiano cielo, colline e terreno (in inverno c'è la neve sul tracciato). Nel viaggio cambiano cielo e alberi.
-- **Market Veneto 07.11**:
+- **Storia in moto tolta dalla home** (il percorso con la pista e i salti). La sezione resta nel tema, ma non è più nella pagina.
+- **Market Milano 07.11**, in Piazzale Antonio Cantore 10 come il 26.09:
   - barra annunci;
   - bottone countdown nella hero, che porta al countdown in fondo (`#countdown`) e sparisce il giorno dopo la data;
-  - poster e countdown del market con l'iscrizione per il gadget gratis, con tag cliente `market-veneto`;
-  - la strada della Cadillac prosegue fino al Veneto (A4, cartello Veneto, Market 07.11).
+  - poster e countdown del market con l'iscrizione per il gadget gratis, con tag cliente `market-milano`;
+  - l'ultimo cartello della strada della Cadillac è "Market 07.11 · P.le Cantore 10".
+- **Griglia Drop 01**:
+  - c'è il filtro "Long sleeve" con tutte le longsleeve sold out;
+  - su "Tutto" restano i primi 8 pezzi, mentre ogni filtro mostra tutti i pezzi del suo tipo.
 - **Manifesto**: la frase centrale ora è "Moto, vestiti, oggetti, persone, esperienze: se ci piace, ci entra." Inizio e fine sono invariati.
 - **Sticker** con il merch vero: MERDE X, 00 MERDE, Tabacchi, Pettorina, 62 (crew: MERDE 62, 00).
-- **La nostra storia**: solo video e numeri, senza testo. Aggiunto 07.11 Market Veneto.
-- **Griglia della home**: mostra la collezione Drop 01.
+- **La nostra storia**: solo video e numeri, senza testo. Aggiunto 07.11 Market Milano.
 
 **Prodotti e footer**
 - **Pagina prodotto**:
   - tag `modello:L` → "Il modello è alto 1,80 m e indossa la L";
-  - tag `prossimo-drop` → etichetta "Prossimo drop" e iscrizione "Avvisami" al posto di Aggiungi;
   - prezzo 0 (sold out caricati senza prezzo) → nessun "0,00 €".
 - **Footer**: dati legali di Fradel S.a.s.
 
 **Strumenti**
 - `tools/theme-test/pacchetti.py` crea i due zip del tema.
+- `tools/theme-test/check-templates.py` controlla i valori dei template, che Shopify altrimenti scarta in silenzio.
 - `tools/art/modello-higgsfield/` contiene i prompt per le foto con il modello.
 
 ## Novità v2.0.1

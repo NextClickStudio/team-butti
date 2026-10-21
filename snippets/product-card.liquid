@@ -1,8 +1,7 @@
 {%- comment -%}
   Product card. Photos: front = featured image, back = 2nd image (flips on hover).
   No photos: jersey illustration from metafields custom.jersey_type / jersey_colors / jersey_number.
-  Tag "prossimo-drop": "Prossimo drop" label, the quick view opens the signup instead of the size picker.
-  Accepts: product, bg (optional; default metafield custom.card_bg)
+  Accepts: product, bg (optional; default metafield custom.card_bg), more (optional: hidden until a type filter of the grid shows it)
 {%- endcomment -%}
 {%- liquid
   assign img1 = product.featured_image
@@ -17,10 +16,6 @@
     assign has_art = true
   endif
   assign alt = product.title | escape
-  assign soon = false
-  if product.tags contains 'prossimo-drop'
-    assign soon = true
-  endif
   assign badge = ''
   for tag in product.tags
     if tag contains 'badge:' and badge == blank
@@ -31,10 +26,9 @@
     endif
   endfor
 -%}
-<a href="{{ product.url }}" class="card{% unless product.available or soon %} sold{% endunless %}{% if img1 and img2 == blank %} card--single{% endif %}" data-type="{{ product.type | handleize }}" data-quick="{{ product.url }}" data-h>
+<a href="{{ product.url }}" class="card{% unless product.available %} sold{% endunless %}{% if img1 and img2 == blank %} card--single{% endif %}" data-type="{{ product.type | handleize }}"{% if more %} data-more{% endif %} data-quick="{{ product.url }}" data-h>
   <div class="card__m"{% if card_bg != blank %} style="background:{{ card_bg | escape }}"{% endif %}>
-    {%- if soon -%}<span class="card__tag card__tag--soon">{{ 'products.soon' | t }}</span>
-    {%- elsif badge != blank and product.available -%}<span class="card__tag">{{ badge | escape }}</span>{%- endif -%}
+    {%- if badge != blank and product.available -%}<span class="card__tag">{{ badge | escape }}</span>{%- endif -%}
     {%- if img1 -%}
       <div class="flip flip--photo">
         <div>{{ img1 | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360,540,720,900', sizes: '(min-width: 990px) 25vw, 50vw', class: 'card__img', alt: alt }}</div>
@@ -53,9 +47,7 @@
       <div class="flip flip--photo"><div>{{ 'product-apparel-1' | placeholder_svg_tag: 'card__ph' }}</div></div>
     {%- endif -%}
     <span class="glare"></span>
-    {%- if soon -%}
-      <span class="card__quick">{{ 'products.soon_cta' | t }}</span>
-    {%- elsif product.available -%}
+    {%- if product.available -%}
       <span class="card__quick">{{ 'products.card_cta' | t }}</span>
     {%- else -%}
       <span class="stamp">{{ 'products.sold_out' | t }}</span>

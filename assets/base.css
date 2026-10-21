@@ -1027,37 +1027,7 @@ html[data-img-fit="contain"] .pdp__slide{background:var(--paper)}
 .mx--art .mx__body{transform-origin:50% 100%}
 .mxs__bike--art{width:calc(clamp(200px,22vw,360px) * .8095);transform-origin:49.833% 99.317%}
 @media(max-width:800px){.mxs__bike--art{width:calc(44vw * .8095)}}
-/* ===== v2.1: season backgrounds (html[data-season]: snow, petals, golden dust, leaves; Cadillac and MX scenery) ===== */
-.sfx{position:absolute;inset:0;z-index:3;overflow:hidden;pointer-events:none;display:none}
-[data-season] .sfx{display:block}
-.mxs .sfx{z-index:0}
-.sfx i{position:absolute;top:-24px;width:calc(9px * var(--s,1));aspect-ratio:1;border-radius:50%;background:#fff;animation:sfxfall var(--t,10s) linear var(--dl,0s) infinite;will-change:transform}
-@keyframes sfxfall{to{transform:translate3d(var(--x,0),calc(100vh + 48px),0) rotate(var(--r,0))}}
-@keyframes sfxrise{from{transform:translate3d(0,calc(100vh + 48px),0)}to{transform:translate3d(var(--x,0),0,0)}}
-[data-season=inverno] .sfx i{opacity:.92;box-shadow:0 0 6px rgba(255,255,255,.75)}
-[data-season=primavera] .sfx i{width:calc(12px * var(--s,1));aspect-ratio:1.5;border-radius:80% 0 80% 0;background:#ffd6e8;border:1px solid rgba(13,13,13,.25)}
-[data-season=primavera] .sfx i:nth-child(3n){background:#fff}
-[data-season=estate] .sfx i{width:calc(6px * var(--s,1));background:#ffe27a;opacity:.8;box-shadow:0 0 8px 2px rgba(255,212,0,.45);animation-name:sfxrise;animation-duration:calc(var(--t,10s) * 1.6)}
-[data-season=autunno] .sfx i{width:calc(14px * var(--s,1));aspect-ratio:1.3;border-radius:0 80% 0 80%;background:#d9822b;border:1px solid rgba(13,13,13,.3)}
-[data-season=autunno] .sfx i:nth-child(4n+1){background:#b5461d}
-[data-season=autunno] .sfx i:nth-child(4n+2){background:#e8b23a}
-[data-season=autunno] .sfx i:nth-child(4n+3){background:#8a4a1c}
-/* Cadillac journey */
-[data-season=inverno] .journey [data-sky="0"]{background:linear-gradient(180deg,#9db7cf 0%,#d8e4ee 58%,#f2f4f6 100%)}
-[data-season=inverno] .jtree{background:linear-gradient(180deg,#f4f7fa 0 18%,#14201a 18%)}
-[data-season=inverno] .journey__road{box-shadow:inset 0 7px 0 #eef3f7}
-[data-season=primavera] .journey [data-sky="0"]{background:linear-gradient(180deg,#6fc0f0 0%,#c9ecff 58%,#f6f0d6 100%)}
-[data-season=primavera] .jtree{background:#1d4a22}
-[data-season=autunno] .journey [data-sky="0"]{background:linear-gradient(180deg,#8fb0d6 0%,#e9cfa4 60%,#f3dcb6 100%)}
-[data-season=autunno] .jtree:nth-of-type(odd){background:#8a3f16}
-/* Storia in moto */
-[data-season=inverno] .mxs__sky{background:linear-gradient(180deg,#b9cad9 0%,#e3ebf2 62%,#f5f7f9 100%)}
-[data-season=inverno] .mxs__sun{background:#fdfdf5;box-shadow:0 0 0 14px rgba(255,255,255,.35),0 0 60px 20px rgba(255,255,255,.4)}
-[data-season=inverno] .mxs .dustb{background:radial-gradient(closest-side,rgba(255,255,255,.9),rgba(255,255,255,.45) 55%,rgba(255,255,255,0))}
-[data-season=primavera] .mxs__sky{background:linear-gradient(180deg,#7cc6f2 0%,#d3efff 62%,#f6eccc 100%)}
-[data-season=autunno] .mxs__sky{background:linear-gradient(180deg,#93b4d4 0%,#eed3a6 62%,#f3d9ae 100%)}
-@media(prefers-reduced-motion:reduce){.sfx{display:none!important}}
-/* ===== v2.1: hero countdown button → #countdown, market gadget signup ===== */
+/* ===== v2.1: hero countdown button → #countdown ===== */
 .hero__count{display:inline-flex;align-items:center;gap:10px;flex:none;min-height:46px;padding:4px 14px;border:2px solid currentColor;color:inherit;white-space:nowrap;transition:background .2s,color .2s}
 .hero__count[hidden]{display:none}
 .hero__count:hover{background:var(--hero-bg);color:var(--hero-fg)}
@@ -1067,11 +1037,8 @@ html[data-img-fit="contain"] .pdp__slide{background:var(--paper)}
 .hero__count b{font-family:var(--display);font-weight:400;font-size:20px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
 @media(max-width:560px){.hero__bottom{gap:10px}.hero__count{padding:4px 10px;gap:8px}.hero__count b{font-size:17px}.hero__count small{font-size:8px;letter-spacing:.08em}}
 #countdown{scroll-margin-top:var(--head)}
-/* ===== v2.1: product: "prossimo drop" signup, model line ===== */
-.card__tag--soon{background:var(--yellow);color:var(--ink);border:2px solid var(--ink)}
-.soon{display:grid;gap:10px;padding:18px;border:3px solid var(--ink);background:var(--yellow);box-shadow:6px 6px 0 var(--ink)}
-.soon__t{font-size:clamp(32px,3.6vw,48px);margin:0}
-.soon__p{margin:0;font-size:12px;line-height:1.55;text-transform:uppercase;letter-spacing:.04em}
-.soon .nl{background:var(--paper)}
+/* ===== v2.1: product: model line ===== */
 .pdp__fit{margin:0;display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .pdp__fit::before{content:'';flex:none;width:14px;height:14px;border:2px solid currentColor;border-radius:50%;background:radial-gradient(circle,currentColor 0 2px,transparent 3px)}
+/* ===== v2.2: grid: pieces past the limit appear only under their type filter ===== */
+[data-tb=grid]:not(.is-filtered) .card[data-more]{display:none!important}

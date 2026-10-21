@@ -29,7 +29,7 @@ Tutto ciò che sta sotto `/v/<commit>/` passa dalla funzione `api/v.js`. La funz
 
 ## Mettere il tema su Shopify (pronto da caricare)
 1. Contenuti → **File** → carica tutte le foto e i video del pacchetto *media pronti per Shopify* (`tb-*.jpg`, `tb-*.png`, `tb-*.mp4`) **senza rinominarli**: la home li trova da sola per nome (video del brand con le clip della Cadillac, storia in moto, foto della crew, la nostra storia).
-2. Online Store → Temi → Aggiungi tema → **Carica file .zip** (`Team-Butti-tema-shopify-2.1.0.zip`).
+2. Online Store → Temi → Aggiungi tema → **Carica file .zip** (`Team-Butti-tema-shopify-2.2.0.zip`).
 3. Prodotti → Importa → `import/prodotti-team-butti.csv` (8 maglie di esempio con taglie e disegni maglia via tag; da sostituire con i prodotti veri).
 4. Online Store → Pagine → crea **Chi siamo** con il modello `chi-siamo` e aggiungila al menu.
 5. Pubblica il tema. La griglia mostra da sola tutti i prodotti. Niente prodotti personalizzati online: la maglia custom si fa solo dal vivo ai market.

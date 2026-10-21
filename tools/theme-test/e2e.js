@@ -24,16 +24,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
   const jr = await p.evaluate(() => ({ car: document.querySelector('[data-tb=vscroll] [data-car]').style.transform, wheel: document.querySelector('[data-tb=vscroll] .wh').style.transform, km: +document.querySelector('[data-km-out]').textContent, far: document.querySelector('[data-far]').style.transform }));
   ok(/translate3d\((\d{3,})/.test(jr.car) && /rotate\(\d/.test(jr.wheel) && jr.km > 100 && jr.far.includes('-'), `Cadillac: avanza con lo scroll, ruote che girano, km ${jr.km}, parallasse attiva`);
   await p.screenshot({ path: __dirname + '/out/th-cadillac.png' });
-  // MX story: the bike rides the dunes and jumps
-  const mx = [];
-  for (const f of [0.08, 0.14, 0.2, 0.26]) {
-    await p.evaluate(f => { const r = document.querySelector('[data-tb=mxs]'); window.scrollTo({ top: r.offsetTop + (r.offsetHeight - innerHeight) * f, behavior: 'instant' }); }, f); await p.waitForTimeout(700);
-    mx.push(await p.evaluate(() => ({ world: document.querySelector('[data-mxs-world]').style.transform, bike: document.querySelector('[data-mxs-bike]').style.transform, air: document.querySelector('[data-mxs-bike] .mx__shadow').style.opacity === '0' })));
-  }
-  ok(mx.every(m => m.world.includes('translate3d(-')) && new Set(mx.map(m => m.bike)).size === 4 && !!(await p.$('[data-mxs-ground] path')), 'storia in moto: dune disegnate, moto che avanza con lo scroll');
-  ok(mx.some(m => m.air) && mx.some(m => !m.air), 'storia in moto: salti (in aria e a terra)');
-  ok(!(await p.$('[data-tb=ride]')), 'storia in moto al posto del viaggio in Cadillac (Cadillac solo in alto)');
-  await p.screenshot({ path: __dirname + '/out/th-mx.png' });
+  ok(!(await p.$('[data-tb=mxs]')) && !(await p.$('[data-tb=ride]')), 'home: niente Storia in moto (minigioco tolto), la Cadillac resta solo in alto');
   ok(await p.$$eval('[data-countdown] [data-u=d]', x => x[0].textContent !== '00' || x[0].textContent === '00'), 'drop: countdown attivo');
   // collection + quick view
   await p.goto('http://localhost:8787/collections/all'); await p.waitForTimeout(800);

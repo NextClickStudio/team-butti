@@ -1,19 +1,24 @@
 # Cosa fa Claude dentro Shopify (connettore)
 
-Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Il tema 2.0.1 è pubblicato. Il 2.1.0 è già caricato da Claude come tema non pubblicato (*Team Butti 2.1.0*, `gid://shopify/OnlineStoreTheme/206147846485`): lo pubblica l'utente. Lo zip è in `pacchetti/`.
+Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Il tema 2.0.1 è pubblicato. Il 2.2.0 è già caricato da Claude come tema non pubblicato (*Team Butti 2.2.0*, `gid://shopify/OnlineStoreTheme/206147846485`): lo pubblica l'utente. Lo zip è in `pacchetti/`.
 
 Prima di ogni scrittura, Claude legge lo stato attuale e non sovrascrive niente di già compilato senza chiedere.
 
-## Stato al 20 ottobre 2026
+## Stato al 21 ottobre 2026
 Fatto:
 - pagina **Chi siamo** (modello `chi-siamo`);
-- menu principale (Shop · Drop 01 · Long sleeve · Chi siamo · Contatti) e menu footer (Chi siamo · Contatti · Cerca);
-- collezione **Drop 01** con 18 prodotti attivi:
-  - prezzi veri dal foglio *TEAM BUTTI DROP 1 MAGAZZINO + PRODOTTI SOLD OUT AGGIORNATO.xlsx* sul Drive;
-  - T-shirt 25 €, Tabacchi 29 €, Pettorina 35 €, Merde 62 e 00 Merde 45 €, Merde X 79 €;
-  - stock dal foglio;
-- collezione **Long sleeve**: 9 longsleeve sold out (taglie S/M e M/L), con il retro con la grafica come prima foto;
-- **Merde X Hockey bianco/rosso/blu**: sold out. I sold out hanno prezzo 0, che il tema 2.1 non mostra;
+- menu principale (Shop · Drop 01 · Chi siamo · Contatti) e menu footer (Chi siamo · Contatti · Cerca);
+- collezione **Drop 01** con 28 prodotti:
+  - 18 in vendita, con lo stock del foglio *TEAM BUTTI DROP 1 MAGAZZINO + PRODOTTI SOLD OUT AGGIORNATO.xlsx* sul Drive;
+  - in fondo, 10 sold out: 9 longsleeve (tipo "Long sleeve", taglie S/M e M/L, retro con la grafica come prima foto) e la Merde X Hockey bianco/rosso/blu;
+- prezzi = foglio + 10 €, come chiesto dal team:
+  - T-shirt Team Butti e Merde 35 €;
+  - Tabacchi 39 €;
+  - Pettorina 45 €;
+  - Merde 62 e 00 Merde 55 €;
+  - Merde X 89 €;
+- i sold out non hanno prezzo nel foglio: restano a 0, che il tema 2.2 non mostra;
+- nessuna collezione separata per le longsleeve: stanno nel Drop 01, sotto il filtro "Long sleeve" della griglia;
 - spedizioni Italia e UE: 10 € sotto i 100 €, gratis da 100 €. Resto del mondo invariato a 19,99 €.
 
 Dati dell'azienda:

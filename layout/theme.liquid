@@ -1,13 +1,9 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}"{% if settings.season != blank and settings.season != 'auto' and settings.season != 'off' %} data-season="{{ settings.season }}"{% endif %} data-jersey-style="{{ settings.jersey_style | default: 'flat' }}" data-img-fit="{{ settings.product_image_fit | default: 'contain' }}"{% if settings.page_transitions %} data-transitions{% endif %}{% if settings.magnetic_buttons %} data-magnetic{% endif %}{% if settings.split_titles %} data-split-titles{% endif %}>
+<html lang="{{ request.locale.iso_code }}" data-jersey-style="{{ settings.jersey_style | default: 'flat' }}" data-img-fit="{{ settings.product_image_fit | default: 'contain' }}"{% if settings.page_transitions %} data-transitions{% endif %}{% if settings.magnetic_buttons %} data-magnetic{% endif %}{% if settings.split_titles %} data-split-titles{% endif %}>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="{{ settings.color_paper }}">
-    {%- if settings.season == 'auto' or settings.season == blank -%}
-      {%- comment -%} season from the visitor's date, before the first paint: Dec–Feb inverno, Mar–May primavera, Jun–Aug estate, Sep–Nov autunno {%- endcomment -%}
-      <script>(function (m) { document.documentElement.setAttribute('data-season', m < 2 || m > 10 ? 'inverno' : m < 5 ? 'primavera' : m < 8 ? 'estate' : 'autunno'); })(new Date().getMonth());</script>
-    {%- endif -%}
     <link rel="canonical" href="{{ canonical_url }}">
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">

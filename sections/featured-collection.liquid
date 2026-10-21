@@ -22,8 +22,21 @@
   </div>
   <div class="grid">
     {%- if coll != blank and coll.products_count > 0 -%}
-      {%- for product in coll.products limit: section.settings.limit -%}
-        {% render 'product-card', product: product %}
+      {%- comment -%} with the type filters every piece is rendered: "Tutto" shows the first N, a type shows all of its pieces (e.g. every sold out long sleeve) {%- endcomment -%}
+      {%- liquid
+        assign shown = section.settings.limit
+        if section.settings.show_tabs
+          assign shown = 50
+        endif
+      -%}
+      {%- for product in coll.products limit: shown -%}
+        {%- liquid
+          assign more = false
+          if forloop.index > section.settings.limit
+            assign more = true
+          endif
+        -%}
+        {% render 'product-card', product: product, more: more %}
       {%- endfor -%}
     {%- else -%}
       {% render 'demo-cards', limit: section.settings.limit %}
@@ -41,7 +54,7 @@
     { "type": "text", "id": "title", "label": "Titolo", "default": "Drop" },
     { "type": "text", "id": "title_outline", "label": "Titolo (contorno)", "default": "01" },
     { "type": "collection", "id": "collection", "label": "Collezione", "info": "Vuota = tutti i prodotti del negozio (maglie demo se il negozio non ha ancora prodotti)" },
-    { "type": "range", "id": "limit", "label": "Prodotti", "min": 2, "max": 16, "step": 1, "default": 8 },
+    { "type": "range", "id": "limit", "label": "Prodotti", "info": "Quanti se ne vedono su Tutto. Con i filtri per tipo, ogni tipo mostra tutti i suoi pezzi.", "min": 2, "max": 16, "step": 1, "default": 8 },
     { "type": "checkbox", "id": "show_tabs", "label": "Filtri per tipo prodotto", "default": true },
     { "type": "text", "id": "link_label", "label": "Bottone collezione", "default": "Vedi tutto" }
   ],

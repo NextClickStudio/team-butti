@@ -13,7 +13,6 @@
   {%- for v in vibes -%}
     <i hidden data-vibe data-name="{{ v.settings.name | escape }}" data-bg="{{ v.settings.bg }}" data-fg="{{ v.settings.fg }}" data-pattern="{{ v.settings.pattern }}" data-j="{{ v.settings.jersey_1 | escape }}|{{ v.settings.jersey_2 | escape }}|{{ v.settings.jersey_3 | escape }}" data-ph="{% if v.settings.photo_1 != blank %}{{ v.settings.photo_1 | image_url: width: 800 }}{% endif %}|{% if v.settings.photo_2 != blank %}{{ v.settings.photo_2 | image_url: width: 800 }}{% endif %}|{% if v.settings.photo_3 != blank %}{{ v.settings.photo_3 | image_url: width: 800 }}{% endif %}" {{ v.shopify_attributes }}></i>
   {%- endfor -%}
-  <div class="sfx" data-season-fx="26" aria-hidden="true"></div>
   <div class="hero__top">
     <div class="hero__kicker">{{ section.settings.kicker }}</div>
     {%- if vibes.size > 1 -%}
@@ -113,7 +112,7 @@
       "id": "count_label",
       "label": "Bottone countdown",
       "info": "Porta al countdown in fondo alla pagina (sezione Poster + countdown, dove si imposta la data). Vuoto = niente bottone. Sparisce da solo il giorno dopo la data.",
-      "default": "Market Veneto · 07.11"
+      "default": "Market Milano · 07.11"
     },
     {
       "type": "text",
@@ -211,7 +210,7 @@
           "type": "text",
           "id": "name",
           "label": "Nome",
-          "default": "Fucsia"
+          "default": "Pink Market"
         },
         {
           "type": "color",
@@ -356,33 +355,25 @@
         {
           "type": "vibe",
           "settings": {
-            "name": "Fucsia"
+            "name": "Pink Market"
           }
         },
         {
           "type": "vibe",
           "settings": {
-            "name": "Rosso",
-            "bg": "#E3191B",
-            "fg": "#F4F1EA",
+            "name": "Leopardo",
+            "bg": "#E0A54A",
+            "pattern": "leopard",
             "jersey_1": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13"
           }
         },
         {
           "type": "vibe",
           "settings": {
-            "name": "Giallo",
+            "name": "Giallo MX",
             "bg": "#FFD400",
             "fg": "#E3191B",
             "jersey_1": "#f4f1ea,#e3191b,#1d3fbf,#e3191b"
-          }
-        },
-        {
-          "type": "vibe",
-          "settings": {
-            "name": "Verde",
-            "bg": "#39FF14",
-            "jersey_1": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13"
           }
         },
         {

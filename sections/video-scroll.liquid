@@ -21,7 +21,6 @@
       <div class="journey" data-journey aria-hidden="true">
         <div class="journey__sky"><i data-sky="0"></i><i data-sky="1"></i><i data-sky="2"></i></div>
         <div class="journey__sun" data-sun></div>
-        <div class="sfx" data-season-fx="30"></div>
         <div class="journey__far" data-far>{% render 'panorama', fit: 'none' %}</div>
         <div class="journey__mid" data-mid>
           {%- for b in signs -%}
@@ -60,7 +59,7 @@
 {% schema %}
 {
   "name": "Cadillac a scroll",
-  "max_blocks": 10,
+  "max_blocks": 8,
   "settings": [
     { "type": "header", "content": "Testi" },
     { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Chianni → Milano · 390 km" },

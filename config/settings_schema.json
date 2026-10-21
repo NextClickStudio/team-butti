@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Team Butti",
-    "theme_version": "2.1.0",
+    "theme_version": "2.2.0",
     "theme_author": "Team Butti",
     "theme_documentation_url": "https://www.instagram.com/team_butti/",
     "theme_support_url": "https://www.instagram.com/team_butti/"
@@ -119,10 +119,6 @@
         "label": "Altezza del modello nelle foto",
         "default": "1,80 m",
         "info": "Con il tag prodotto modello:M la pagina prodotto scrive \"Il modello è alto 1,80 m e indossa la M\"."
-      },
-      {
-        "type": "paragraph",
-        "content": "Tag prossimo-drop su un prodotto: etichetta \"Prossimo drop\" e, al posto del bottone Aggiungi, l'iscrizione per essere avvisati."
       }
     ]
   },
@@ -134,21 +130,6 @@
         "id": "loader",
         "label": "Loader all'apertura: moto da cross che passa e alza la sabbia",
         "default": true
-      },
-      {
-        "type": "select",
-        "id": "season",
-        "label": "Sfondo di stagione",
-        "info": "Neve d'inverno, fiori in primavera, polvere d'oro d'estate, foglie d'autunno: su hero, viaggio in Cadillac e Storia in moto. Automatico = cambia da solo con la data.",
-        "default": "auto",
-        "options": [
-          { "value": "auto", "label": "Automatico (dalla data)" },
-          { "value": "inverno", "label": "Inverno" },
-          { "value": "primavera", "label": "Primavera" },
-          { "value": "estate", "label": "Estate" },
-          { "value": "autunno", "label": "Autunno" },
-          { "value": "off", "label": "Spento" }
-        ]
       },
       {
         "type": "checkbox",

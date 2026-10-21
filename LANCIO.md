@@ -20,7 +20,7 @@ Lista in ordine. Ogni punto dice dove cliccare nell'admin Shopify. Il tema è gi
 
 ## 2. Tema e contenuti
 1. **Foto e video.** Caricali da *Contenuti → File → Carica file* (pacchetti `Team-Butti-media-foto.zip` e `Team-Butti-media-video.zip`, estratti). **Non rinominare i file**: il tema li cerca per nome.
-2. **Tema.** In *Negozio online → Temi → Aggiungi tema → Carica file zip* scegli `Team-Butti-tema-shopify-2.1.0.zip`. Se Shopify si lamenta di file mancanti, carica `…-senza-media.zip` e scegli foto e video a mano in *Personalizza* (la tabella in `preview/SHOPIFY-MAP.md` dice cosa va dove).
+2. **Tema.** In *Negozio online → Temi → Aggiungi tema → Carica file zip* scegli `Team-Butti-tema-shopify-2.2.0.zip`. Se Shopify si lamenta di file mancanti, carica `…-senza-media.zip` e scegli foto e video a mano in *Personalizza* (la tabella in `preview/SHOPIFY-MAP.md` dice cosa va dove).
 3. **Pagine.** Da *Negozio online → Pagine* crea **Chi siamo** con il modello `chi-siamo`. Poi crea *Spedizioni e resi* e *Guida taglie*.
 4. **Menu.** In *Contenuti → Menu*:
    - menu principale: Shop, Drop 01, Chi siamo, Spedizioni;

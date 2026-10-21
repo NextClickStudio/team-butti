@@ -6,7 +6,7 @@
         "v1": {
           "type": "vibe",
           "settings": {
-            "name": "Fucsia",
+            "name": "Pink Market",
             "bg": "#FF2E93",
             "fg": "#0D0D0D",
             "pattern": "halftone",
@@ -21,13 +21,13 @@
         "v2": {
           "type": "vibe",
           "settings": {
-            "name": "Rosso",
-            "bg": "#E3191B",
-            "fg": "#F4F1EA",
-            "pattern": "halftone",
+            "name": "Leopardo",
+            "bg": "#E0A54A",
+            "fg": "#0D0D0D",
+            "pattern": "leopard",
             "jersey_1": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13",
             "jersey_2": "#f4f1ea,#0d0d0d,#9a9a9a,#0d0d0d",
-            "jersey_3": "#ffd400,#0d0d0d,#f4f1ea,#0d0d0d",
+            "jersey_3": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d",
             "photo_1": "shopify://shop_images/tb-maglia-hockey-merdex-nero-arancio-back.png",
             "photo_2": "shopify://shop_images/tb-maglia-hockey-merde00-bianco-front.png",
             "photo_3": "shopify://shop_images/tb-maglia-cross-merde62-nero-back.png"
@@ -36,7 +36,7 @@
         "v3": {
           "type": "vibe",
           "settings": {
-            "name": "Giallo",
+            "name": "Giallo MX",
             "bg": "#FFD400",
             "fg": "#E3191B",
             "pattern": "halftone",
@@ -46,21 +46,6 @@
             "photo_1": "shopify://shop_images/tb-maglia-cross-merde62-bluette-giallo-front.png",
             "photo_2": "shopify://shop_images/tb-maglia-hockey-merde00-bluette-back.png",
             "photo_3": "shopify://shop_images/tb-maglia-cross-merde62-bianco-rosso-back.png"
-          }
-        },
-        "v5": {
-          "type": "vibe",
-          "settings": {
-            "name": "Verde",
-            "bg": "#39FF14",
-            "fg": "#0D0D0D",
-            "pattern": "halftone",
-            "jersey_1": "#c9a46a,#7a5a2c,#f4f1ea,#0d0d0d",
-            "jersey_2": "#39ff14,#ff2e93,#0d0d0d,#ff2e93",
-            "jersey_3": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13",
-            "photo_1": "shopify://shop_images/tb-maglia-hockey-merde00-nero-front.png",
-            "photo_2": "shopify://shop_images/tb-maglia-hockey-merde00-giallo-back.png",
-            "photo_3": "shopify://shop_images/tb-maglia-cross-merde62-bianco-back.png"
           }
         },
         "j1": {
@@ -95,7 +80,6 @@
         "v1",
         "v2",
         "v3",
-        "v5",
         "j1",
         "j2",
         "j3"
@@ -105,7 +89,7 @@
         "route_from": "Chianni",
         "route_to": "Milano",
         "badge_text": "TEAM BUTTI ★ CHIANNI ★ MILANO ★ MERDE ★ ",
-        "count_label": "Market Veneto · 07.11"
+        "count_label": "Market Milano · 07.11"
       }
     },
     "tapes": {
@@ -202,17 +186,17 @@
     "drop_countdown": {
       "type": "drop-countdown",
       "settings": {
-        "poster_title": "Market|Veneto",
+        "poster_title": "Market|Milano",
         "poster_date": "07.11|2026",
-        "poster_info": "<p>Luogo e orari in arrivo<br>Lascia la mail: ti avvisiamo noi</p>",
+        "poster_info": "<p>Piazzale Antonio Cantore 10<br>20123 Milano<br>Stesso posto dell'ultima volta</p>",
         "stamp": "Gadget gratis",
         "kicker": "Prossima tappa",
-        "title": "Market Veneto",
-        "date": "2026-11-07T10:00:00+01:00",
-        "text": "Lascia la mail: al market ti aspetta un gadget Team Butti gratis. Ti mandiamo anche luogo e orari.",
+        "title": "Market Milano",
+        "date": "2026-11-07T09:00:00+01:00",
+        "text": "Lascia la mail: al market di Piazzale Cantore ti aspetta un gadget Team Butti gratis.",
         "submit": "Voglio il gadget",
         "success": "Ci sei. Al market dì la tua mail al banco Team Butti e ritira il gadget.",
-        "tags": "newsletter, market-veneto"
+        "tags": "newsletter, market-milano"
       }
     },
     "story": {
@@ -243,7 +227,7 @@
           "type": "fact",
           "settings": {
             "value": "07.11",
-            "label": "Market Veneto"
+            "label": "Market Milano"
           }
         }
       },
@@ -270,7 +254,7 @@
             "title": "Il Ranch",
             "sub": "Chianni · Team Butti HQ",
             "style": "brown",
-            "pos": 5
+            "pos": 8
           }
         },
         "sign-fipili": {
@@ -279,7 +263,7 @@
             "title": "FI-PI-LI",
             "sub": "Pontedera · Firenze",
             "style": "blue",
-            "pos": 14
+            "pos": 21
           }
         },
         "sign-a1": {
@@ -288,7 +272,7 @@
             "title": "A1",
             "sub": "Bologna · Milano",
             "style": "green",
-            "pos": 24
+            "pos": 34
           }
         },
         "sign-mi": {
@@ -297,7 +281,7 @@
             "title": "Milano",
             "sub": "215 km",
             "style": "green",
-            "pos": 35
+            "pos": 54
           }
         },
         "sign-city": {
@@ -306,41 +290,14 @@
             "title": "Milano",
             "sub": "",
             "style": "city",
-            "pos": 45
+            "pos": 76
           }
         },
         "sign-market": {
           "type": "sign",
           "settings": {
-            "title": "Market 26.09",
-            "sub": "Grazie Milano",
-            "style": "pink",
-            "pos": 54
-          }
-        },
-        "sign-a4": {
-          "type": "sign",
-          "settings": {
-            "title": "A4",
-            "sub": "Brescia · Verona · Venezia",
-            "style": "green",
-            "pos": 66
-          }
-        },
-        "sign-veneto": {
-          "type": "sign",
-          "settings": {
-            "title": "Veneto",
-            "sub": "Benvenuti",
-            "style": "blue",
-            "pos": 79
-          }
-        },
-        "sign-market-veneto": {
-          "type": "sign",
-          "settings": {
             "title": "Market 07.11",
-            "sub": "Team Butti →",
+            "sub": "P.le Cantore 10",
             "style": "pink",
             "pos": 93
           }
@@ -352,18 +309,15 @@
         "sign-a1",
         "sign-mi",
         "sign-city",
-        "sign-market",
-        "sign-a4",
-        "sign-veneto",
-        "sign-market-veneto"
+        "sign-market"
       ],
       "settings": {
-        "kicker": "Chianni → Milano → Veneto · 600 km",
+        "kicker": "Chianni → Milano · 390 km",
         "title": "Si parte",
-        "text": "Dal Ranch di Chianni al Market di Milano, poi dritti in Veneto per il 7 novembre. Finestrini giù, maglie al vento: scorri e portaci là.",
-        "places": "Chianni · Il Ranch,Valdera,FI-PI-LI,Firenze,A1 · Appennino,Bologna,Emilia,Milano,A4,Brescia,Verona,Veneto",
-        "km": 600,
-        "length": 425,
+        "text": "Dal Ranch di Chianni al Market di Milano. Finestrini giù, maglie al vento: scorri e portaci là.",
+        "places": "Chianni · Il Ranch,Valdera,FI-PI-LI,Firenze,A1 · Appennino,Bologna,Emilia,Milano",
+        "km": 390,
+        "length": 325,
         "theme": "light",
         "show_without_video": true
       }
@@ -436,74 +390,6 @@
         "length": 130,
         "autoplay_next": 8
       }
-    },
-    "storia_mx": {
-      "type": "mx-story",
-      "blocks": {
-        "ch1": {
-          "type": "chapter",
-          "settings": {
-            "year": "Prima",
-            "place": "Chianni",
-            "title": "Gli amici",
-            "text": "Prima c'erano gli amici. Uno sterrato dietro casa, un due tempi che va spinto più che guidato e nessun piano. Nessuno sapeva ancora cosa sarebbe diventato.",
-            "video": "shopify://files/videos/tb-mx-spinta.mp4",
-            "caption": "Chianni · 06.08.2025"
-          }
-        },
-        "ch2": {
-          "type": "chapter",
-          "settings": {
-            "year": "Poi",
-            "place": "Nel grano",
-            "title": "Il nome",
-            "text": "Poi è arrivato il nome. TEAM BUTTI sulla schiena, su maglie da cross, da hockey e da football. Le chiedono gli amici, poi gli amici degli amici.",
-            "image": "shopify://shop_images/tb-mx-maglie.jpg",
-            "caption": "Due tempi nel grano"
-          }
-        },
-        "ch3": {
-          "type": "chapter",
-          "settings": {
-            "year": "Qui",
-            "place": "Il Ranch",
-            "title": "L'officina",
-            "text": "Il Ranch, a Chianni: un'officina dove ci si trova, si parla, si prova, si inventa. Moto, maglie, una Cadillac leopardata: qui le cose partono senza sapere cosa diventeranno.",
-            "image": "shopify://shop_images/tb-mx-officina.jpg",
-            "caption": "La crew e la DeVille"
-          }
-        },
-        "ch4": {
-          "type": "chapter",
-          "settings": {
-            "year": "26.09",
-            "place": "Milano",
-            "title": "Fuori posto",
-            "text": "Non è questione di andare lontano: è non stare dove ci si aspetta. Il pick-up col cofano arancione in mezzo a Milano, le maglie da cross al Market di Piazzale Cantore 10.",
-            "image": "shopify://shop_images/tb-mx-pickup-milano.jpg",
-            "caption": "Big ahh truck around Milano"
-          }
-        },
-        "ch5": {
-          "type": "chapter",
-          "settings": {
-            "year": "Oggi",
-            "place": "In movimento",
-            "title": "Gas aperto",
-            "text": "Moto, vestiti, oggetti, persone, esperienze: se ci piace, ci entra. Senza un'unica direzione. Team Butti non è un brand, è uno stile di vita.",
-            "video": "shopify://files/videos/tb-mx-via.mp4",
-            "caption": "Via! · 29.08.2026"
-          }
-        }
-      },
-      "block_order": [
-        "ch1",
-        "ch2",
-        "ch3",
-        "ch4",
-        "ch5"
-      ],
-      "settings": {}
     },
     "crew": {
       "type": "crew-wall",
@@ -706,7 +592,6 @@
     "cadillac",
     "manifesto",
     "crew",
-    "storia_mx",
     "story",
     "drop_countdown"
   ]

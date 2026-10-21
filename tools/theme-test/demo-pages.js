@@ -27,8 +27,7 @@
     };
     var collections = {
       all: coll('all', 'Shop', products),
-      'drop-01': coll('drop-01', 'Drop 01', products.slice(0, 8)),
-      'long-sleeve': coll('long-sleeve', 'Long sleeve', products.filter(function (p) { return p.type === 'Long sleeve'; }))
+      'drop-01': coll('drop-01', 'Drop 01', products)
     };
     var tpl = function (name) { return JSON.parse(o.read('templates/' + name + '.json')); };
     var sec = function (type, id, conf, extra) { return env.renderSection(type, id, conf || {}, extra); };
@@ -78,7 +77,7 @@
           .then(function (b) { return page('<div data-demo-search>' + b + '</div>', { template: { name: 'search' }, page_title: 'Cerca', request: req('search') }); });
       },
       collections: function () {
-        return sec('main-list-collections', 'main', {}, { collections: [collections.all, collections['drop-01'], collections['long-sleeve']] })
+        return sec('main-list-collections', 'main', {}, { collections: [collections.all, collections['drop-01']] })
           .then(function (b) { return page(b, { template: { name: 'list-collections' }, page_title: 'Collezioni', request: req('list-collections') }); });
       },
       chiSiamo: function () {

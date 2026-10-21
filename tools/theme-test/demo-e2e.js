@@ -8,8 +8,20 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     const p = await ctx.newPage();
     const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
     const shot = n => p.screenshot({ path: `${__dirname}/out/demo-${name}-${n}.png` });
-    await p.goto(BASE + '/'); await p.waitForTimeout(2500); await shot('home');
-    ok(await p.$$eval('#shopify-section-drop .card[data-quick]', x => x.length) === 8, `[${name}] home: 8 prodotti veri nella griglia`);
+    await p.goto(BASE + '/'); await p.waitForTimeout(700);
+    ok(await p.$eval('#loader [data-lbike]', b => /translate3d\(\d/.test(b.style.transform)).catch(() => false) && (await p.$$('#loader [data-lsand] i')).length > 5, `[${name}] loader: la moto attraversa lo schermo e alza la sabbia`);
+    await p.waitForTimeout(2600); await shot('home');
+    ok(!(await p.$('#loader')), `[${name}] loader: finito, la pagina si vede`);
+    ok(JSON.stringify(await p.$$eval('[data-vibe]', v => v.map(x => x.dataset.name))) === '["Pink Market","Leopardo","Giallo MX"]', `[${name}] hero: solo i vibe Pink Market, Leopardo, Giallo MX`);
+    ok((await p.textContent('[data-hero-count]')).includes('Market Milano') && /\d+g \d\d:\d\d:\d\d/.test(await p.textContent('[data-hero-count-t]')), `[${name}] hero: bottone countdown del Market Milano`);
+    ok((await p.textContent('#countdown')).includes('Market Milano') && (await p.textContent('#countdown')).includes('Cantore 10'), `[${name}] countdown in fondo: Market Milano in Piazzale Cantore 10`);
+    ok(!/Veneto/.test(await p.content()), `[${name}] niente Veneto da nessuna parte`);
+    ok((await p.textContent('#shopify-section-drop .card .price')).includes('89,00'), `[${name}] prezzi: quelli del foglio + 10 € (Merde X 89 €)`);
+    await p.click('#shopify-section-drop .tab[data-f="long-sleeve"]'); await p.waitForTimeout(300);
+    ok(await p.$$eval('#shopify-section-drop .card', c => { const v = c.filter(x => getComputedStyle(x).display !== 'none'); return v.length === 9 && v.every(x => x.classList.contains('sold')); }), `[${name}] griglia: il filtro Long sleeve mostra le 9 longsleeve sold out`);
+    await p.click('#shopify-section-drop .tab[data-f="all"]'); await p.waitForTimeout(300);
+    ok(await p.$$eval('#shopify-section-drop .card', c => c.filter(x => getComputedStyle(x).display !== 'none').length) === 8, `[${name}] griglia: su Tutto restano 8 pezzi`);
+    ok(await p.$$eval('#shopify-section-drop .card[data-quick]', x => x.filter(c => getComputedStyle(c).display !== 'none').length) === 8, `[${name}] home: 8 prodotti veri nella griglia (gli altri del drop sotto i filtri)`);
     ok(await p.$$eval('[data-float].has-photo .hero__photo', x => x.filter(i => /tb-maglia-/.test(i.src) && i.complete && i.naturalWidth > 0).length) >= 2, `[${name}] hero: maglie vere (still life) al posto dei disegni`);
     const ph1 = await p.$eval('[data-float] .hero__photo', i => i.src);
     await p.click('[data-vibe-btn]'); await p.waitForTimeout(500);
@@ -47,34 +59,9 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     }
     await shot('reel');
     await p.$eval('[data-tb=vscroll]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.98, behavior: 'instant' })); await p.waitForTimeout(1500);
-    ok(+(await p.textContent('[data-km-out]')) >= 575 && (await p.textContent('[data-tb=vscroll] [data-place]')) === 'Veneto' && (await p.textContent('[data-tb=vscroll] .jsign--brown')).includes('Il Ranch'), `[${name}] Cadillac: parte dal Ranch di Chianni, passa da Milano, arriva in Veneto dopo ~600 km`);
+    ok(+(await p.textContent('[data-km-out]')) >= 375 && (await p.textContent('[data-tb=vscroll] [data-place]')) === 'Milano' && (await p.textContent('[data-tb=vscroll] .jsign--brown')).includes('Il Ranch') && (await p.textContent('[data-tb=vscroll] .jsign--pink')).includes('Market 07.11'), `[${name}] Cadillac: parte dal Ranch di Chianni, arriva a Milano dopo ~390 km (ultimo cartello: Market 07.11)`);
     await shot('cadillac');
-    await p.$eval('[data-tb=mxs]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.5, behavior: 'instant' })); await p.waitForTimeout(1200);
-    ok((await p.$$('.mxs__ch')).length === 5 && (await p.$eval('[data-mxs-bike]', b => b.style.transform)).includes('rotate('), `[${name}] storia in moto: 5 capitoli, moto sulle dune`);
-    ok((await p.$$('.mxs__ch--media')).length === 5 && (await p.$$('.mxs__pic video')).length === 2 && (await p.$$('.mxs__pic img')).length === 3, `[${name}] storia in moto: ogni capitolo con foto/video veri (2 video + 3 foto)`);
-    // illustrated bike: every layer loaded, wheels spin, and on the ground both tyres sit on the drawn track
-    await p.waitForFunction(() => [...document.querySelectorAll('.mx--art img')].every(i => i.complete && i.naturalWidth > 0), null, { timeout: 8000 }).catch(() => {});
-    const art = [];
-    for (const f of [0.08, 0.2, 0.33, 0.47, 0.6, 0.74, 0.88]) {
-      await p.$eval('[data-tb=mxs]', (el, f) => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * f, behavior: 'instant' }), f); await p.waitForTimeout(900);
-      art.push(await p.evaluate(() => {
-        const root = document.querySelector('[data-tb=mxs]'), bike = root.querySelector('[data-mxs-bike]'), m = root._mx.get();
-        const st = root.querySelector('.mxs__s').getBoundingClientRect(), wl = root.querySelector('[data-mxs-world]').getBoundingClientRect().left;
-        const r = bike.offsetWidth * +root.querySelector('[data-bike-art]').dataset.r;
-        // distance from each axle to the nearest point of the track, minus the tyre radius (works on slopes too)
-        const gap = [...bike.querySelectorAll('.mxa__w')].map(w => {
-          const b = w.getBoundingClientRect(), cx = b.left + b.width / 2, cy = b.top + b.height / 2;
-          let d = 1e9; for (let x = cx - 2 * r; x <= cx + 2 * r; x++) d = Math.min(d, Math.hypot(x - cx, st.top + m.T(x - wl) - cy));
-          return Math.abs(d - r);
-        });
-        return { air: bike.querySelector('.mx__shadow').style.opacity === '0', gap, wheel: bike.querySelector('.mxa__w').style.transform, arm: bike.querySelector('.mxa__arm').style.transform };
-      }));
-    }
-    const grounded = art.filter(a => !a.air), worst = Math.max(...grounded.flatMap(a => a.gap));
-    ok((await p.$$('.mx--art img')).length === 5 && await p.$$eval('.mx--art img', is => is.every(i => i.complete && i.naturalWidth > 0)), `[${name}] storia in moto: moto illustrata, 5 livelli caricati`);
-    ok(new Set(art.map(a => a.wheel)).size === art.length && art.every(a => a.arm.includes('rotate(')), `[${name}] storia in moto: ruote che girano, forcellone che segue la sospensione`);
-    ok(grounded.length >= 3 && worst < 8, `[${name}] storia in moto: a terra le gomme toccano la pista (${grounded.length} punti, scarto max ${worst.toFixed(1)} px)`);
-    await shot('mx');
+    ok(!(await p.$('[data-tb=mxs]')), `[${name}] home: niente Storia in moto (minigioco tolto)`);
     // crew wall: polaroids slide with the scroll, open big, step with the arrows
     await p.$eval('[data-tb=crew]', el => scrollTo({ top: el.offsetTop - innerHeight * 0.6, behavior: 'instant' })); await p.waitForTimeout(700);
     const cw1 = await p.$eval('[data-crew-row]', r => r.style.transform);
