@@ -25,6 +25,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok((await p.textContent('#shopify-section-drop .card .price')).includes('89,00'), `[${name}] prezzi: quelli del foglio + 10 € (Merde X 89 €)`);
     await p.click('#shopify-section-drop .tab[data-f="long-sleeve"]'); await p.waitForTimeout(300);
     ok(await p.$$eval('#shopify-section-drop .card', c => { const v = c.filter(x => getComputedStyle(x).display !== 'none'); return v.length === 9 && v.every(x => x.classList.contains('sold')); }), `[${name}] griglia: il filtro Long sleeve mostra le 9 longsleeve sold out`);
+    ok(await p.$$eval('#shopify-section-drop .card.sold', c => c.filter(x => getComputedStyle(x).display !== 'none').every(x => { const f = getComputedStyle(x.querySelector('.flip')); return f.filter === 'none' && f.opacity === '1' && /sold out/i.test(x.querySelector('.stamp').textContent); })), `[${name}] sold out: maglie a colori con la scritta SOLD OUT sopra`);
     await p.click('#shopify-section-drop .tab[data-f="all"]'); await p.waitForTimeout(300);
     ok(await p.$$eval('#shopify-section-drop .card', c => c.filter(x => getComputedStyle(x).display !== 'none').length) === 8, `[${name}] griglia: su Tutto restano 8 pezzi`);
     ok(await p.$$eval('#shopify-section-drop .card[data-quick]', x => x.filter(c => getComputedStyle(c).display !== 'none').length) === 8, `[${name}] home: 8 prodotti veri nella griglia (gli altri del drop sotto i filtri)`);
