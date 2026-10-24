@@ -488,6 +488,11 @@
       var tc = $('[data-tc]', root), placeOut = $('[data-place-out]', root), dateOut = $('[data-date-out]', root), sound = $('[data-sound]', root);
       var auto = (+root.dataset.auto || 0) * 1000, cur = 0, muted = true, visible = false, timer = 0, t0 = performance.now(), lastTc = '', bubT = [];
       root.style.setProperty('--auto', (auto / 1000) + 's');
+      // stickers get slapped on the frame the first time the section is on screen
+      if ($('.reel__stk', root)) {
+        if ('IntersectionObserver' in window && !reduce) new IntersectionObserver(function (es, ob) { if (es[0].isIntersecting) { root.classList.add('stk-in'); ob.disconnect(); } }, { threshold: 0.3 }).observe(root);
+        else root.classList.add('stk-in');
+      }
       var vid = function (i) { return clips[i] ? $('video', clips[i]) : null; };
       var pad = function (n) { return String(Math.floor(n)).padStart(2, '0'); };
       function playCur() {
@@ -1124,7 +1129,8 @@
   }
 
   /* ---------------- loader + cursor ---------------- */
-  // opening: the Team Butti bike crosses the screen kicking up sand, the sand cloud covers everything and settles on the page
+  // opening: the Team Butti bike rides a motocross track drawn to fit the screen (whoops, kicker, jump over the pit,
+  // landing, finish arch), kicks up sand and leaves its ruts; at the finish the sand cloud covers everything and settles on the page
   function loader() {
     var l = $('#loader'); if (!l) return;
     var out = false, done = function () {
@@ -1132,35 +1138,114 @@
       l.classList.add('done'); lock(false); setTimeout(function () { l.remove(); }, 900);
     };
     if (reduce || window.Shopify && window.Shopify.designMode) { l.remove(); return; }
+    try { sessionStorage.setItem('tb-loader', '1'); } catch (e) {}
     lock(true);
     l.addEventListener('click', done);
-    setTimeout(done, 5000);
-    var bike = $('[data-lbike]', l), sand = $('[data-lsand]', l), started = false;
+    setTimeout(done, 6500);
+    var bike = $('[data-lbike]', l), fx = $('[data-lsand]', l), scene = $('[data-lscene]', l), art = $('[data-wb]', bike);
+    var W = l.clientWidth, H = l.clientHeight, bw = bike.offsetWidth, bh = bike.offsetHeight;
+    var WB = bw * +art.dataset.wb, CX = bw * +art.dataset.cx, GY = bh * +art.dataset.ground, u = bw;
+    bike.style.transformOrigin = CX + 'px ' + GY + 'px';
+    // track: everything in px, scaled to the bike so the jump looks the same on a phone and on a big screen
+    var y0 = H * (H > W * 1.1 ? 0.7 : 0.82), s = Math.min(1, W * 0.95 / (3.25 * u));
+    l.style.setProperty('--ly', y0 + 'px');
+    var kL = 1.1 * u * s, kH = 0.36 * u * s, gap = 0.95 * u * s, lL = 1.2 * u * s, lH = 0.3 * u * s, face = 0.1 * u * s;
+    var lip = W * 0.42, k0 = lip - kL, l0 = lip + gap, l1 = l0 + lL, wa = 0.035 * u, wl = 0.42 * u;
+    var sm = function (t) { return t * t * (3 - 2 * t); };
+    var kick = function (x) { var t = (x - k0) / kL; return y0 - kH * t * t * (1.7 - 0.7 * t); };
+    var lipY = kick(lip), lipSlope = (lipY - kick(lip - 2)) / 2;
+    // surface the wheels roll on; over the pit the kicker carries on as a straight line (front wheel already in the air)
+    function g(x) {
+      if (x <= k0) return x > 0.04 * W && x < k0 - 0.35 * u ? y0 - wa * (1 - Math.cos(2 * Math.PI * (x - 0.04 * W) / wl)) / 2 : y0;
+      if (x <= lip) return kick(x);
+      if (x < l0) return lipY + lipSlope * (x - lip);
+      if (x < l1) return y0 - lH * (1 - sm((x - l0) / lL));
+      return x > l1 + 0.3 * u && x < W * 0.86 ? y0 - wa * (1 - Math.cos(2 * Math.PI * (x - l1 - 0.3 * u) / wl)) / 2 : y0;
+    }
+    // airborne from the moment the rear wheel leaves the lip until both wheels are back on the landing ramp
+    var A = lip + WB / 2, B = l0 + Math.max(0.42 * lL, WB / 2 + 4);
+    var yA = lipY + lipSlope * WB / 2, yB = (g(B - WB / 2) + g(B + WB / 2)) / 2, peak = 0.5 * u * s;
+    var aA = Math.atan(lipSlope), aB = Math.atan2(g(B + WB / 2) - g(B - WB / 2), WB);
+    function pose(xc) {
+      if (xc > A && xc < B) {
+        var t = (xc - A) / (B - A);
+        return { y: yA + (yB - yA) * t - peak * 4 * t * (1 - t), a: aA + (aB - aA) * sm(t) - 0.12 * Math.sin(Math.PI * t), air: true };
+      }
+      var yr = g(xc - WB / 2), yf = g(xc + WB / 2);
+      return { y: (yr + yf) / 2, a: Math.atan2(yf - yr, WB), air: false };
+    }
+    // scene
+    var n = function (v) { return v.toFixed(1); }, ns = 'http://www.w3.org/2000/svg';
+    var ground = 'M0 ' + n(H);
+    for (var x = 0; x <= W; x += 6) {
+      if (x > lip && x < l0) continue;
+      ground += 'L' + n(x) + ' ' + n(x > lip && x < l0 ? y0 : g(x));
+      if (x <= lip && x + 6 > lip) ground += 'L' + n(lip) + ' ' + n(lipY) + 'L' + n(lip + face) + ' ' + n(y0) + 'L' + n(l0 - face) + ' ' + n(y0) + 'L' + n(l0) + ' ' + n(g(l0));
+    }
+    ground += 'L' + n(W) + ' ' + n(H) + 'Z';
+    var surf = function (from, to) { var d = ''; for (var x = from; x <= to; x += 6) d += (d ? 'L' : 'M') + n(x) + ' ' + n(g(x) + 0.03 * u); return d; };
+    var seed = 7, rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    var clods = '';
+    for (var q = 0; q < Math.round(W * (H - y0) / 2600); q++) clods += '<circle cx="' + n(rnd() * W) + '" cy="' + n(y0 + 16 + rnd() * (H - y0 - 20)) + '" r="' + n(1.5 + rnd() * 3) + '"/>';
+    var su = u / 300, as = Math.min(su * 1.5, W * 0.42 / 264), fin = Math.min(W * 0.86, W - 140 * as - 6), hay = k0 - 0.45 * u;
+    var props =
+      // start flag
+      '<g transform="translate(' + n(W * 0.03) + ' ' + n(g(W * 0.03)) + ') scale(' + n(su * 1.2) + ')"><path d="M0 0V-120" stroke="#0d0d0d" stroke-width="5"/><path d="M0 -120L64 -104L0 -88Z" fill="#ffd400" stroke="#0d0d0d" stroke-width="4" stroke-linejoin="round"/></g>' +
+      // tyre stack right of the finish, if the screen has room
+      (fin + 140 * as + 0.3 * u < W ? '<g transform="translate(' + n(fin + 140 * as + 0.2 * u) + ' ' + n(g(fin + 140 * as + 0.2 * u)) + ') scale(' + n(su * 1.3) + ')"><g fill="#1a1a1a" stroke="#0d0d0d" stroke-width="3"><rect x="-30" y="-17" width="60" height="18" rx="9"/><rect x="-28" y="-33" width="56" height="17" rx="8"/><rect x="-26" y="-49" width="52" height="17" rx="8"/></g><path d="M-22 -41h44M-24 -25h48" stroke="#ffd400" stroke-width="4"/></g>' : '') +
+      // hay bale with the 69 before the kicker, if the screen has room
+      (hay > W * 0.12 ? '<g transform="translate(' + n(hay) + ' ' + n(g(hay)) + ') scale(' + n(su * 1.3) + ')"><rect x="-40" y="-40" width="80" height="42" rx="9" fill="#e8c66f" stroke="#0d0d0d" stroke-width="3.5"/><path d="M-30 -29h60M-30 -17h60" stroke="#b98d35" stroke-width="2.5"/><rect x="-17" y="-36" width="34" height="26" fill="#f4f1ea" stroke="#0d0d0d" stroke-width="2.5"/><text x="0" y="-16" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="19" fill="#0d0d0d">69</text></g>' : '') +
+      // finish arch: the bike rides under it
+      '<g transform="translate(' + n(fin) + ' ' + n(y0) + ') scale(' + n(as) + ')"><path d="M-120 0V-200M120 0V-200" stroke="#0d0d0d" stroke-width="8"/><rect x="-132" y="-226" width="264" height="52" fill="#ff2e93" stroke="#0d0d0d" stroke-width="4"/><text x="0" y="-188" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="36" fill="#0d0d0d">TEAM BUTTI</text><g fill="#0d0d0d">' + (function () { var r = ''; for (var k = 0; k < 13; k++) r += '<rect x="' + n(-132 + k * 20.3) + '" y="' + (k % 2 ? -174 : -165) + '" width="20.3" height="9"/>'; return r; })() + '</g></g>';
+    scene.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    scene.innerHTML =
+      '<defs><linearGradient id="ldirt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dcb273"/><stop offset="1" stop-color="#9a6332"/></linearGradient>' +
+      '<clipPath id="lrut"><rect data-lrut x="0" y="0" width="0" height="' + H + '"/></clipPath></defs>' +
+      props +
+      '<path d="' + ground + '" fill="url(#ldirt)" stroke="#0d0d0d" stroke-width="5" stroke-linejoin="round"/>' +
+      '<g fill="rgba(90,52,20,.35)">' + clods + '</g>' +
+      '<path d="' + surf(0, lip) + surf(l0, W) + '" fill="none" stroke="#f0d39a" stroke-width="3" opacity=".8"/>' +
+      '<g clip-path="url(#lrut)" fill="none" stroke="rgba(70,40,14,.55)" stroke-width="' + n(0.03 * u) + '" stroke-dasharray="' + n(0.06 * u) + ' ' + n(0.035 * u) + '"><path d="' + surf(0, lip) + '"/><path d="' + surf(B - WB / 2, W) + '"/></g>';
+    var rut = $('[data-lrut]', scene);
+    var cols = ['#ecd3a0', '#dcb877', '#c9a46a', '#f3e2bd'];
+    function puff(x, y, sz, dx, dy) {
+      var p = document.createElement('i');
+      p.style.cssText = 'left:' + n(x) + 'px;top:' + n(y) + 'px;width:' + n(sz) + 'px;background:' + cols[Math.floor(Math.random() * cols.length)] + ';--dx:' + n(dx) + 'px;--dy:' + n(dy) + 'px';
+      fx.appendChild(p);
+    }
     function ride() {
-      if (started || out) return; started = true;
-      var W = l.clientWidth, bw = bike.offsetWidth, bh = bike.offsetHeight, t0 = performance.now(), dur = 1300, last = -bw, acc = 0;
-      var cols = ['#e8ce98', '#d9b77a', '#c9a46a', '#f0dcb0'];
+      if (ride.on || out) return; ride.on = true;
+      var t0 = performance.now(), dur = 2100, acc = 0, last = -2 * u, wasAir = false, braap = false, dust = false;
+      bike.style.visibility = 'visible';
       (function step(now) {
         if (out) return;
-        var p = Math.min(1, (now - t0) / dur), e = p * (0.55 + 0.45 * p), x = -bw + e * (W + bw * 1.15);
-        // front wheel up at the start, then the bike settles
-        bike.style.transform = 'translate3d(' + x.toFixed(1) + 'px,0,0) rotate(' + (-9 * Math.max(0, 1 - p * 2.4)).toFixed(2) + 'deg)';
-        acc += x - last; last = x;
-        // roost from the rear wheel: the faster the bike, the bigger the cloud
-        while (acc > 16) {
-          acc -= 16;
-          var s = document.createElement('i'), sz = bh * (0.18 + Math.random() * 0.3) * (0.6 + p);
-          s.style.cssText = 'left:' + (x + bw * 0.12).toFixed(0) + 'px;width:' + sz.toFixed(0) + 'px;background:' + cols[Math.floor(Math.random() * cols.length)] +
-            ';--dx:' + (-40 - Math.random() * 120).toFixed(0) + 'px;--dy:' + (-20 - Math.random() * bh * 0.7).toFixed(0) + 'px';
-          sand.appendChild(s);
+        var p = Math.min(1, (now - t0) / dur), xc = -0.7 * u + (W + 1.5 * u) * p * (0.7 + 0.3 * p), ps = pose(xc);
+        bike.style.transform = 'translate3d(' + n(xc - CX) + 'px,' + n(ps.y - GY) + 'px,0) rotate(' + (ps.a * 180 / Math.PI).toFixed(2) + 'deg)';
+        rut.setAttribute('width', Math.max(0, xc - WB / 2));
+        var xr = xc - WB / 2;
+        if (!ps.air) {
+          acc += xc - last;
+          // roost from the rear wheel
+          while (acc > 0.05 * u) { acc -= 0.05 * u; puff(xr, g(xr) - 4, u * (0.1 + Math.random() * 0.16), -0.15 * u - Math.random() * 0.4 * u, -0.05 * u - Math.random() * 0.45 * u); }
         }
-        if (p < 1) requestAnimationFrame(step);
-        else { l.classList.add('dust'); setTimeout(done, 420); }
+        if (ps.air && !braap) {
+          braap = true;
+          var b = document.createElement('b'); b.className = 'loader__braap'; b.textContent = 'BRAAAP!';
+          b.style.left = n(lip) + 'px'; b.style.top = n(lipY - 0.9 * bh) + 'px'; fx.appendChild(b);
+        }
+        if (wasAir && !ps.air) {
+          // landing: suspension, a big burst of sand, the ground shakes
+          for (var k = 0; k < 16; k++) puff(xc + (k % 2 ? 1 : -1) * Math.random() * WB * 0.6, g(xc) - 6, u * (0.16 + Math.random() * 0.22), (k % 2 ? 1 : -1) * (0.1 + Math.random() * 0.5) * u, -0.1 * u - Math.random() * 0.4 * u);
+          art.classList.remove('land'); void art.offsetWidth; art.classList.add('land');
+          l.classList.add('shake'); setTimeout(function () { l.classList.remove('shake'); }, 320);
+        }
+        wasAir = ps.air; last = xc;
+        if (!dust && xc > fin + 0.3 * u) { dust = true; l.classList.add('dust'); setTimeout(done, 480); }
+        if (p < 1) requestAnimationFrame(step); else if (!dust) { l.classList.add('dust'); setTimeout(done, 480); }
       })(t0);
     }
     // start once the bike layers are decoded (they are preloaded in <head>), or after 700 ms anyway
-    var imgs = $$('img', bike);
-    Promise.all(imgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : null; })).then(ride);
+    Promise.all($$('img', bike).map(function (im) { return im.decode ? im.decode().catch(function () {}) : null; })).then(ride);
     setTimeout(ride, 700);
   }
   function cursor() {

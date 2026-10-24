@@ -11,6 +11,18 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.3.0
+- **Loader con pista vera**: dietro c'è il panorama Chianni → Milano. La pista si adatta allo schermo, con whoops, rampa, buca e salto ("BRAAAP!"). All'atterraggio la moto ammortizza, si alza il polverone e la terra trema. Le gomme lasciano i solchi; bandiera, balla 69, gomme e arco d'arrivo TEAM BUTTI completano la scena.
+  - Di default si vede solo alla prima apertura della home nella visita (*Effetti → Loader solo alla prima apertura*).
+- **Sticker veri** dal foglio del team, scontornati con il bordo fustellato (`tools/art/sticker/cut.py`, file `tb-sticker-*.png` nei File di Shopify):
+  - nel manifesto, trascinabili: Team Butti groovy, guanto, Pigboy, soldatino skate;
+  - sul video della Cadillac: Hot Milfs e Toyoda;
+  - nel muro della crew: I'm loving it e TEAM BUTTI MERDE.
+  - I blocchi sticker ora accettano un'immagine.
+- **Market Milano**: al posto del gadget c'è la Crew List (tag `crew-list`). Il 6 novembre chi è in lista riceve cosa portate e, rispondendo con la taglia, si fa tenere il pezzo da parte fino alle 13.
+- **Contatti**: nuovo modulo contatti (`sections/contact-form.liquid`, modello `page.contact`).
+- **Spedizione** nella scheda prodotto: 5 € in Italia e UE, gratis sopra 100 €.
+
 ## Novità v2.2.0 (modifiche dopo la call con il team)
 **Home**
 - **Vibe della hero**: restano i primi tre, Pink Market (il primo), Leopardo e Giallo MX. Night Milano e Neon Dirt sono tolti.

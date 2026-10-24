@@ -63,12 +63,17 @@
   <body class="template-{{ template.name }}{% if settings.grain %} has-grain{% endif %}">
     <a class="skip-link" href="#main">{{ 'general.skip' | t }}</a>
     {%- if settings.loader and template.name == 'index' -%}
-      {%- comment -%} the Team Butti bike crosses the screen and kicks up sand; the sand cloud covers everything, then settles on the page {%- endcomment -%}
+      {%- comment -%}
+        The Team Butti bike rides a motocross track (whoops, kicker, jump, landing, finish arch) drawn by theme.js,
+        kicks up sand and leaves its ruts; the sand cloud covers everything, then settles on the page.
+        Bike geometry (data-*) as in snippets/mx-bike-art.liquid.
+      {%- endcomment -%}
       <div class="loader" id="loader" aria-hidden="true">
+        <div class="loader__pano">{% render 'panorama' %}</div>
+        <svg class="loader__scene" data-lscene focusable="false"></svg>
         <div class="loader__in">{% render 'badge' %}</div>
-        <div class="loader__ground"></div>
         <div class="loader__bike" data-lbike>
-          <div class="mx mx--art">
+          <div class="mx mx--art" data-wb="0.6647" data-cx="0.4983" data-ground="0.9932">
             <img class="mx__wh mxa__w mxa__w--r" src="{{ 'tb-moto-ruota-post-s.webp' | asset_url }}" width="199" height="199" alt="">
             <img class="mx__wh mxa__w mxa__w--f" src="{{ 'tb-moto-ruota-ant-s.webp' | asset_url }}" width="202" height="202" alt="">
             <img class="mxa__l mx__body" src="{{ 'tb-moto-corpo-s.webp' | asset_url }}" width="600" height="531" alt="">
@@ -76,9 +81,12 @@
             <img class="mxa__l mxa__fork" src="{{ 'tb-moto-forcella-s.webp' | asset_url }}" width="600" height="531" alt="">
           </div>
         </div>
-        <div class="loader__sand" data-lsand></div>
+        <div class="loader__fx" data-lsand></div>
         <div class="loader__cloud"></div>
       </div>
+      {%- if settings.loader_once -%}
+        <script>try { if (sessionStorage.getItem('tb-loader')) document.getElementById('loader').remove(); } catch (e) {}</script>
+      {%- endif -%}
     {%- endif -%}
     {%- if settings.custom_cursor -%}<div class="cur" id="cur" aria-hidden="true"></div>{%- endif -%}
 

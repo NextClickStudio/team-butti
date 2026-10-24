@@ -39,22 +39,29 @@ button{background:none;border:0;padding:0;cursor:pointer}
 body.has-grain::after{content:'';position:fixed;inset:0;z-index:900;pointer-events:none;opacity:.09;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 @keyframes grain{0%,100%{transform:translate(0,0)}25%{transform:translate(-4%,3%)}50%{transform:translate(3%,-4%)}75%{transform:translate(-3%,-2%)}}
 
-/* loader: motocross on fuchsia, sand roost, then the cloud settles */
-.loader{position:fixed;inset:0;z-index:1000;overflow:hidden;background:radial-gradient(circle,rgba(0,0,0,.22) 1.3px,transparent 1.8px) 0 0/9px 9px,var(--pink);color:var(--ink);transition:opacity .7s ease}
+/* loader: motocross track on fuchsia (drawn by theme.js), sand roost, then the cloud settles */
+.loader{position:fixed;inset:0;z-index:1000;overflow:hidden;background:radial-gradient(circle,rgba(0,0,0,.2) 1.3px,transparent 1.8px) 0 0/9px 9px,var(--pink);color:var(--ink);transition:opacity .7s ease}
 .loader.done{opacity:0;pointer-events:none}
-.loader__in{position:absolute;left:0;right:0;top:20%;display:grid;justify-items:center}
-.loader .badge{width:150px;height:150px;font-size:44px;animation:slam .6s cubic-bezier(.2,1.6,.4,1) both}
-.loader__ground{position:absolute;left:0;right:0;bottom:0;height:24%;background:repeating-linear-gradient(90deg,rgba(13,13,13,.08) 0 3px,transparent 3px 46px),var(--sand);border-top:4px solid var(--ink)}
-.loader__bike{position:absolute;left:0;bottom:calc(24% - .5%);width:clamp(190px,24vw,380px);z-index:2;transform:translate3d(-110%,0,0);transform-origin:17% 99%;will-change:transform}
-.loader__bike .mxa__w{animation:spin .28s linear infinite}
+.loader__scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+.loader__pano{position:absolute;left:0;right:0;top:calc(var(--ly,82vh) - clamp(110px,17vw,250px) + 4px);height:clamp(110px,17vw,250px);color:var(--ink)}
+.loader__pano .pano__far{opacity:.12}.loader__pano .pano__mid{opacity:.2}.loader__pano .pano__near{opacity:.26}
+.loader.shake .loader__scene{animation:lshake .3s steps(6) both}
+@keyframes lshake{0%,100%{transform:none}20%{transform:translate(-3px,3px)}40%{transform:translate(3px,-2px)}60%{transform:translate(-2px,2px)}80%{transform:translate(2px,0)}}
+.loader__in{position:absolute;right:9%;top:9%;z-index:1}
+.loader .badge{width:130px;height:130px;font-size:38px;animation:slam .6s cubic-bezier(.2,1.6,.4,1) both}
+.loader__bike{position:absolute;left:0;top:0;width:clamp(190px,24vw,380px);z-index:2;visibility:hidden;will-change:transform}
+.loader__bike .mxa__w{animation:spin .26s linear infinite}
 .loader__bike .mx__body{animation:cruise .12s ease-in-out infinite alternate}
-.loader__sand{position:absolute;left:0;right:0;bottom:24%;height:0;z-index:3}
-.loader__sand i{position:absolute;bottom:-12px;aspect-ratio:1.4;border-radius:50%;opacity:.95;transform:translate(-50%,0) scale(.3);animation:sand 1.3s cubic-bezier(.15,.7,.3,1) forwards}
-@keyframes sand{to{transform:translate(calc(-50% + var(--dx)),var(--dy)) scale(2.6);opacity:.55}}
+.loader__bike .land .mx__body{animation:lland .38s cubic-bezier(.3,1.6,.5,1)}
+@keyframes lland{35%{transform:translateY(6%)}}
+.loader__fx{position:absolute;inset:0;z-index:3;pointer-events:none}
+.loader__fx i{position:absolute;aspect-ratio:1.4;border-radius:50%;opacity:.95;transform:translate(-50%,-50%) scale(.3);animation:sand 1.3s cubic-bezier(.15,.7,.3,1) forwards}
+@keyframes sand{to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(2.6);opacity:.35}}
+.loader__braap{position:absolute;font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,72px);line-height:1;color:var(--yellow);-webkit-text-stroke:2px var(--ink);text-shadow:5px 5px 0 var(--ink);white-space:nowrap;animation:braapmx 1s cubic-bezier(.2,1.4,.4,1) forwards}
 .loader__cloud{position:absolute;left:50%;top:70%;width:260vmax;height:260vmax;margin:-130vmax 0 0 -130vmax;z-index:4;border-radius:50%;background:radial-gradient(closest-side,#ead2a0 0,#dcbd84 68%,rgba(220,189,132,0) 100%);transform:scale(0);transition:transform .55s cubic-bezier(.3,.7,.3,1)}
 .loader.dust .loader__cloud{transform:scale(1)}
 .loader.done .loader__cloud{transform:scale(1.2)}
-@media(max-width:700px){.loader__bike{width:52vw}.loader .badge{width:120px;height:120px;font-size:36px}}
+@media(max-width:700px){.loader__bike{width:40vw}.loader__in{right:6%;top:7%}.loader .badge{width:92px;height:92px;font-size:27px}}
 @keyframes slam{0%{transform:scale(3) rotate(-20deg);opacity:0}100%{transform:none;opacity:1}}
 
 /* badge logo */
@@ -1042,3 +1049,21 @@ html[data-img-fit="contain"] .pdp__slide{background:var(--paper)}
 .pdp__fit::before{content:'';flex:none;width:14px;height:14px;border:2px solid currentColor;border-radius:50%;background:radial-gradient(circle,currentColor 0 2px,transparent 3px)}
 /* ===== v2.2: grid: pieces past the limit appear only under their type filter ===== */
 [data-tb=grid]:not(.is-filtered) .card[data-more]{display:none!important}
+/* ===== v2.3: die-cut image stickers (manifesto, crew wall, brand video) ===== */
+.stk--img{width:min(var(--w,170px),34vw);line-height:0;filter:drop-shadow(5px 7px 0 rgba(0,0,0,.4))}
+.stk--img img{width:100%;height:auto;pointer-events:none;-webkit-user-drag:none;user-select:none}
+.crew__stk.stk--img{width:min(var(--w,180px),36vw)}
+.reel__stk{position:absolute;z-index:3;width:min(var(--w,200px),30vw);line-height:0;pointer-events:none;filter:drop-shadow(5px 7px 0 rgba(0,0,0,.45));opacity:0;transform:scale(1.7) rotate(calc(var(--r) - 14deg))}
+.reel__stk img{width:100%;height:auto}
+.stk-in .reel__stk{opacity:1;transform:rotate(var(--r));transition:transform .5s cubic-bezier(.2,1.6,.4,1) var(--d),opacity .15s var(--d)}
+@media(max-width:700px){.reel__stk{width:min(var(--w,200px),34vw)}}
+@media(prefers-reduced-motion:reduce){.reel__stk{opacity:1;transform:rotate(var(--r))}}
+/* ===== v2.3: contact form (page.contact) ===== */
+.contact{padding-top:0}
+.contact__form{display:grid;gap:16px;max-width:760px}
+.contact__row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.contact__f{display:grid;gap:6px}
+.contact__f input,.contact__f textarea{width:100%;border:3px solid var(--ink);background:var(--paper);padding:14px 16px;font-family:var(--mono);font-size:14px;color:var(--ink);border-radius:0}
+.contact__f input:focus,.contact__f textarea:focus{outline:3px solid var(--pink);outline-offset:0}
+.contact__form .btn{justify-self:start}
+@media(max-width:700px){.contact__row{grid-template-columns:1fr}.contact__f input,.contact__f textarea{font-size:16px}}

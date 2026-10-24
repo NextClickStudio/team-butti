@@ -16,7 +16,8 @@ JSON.parse(rd('config/settings_schema.json')).forEach(g => (g.settings || []).fo
 settings.social_instagram = 'https://www.instagram.com/team_butti/';
 // Legal texts (legal/*.md) as the store's policies and the cookie policy page; [PLACEHOLDERS] stay visible, highlighted
 const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const inline = t => esc(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/\[([A-ZÀ-Ú0-9 .\/]+)\]/g, '<mark>[$1]</mark>');
+// \* is a literal asterisk (the (*) of the withdrawal form), not emphasis
+const inline = t => esc(t).replace(/\\\*/g, '\u0000').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/\[([A-ZÀ-Ú0-9 .\/]+)\]/g, '<mark>[$1]</mark>').replace(/\u0000/g, '*');
 function md(src) {
   const out = []; let list = null, table = null, quote = [];
   const flush = () => {

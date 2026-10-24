@@ -2,9 +2,15 @@
   {%- if section.blocks.size > 0 -%}<span class="mani__hint">{{ 'manifesto.drag' | t }}</span>{%- endif -%}
   <div class="stickers">
     {%- for block in section.blocks -%}
-      <div class="stk stk--{{ block.settings.style }}{% if block.settings.style == 'badge' %} badge{% endif %}" style="left:{{ block.settings.x }}%;top:{{ block.settings.y }}%;rotate:{{ block.settings.rotate }}deg" {{ block.shopify_attributes }}>
-        {{- block.settings.text | escape | replace: '|', '<br>' -}}
-      </div>
+      {%- if block.settings.image != blank -%}
+        <div class="stk stk--img" style="left:{{ block.settings.x }}%;top:{{ block.settings.y }}%;rotate:{{ block.settings.rotate }}deg;--w:{{ block.settings.size }}px" {{ block.shopify_attributes }}>
+          {{- block.settings.image | image_url: width: 640 | image_tag: loading: 'lazy', widths: '320,480,640', sizes: '(min-width: 990px) 260px, 34vw', alt: block.settings.text, draggable: 'false' -}}
+        </div>
+      {%- else -%}
+        <div class="stk stk--{{ block.settings.style }}{% if block.settings.style == 'badge' %} badge{% endif %}" style="left:{{ block.settings.x }}%;top:{{ block.settings.y }}%;rotate:{{ block.settings.rotate }}deg" {{ block.shopify_attributes }}>
+          {{- block.settings.text | escape | replace: '|', '<br>' -}}
+        </div>
+      {%- endif -%}
     {%- endfor -%}
   </div>
   <div class="mani__txt" data-words>{{ section.settings.text }}</div>
@@ -27,6 +33,8 @@
       "type": "sticker",
       "name": "Sticker",
       "settings": [
+        { "type": "image_picker", "id": "image", "label": "Sticker (immagine)", "info": "PNG scontornato. Se c'è, prende il posto del testo; il testo diventa la descrizione dell'immagine." },
+        { "type": "range", "id": "size", "label": "Larghezza sticker immagine", "min": 80, "max": 320, "step": 10, "unit": "px", "default": 170 },
         { "type": "text", "id": "text", "label": "Testo", "default": "MERDE", "info": "Usa | per andare a capo" },
         { "type": "select", "id": "style", "label": "Stile", "default": "a", "options": [
           { "value": "a", "label": "Giallo" },

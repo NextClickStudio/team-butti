@@ -1,4 +1,5 @@
 # Cuts the stickers out of the sheet: each gets a white die-cut border around its artwork, transparent outside.
+# Usage: python3 -I tools/art/sticker/cut.py <sticker sheet.jpg> <output folder>  (the boxes below are for the Team Butti sheet, 1024x1536)
 import sys, os, numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage as ndi

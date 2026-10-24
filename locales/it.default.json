@@ -119,6 +119,15 @@
     "next": "Foto successiva",
     "slot": "Foto della crew"
   },
+  "contact": {
+    "name": "Nome",
+    "email": "Email",
+    "order": "Numero d'ordine (se ce l'hai)",
+    "message": "Messaggio",
+    "submit": "Invia",
+    "success": "Ricevuto. Ti rispondiamo entro 2 giorni lavorativi.",
+    "note": "Usiamo i tuoi dati solo per risponderti."
+  },
   "legal": {
     "title": "Informazioni legali",
     "privacy": "Informativa privacy",

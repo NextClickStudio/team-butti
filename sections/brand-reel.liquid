@@ -3,10 +3,12 @@
   with a camcorder HUD (REC, timecode, place, date), clip tabs, comic speech bubbles per clip
   and a shop button that is always on screen.
   Vertical clips (Reels 9:16) get a blurred backdrop so they also work full-width.
+  Sticker blocks are slapped on the camcorder frame when the section comes into view.
   Live store: hidden until at least one clip has a video. Theme editor: placeholders are shown.
 {%- endcomment -%}
 {%- liquid
   assign clips = section.blocks | where: 'type', 'clip'
+  assign stickers = section.blocks | where: 'type', 'sticker'
   assign has_video = false
   for c in clips
     if c.settings.video != blank
@@ -65,6 +67,13 @@
         <span class="reel__meta"><b data-place-out>{{ first.settings.place | escape }}</b><span data-date-out>{{ first.settings.date | escape }}</span></span>
         <span class="reel__bat"><i></i><i></i><i></i></span>
       </div>
+      {%- for s in stickers -%}
+        {%- if s.settings.image != blank -%}
+          <span class="reel__stk" style="left: {{ s.settings.x }}%; top: {{ s.settings.y }}%; --r: {{ s.settings.rotate }}deg; --w: {{ s.settings.size }}px; --d: {{ forloop.index0 | times: 140 }}ms" {{ s.shopify_attributes }}>
+            {{- s.settings.image | image_url: width: 640 | image_tag: loading: 'lazy', widths: '320,480,640', sizes: '(min-width: 990px) 260px, 34vw', alt: '', draggable: 'false' -}}
+          </span>
+        {%- endif -%}
+      {%- endfor -%}
       <p class="reel__kicker label">{{ section.settings.kicker | escape }}</p>
       {%- if section.settings.cta_label != blank -%}
         <a class="reel__cta" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" data-reel-cta data-h>
@@ -103,7 +112,7 @@
 {% schema %}
 {
   "name": "Video del brand",
-  "max_blocks": 6,
+  "max_blocks": 10,
   "settings": [
     { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Girato da noi · nessun attore" },
     { "type": "text", "id": "title_1", "label": "Titolo dietro il video", "default": "La vera" },
@@ -126,12 +135,25 @@
     {
       "type": "clip",
       "name": "Clip",
+      "limit": 6,
       "settings": [
         { "type": "video", "id": "video", "label": "Video", "info": "MP4 orizzontale o verticale (Reel). Max 20 MB consigliati, parte muto in loop." },
         { "type": "text", "id": "title", "label": "Titolo", "default": "Sterrato" },
         { "type": "text", "id": "place", "label": "Luogo (in sovrimpressione)", "default": "Chianni" },
         { "type": "text", "id": "date", "label": "Data (in sovrimpressione)", "default": "2026" },
         { "type": "text", "id": "bubbles", "label": "Fumetti", "info": "Fino a 3, separati da | . Escono uno dopo l'altro mentre gira la clip. Tra virgolette = frase detta da qualcuno.", "default": "Partita da Chianni.|Destinazione Milano." }
+      ]
+    },
+    {
+      "type": "sticker",
+      "name": "Sticker sul video",
+      "limit": 4,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Sticker (PNG scontornato)" },
+        { "type": "range", "id": "x", "label": "Posizione orizzontale", "min": 0, "max": 90, "step": 1, "unit": "%", "default": 4 },
+        { "type": "range", "id": "y", "label": "Posizione verticale", "min": 0, "max": 90, "step": 1, "unit": "%", "default": 30 },
+        { "type": "range", "id": "rotate", "label": "Rotazione", "min": -30, "max": 30, "step": 1, "unit": "°", "default": -8 },
+        { "type": "range", "id": "size", "label": "Larghezza", "min": 80, "max": 320, "step": 10, "unit": "px", "default": 200 }
       ]
     }
   ],

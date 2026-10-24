@@ -33,7 +33,11 @@
         {%- for b in items limit: half offset: off -%}
           {%- assign k = forloop.index0 | plus: off | modulo: 10 -%}
           {%- assign tilt = tilts[k] -%}
-          {%- if b.type == 'sticker' -%}
+          {%- if b.type == 'sticker' and b.settings.image != blank -%}
+            <span class="crew__stk stk stk--img" style="--r: {{ tilt | times: -2 }}deg; --w: {{ b.settings.size }}px" {{ b.shopify_attributes }}>
+              {{- b.settings.image | image_url: width: 560 | image_tag: loading: 'lazy', widths: '280,420,560', sizes: '(min-width: 990px) 220px, 36vw', alt: b.settings.text, draggable: 'false' -}}
+            </span>
+          {%- elsif b.type == 'sticker' -%}
             <span class="crew__stk stk stk--{{ b.settings.style }}" style="--r: {{ tilt | times: -2 }}deg" {{ b.shopify_attributes }}>{{ b.settings.text | escape }}</span>
           {%- elsif b.settings.image != blank -%}
             {%- liquid
@@ -104,6 +108,8 @@
       "type": "sticker",
       "name": "Adesivo",
       "settings": [
+        { "type": "image_picker", "id": "image", "label": "Sticker (immagine)", "info": "PNG scontornato. Se c'è, prende il posto del testo." },
+        { "type": "range", "id": "size", "label": "Larghezza sticker immagine", "min": 80, "max": 300, "step": 10, "unit": "px", "default": 180 },
         { "type": "text", "id": "text", "label": "Testo", "default": "MERDE" },
         { "type": "select", "id": "style", "label": "Stile", "default": "a", "options": [
           { "value": "a", "label": "Giallo" },

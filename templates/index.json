@@ -122,41 +122,49 @@
         "s2": {
           "type": "sticker",
           "settings": {
-            "text": "00|MERDE",
-            "style": "b",
-            "x": 82,
-            "y": 12,
-            "rotate": 12
+            "image": "shopify://shop_images/tb-sticker-team-butti-groovy.png",
+            "size": 230,
+            "text": "Team Butti",
+            "style": "a",
+            "x": 74,
+            "y": 6,
+            "rotate": 8
           }
         },
         "s3": {
           "type": "sticker",
           "settings": {
-            "text": "Tabacchi",
-            "style": "c",
-            "x": 58,
-            "y": 46,
-            "rotate": -6
+            "image": "shopify://shop_images/tb-sticker-dito-medio.png",
+            "size": 150,
+            "text": "Team Butti",
+            "style": "a",
+            "x": 60,
+            "y": 44,
+            "rotate": -7
           }
         },
         "s4": {
           "type": "sticker",
           "settings": {
-            "text": "Pettorina",
-            "style": "d",
-            "x": 12,
-            "y": 78,
-            "rotate": 5
+            "image": "shopify://shop_images/tb-sticker-pigboy.png",
+            "size": 150,
+            "text": "Pigboy Team Butti",
+            "style": "a",
+            "x": 8,
+            "y": 70,
+            "rotate": 6
           }
         },
         "s5": {
           "type": "sticker",
           "settings": {
-            "text": "62",
-            "style": "e",
-            "x": 78,
-            "y": 76,
-            "rotate": -10
+            "image": "shopify://shop_images/tb-sticker-soldatino-skate.png",
+            "size": 170,
+            "text": "Team Butti skate",
+            "style": "a",
+            "x": 80,
+            "y": 68,
+            "rotate": -9
           }
         },
         "s6": {
@@ -189,14 +197,14 @@
         "poster_title": "Market|Milano",
         "poster_date": "07.11|2026",
         "poster_info": "<p>Piazzale Antonio Cantore 10<br>20123 Milano<br>Stesso posto dell'ultima volta</p>",
-        "stamp": "Gadget gratis",
+        "stamp": "Crew List",
         "kicker": "Prossima tappa",
         "title": "Market Milano",
         "date": "2026-11-07T09:00:00+01:00",
-        "text": "Lascia la mail: al market di Piazzale Cantore ti aspetta un gadget Team Butti gratis.",
-        "submit": "Voglio il gadget",
-        "success": "Ci sei. Al market dì la tua mail al banco Team Butti e ritira il gadget.",
-        "tags": "newsletter, market-milano"
+        "text": "Entra nella Crew List: il 6 novembre ti scriviamo cosa portiamo al market. Rispondi con la tua taglia e il pezzo te lo teniamo da parte fino alle 13.",
+        "submit": "Entra in lista",
+        "success": "Sei nella Crew List. Il 6 novembre ti scriviamo noi: rispondi con la tua taglia.",
+        "tags": "newsletter, market-milano, crew-list"
       }
     },
     "story": {
@@ -374,6 +382,26 @@
             "date": "26.09.2026",
             "bubbles": "\"Tira fuori un fumo nero, frate.\"|Prossima fermata: il Market."
           }
+        },
+        "stk1": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-hot-milfs.png",
+            "x": 3,
+            "y": 24,
+            "rotate": -9,
+            "size": 230
+          }
+        },
+        "stk2": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-toyoda.png",
+            "x": 72,
+            "y": 50,
+            "rotate": 7,
+            "size": 220
+          }
         }
       },
       "block_order": [
@@ -381,7 +409,9 @@
         "c2",
         "c3",
         "c4",
-        "c5"
+        "c5",
+        "stk1",
+        "stk2"
       ],
       "settings": {
         "kicker": "Girato da noi · nessun attore",
@@ -432,7 +462,9 @@
         "s1": {
           "type": "sticker",
           "settings": {
-            "text": "MERDE 62",
+            "image": "shopify://shop_images/tb-sticker-im-loving-it.png",
+            "size": 190,
+            "text": "I'm loving it Team Butti",
             "style": "a"
           }
         },
@@ -509,7 +541,9 @@
         "s2": {
           "type": "sticker",
           "settings": {
-            "text": "00",
+            "image": "shopify://shop_images/tb-sticker-team-butti-merde.png",
+            "size": 180,
+            "text": "Team Butti Merde",
             "style": "e"
           }
         },

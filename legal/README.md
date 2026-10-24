@@ -22,6 +22,9 @@ Le policy compaiono da sole:
 
 Per la Cookie policy, dopo aver creato la pagina, sceglila in *Personalizza → Footer → Pagina Cookie policy*.
 
+## Testi già compilati
+In `legal/compilato/` ci sono i testi con i dati di Fradel S.a.s. (`tools/shopify-setup/legal.py`). In `legal/compilato/html/` ci sono le versioni da incollare nelle policy di Shopify (`node tools/shopify-setup/legal-html.js`).
+
 ## Dati da compilare
 
 Ogni dato tra parentesi quadre va sostituito, lo stesso valore in tutti i file:
