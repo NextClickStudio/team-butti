@@ -84,8 +84,8 @@
     "quantity": "Quantità",
     "increase": "Aumenta quantità",
     "decrease": "Diminuisci quantità",
-    "free_left": "Ti mancano {{ amount }} per la spedizione gratis",
-    "free_done": "Spedizione gratis sbloccata"
+    "free_left": "Ti mancano {{ amount }} per la spedizione gratis in Italia",
+    "free_done": "Spedizione gratis in Italia sbloccata"
   },
   "nf": {
     "text": "Questa pagina è finita fuori strada.",

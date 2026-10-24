@@ -488,11 +488,6 @@
       var tc = $('[data-tc]', root), placeOut = $('[data-place-out]', root), dateOut = $('[data-date-out]', root), sound = $('[data-sound]', root);
       var auto = (+root.dataset.auto || 0) * 1000, cur = 0, muted = true, visible = false, timer = 0, t0 = performance.now(), lastTc = '', bubT = [];
       root.style.setProperty('--auto', (auto / 1000) + 's');
-      // stickers get slapped on the frame the first time the section is on screen
-      if ($('.reel__stk', root)) {
-        if ('IntersectionObserver' in window && !reduce) new IntersectionObserver(function (es, ob) { if (es[0].isIntersecting) { root.classList.add('stk-in'); ob.disconnect(); } }, { threshold: 0.3 }).observe(root);
-        else root.classList.add('stk-in');
-      }
       var vid = function (i) { return clips[i] ? $('video', clips[i]) : null; };
       var pad = function (n) { return String(Math.floor(n)).padStart(2, '0'); };
       function playCur() {
@@ -525,6 +520,41 @@
           bubT.push(setTimeout(function () { b.classList.add('on'); }, 600 + k * Math.min(2600, span / bs.length)));
         });
       }
+      // stickers take turns: one at a time it slaps onto a free spot of the frame, stays a few seconds and peels off.
+      // Never over the clip's bubbles (shown or still to come), the HUD, the sound and shop buttons, the chips or the scroll hint.
+      var stks = $$('[data-reel-stk]', root), stkI = Math.floor(Math.random() * 8), stkT = 0, stkOn = null;
+      var SLOTS = [[4, 16], [66, 14], [5, 40], [70, 40], [28, 18], [48, 58], [6, 62], [36, 36], [58, 24], [20, 66], [74, 60]];
+      function stkBox(el) { // frame space (unscaled): offsets of the frame's own children
+        var x = 0, y = 0, n = el;
+        while (n && n !== frame) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+        return { l: x, t: y, r: x + el.offsetWidth, b: y + el.offsetHeight };
+      }
+      function stickers(next) {
+        clearTimeout(stkT);
+        if (stkOn) { stkOn.classList.remove('on'); stkOn = null; }
+        if (!stks.length || reduce || !visible) return;
+        stkT = setTimeout(function place() {
+          var fr = frame.getBoundingClientRect(), k = fr.width / frame.offsetWidth, pad = 14;
+          var busy = $$('[data-bub]', clips[cur]).map(stkBox);
+          $$('.reel__rec, .reel__tc, .reel__bat, .reel__meta, .reel__kicker, .reel__sound, .reel__cta, .reel__chips, .reel__more', root).forEach(function (el) {
+            var b = el.getBoundingClientRect(); if (!b.width || getComputedStyle(el).opacity === '0') return;
+            busy.push({ l: (b.left - fr.left) / k, t: (b.top - fr.top) / k, r: (b.right - fr.left) / k, b: (b.bottom - fr.top) / k });
+          });
+          stkI = (stkI + 1) % stks.length;
+          var s = stks[stkI], slots = SLOTS.slice().sort(function () { return Math.random() - 0.5; });
+          for (var i = 0; i < slots.length; i++) {
+            s.style.left = slots[i][0] + '%'; s.style.top = slots[i][1] + '%';
+            var a = stkBox(s);
+            if (a.r > frame.offsetWidth - 8 || a.b > frame.offsetHeight - 8) continue;
+            if (busy.some(function (o) { return a.l < o.r + pad && o.l < a.r + pad && a.t < o.b + pad && o.t < a.b + pad; })) continue;
+            s.style.setProperty('--r', (Math.random() * 24 - 12).toFixed(1) + 'deg');
+            s.classList.add('on'); stkOn = s;
+            stkT = setTimeout(function () { stickers(true); }, 2900);
+            return;
+          }
+          stkT = setTimeout(place, 1500);
+        }, next ? 1300 : 1800);
+      }
       function show(i) {
         cur = (i + clips.length) % clips.length;
         clips.forEach(function (c, k) { c.classList.toggle('on', k === cur); });
@@ -533,7 +563,7 @@
         if (dateOut) dateOut.textContent = clips[cur].dataset.date || '';
         if (!reduce) { frame.classList.remove('glitch'); void frame.offsetWidth; frame.classList.add('glitch'); }
         var v = vid(cur); if (v) { try { v.currentTime = 0; } catch (e) {} }
-        t0 = performance.now(); playCur(); runChip(); schedule(); bubbles();
+        t0 = performance.now(); playCur(); runChip(); schedule(); bubbles(); stickers();
       }
       root._show = show;
       chips.forEach(function (c) { c.addEventListener('click', function (e) { e.stopPropagation(); show(+c.dataset.chip); }); });
@@ -551,9 +581,9 @@
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (es) {
           var was = visible; visible = es[0].isIntersecting; playCur();
-          if (visible) { runChip(); schedule(); if (!was) bubbles(); } else { clearTimeout(timer); bubbles(); }
+          if (visible) { runChip(); schedule(); if (!was) { bubbles(); stickers(); } } else { clearTimeout(timer); bubbles(); stickers(); }
         }, { threshold: 0.25 }).observe(frame);
-      } else { visible = true; playCur(); schedule(); bubbles(); }
+      } else { visible = true; playCur(); schedule(); bubbles(); stickers(); }
       // scroll: the frame grows from a card to full screen; HUD timecode follows the clip.
       // Once it is full screen the "keep scrolling" hint shows, its bar filling until the page moves on.
       var more = $('[data-reel-more]', root), moreOn = false, lastMp = -1;

@@ -3,7 +3,7 @@
   with a camcorder HUD (REC, timecode, place, date), clip tabs, comic speech bubbles per clip
   and a shop button that is always on screen.
   Vertical clips (Reels 9:16) get a blurred backdrop so they also work full-width.
-  Sticker blocks are slapped on the camcorder frame when the section comes into view.
+  Sticker blocks take turns on the camcorder frame: one at a time on a free spot, never over the bubbles or the HUD (theme.js).
   Live store: hidden until at least one clip has a video. Theme editor: placeholders are shown.
 {%- endcomment -%}
 {%- liquid
@@ -69,7 +69,7 @@
       </div>
       {%- for s in stickers -%}
         {%- if s.settings.image != blank -%}
-          <span class="reel__stk" style="left: {{ s.settings.x }}%; top: {{ s.settings.y }}%; --r: {{ s.settings.rotate }}deg; --w: {{ s.settings.size }}px; --d: {{ forloop.index0 | times: 140 }}ms" {{ s.shopify_attributes }}>
+          <span class="reel__stk" data-reel-stk style="--w: {{ s.settings.size }}px" {{ s.shopify_attributes }}>
             {{- s.settings.image | image_url: width: 640 | image_tag: loading: 'lazy', widths: '320,480,640', sizes: '(min-width: 990px) 260px, 34vw', alt: '', draggable: 'false' -}}
           </span>
         {%- endif -%}
@@ -112,7 +112,7 @@
 {% schema %}
 {
   "name": "Video del brand",
-  "max_blocks": 10,
+  "max_blocks": 14,
   "settings": [
     { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Girato da noi · nessun attore" },
     { "type": "text", "id": "title_1", "label": "Titolo dietro il video", "default": "La vera" },
@@ -147,13 +147,11 @@
     {
       "type": "sticker",
       "name": "Sticker sul video",
-      "limit": 4,
+      "limit": 8,
       "settings": [
+        { "type": "paragraph", "content": "Gli sticker compaiono uno alla volta, a turno, in un punto libero del video: mai sopra i fumetti, il REC, l'audio o il bottone Shop." },
         { "type": "image_picker", "id": "image", "label": "Sticker (PNG scontornato)" },
-        { "type": "range", "id": "x", "label": "Posizione orizzontale", "min": 0, "max": 90, "step": 1, "unit": "%", "default": 4 },
-        { "type": "range", "id": "y", "label": "Posizione verticale", "min": 0, "max": 90, "step": 1, "unit": "%", "default": 30 },
-        { "type": "range", "id": "rotate", "label": "Rotazione", "min": -30, "max": 30, "step": 1, "unit": "°", "default": -8 },
-        { "type": "range", "id": "size", "label": "Larghezza", "min": 80, "max": 320, "step": 10, "unit": "px", "default": 200 }
+        { "type": "range", "id": "size", "label": "Larghezza", "min": 80, "max": 320, "step": 10, "unit": "px", "default": 170 }
       ]
     }
   ],

@@ -16,7 +16,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(!(await p.$('#loader')), `[${name}] loader: finito, la pagina si vede`);
     await p.goto(BASE + '/collections/all'); await p.goto(BASE + '/'); await p.waitForTimeout(1500);
     ok(!(await p.$('#loader')), `[${name}] loader: tornando alla home nella stessa visita non riparte`);
-    ok(await p.$$eval('.stk--img img, .reel__stk img', i => i.length === 8 && i.every(x => /tb-sticker-/.test(x.src))), `[${name}] sticker veri: 4 nel manifesto, 2 sul video, 2 nel muro della crew`);
+    ok(await p.$$eval('.stk--img img', i => i.length === 6 && i.every(x => /tb-sticker-/.test(x.src))) && (await p.$$('[data-reel-stk]')).length === 8, `[${name}] sticker veri: 4 nel manifesto, 2 nel muro della crew, 8 a turno sul video`);
     ok((await p.textContent('#countdown')).includes('Crew List') && !/gadget/i.test(await p.textContent('#countdown')), `[${name}] market: Crew List al posto del gadget`);
     ok(JSON.stringify(await p.$$eval('[data-vibe]', v => v.map(x => x.dataset.name))) === '["Pink Market","Leopardo","Giallo MX"]', `[${name}] hero: solo i vibe Pink Market, Leopardo, Giallo MX`);
     ok((await p.textContent('[data-hero-count]')).includes('Market Milano') && /\d+g \d\d:\d\d:\d\d/.test(await p.textContent('[data-hero-count-t]')), `[${name}] hero: bottone countdown del Market Milano`);
@@ -55,6 +55,17 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(+(await p.$eval('[data-tb=reel]', el => getComputedStyle(el).getPropertyValue('--x'))) > 0.5, `[${name}] video del brand: si espande con lo scroll`);
     await p.waitForTimeout(700);
     ok(await p.$eval('[data-tb=reel]', el => el.classList.contains('more-on') && getComputedStyle(el.querySelector('.reel__more')).opacity === '1' && el.querySelector('.reel__more').textContent.replace(/\s+/g, ' ').includes('Scorri')), `[${name}] video del brand: a tutto schermo compare "Scorri giù · c'è il drop"`);
+    { let shown = 0, hits = 0;
+      for (let k = 0; k < 14; k++) {
+        await p.waitForTimeout(500);
+        const r = await p.evaluate(() => {
+          const s = document.querySelector('.reel__stk.on'); if (!s || getComputedStyle(s).opacity < 0.9) return null;
+          const a = s.getBoundingClientRect();
+          return [...document.querySelectorAll('.reel__clip.on .bub.on, .reel__rec, .reel__tc, .reel__meta, .reel__sound, .reel__cta, .reel__chips')].filter(e => { const b = e.getBoundingClientRect(); return b.width && a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom; }).length;
+        });
+        if (r !== null) { shown++; hits += r; }
+      }
+      ok(shown > 0 && hits === 0, `[${name}] video: gli sticker compaiono a turno senza coprire fumetti, HUD e bottoni (${shown} campioni)`); }
     await p.click('[data-tb=reel] [data-chip="1"]'); await p.waitForTimeout(400);
     ok((await p.textContent('[data-date-out]')) === 'Settembre 2026' && (await p.$eval('[data-tb=reel] [data-clip].on video', v => v.querySelector('source').src)).includes('tb-reel-targa.mp4'), `[${name}] video del brand: cambio clip (la targa Los Angeles)`);
     await p.waitForTimeout(3600);

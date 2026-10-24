@@ -7,7 +7,7 @@ Ultimo aggiornamento: 24 ottobre 2026
 | Zona | Tempi | Costo | Gratis da |
 |---|---|---|---|
 | Italia | 2–4 giorni lavorativi | 5 € | 100 € |
-| Unione Europea | 4–7 giorni lavorativi | 5 € | 100 € |
+| Unione Europea | 4–7 giorni lavorativi | 25 € | 250 € |
 | Resto del mondo | indicati al checkout | 19,99 € | — |
 
 - I tempi partono dalla spedizione dell'ordine, di solito entro 1–2 giorni lavorativi dal pagamento.

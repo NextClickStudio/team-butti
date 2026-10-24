@@ -12,7 +12,7 @@ DATA = {
     '[PEC]': 'Fradel.sas@pec.it',
     '[EMAIL]': 'leonardo@showroomn1.it',
     '[COSTO ITALIA]': '5 €',
-    '[COSTO UE]': '5 €',
+    '[COSTO UE]': '25 €',
     '[SOGLIA GRATIS]': '100 €',
     '[TEMPI ITALIA]': '2–4 giorni lavorativi',
     '[TEMPI UE]': '4–7 giorni lavorativi',
@@ -32,7 +32,7 @@ EDITS = [
     ('- Corrieri: [CORRIERI].', '- Spediamo con corriere espresso, con tracciamento.'),
     ('con [CORRIERI]', 'con corriere espresso'),
     ('**corrieri** ([CORRIERI])', '**corrieri**'),
-    ('| Unione Europea | [TEMPI UE] | [COSTO UE] | — |', '| Unione Europea | [TEMPI UE] | [COSTO UE] | [SOGLIA GRATIS] |\n| Resto del mondo | indicati al checkout | 19,99 € | — |'),
+    ('| Unione Europea | [TEMPI UE] | [COSTO UE] | — |', '| Unione Europea | [TEMPI UE] | [COSTO UE] | 250 € |\n| Resto del mondo | indicati al checkout | 19,99 € | — |'),
 ]
 os.makedirs(os.path.join(ROOT, 'legal', 'compilato'), exist_ok=True)
 left = 0

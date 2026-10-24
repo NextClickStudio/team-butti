@@ -201,7 +201,8 @@
       {
         "type": "range",
         "id": "free_shipping",
-        "label": "Soglia spedizione gratis",
+        "label": "Soglia spedizione gratis (Italia)",
+        "info": "Deve essere uguale alla tariffa gratuita di Impostazioni → Spedizione per l'Italia. UE: gratis da 250 €.",
         "min": 0,
         "max": 300,
         "step": 10,

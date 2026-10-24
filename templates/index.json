@@ -387,20 +387,56 @@
           "type": "sticker",
           "settings": {
             "image": "shopify://shop_images/tb-sticker-hot-milfs.png",
-            "x": 3,
-            "y": 24,
-            "rotate": -9,
-            "size": 230
+            "size": 210
           }
         },
         "stk2": {
           "type": "sticker",
           "settings": {
             "image": "shopify://shop_images/tb-sticker-toyoda.png",
-            "x": 72,
-            "y": 50,
-            "rotate": 7,
-            "size": 220
+            "size": 200
+          }
+        },
+        "stk3": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-im-loving-it.png",
+            "size": 160
+          }
+        },
+        "stk4": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-team-butti-groovy.png",
+            "size": 190
+          }
+        },
+        "stk5": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-pigboy.png",
+            "size": 130
+          }
+        },
+        "stk6": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-dito-medio.png",
+            "size": 130
+          }
+        },
+        "stk7": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-soldatino-skate.png",
+            "size": 150
+          }
+        },
+        "stk8": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-team-butti-merde.png",
+            "size": 150
           }
         }
       },
@@ -411,12 +447,18 @@
         "c4",
         "c5",
         "stk1",
-        "stk2"
+        "stk2",
+        "stk3",
+        "stk4",
+        "stk5",
+        "stk6",
+        "stk7",
+        "stk8"
       ],
       "settings": {
         "kicker": "Girato da noi · nessun attore",
         "cta_label": "Shop il drop",
-        "cta_note": "Spedizione gratis da 100€",
+        "cta_note": "Gratis in Italia da 100€",
         "length": 130,
         "autoplay_next": 8
       }
