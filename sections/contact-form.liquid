@@ -1,0 +1,26 @@
+{%- comment -%} Contact form: Shopify sends the message to the store's email (Settings > Store details). {%- endcomment -%}
+<section class="sec contact" data-tb="contact">
+  {%- form 'contact', id: 'ContactForm', class: 'contact__form' -%}
+    {%- if form.posted_successfully? -%}
+      <p class="nl-ok">{{ 'contact.success' | t }}</p>
+    {%- else -%}
+      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <div class="contact__row">
+        <label class="contact__f"><span class="label">{{ 'contact.name' | t }}</span><input type="text" name="contact[name]" autocomplete="name" value="{{ form.name }}"></label>
+        <label class="contact__f"><span class="label">{{ 'contact.email' | t }}</span><input type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}"></label>
+      </div>
+      <label class="contact__f"><span class="label">{{ 'contact.order' | t }}</span><input type="text" name="contact[Ordine]"></label>
+      <label class="contact__f"><span class="label">{{ 'contact.message' | t }}</span><textarea name="contact[body]" rows="6" required>{{ form.body }}</textarea></label>
+      <button type="submit" class="btn btn--pink">{{ 'contact.submit' | t }}</button>
+      <p class="nl-note">{{ 'contact.note' | t }}{%- if shop.privacy_policy.body != blank %} <a href="{{ shop.privacy_policy.url }}">{{ 'legal.privacy' | t }}</a>{%- endif -%}</p>
+    {%- endif -%}
+  {%- endform -%}
+</section>
+
+{% schema %}
+{
+  "name": "Modulo contatti",
+  "settings": [],
+  "presets": [{ "name": "Modulo contatti" }]
+}
+{% endschema %}

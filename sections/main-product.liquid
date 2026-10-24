@@ -1,0 +1,89 @@
+{%- liquid
+  assign jtype = product.metafields.custom.jersey_type.value
+  assign jcolors = product.metafields.custom.jersey_colors.value
+  assign jnum = product.metafields.custom.jersey_number.value
+  assign jtags = product.tags | join: '|'
+  assign has_art = false
+  if jtype != blank or jtags contains 'jersey:'
+    assign has_art = true
+  endif
+-%}
+<section class="pdp" data-tb="product">
+  <div class="pdp__gal">
+  <div class="pdp__media" data-pdp-media>
+    {%- if product.images.size > 0 -%}
+      {%- for image in product.images -%}
+        <div class="pdp__slide">
+          {%- liquid
+            assign loading = 'lazy'
+            if forloop.first
+              assign loading = 'eager'
+            endif
+            assign alt = image.alt | default: product.title | escape
+          -%}
+          {{ image | image_url: width: 1800 | image_tag: loading: loading, widths: '600,900,1200,1500,1800', sizes: '(min-width: 990px) 60vw, 100vw', alt: alt }}
+        </div>
+      {%- endfor -%}
+    {%- elsif has_art -%}
+      <div class="cfg__stage pdp__stage" data-stage style="--cfg-bg: var(--yellow)">
+        <div class="cfg__flip" data-flip>
+          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, tags: jtags, capt: true %}</div>
+          <div>{% render 'jersey-art', type: jtype, colors: jcolors, num: jnum, tags: jtags, side: 'back' %}</div>
+        </div>
+        <button class="btn cfg__turn" type="button" data-turn data-h>↻ {{ 'customizer.turn' | t }}</button>
+        <span class="cfg__hint">{{ 'customizer.drag' | t }}</span>
+      </div>
+    {%- else -%}
+      <div class="pdp__slide">{{ 'product-apparel-1' | placeholder_svg_tag: 'card__ph' }}</div>
+    {%- endif -%}
+  </div>
+  {%- if product.images.size > 1 -%}
+    <div class="pdp__dots" data-pdp-dots aria-hidden="true">{%- for image in product.images -%}<i{% if forloop.first %} class="on"{% endif %}></i>{%- endfor -%}</div>
+  {%- endif -%}
+  </div>
+  <div class="pdp__info">
+    <div class="pdp__sticky">
+      <span class="label">{{ product.type | default: product.vendor | escape }}</span>
+      <h1 class="modal__t d">{{ product.title | escape }}</h1>
+      <div class="modal__p">{% render 'price', product: product, variant: product.selected_or_first_available_variant %}</div>
+      {% render 'product-buy', product: product %}
+      <p class="pdp__legal">
+        {%- if cart.taxes_included -%}{{ 'products.taxes_included' | t }} {% endif -%}
+        {%- if shop.shipping_policy.body != blank -%}{{ 'products.shipping_html' | t: url: shop.shipping_policy.url }}{%- else -%}{{ 'products.shipping' | t }}{%- endif -%}
+        <br>
+        {%- if shop.refund_policy.body != blank -%}{{ 'products.returns_html' | t: url: shop.refund_policy.url }}{%- else -%}{{ 'products.returns' | t }}{%- endif %} · {{ 'products.warranty' | t }}
+      </p>
+      {%- if product.description != blank -%}
+        <details class="acc" open><summary>{{ 'products.details' | t }}</summary><div class="rte">{{ product.description }}</div></details>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        <details class="acc" {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.title | escape }}</summary>
+          <div class="rte">{{ block.settings.content }}{%- if block.settings.page != blank -%}{{ block.settings.page.content }}{%- endif -%}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+  {%- assign current = product.selected_or_first_available_variant -%}
+  <div class="pbar" data-pbar aria-hidden="true">
+    <div class="pbar__i"><b>{{ product.title | escape }}</b><span data-pbar-price>{%- if current.price > 0 -%}{{ current.price | money }}{%- endif -%}</span></div>
+    <button type="button" class="btn btn--pink pbar__btn" data-pbar-btn tabindex="-1">{{ 'products.add' | t }}</button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Prodotto",
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Fisarmonica",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titolo", "default": "Guida taglie" },
+        { "type": "richtext", "id": "content", "label": "Contenuto" },
+        { "type": "page", "id": "page", "label": "Oppure contenuto da pagina" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,195 @@
+<section class="ride" data-tb="ride" style="height: {{ section.blocks.size | times: 100 | plus: 20 }}vh">
+  <div class="ride__s">
+    <div class="ride__bar">
+      {%- for block in section.blocks -%}<span>{{ block.settings.title | escape }}</span>{%- endfor -%}
+      <i data-ride-bar></i>
+    </div>
+    <div class="ride__track" data-ride-track>
+      {%- for block in section.blocks -%}
+        <div class="stop stop--{{ block.settings.style }}" style="--stop-bg: {{ block.settings.bg }}; --stop-fg: {{ block.settings.fg }};" {{ block.shopify_attributes }}>
+          {%- if block.settings.style == 'hills' -%}
+            <div class="stop__land">{% render 'panorama', view: '0 50 720 170' %}</div>
+          {%- endif -%}
+          {%- if block.settings.video != blank -%}
+            <div class="stop__video">{{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1600x' }}</div>
+          {%- elsif block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 1600 | image_tag: class: 'stop__img', loading: 'lazy', widths: '800,1200,1600', sizes: '100vw' }}
+          {%- endif -%}
+          <span class="stop__n label">{{ forloop.index | prepend: '0' | slice: -2, 2 }} / {{ forloop.length | prepend: '0' | slice: -2, 2 }} — {{ block.settings.label | escape }}</span>
+          <h3 class="stop__t d{% unless block.settings.style == 'night' %} grunge{% endunless %}">{{ block.settings.title | escape }}</h3>
+          <p class="stop__p">{{ block.settings.text | escape }}</p>
+          {%- if block.settings.deco == 'plate' -%}
+            <div class="stop__deco"><div class="plate-mini"><div class="goth">{{ block.settings.plate_top | escape }}</div><div class="big">{{ block.settings.deco_text | escape }}</div><div class="goth goth--b">{{ block.settings.plate_bottom | escape }}</div></div></div>
+          {%- elsif block.settings.deco == 'neon' -%}
+            <div class="stop__deco"><div class="neon">{{ block.settings.deco_text | escape }}</div></div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="road"></div>
+    <div class="car car--ride" data-car><div class="car__fx"><i></i><i></i><i></i></div>{% render 'cadillac', uid: section.id %}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Il viaggio (Cadillac)",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "stop",
+      "name": "Tappa",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etichetta",
+          "default": "Il Market"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titolo",
+          "default": "Milano"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Testo",
+          "default": "Piazzale Antonio Cantore 10. Banchetti pieni di maglie, DJ set dalle 15, la gente in fila."
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Stile",
+          "default": "halftone",
+          "options": [
+            {
+              "value": "halftone",
+              "label": "Retino"
+            },
+            {
+              "value": "hills",
+              "label": "Colline"
+            },
+            {
+              "value": "flat",
+              "label": "Pieno"
+            },
+            {
+              "value": "night",
+              "label": "Notte neon"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "bg",
+          "label": "Sfondo",
+          "default": "#FF2E93"
+        },
+        {
+          "type": "color",
+          "id": "fg",
+          "label": "Testo",
+          "default": "#0D0D0D"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Foto di sfondo (opzionale)"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video di sfondo (opzionale)",
+          "info": "Clip in loop senza audio, es. Higgsfield. Ha la precedenza sulla foto."
+        },
+        {
+          "type": "select",
+          "id": "deco",
+          "label": "Decorazione",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "Nessuna"
+            },
+            {
+              "value": "plate",
+              "label": "Targa"
+            },
+            {
+              "value": "neon",
+              "label": "Scritta neon"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "deco_text",
+          "label": "Testo decorazione",
+          "default": "MERDE"
+        },
+        {
+          "type": "text",
+          "id": "plate_top",
+          "label": "Targa: scritta alta",
+          "default": "Toscana"
+        },
+        {
+          "type": "text",
+          "id": "plate_bottom",
+          "label": "Targa: scritta bassa",
+          "default": "Milano"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Il viaggio (Cadillac)",
+      "blocks": [
+        {
+          "type": "stop",
+          "settings": {
+            "label": "Lo sterrato",
+            "title": "Toscana",
+            "text": "Colline, polvere, due tempi. Le maglie MX non sono un costume: ci cadiamo dentro ogni weekend.",
+            "style": "hills",
+            "bg": "#9EC9EF"
+          }
+        },
+        {
+          "type": "stop",
+          "settings": {
+            "label": "La strada",
+            "title": "A1",
+            "text": "Cadillac carica di maglie, autogrill alle sette, Appennino a finestrini giù. Trecento chilometri di musica alta.",
+            "style": "flat",
+            "bg": "#FFD400",
+            "fg": "#E3191B",
+            "deco": "plate"
+          }
+        },
+        {
+          "type": "stop"
+        },
+        {
+          "type": "stop",
+          "settings": {
+            "label": "Le luci",
+            "title": "Navigli",
+            "text": "Navigli, insegne al neon e una crew che non va a dormire. Prossima fermata: ovunque ci sia una crew.",
+            "style": "night",
+            "bg": "#0D0D0D",
+            "fg": "#F4F1EA",
+            "deco": "neon",
+            "deco_text": "Team Butti Merde"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

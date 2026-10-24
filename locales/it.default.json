@@ -1,0 +1,136 @@
+{
+  "general": {
+    "skip": "Vai al contenuto",
+    "page": "Pagina {{ page }}",
+    "menu": "Menu",
+    "close": "Chiudi",
+    "search": "Cerca",
+    "pagination": "Paginazione"
+  },
+  "header": {
+    "bag": "Bag"
+  },
+  "hero": {
+    "vibe": "Vibe"
+  },
+  "manifesto": {
+    "drag": "← trascina gli sticker"
+  },
+  "products": {
+    "add": "Aggiungi alla bag",
+    "sold_out": "Sold out",
+    "unavailable": "Non disponibile",
+    "choose_size": "Scegli la taglia",
+    "from": "Da",
+    "quick_view": "Vista rapida +",
+    "demo": "Demo · collega una collezione",
+    "details": "Dettagli",
+    "full_details": "Tutti i dettagli",
+    "card_cta": "Scegli la taglia +",
+    "taxes_included": "IVA inclusa.",
+    "shipping": "Spedizione calcolata al checkout.",
+    "shipping_html": "<a href=\"{{ url }}\">Spedizione</a> calcolata al checkout.",
+    "returns": "Reso entro 14 giorni",
+    "returns_html": "<a href=\"{{ url }}\">Reso entro 14 giorni</a>",
+    "warranty": "Garanzia legale 24 mesi",
+    "model": "Il modello è alto {{ height }} e indossa la {{ size }}"
+  },
+  "customizer": {
+    "turn": "Gira",
+    "drag": "← trascina per girarla →",
+    "setup": "Collega un prodotto nel theme editor"
+  },
+  "countdown": {
+    "days": "GG",
+    "hours": "ORE",
+    "minutes": "MIN",
+    "seconds": "SEC",
+    "today": "È oggi!",
+    "days_short": "g"
+  },
+  "newsletter": {
+    "placeholder": "La tua email",
+    "submit": "Entra",
+    "success": "Sei nel team. Ci vediamo al drop.",
+    "note": "Iscrivendoti accetti di ricevere le email di {{ shop }}. Puoi disiscriverti quando vuoi."
+  },
+  "collections": {
+    "all": "Tutto",
+    "title": "Collezioni",
+    "empty": "Niente qui. Il prossimo drop arriva presto.",
+    "count": {
+      "one": "{{ count }} pezzo",
+      "other": "{{ count }} pezzi"
+    }
+  },
+  "search": {
+    "placeholder": "Cerca maglie, MX, hockey…",
+    "none": "Niente. Prova con un'altra parola.",
+    "count": {
+      "one": "{{ count }} risultato",
+      "other": "{{ count }} risultati"
+    }
+  },
+  "cart": {
+    "title": "Bag",
+    "empty": "La bag è vuota. Per ora.",
+    "empty_html": "Vuota.<br>Per ora.",
+    "continue": "Vai allo shop",
+    "checkout": "Checkout",
+    "total": "Totale",
+    "taxes": "Tasse incluse · Spedizione al checkout",
+    "remove": "Rimuovi",
+    "update": "Aggiorna",
+    "quantity": "Quantità",
+    "increase": "Aumenta quantità",
+    "decrease": "Diminuisci quantità",
+    "free_left": "Ti mancano {{ amount }} per la spedizione gratis in Italia",
+    "free_done": "Spedizione gratis in Italia sbloccata"
+  },
+  "nf": {
+    "text": "Questa pagina è finita fuori strada.",
+    "home": "Torna in pista"
+  },
+  "password": {
+    "enter": "Entra con la password",
+    "placeholder": "Password",
+    "submit": "Entra"
+  },
+  "story": {
+    "slot": "Slot video: qui andrà il video della vostra storia",
+    "play": "Guarda il video con l'audio"
+  },
+  "vscroll": {
+    "slot": "Slot Higgsfield: qui andrà la Cadillac animata (sprite) o il video a scroll",
+    "km": "Km"
+  },
+  "reel": {
+    "slot": "Slot video",
+    "sound_on": "Audio on",
+    "sound_off": "Audio off"
+  },
+  "mxs": {
+    "photo": "Foto o video del capitolo"
+  },
+  "crew": {
+    "open": "Apri la foto",
+    "close": "Chiudi",
+    "prev": "Foto precedente",
+    "next": "Foto successiva",
+    "slot": "Foto della crew"
+  },
+  "contact": {
+    "name": "Nome",
+    "email": "Email",
+    "order": "Numero d'ordine (se ce l'hai)",
+    "message": "Messaggio",
+    "submit": "Invia",
+    "success": "Ricevuto. Ti rispondiamo entro 2 giorni lavorativi.",
+    "note": "Usiamo i tuoi dati solo per risponderti."
+  },
+  "legal": {
+    "title": "Informazioni legali",
+    "privacy": "Informativa privacy",
+    "cookie_prefs": "Preferenze cookie"
+  }
+}

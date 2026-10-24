@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" data-jersey-style="{{ settings.jersey_style | default: 'flat' }}" data-img-fit="{{ settings.product_image_fit | default: 'contain' }}"{% if settings.page_transitions %} data-transitions{% endif %}{% if settings.magnetic_buttons %} data-magnetic{% endif %}{% if settings.split_titles %} data-split-titles{% endif %}>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_paper }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+      <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+    {%- else -%}
+      <link rel="icon" type="image/png" href="{{ 'tb-favicon.png' | asset_url }}">
+      <link rel="apple-touch-icon" href="{{ 'tb-apple-touch-icon.png' | asset_url }}">
+    {%- endif -%}
+    <title>
+      {{- page_title | escape -}}
+      {%- if current_page != 1 %} – {{ 'general.page' | t: page: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} – {{ shop.name | escape }}{% endunless -%}
+    </title>
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+    {% render 'meta-tags' %}
+    {% render 'structured-data' %}
+    {{ 'anton.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {%- if settings.loader and template.name == 'index' -%}
+      {{ 'tb-moto-corpo-s.webp' | asset_url | preload_tag: as: 'image' }}
+      {{ 'tb-moto-ruota-post-s.webp' | asset_url | preload_tag: as: 'image' }}
+      {{ 'tb-moto-ruota-ant-s.webp' | asset_url | preload_tag: as: 'image' }}
+      {{ 'tb-moto-forcellone-s.webp' | asset_url | preload_tag: as: 'image' }}
+      {{ 'tb-moto-forcella-s.webp' | asset_url | preload_tag: as: 'image' }}
+    {%- endif -%}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {% render 'css-variables' %}
+    <script>
+      window.TB = {
+        routes: {
+          root: {{ routes.root_url | json }},
+          cart: {{ routes.cart_url | json }},
+          cartAdd: {{ routes.cart_add_url | json }},
+          cartChange: {{ routes.cart_change_url | json }}
+        },
+        cartDrawer: {{ settings.cart_drawer | json }},
+        strings: {
+          add: {{ 'products.add' | t | json }},
+          soldOut: {{ 'products.sold_out' | t | json }},
+          unavailable: {{ 'products.unavailable' | t | json }},
+          chooseSize: {{ 'products.choose_size' | t | json }},
+          joined: {{ 'newsletter.success' | t | json }},
+          menu: {{ 'general.menu' | t | json }},
+          close: {{ 'general.close' | t | json }},
+          setupProduct: {{ 'customizer.setup' | t | json }},
+          today: {{ 'countdown.today' | t | json }},
+          daysShort: {{ 'countdown.days_short' | t | json }}
+        }
+      };
+    </script>
+    <script src="{{ 'tb-jersey.js' | asset_url }}" defer></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ template.name }}{% if settings.grain %} has-grain{% endif %}">
+    <a class="skip-link" href="#main">{{ 'general.skip' | t }}</a>
+    {%- if settings.loader and template.name == 'index' -%}
+      {%- comment -%}
+        The Team Butti bike rides a motocross track (whoops, kicker, jump, landing, finish arch) drawn by theme.js,
+        kicks up sand and leaves its ruts; the sand cloud covers everything, then settles on the page.
+        Bike geometry (data-*) as in snippets/mx-bike-art.liquid.
+      {%- endcomment -%}
+      <div class="loader" id="loader" aria-hidden="true">
+        <div class="loader__pano">{% render 'panorama' %}</div>
+        <svg class="loader__scene" data-lscene focusable="false"></svg>
+        <div class="loader__in">{% render 'badge' %}</div>
+        <div class="loader__bike" data-lbike>
+          <div class="mx mx--art" data-wb="0.6647" data-cx="0.4983" data-ground="0.9932">
+            <img class="mx__wh mxa__w mxa__w--r" src="{{ 'tb-moto-ruota-post-s.webp' | asset_url }}" width="199" height="199" alt="">
+            <img class="mx__wh mxa__w mxa__w--f" src="{{ 'tb-moto-ruota-ant-s.webp' | asset_url }}" width="202" height="202" alt="">
+            <img class="mxa__l mx__body" src="{{ 'tb-moto-corpo-s.webp' | asset_url }}" width="600" height="531" alt="">
+            <img class="mxa__l mxa__arm" src="{{ 'tb-moto-forcellone-s.webp' | asset_url }}" width="600" height="531" alt="">
+            <img class="mxa__l mxa__fork" src="{{ 'tb-moto-forcella-s.webp' | asset_url }}" width="600" height="531" alt="">
+          </div>
+        </div>
+        <div class="loader__fx" data-lsand></div>
+        <div class="loader__cloud"></div>
+      </div>
+      {%- if settings.loader_once -%}
+        <script>try { if (sessionStorage.getItem('tb-loader')) document.getElementById('loader').remove(); } catch (e) {}</script>
+      {%- endif -%}
+    {%- endif -%}
+    {%- if settings.custom_cursor -%}<div class="cur" id="cur" aria-hidden="true"></div>{%- endif -%}
+
+    {% sections 'header-group' %}
+
+    <main id="main" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {%- if settings.cart_drawer -%}
+      <div class="ov" id="ov"></div>
+      {% section 'cart-drawer' %}
+      <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="{{ 'products.quick_view' | t }}" aria-hidden="true"></div>
+    {%- endif -%}
+    {%- if settings.shop_pill and settings.shop_pill_label != blank -%}
+      {%- case template.name -%}
+        {%- when 'index', 'page' -%}{% render 'shop-pill' %}
+      {%- endcase -%}
+    {%- endif -%}
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    {%- if settings.page_transitions -%}<div class="wipe" id="wipe" aria-hidden="true"><span class="d">{{ settings.badge_text | default: 'Team|Butti' | replace: '|', ' ' | escape }}</span></div>{%- endif -%}
+  </body>
+</html>

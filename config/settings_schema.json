@@ -1,0 +1,244 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Team Butti",
+    "theme_version": "2.3.0",
+    "theme_author": "Team Butti",
+    "theme_documentation_url": "https://www.instagram.com/team_butti/",
+    "theme_support_url": "https://www.instagram.com/team_butti/"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo (se vuoto: badge Team Butti)"
+      },
+      {
+        "type": "text",
+        "id": "badge_text",
+        "label": "Testo badge",
+        "default": "Team|Butti",
+        "info": "Usa | per andare a capo"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Colori",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Inchiostro",
+        "default": "#0D0D0D"
+      },
+      {
+        "type": "color",
+        "id": "color_paper",
+        "label": "Carta (sfondo)",
+        "default": "#F4F1EA"
+      },
+      {
+        "type": "color",
+        "id": "color_pink",
+        "label": "Rosa poster",
+        "default": "#FF2E93"
+      },
+      {
+        "type": "color",
+        "id": "color_yellow",
+        "label": "Giallo MX",
+        "default": "#FFD400"
+      },
+      {
+        "type": "color",
+        "id": "color_red",
+        "label": "Rosso",
+        "default": "#E3191B"
+      },
+      {
+        "type": "color",
+        "id": "color_blue",
+        "label": "Blu royal",
+        "default": "#1D3FBF"
+      },
+      {
+        "type": "color",
+        "id": "color_green",
+        "label": "Verde neon",
+        "default": "#39FF14"
+      }
+    ]
+  },
+  {
+    "name": "Maglie",
+    "settings": [
+      {
+        "type": "select",
+        "id": "product_image_fit",
+        "label": "Foto prodotto",
+        "default": "contain",
+        "options": [
+          {
+            "value": "contain",
+            "label": "Intere su colore (still life scontornate)"
+          },
+          {
+            "value": "cover",
+            "label": "A tutto riquadro (foto ambientate)"
+          }
+        ],
+        "info": "Con le still life la maglia resta intera e la card prende il colore del tag bg: (es. bg:ffd400)."
+      },
+      {
+        "type": "select",
+        "id": "jersey_style",
+        "label": "Stile disegno maglie",
+        "default": "flat",
+        "options": [
+          {
+            "value": "flat",
+            "label": "Flat (concept approvato)"
+          },
+          {
+            "value": "detailed",
+            "label": "Dettagliato (cuciture, mesh, gruccia)"
+          }
+        ],
+        "info": "Usato finché un prodotto non ha foto. Disegno da metafield custom.jersey_type / jersey_colors / jersey_number o dai tag jersey:hockey, colors:ff2e93-0d0d0d-f4f1ea-0d0d0d, num:69, bg:ffd400."
+      },
+      {
+        "type": "text",
+        "id": "model_height",
+        "label": "Altezza del modello nelle foto",
+        "default": "1,80 m",
+        "info": "Con il tag prodotto modello:M la pagina prodotto scrive \"Il modello è alto 1,80 m e indossa la M\"."
+      }
+    ]
+  },
+  {
+    "name": "Effetti",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "loader",
+        "label": "Loader all'apertura: moto da cross che passa e alza la sabbia",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "loader_once",
+        "label": "Loader solo alla prima apertura",
+        "info": "Chi torna alla home nella stessa visita non lo rivede.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "custom_cursor",
+        "label": "Cursore personalizzato (desktop)",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "grain",
+        "label": "Grana pellicola",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "page_transitions",
+        "label": "Transizione tra le pagine",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "magnetic_buttons",
+        "label": "Bottoni magnetici",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "split_titles",
+        "label": "Titoli animati lettera per lettera",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Carrello",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_drawer",
+        "label": "Carrello laterale",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "shop_pill",
+        "label": "Bottone Shop che segue lo scroll",
+        "info": "Home e pagine (es. Chi siamo). Si nasconde sopra le griglie prodotti e il footer.",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "shop_pill_label",
+        "label": "Testo bottone Shop",
+        "default": "Shop il drop"
+      },
+      {
+        "type": "url",
+        "id": "shop_pill_link",
+        "label": "Link bottone Shop",
+        "info": "Vuoto = tutti i prodotti"
+      },
+      {
+        "type": "range",
+        "id": "free_shipping",
+        "label": "Soglia spedizione gratis (Italia)",
+        "info": "Deve essere uguale alla tariffa gratuita di Impostazioni → Spedizione per l'Italia. UE: gratis da 250 €.",
+        "min": 0,
+        "max": 300,
+        "step": 10,
+        "unit": "€",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Social",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok"
+      }
+    ]
+  },
+  {
+    "name": "SEO e condivisione",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Titolo e descrizione per Google della home si impostano in Negozio online → Preferenze. Per prodotti, collezioni e pagine: in fondo a ogni scheda, \"Anteprima nei motori di ricerca\"."
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Immagine di condivisione",
+        "info": "Compare quando il link del sito viene condiviso su WhatsApp, Instagram, Facebook (se la pagina non ha una sua foto). Consigliato 1200 × 630 px."
+      }
+    ]
+  }
+]
