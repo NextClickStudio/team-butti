@@ -17,10 +17,10 @@ Fatto:
   - Pettorina 45 €;
   - Merde 62 e 00 Merde 55 €;
   - Merde X 89 €;
-- spedizioni Italia e UE: **5 €** sotto i 100 €, gratis da 100 €. Resto del mondo 19,99 €;
+- spedizioni: Italia **5 €**, gratis da 100 €; UE **25 €**, gratis da 250 € (condizioni di Davide); resto del mondo 19,99 €;
 - 8 sticker nei File (`tb-sticker-*.png`), usati dal tema 2.3.
 
-Non fatto, perché al connettore manca il permesso `write_legal_policies`: le 5 policy. I testi pronti sono in `legal/compilato/html/`; vanno incollati in *Impostazioni → Policy*, con il pulsante `<>` per incollare l'HTML.
+Non fatto, perché al connettore mancano i permessi: le 5 policy (`write_legal_policies`) e il consenso cookie per i paesi UE (`write_privacy_settings`). Lo stesso vale per i dati fiscali del negozio, i pagamenti, il dominio e le notifiche, che l'API non espone. Per l'utente c'è la guida "Setup Team Butti" (artifact) con link diretti e testi da copiare. I testi pronti sono in `legal/compilato/html/`; vanno incollati in *Impostazioni → Policy*, con il pulsante `<>` per incollare l'HTML.
 
 Dati dell'azienda:
 - Fradel S.a.s. (ragione sociale esatta da confermare);
