@@ -4,10 +4,12 @@ Ultimo aggiornamento: [DATA]
 
 ## Dove e quanto
 
+Per ora spediamo **solo in Italia**.
+
 | Zona | Tempi | Costo | Gratis da |
 |---|---|---|---|
 | Italia | [TEMPI ITALIA] | [COSTO ITALIA] | [SOGLIA GRATIS] |
-| Unione Europea | [TEMPI UE] | [COSTO UE] | — |
+| Isole e località remote | [TEMPI ISOLE] | [COSTO ITALIA] | [SOGLIA GRATIS] |
 
 - I tempi partono dalla spedizione dell'ordine, di solito entro 1–2 giorni lavorativi dal pagamento.
 - Nei giorni di drop gli ordini possono partire con 1–2 giorni in più: lo scriviamo sul sito.
@@ -26,7 +28,3 @@ Quando il pacco parte ricevi un'email con il link di tracciamento.
 ## Pacco danneggiato
 
 Controlla il pacco alla consegna. Se è aperto o rovinato, accettalo "con riserva" e scrivici entro 7 giorni a [EMAIL] con una foto: ce ne occupiamo noi con il corriere.
-
-## Fuori dall'Unione Europea
-
-Per eventuali spedizioni fuori dall'UE possono esserci dazi e imposte locali, pagati da chi riceve al momento della consegna.

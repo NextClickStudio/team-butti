@@ -1,37 +1,55 @@
-# Diritto di recesso e resi
+# Resi, cambi e diritto di recesso
 
-Ultimo aggiornamento: 24 ottobre 2026
+Ultimo aggiornamento: 27 ottobre 2026
 
 ## In breve
 
-- Hai **14 giorni** dalla consegna per ripensarci, senza dover dare una motivazione.
-- Ti rimborsiamo entro **14 giorni** dalla tua comunicazione di recesso, con lo stesso metodo di pagamento usato per l'ordine.
-- Il prodotto deve tornare integro, non usato, con etichette e confezione originali.
+- Hai **14 giorni** dalla ricezione del pacco per chiedere un **cambio** o un **rimborso**, senza dover dare una motivazione.
+- Le spese per rispedirci i prodotti sono a tuo carico.
+- Gestiamo il reso entro **3–4 giorni lavorativi** da quando arriva al nostro magazzino.
+- Il rimborso torna sullo **stesso metodo di pagamento** usato per l'ordine.
 
-## Come esercitare il recesso
+## Come fare un reso o un cambio
 
-1. Entro 14 giorni dal giorno in cui tu, o una persona da te indicata, avete ricevuto il pacco, comunicaci che vuoi recedere. Puoi farlo:
-   - scrivendo a **leonardo@showroomn1.it** o alla PEC **Fradel.sas@pec.it** con numero d'ordine e prodotti da restituire;
-   - oppure compilando il modulo qui sotto e mandandolo agli stessi indirizzi.
-2. Rispedisci i prodotti entro 14 giorni dalla comunicazione, all'indirizzo che ti scriviamo nella risposta alla tua richiesta di recesso.
-3. Quando riceviamo il pacco, o la prova che l'hai spedito, ti rimborsiamo.
+1. Entro 14 giorni dalla ricezione del pacco scrivi a **online@teambutti.com** con il numero d'ordine, i prodotti da restituire e se vuoi il cambio (con la nuova taglia) o il rimborso. In alternativa puoi:
+   - mandare il modulo di recesso qui sotto, compilato, allo stesso indirizzo o alla PEC **fradel.sas@pec.it**;
+   - inviare una raccomandata a Fradel S.a.s. di Lorenzo Barindelli & C. – Team Butti, Corso Magenta 52, 20123 Milano (MI).
+2. Segui le istruzioni che ti manda il nostro servizio clienti.
+3. Spedisci il pacco a **Team Butti, Corso Magenta 52, 20123 Milano (MI)**.
+   - Per un **cambio**, spediscilo entro 48 ore dall'email con le istruzioni: così ti teniamo da parte la taglia.
+   - Per un **rimborso** hai comunque 14 giorni dal giorno in cui ci hai comunicato il recesso (art. 57 Codice del Consumo).
+   - Fa fede la data del timbro postale o del documento di trasporto del corriere.
+4. Puoi spedire il reso solo dal Paese in cui hai fatto l'ordine.
+
+## Condizioni dei prodotti
+
+Puoi provare il capo come faresti in negozio. Perché il reso sia accettato, i prodotti devono:
+
+- non essere stati usati;
+- non essere sporchi o danneggiati;
+- non essere stati lavati;
+- avere ancora attaccata l'etichetta descrittiva e i cartellini originali.
+
+Se un prodotto torna senza queste condizioni non possiamo cambiarlo. In caso di recesso possiamo trattenere dal rimborso la perdita di valore che ne deriva (art. 57 Codice del Consumo).
+
+## Esito: cambio o rimborso
+
+Entro 3–4 giorni lavorativi dall'arrivo del reso al magazzino ti scriviamo l'esito.
+
+- **Cambio**: ti spediamo il nuovo prodotto. Se la taglia o il prodotto non sono più disponibili, ti rimborsiamo.
+- **Rimborso**: ti restituiamo il prezzo dei prodotti resi. Se restituisci tutto l'ordine ti rimborsiamo anche le spese di consegna standard pagate; se avevi scelto una consegna più cara, la differenza non è rimborsata.
+  - Rimborsiamo entro 14 giorni dal giorno in cui ci hai comunicato il recesso, con lo stesso metodo di pagamento usato per l'ordine.
+  - Possiamo aspettare di ricevere il pacco, o la prova che l'hai spedito (art. 56 Codice del Consumo).
 
 ## Costi
 
-- Ti rimborsiamo il prezzo dei prodotti e le spese di consegna standard pagate per l'ordine. Se avevi scelto una consegna più cara di quella standard, la differenza non è rimborsata (art. 56 Codice del Consumo).
-- Le spese per rispedirci i prodotti sono a tuo carico.
-
-## Condizioni del prodotto
-
-Puoi provare il capo come faresti in negozio. Se il prodotto torna usato, lavato, danneggiato o senza etichette, possiamo trattenere dal rimborso la perdita di valore che ne deriva (art. 57 Codice del Consumo).
-
-## Cambio taglia
-
-Per cambiare taglia scrivici a leonardo@showroomn1.it: se la taglia è disponibile ti spediamo la nuova appena riceviamo il reso. Nei drop limitati, se la taglia è finita, ti rimborsiamo.
+- Le spese per rispedirci i prodotti, per un cambio o per un rimborso, sono a tuo carico.
+- La spedizione del prodotto in cambio è a carico nostro.
+- Se al momento dell'acquisto hai usato uno sconto, la spedizione del prodotto in cambio non è gratuita: ti chiediamo un contributo pari alla tariffa standard applicata all'ordine.
 
 ## Prodotti difettosi o sbagliati
 
-Se il prodotto è difettoso o diverso da quello ordinato, non è un recesso ma garanzia legale. Scrivici entro 2 mesi dalla scoperta con una foto: le spese sono tutte a carico nostro. Vedi *Condizioni generali di vendita*, punto 9.
+Se il prodotto è difettoso o diverso da quello ordinato, non è un reso ma garanzia legale. Scrivici entro 2 mesi dalla scoperta con una foto: le spese sono tutte a carico nostro. Vedi *Condizioni generali di vendita*, punto 9.
 
 ---
 
@@ -39,7 +57,7 @@ Se il prodotto è difettoso o diverso da quello ordinato, non è un recesso ma g
 
 *(Allegato I, parte B, del Codice del Consumo. Compilalo e mandalo solo se vuoi recedere dal contratto.)*
 
-> Destinatario: Fradel S.a.s., Corso Concordia 5, 20129 Milano (MI), email leonardo@showroomn1.it, PEC Fradel.sas@pec.it
+> Destinatario: Fradel S.a.s. di Lorenzo Barindelli & C., Corso Concordia 5, 20129 Milano (MI), email online@teambutti.com, PEC fradel.sas@pec.it
 >
 > Con la presente io/noi (\*) notifico/notifichiamo (\*) il recesso dal mio/nostro (\*) contratto di vendita dei seguenti beni:
 > ______________________________________________

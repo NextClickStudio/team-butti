@@ -23,7 +23,6 @@ Si applicano il Codice del Consumo (D.Lgs. 206/2005) e il D.Lgs. 70/2003. Ordina
 
 - I prezzi sono in euro e **comprendono l'IVA**.
 - Le spese di spedizione sono indicate nel checkout prima del pagamento e nella pagina *Spedizioni*.
-- Per le consegne fuori dall'UE possono esserci dazi e imposte locali a carico di chi riceve.
 - Se un prezzo è palesemente sbagliato per un errore materiale, ti avvisiamo prima di spedire e puoi annullare l'ordine con rimborso completo.
 
 ## 5. Come si conclude il contratto

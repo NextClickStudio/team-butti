@@ -1,10 +1,10 @@
 # Cookie policy
 
-Ultimo aggiornamento: 24 ottobre 2026
+Ultimo aggiornamento: 27 ottobre 2026
 
 Questa pagina spiega quali cookie e tecnologie simili usa questo sito e come puoi gestirli. È scritta secondo l'art. 122 del Codice Privacy e le Linee guida del Garante sui cookie del 10 giugno 2021.
 
-Titolare: **Fradel S.a.s.**, Corso Concordia 5, 20129 Milano (MI), leonardo@showroomn1.it.
+Titolare: **Fradel S.a.s. di Lorenzo Barindelli & C.**, Corso Concordia 5, 20129 Milano (MI), online@teambutti.com.
 
 ## Cosa sono i cookie
 

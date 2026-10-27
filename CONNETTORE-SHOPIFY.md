@@ -1,10 +1,29 @@
 # Cosa fa Claude dentro Shopify (connettore)
 
-Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Il tema 2.0.1 è pubblicato. Il 2.3.0 è già caricato da Claude come tema non pubblicato (*Team Butti 2.3.0*, `gid://shopify/OnlineStoreTheme/206147846485`): lo pubblica l'utente. Lo zip è in `pacchetti/`.
+Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Il tema 2.3.0 è pubblicato dal 27 ottobre (*Team Butti 2.3.0*). Il 2.3.1 è caricato da Claude come tema non pubblicato (*Team Butti 2.3.1*): lo pubblica l'utente. Lo zip è in `pacchetti/`.
 
 Prima di ogni scrittura, Claude legge lo stato attuale e non sovrascrive niente di già compilato senza chiedere.
 
-## Stato al 24 ottobre 2026
+## Stato al 27 ottobre 2026
+Dati di Davide (27/10):
+- ragione sociale **Fradel S.a.s. di Lorenzo Barindelli & C.**, legale rappresentante Lorenzo Barindelli;
+- telefono +39 331 700 0849;
+- email per i clienti online@teambutti.com (dominio teambutti.com, che il team ha già);
+- corriere DHL: 2–3 giorni lavorativi, isole e località remote 6–10;
+- magazzino e resi: Corso Magenta 52, 20123 Milano;
+- **solo Italia**: UE dal 2027, resto del mondo dal 2028, quando il marchio è registrato.
+
+Fatto da Claude il 27/10:
+- spedizioni: tolte le zone UE e Internazionale; in Italia restano *Spedizione DHL* 5 € fino a 99,99 € e *Spedizione DHL gratuita* da 100 €, con i tempi nella descrizione;
+- pagine **Contatti** e **Cookie policy** aggiornate con i dati nuovi;
+- testi legali rifatti (`legal/compilato/html/`), con la procedura resi e cambi di Davide adattata al Codice del Consumo;
+- tema 2.3.1 non pubblicato: scheda prodotto "solo Italia" e footer con la ragione sociale esatta.
+
+Già fatto dall'utente: tema 2.3.0 pubblicato, password tolta, 4 policy incollate (testi del 24/10, da sostituire con quelli del 27/10).
+
+Da fare dall'utente: dati del negozio, le 5 policy nuove, pagamenti, email ai clienti, collegare il dominio.
+
+## Stato al 24 ottobre 2026 (storico)
 Fatto:
 - pagine **Chi siamo** (modello `chi-siamo`), **Contatti** (testo con email, PEC e dati Fradel; il modulo arriva con il modello `page.contact` del tema 2.3) e **Cookie policy** (`cookie-policy`, dal testo compilato);
 - menu principale (Shop · Drop 01 · Chi siamo · Contatti) e menu footer (Chi siamo · Contatti · Cerca);

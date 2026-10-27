@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Team Butti",
-    "theme_version": "2.3.0",
+    "theme_version": "2.3.1",
     "theme_author": "Team Butti",
     "theme_documentation_url": "https://www.instagram.com/team_butti/",
     "theme_support_url": "https://www.instagram.com/team_butti/"
@@ -202,7 +202,7 @@
         "type": "range",
         "id": "free_shipping",
         "label": "Soglia spedizione gratis (Italia)",
-        "info": "Deve essere uguale alla tariffa gratuita di Impostazioni → Spedizione per l'Italia. UE: gratis da 250 €.",
+        "info": "Deve essere uguale alla tariffa gratuita di Impostazioni → Spedizione per l'Italia.",
         "min": 0,
         "max": 300,
         "step": 10,

@@ -1,13 +1,13 @@
 # Informativa privacy
 
-Ultimo aggiornamento: 24 ottobre 2026
+Ultimo aggiornamento: 27 ottobre 2026
 
 Questa informativa spiega come trattiamo i tuoi dati personali quando visiti questo sito, ti iscrivi alla newsletter o compri. È resa ai sensi degli artt. 13 e 14 del Regolamento UE 2016/679 (GDPR) e del D.Lgs. 196/2003 (Codice Privacy).
 
 ## 1. Titolare del trattamento
 
-**Fradel S.a.s.**, sede Corso Concordia 5, 20129 Milano (MI), P.IVA 09963340964.
-Per qualsiasi richiesta sulla privacy: **leonardo@showroomn1.it** · PEC Fradel.sas@pec.it.
+**Fradel S.a.s. di Lorenzo Barindelli & C.**, sede Corso Concordia 5, 20129 Milano (MI), P.IVA 09963340964.
+Per qualsiasi richiesta sulla privacy: **online@teambutti.com** · PEC fradel.sas@pec.it.
 
 ## 2. Quali dati trattiamo
 
@@ -41,7 +41,7 @@ Solo a chi serve per le finalità sopra:
 
 - **Shopify**, la piattaforma del negozio: Shopify International Limited (Irlanda), responsabile del trattamento;
 - **fornitori di pagamento** (Shopify Payments, PayPal se attivo), per i pagamenti e i controlli antifrode;
-- **corrieri**, per le consegne;
+- **corrieri** (DHL), per le consegne;
 - **commercialista e consulenti**, per gli adempimenti fiscali e legali;
 - **autorità**, se la legge lo richiede.
 
@@ -63,7 +63,7 @@ Puoi chiederci in ogni momento di:
 - avere i dati in un formato portabile;
 - revocare il consenso.
 
-Scrivi a **leonardo@showroomn1.it**: rispondiamo entro 30 giorni.
+Scrivi a **online@teambutti.com**: rispondiamo entro 30 giorni.
 
 Puoi anche presentare reclamo al **Garante per la protezione dei dati personali** (www.garanteprivacy.it).
 
