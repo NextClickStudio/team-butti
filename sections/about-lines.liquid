@@ -1,0 +1,127 @@
+{%- comment -%}
+  "Chi siamo": the brand text one line at a time, words rising in as you scroll, highlighted words
+  marked with a highlighter, crossed-out words struck with a marker, photos taped in between
+  (slight parallax), and a final tape that never stops ("il resto è in movimento").
+{%- endcomment -%}
+<section class="ab ab--{{ section.settings.style }}" id="chi-siamo" data-tb="about">
+  <div class="ab__head">
+    <p class="label rv">{{ section.settings.kicker | escape }}</p>
+    <h1 class="ab__brand d grunge rv">{{ section.settings.brand | escape }}</h1>
+  </div>
+  <div class="ab__lines">
+    {%- for b in section.blocks -%}
+      {%- if b.type == 'line' and b.settings.text != blank -%}
+        {%- liquid
+          assign t = b.settings.text | escape | newline_to_br
+          assign hl = b.settings.highlight | escape
+          if hl != blank
+            assign em = '<em>' | append: hl | append: '</em>'
+            assign t = t | replace: hl, em
+          endif
+          assign st = b.settings.strike | escape
+          if st != blank
+            assign sx = '<s>' | append: st | append: '</s>'
+            assign t = t | replace: st, sx
+          endif
+        -%}
+        <p class="ab__l ab__l--{{ b.settings.size }} ab__l--{{ b.settings.style }} ab__l--{{ b.settings.align }} rv" {{ b.shopify_attributes }}>{{ t }}</p>
+      {%- elsif b.type == 'photo' -%}
+        {%- if b.settings.image != blank -%}
+          {%- liquid
+            assign img = b.settings.image
+            assign ar = '4/5'
+            if img.aspect_ratio > 1.15
+              assign ar = '5/4'
+            elsif img.aspect_ratio > 0.9
+              assign ar = '1/1'
+            endif
+          -%}
+          <figure class="pol ab__pic ab__pic--{{ b.settings.align }} rv" style="--r: {% if b.settings.align == 'left' %}-4{% else %}3{% endif %}deg; --ar: {{ ar }}" {{ b.shopify_attributes }}>
+            <span class="pol__btn">
+              <span class="pol__img">{{ img | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', sizes: '(min-width: 990px) 30vw, 70vw', alt: b.settings.caption }}</span>
+              {%- if b.settings.caption != blank -%}<span class="pol__cap">{{ b.settings.caption | escape }}</span>{%- endif -%}
+            </span>
+            <i class="pol__tape" aria-hidden="true"></i>
+          </figure>
+        {%- elsif request.design_mode -%}
+          <figure class="pol pol--empty ab__pic ab__pic--{{ b.settings.align }}" style="--r: 3deg; --ar: 4/5" {{ b.shopify_attributes }}>
+            <span class="pol__btn"><span class="pol__img"><span class="label">{{ 'crew.slot' | t }}</span></span><span class="pol__cap">{{ b.settings.caption | escape }}</span></span>
+          </figure>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- if section.settings.tape != blank -%}
+    <div class="ab__tape" aria-label="{{ section.settings.tape | escape }}">
+      <div aria-hidden="true">
+        {%- for i in (1..6) -%}<span>{{ section.settings.tape | escape }}</span><b>★</b>{%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Chi siamo (a righe)",
+  "max_blocks": 24,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Etichetta", "default": "Chi siamo" },
+    { "type": "text", "id": "brand", "label": "Titolo grande", "default": "Team Butti" },
+    { "type": "select", "id": "style", "label": "Sfondo", "default": "paper", "options": [
+      { "value": "paper", "label": "Carta" },
+      { "value": "dark", "label": "Scuro" },
+      { "value": "pink", "label": "Rosa poster" }
+    ] },
+    { "type": "text", "id": "tape", "label": "Nastro finale (scorre sempre)", "default": "Il resto è in movimento" }
+  ],
+  "blocks": [
+    {
+      "type": "line",
+      "name": "Riga",
+      "settings": [
+        { "type": "textarea", "id": "text", "label": "Testo", "default": "Prima c'erano gli amici." },
+        { "type": "text", "id": "highlight", "label": "Parole evidenziate", "info": "Scrivile esattamente come nel testo" },
+        { "type": "text", "id": "strike", "label": "Parole barrate a pennarello", "info": "Scrivile esattamente come nel testo" },
+        { "type": "select", "id": "size", "label": "Grandezza", "default": "xl", "options": [
+          { "value": "xl", "label": "Enorme" },
+          { "value": "l", "label": "Grande" },
+          { "value": "m", "label": "Media" }
+        ] },
+        { "type": "select", "id": "style", "label": "Stile", "default": "fill", "options": [
+          { "value": "fill", "label": "Pieno" },
+          { "value": "outline", "label": "Contorno" },
+          { "value": "marker", "label": "Pennarello" }
+        ] },
+        { "type": "select", "id": "align", "label": "Allineamento", "default": "left", "options": [
+          { "value": "left", "label": "Sinistra" },
+          { "value": "center", "label": "Centro" },
+          { "value": "right", "label": "Destra" }
+        ] }
+      ]
+    },
+    {
+      "type": "photo",
+      "name": "Foto",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Foto" },
+        { "type": "text", "id": "caption", "label": "Scritta a pennarello" },
+        { "type": "select", "id": "align", "label": "Posizione", "default": "right", "options": [
+          { "value": "left", "label": "Sinistra" },
+          { "value": "right", "label": "Destra" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Chi siamo (a righe)",
+      "blocks": [
+        { "type": "line", "settings": { "text": "Prima c'erano gli amici.", "highlight": "amici", "size": "xl" } },
+        { "type": "line", "settings": { "text": "Poi è arrivato il nome.", "size": "xl", "style": "outline", "align": "right" } },
+        { "type": "line", "settings": { "text": "Team Butti non è un brand.", "strike": "brand", "size": "xl", "align": "center" } },
+        { "type": "line", "settings": { "text": "È uno stile di vita.", "highlight": "stile di vita", "size": "xl", "align": "center" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

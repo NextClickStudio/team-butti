@@ -1,0 +1,20 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Prossimo market: Milano · 07.11 · Piazzale Cantore 10|Crew List: la tua taglia tenuta da parte al market|Team Butti Merde|Spedizione gratis in Italia sopra 100€|Market Milano 26.09 — grazie a tutti|Da Chianni a Milano",
+        "separator": "★"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu"
+      }
+    }
+  },
+  "order": ["announcement", "header"]
+}

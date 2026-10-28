@@ -1,0 +1,14 @@
+{%- comment -%}
+  The Team Butti bike illustrated with Higgsfield, cut into layers by tools/art/moto-higgsfield (README there).
+  Layers, bottom to top: wheels (spin), body with the rider (suspension), swingarm (pivots on the rear axle), fork lower (stays on the front axle).
+  data-*: wheelbase, centre between the axles, wheel radius and swingarm length as a share of the width, ground line as a share of the height.
+  The numbers come from tools/art/moto-higgsfield/export.py: rerun it if the drawing changes.
+{%- endcomment -%}
+<div class="mx mx--art" data-bike-art data-wb="0.6647" data-cx="0.4983" data-ground="0.9932" data-r="0.1622" data-arm="0.1787" aria-hidden="true">
+  <svg class="mx__shadow" viewBox="0 0 1800 1594" preserveAspectRatio="none" focusable="false"><ellipse cx="897" cy="1586" rx="830" ry="20" fill="#000" opacity=".22"/></svg>
+  <img class="mx__wh mxa__w mxa__w--r" src="{{ 'tb-moto-ruota-post-s.webp' | asset_url }}" srcset="{{ 'tb-moto-ruota-post-s.webp' | asset_url }} 199w, {{ 'tb-moto-ruota-post.webp' | asset_url }} 397w" sizes="(max-width: 800px) 12vw, 7vw" width="397" height="397" alt="" loading="lazy" decoding="async">
+  <img class="mx__wh mxa__w mxa__w--f" src="{{ 'tb-moto-ruota-ant-s.webp' | asset_url }}" srcset="{{ 'tb-moto-ruota-ant-s.webp' | asset_url }} 202w, {{ 'tb-moto-ruota-ant.webp' | asset_url }} 404w" sizes="(max-width: 800px) 12vw, 7vw" width="404" height="404" alt="" loading="lazy" decoding="async">
+  <img class="mxa__l mx__body" src="{{ 'tb-moto-corpo-s.webp' | asset_url }}" srcset="{{ 'tb-moto-corpo-s.webp' | asset_url }} 600w, {{ 'tb-moto-corpo.webp' | asset_url }} 1200w" sizes="(max-width: 800px) 36vw, 18vw" width="1200" height="1063" alt="" loading="lazy" decoding="async">
+  <img class="mxa__l mxa__arm" data-bike-arm src="{{ 'tb-moto-forcellone-s.webp' | asset_url }}" srcset="{{ 'tb-moto-forcellone-s.webp' | asset_url }} 600w, {{ 'tb-moto-forcellone.webp' | asset_url }} 1200w" sizes="(max-width: 800px) 36vw, 18vw" width="1200" height="1063" alt="" loading="lazy" decoding="async">
+  <img class="mxa__l mxa__fork" src="{{ 'tb-moto-forcella-s.webp' | asset_url }}" srcset="{{ 'tb-moto-forcella-s.webp' | asset_url }} 600w, {{ 'tb-moto-forcella.webp' | asset_url }} 1200w" sizes="(max-width: 800px) 36vw, 18vw" width="1200" height="1063" alt="" loading="lazy" decoding="async">
+</div>

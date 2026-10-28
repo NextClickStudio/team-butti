@@ -1,0 +1,126 @@
+{%- comment -%}
+  Structured data (JSON-LD) for Google and the other search engines:
+  - every page: the brand (Organization, with logo and Instagram/TikTok) and the site (WebSite, with the search box);
+  - product pages: Product with brand, photos, description and one Offer per size (price, currency, availability);
+  - product and collection pages: BreadcrumbList (Home → collection → product);
+  - blog posts: Article.
+  Every value goes through | json, so titles and descriptions can never break out of the script tag.
+{%- endcomment -%}
+{%- liquid
+  assign site = request.origin | default: shop.url
+  assign org_id = site | append: '/#organization'
+  assign currency = cart.currency.iso_code | default: shop.currency
+  assign search_target = site | append: routes.search_url | append: '?q={search_term_string}'
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": {{ org_id | json }},
+      "name": {{ shop.name | json }},
+      "url": {{ site | append: '/' | json }}
+      {%- if settings.logo != blank -%},
+      "logo": {{ settings.logo | image_url: width: 600 | prepend: 'https:' | json }}
+      {%- else -%},
+      "logo": {{ 'tb-logo-nero.png' | asset_url | prepend: 'https:' | json }}
+      {%- endif -%}
+      {%- if settings.social_instagram != blank or settings.social_tiktok != blank -%},
+      "sameAs": [
+        {%- if settings.social_instagram != blank -%}{{ settings.social_instagram | json }}{%- endif -%}
+        {%- if settings.social_instagram != blank and settings.social_tiktok != blank -%},{%- endif -%}
+        {%- if settings.social_tiktok != blank -%}{{ settings.social_tiktok | json }}{%- endif -%}
+      ]
+      {%- endif %}
+    },
+    {
+      "@type": "WebSite",
+      "@id": {{ site | append: '/#website' | json }},
+      "name": {{ shop.name | json }},
+      "url": {{ site | append: '/' | json }},
+      "inLanguage": {{ request.locale.iso_code | json }},
+      "publisher": { "@id": {{ org_id | json }} },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ search_target | json }},
+        "query-input": "required name=search_term_string"
+      }
+    }
+    {%- if request.page_type == 'product' and product -%},
+    {%- assign current = product.selected_or_first_available_variant -%}
+    {
+      "@type": "Product",
+      "@id": {{ site | append: product.url | append: '#product' | json }},
+      "name": {{ product.title | json }},
+      "url": {{ site | append: product.url | json }},
+      "brand": { "@type": "Brand", "name": {{ product.vendor | default: shop.name | json }} }
+      {%- if product.type != blank -%},
+      "category": {{ product.type | json }}
+      {%- endif -%}
+      {%- if product.description != blank -%},
+      "description": {{ product.description | strip_html | strip_newlines | truncate: 500 | json }}
+      {%- endif -%}
+      {%- if current.sku != blank -%},
+      "sku": {{ current.sku | json }}
+      {%- endif -%}
+      {%- if product.images.size > 0 -%},
+      "image": [
+        {%- for image in product.images limit: 6 -%}
+          {{ image | image_url: width: 1600 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+      {%- endif -%},
+      "offers": [
+        {%- for v in product.variants -%}
+        {
+          "@type": "Offer",
+          "name": {{ v.title | json }},
+          {%- if v.sku != blank %}"sku": {{ v.sku | json }},{% endif %}
+          "price": {{ v.price | divided_by: 100.0 | json }},
+          "priceCurrency": {{ currency | json }},
+          "availability": "https://schema.org/{% if v.available %}InStock{% else %}OutOfStock{% endif %}",
+          "itemCondition": "https://schema.org/NewCondition",
+          "url": {{ site | append: v.url | json }},
+          "seller": { "@id": {{ org_id | json }} }
+        }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": {{ shop.name | json }}, "item": {{ site | append: '/' | json }} },
+        {%- if collection -%}
+        { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ site | append: collection.url | json }} },
+        { "@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": {{ site | append: product.url | json }} }
+        {%- else -%}
+        { "@type": "ListItem", "position": 2, "name": {{ product.title | json }}, "item": {{ site | append: product.url | json }} }
+        {%- endif -%}
+      ]
+    }
+    {%- elsif request.page_type == 'collection' and collection -%},
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": {{ shop.name | json }}, "item": {{ site | append: '/' | json }} },
+        { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ site | append: collection.url | json }} }
+      ]
+    }
+    {%- elsif request.page_type == 'article' and article -%},
+    {
+      "@type": "Article",
+      "headline": {{ article.title | truncate: 110 | json }},
+      "url": {{ site | append: article.url | json }},
+      "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+      "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+      "author": { "@type": "Person", "name": {{ article.author | default: shop.name | json }} },
+      "publisher": { "@id": {{ org_id | json }} }
+      {%- if article.image -%},
+      "image": {{ article.image | image_url: width: 1600 | prepend: 'https:' | json }}
+      {%- endif %}
+    }
+    {%- endif %}
+  ]
+}
+</script>

@@ -1,0 +1,674 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-vibe",
+      "blocks": {
+        "v1": {
+          "type": "vibe",
+          "settings": {
+            "name": "Pink Market",
+            "bg": "#FF2E93",
+            "fg": "#0D0D0D",
+            "pattern": "halftone",
+            "jersey_1": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d",
+            "jersey_2": "#f4f1ea,#0d0d0d,#9a9a9a,#0d0d0d",
+            "jersey_3": "#39ff14,#ff2e93,#0d0d0d,#ff2e93",
+            "photo_1": "shopify://shop_images/tb-maglia-hockey-merde00-nero-back.png",
+            "photo_2": "shopify://shop_images/tb-maglia-hockey-merde00-verde-front.png",
+            "photo_3": "shopify://shop_images/tb-maglia-cross-merde62-bianco-rosso-front.png"
+          }
+        },
+        "v2": {
+          "type": "vibe",
+          "settings": {
+            "name": "Leopardo",
+            "bg": "#E0A54A",
+            "fg": "#0D0D0D",
+            "pattern": "leopard",
+            "jersey_1": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13",
+            "jersey_2": "#f4f1ea,#0d0d0d,#9a9a9a,#0d0d0d",
+            "jersey_3": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d",
+            "photo_1": "shopify://shop_images/tb-maglia-hockey-merdex-nero-arancio-back.png",
+            "photo_2": "shopify://shop_images/tb-maglia-hockey-merde00-bianco-front.png",
+            "photo_3": "shopify://shop_images/tb-maglia-cross-merde62-nero-back.png"
+          }
+        },
+        "v3": {
+          "type": "vibe",
+          "settings": {
+            "name": "Giallo MX",
+            "bg": "#FFD400",
+            "fg": "#E3191B",
+            "pattern": "halftone",
+            "jersey_1": "#f4f1ea,#e3191b,#1d3fbf,#e3191b",
+            "jersey_2": "#ffd400,#e3191b,#0d0d0d,#e3191b",
+            "jersey_3": "#1d3fbf,#1d3fbf,#e3191b,#f4f1ea",
+            "photo_1": "shopify://shop_images/tb-maglia-cross-merde62-bluette-giallo-front.png",
+            "photo_2": "shopify://shop_images/tb-maglia-hockey-merde00-bluette-back.png",
+            "photo_3": "shopify://shop_images/tb-maglia-cross-merde62-bianco-rosso-back.png"
+          }
+        },
+        "j1": {
+          "type": "jersey",
+          "settings": {
+            "type": "hockey",
+            "side": "front",
+            "num": "00",
+            "name": "BUTTI"
+          }
+        },
+        "j2": {
+          "type": "jersey",
+          "settings": {
+            "type": "mx",
+            "side": "back",
+            "num": "69",
+            "name": "BUTTI"
+          }
+        },
+        "j3": {
+          "type": "jersey",
+          "settings": {
+            "type": "football",
+            "side": "front",
+            "num": "68",
+            "name": "BUTTI"
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "j1",
+        "j2",
+        "j3"
+      ],
+      "settings": {
+        "kicker": "Da <b>Chianni</b>, Toscana, a <b>Milano</b>. Maglie da hockey, MX e football per chi va di traverso.",
+        "route_from": "Chianni",
+        "route_to": "Milano",
+        "badge_text": "TEAM BUTTI ★ CHIANNI ★ MILANO ★ MERDE ★ ",
+        "count_label": "Market Milano · 07.11"
+      }
+    },
+    "tapes": {
+      "type": "tapes",
+      "settings": {}
+    },
+    "drop": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Drop",
+        "title_outline": "01",
+        "limit": 8,
+        "link_label": "Vedi tutto il drop →",
+        "collection": "drop-01"
+      }
+    },
+    "manifesto": {
+      "type": "manifesto",
+      "blocks": {
+        "s1": {
+          "type": "sticker",
+          "settings": {
+            "text": "MERDE X",
+            "style": "a",
+            "x": 6,
+            "y": 8,
+            "rotate": -8
+          }
+        },
+        "s2": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-team-butti-groovy.png",
+            "size": 230,
+            "text": "Team Butti",
+            "style": "a",
+            "x": 74,
+            "y": 6,
+            "rotate": 8
+          }
+        },
+        "s3": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-dito-medio.png",
+            "size": 150,
+            "text": "Team Butti",
+            "style": "a",
+            "x": 60,
+            "y": 44,
+            "rotate": -7
+          }
+        },
+        "s4": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-pigboy.png",
+            "size": 150,
+            "text": "Pigboy Team Butti",
+            "style": "a",
+            "x": 8,
+            "y": 70,
+            "rotate": 6
+          }
+        },
+        "s5": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-soldatino-skate.png",
+            "size": 170,
+            "text": "Team Butti skate",
+            "style": "a",
+            "x": 80,
+            "y": 68,
+            "rotate": -9
+          }
+        },
+        "s6": {
+          "type": "sticker",
+          "settings": {
+            "text": "Team|Butti",
+            "style": "badge",
+            "x": 44,
+            "y": 6,
+            "rotate": 14
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ],
+      "settings": {
+        "sub": "Est. Chianni · Milano",
+        "text": "<p>Non siamo nati a Los Angeles. Siamo nati sullo <em>sterrato</em> dietro casa, con un due tempi che non partiva mai. <em>Moto</em>, vestiti, oggetti, persone, esperienze: se ci piace, ci entra. Team Butti è la <em>crew</em>. Il resto è merde.</p>"
+      }
+    },
+    "drop_countdown": {
+      "type": "drop-countdown",
+      "settings": {
+        "poster_title": "Market|Milano",
+        "poster_date": "07.11|2026",
+        "poster_info": "<p>Piazzale Antonio Cantore 10<br>20123 Milano<br>Stesso posto dell'ultima volta</p>",
+        "stamp": "Crew List",
+        "kicker": "Prossima tappa",
+        "title": "Market Milano",
+        "date": "2026-11-07T09:00:00+01:00",
+        "text": "Entra nella Crew List: il 6 novembre ti scriviamo cosa portiamo al market. Rispondi con la tua taglia e il pezzo te lo teniamo da parte fino alle 13.",
+        "submit": "Entra in lista",
+        "success": "Sei nella Crew List. Il 6 novembre ti scriviamo noi: rispondi con la tua taglia.",
+        "tags": "newsletter, market-milano, crew-list"
+      }
+    },
+    "story": {
+      "type": "story-video",
+      "blocks": {
+        "f1": {
+          "type": "fact",
+          "settings": {
+            "value": "1",
+            "label": "Stile di vita"
+          }
+        },
+        "f2": {
+          "type": "fact",
+          "settings": {
+            "value": "26.09",
+            "label": "Market Milano"
+          }
+        },
+        "f3": {
+          "type": "fact",
+          "settings": {
+            "value": "00",
+            "label": "Regole"
+          }
+        },
+        "f4": {
+          "type": "fact",
+          "settings": {
+            "value": "07.11",
+            "label": "Market Milano"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "video": "shopify://files/videos/tb-storia-estate.mp4",
+        "rec_label": "Chianni · Estate 2025–26",
+        "link": "/pages/chi-siamo",
+        "link_label": "Chi siamo",
+        "text": ""
+      }
+    },
+    "cadillac": {
+      "type": "video-scroll",
+      "blocks": {
+        "sign-ranch": {
+          "type": "sign",
+          "settings": {
+            "title": "Il Ranch",
+            "sub": "Chianni · Team Butti HQ",
+            "style": "brown",
+            "pos": 8
+          }
+        },
+        "sign-fipili": {
+          "type": "sign",
+          "settings": {
+            "title": "FI-PI-LI",
+            "sub": "Pontedera · Firenze",
+            "style": "blue",
+            "pos": 21
+          }
+        },
+        "sign-a1": {
+          "type": "sign",
+          "settings": {
+            "title": "A1",
+            "sub": "Bologna · Milano",
+            "style": "green",
+            "pos": 34
+          }
+        },
+        "sign-mi": {
+          "type": "sign",
+          "settings": {
+            "title": "Milano",
+            "sub": "215 km",
+            "style": "green",
+            "pos": 54
+          }
+        },
+        "sign-city": {
+          "type": "sign",
+          "settings": {
+            "title": "Milano",
+            "sub": "",
+            "style": "city",
+            "pos": 76
+          }
+        },
+        "sign-market": {
+          "type": "sign",
+          "settings": {
+            "title": "Market 07.11",
+            "sub": "P.le Cantore 10",
+            "style": "pink",
+            "pos": 93
+          }
+        }
+      },
+      "block_order": [
+        "sign-ranch",
+        "sign-fipili",
+        "sign-a1",
+        "sign-mi",
+        "sign-city",
+        "sign-market"
+      ],
+      "settings": {
+        "kicker": "Chianni → Milano · 390 km",
+        "title": "Si parte",
+        "text": "Dal Ranch di Chianni al Market di Milano. Finestrini giù, maglie al vento: scorri e portaci là.",
+        "places": "Chianni · Il Ranch,Valdera,FI-PI-LI,Firenze,A1 · Appennino,Bologna,Emilia,Milano",
+        "km": 390,
+        "length": 325,
+        "theme": "light",
+        "show_without_video": true
+      }
+    },
+    "reel": {
+      "type": "brand-reel",
+      "blocks": {
+        "c1": {
+          "type": "clip",
+          "settings": {
+            "video": "shopify://files/videos/tb-reel-deville.mp4",
+            "title": "La DeVille",
+            "place": "Milano",
+            "date": "Settembre 2026",
+            "bubbles": "Partita da Chianni.|\"Fa paura.\"|\"Alla Joker, frate.\""
+          }
+        },
+        "c2": {
+          "type": "clip",
+          "settings": {
+            "video": "shopify://files/videos/tb-reel-targa.mp4",
+            "title": "Los Angeles?",
+            "place": "Milano",
+            "date": "Settembre 2026",
+            "bubbles": "\"Il portatarga? Los Angeles, in gotico.\"|Non siamo nati a Los Angeles."
+          }
+        },
+        "c3": {
+          "type": "clip",
+          "settings": {
+            "video": "shopify://files/videos/tb-reel-leopardo.mp4",
+            "title": "Leopardo",
+            "place": "Interni",
+            "date": "DeVille '66",
+            "bubbles": "Leopardo ovunque.|Anche sul cruscotto."
+          }
+        },
+        "c4": {
+          "type": "clip",
+          "settings": {
+            "video": "shopify://files/videos/tb-reel-volante.mp4",
+            "title": "Al volante",
+            "place": "Milano",
+            "date": "Settembre 2026",
+            "bubbles": "Finestrini giù.|Il resto è in movimento."
+          }
+        },
+        "c5": {
+          "type": "clip",
+          "settings": {
+            "video": "shopify://files/videos/tb-reel-milano.mp4",
+            "title": "Milano",
+            "place": "Milano",
+            "date": "26.09.2026",
+            "bubbles": "\"Tira fuori un fumo nero, frate.\"|Prossima fermata: il Market."
+          }
+        },
+        "stk1": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-hot-milfs.png",
+            "size": 210
+          }
+        },
+        "stk2": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-toyoda.png",
+            "size": 200
+          }
+        },
+        "stk3": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-im-loving-it.png",
+            "size": 160
+          }
+        },
+        "stk4": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-team-butti-groovy.png",
+            "size": 190
+          }
+        },
+        "stk5": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-pigboy.png",
+            "size": 130
+          }
+        },
+        "stk6": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-dito-medio.png",
+            "size": 130
+          }
+        },
+        "stk7": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-soldatino-skate.png",
+            "size": 150
+          }
+        },
+        "stk8": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-team-butti-merde.png",
+            "size": 150
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "stk1",
+        "stk2",
+        "stk3",
+        "stk4",
+        "stk5",
+        "stk6",
+        "stk7",
+        "stk8"
+      ],
+      "settings": {
+        "kicker": "Girato da noi · nessun attore",
+        "cta_label": "Shop il drop",
+        "cta_note": "Gratis in Italia da 100€",
+        "length": 130,
+        "autoplay_next": 8
+      }
+    },
+    "crew": {
+      "type": "crew-wall",
+      "blocks": {
+        "p01": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-01.jpg",
+            "caption": "La crew e la DeVille"
+          }
+        },
+        "p02": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-02.jpg",
+            "caption": "Senza maglia, gas aperto"
+          }
+        },
+        "p03": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-03.jpg",
+            "caption": "Cadillac DeVille '66"
+          }
+        },
+        "p04": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-04.jpg",
+            "caption": "La bandiera la porta lei"
+          }
+        },
+        "p05": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-05.jpg",
+            "caption": "Interni leopardati, ovvio"
+          }
+        },
+        "s1": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-im-loving-it.png",
+            "size": 190,
+            "text": "I'm loving it Team Butti",
+            "style": "a"
+          }
+        },
+        "p06": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-06.jpg",
+            "caption": "Anche il cavallo ha il cappellino"
+          }
+        },
+        "p07": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-07.jpg",
+            "caption": "MERDE X"
+          }
+        },
+        "p08": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-08.jpg",
+            "caption": "Numero 45"
+          }
+        },
+        "p09": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-09.jpg",
+            "caption": "Pieno e si parte"
+          }
+        },
+        "p10": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-10.jpg",
+            "caption": "Il guardiano"
+          }
+        },
+        "p11": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-11.jpg",
+            "caption": "Milano in maglia rossa"
+          }
+        },
+        "p12": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-12.jpg",
+            "caption": "Luna park"
+          }
+        },
+        "p13": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-13.jpg",
+            "caption": "Team Butti Merde"
+          }
+        },
+        "p14": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-14.jpg",
+            "caption": "Bomber verde"
+          }
+        },
+        "p15": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-15.jpg",
+            "caption": "Rosa e verde"
+          }
+        },
+        "s2": {
+          "type": "sticker",
+          "settings": {
+            "image": "shopify://shop_images/tb-sticker-team-butti-merde.png",
+            "size": 180,
+            "text": "Team Butti Merde",
+            "style": "e"
+          }
+        },
+        "p16": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-16.jpg",
+            "caption": "I ❤ Team Butti"
+          }
+        },
+        "p17": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-17.jpg",
+            "caption": "Polamalu"
+          }
+        },
+        "p18": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-18.jpg",
+            "caption": "La moneta"
+          }
+        },
+        "p19": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-19.jpg",
+            "caption": "Al mare col cappellino"
+          }
+        },
+        "p20": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-20.jpg",
+            "caption": "Sotto il palco"
+          }
+        },
+        "p21": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-21.jpg",
+            "caption": "Milano, numero 10"
+          }
+        }
+      },
+      "block_order": [
+        "p01",
+        "p02",
+        "p03",
+        "p04",
+        "p05",
+        "s1",
+        "p06",
+        "p07",
+        "p08",
+        "p09",
+        "p10",
+        "p11",
+        "p12",
+        "p13",
+        "p14",
+        "p15",
+        "s2",
+        "p16",
+        "p17",
+        "p18",
+        "p19",
+        "p20",
+        "p21"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "reel",
+    "tapes",
+    "drop",
+    "cadillac",
+    "manifesto",
+    "crew",
+    "story",
+    "drop_countdown"
+  ]
+}

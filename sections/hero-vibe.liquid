@@ -1,0 +1,404 @@
+{%- liquid
+  assign vibes = section.blocks | where: 'type', 'vibe'
+  assign jerseys = section.blocks | where: 'type', 'jersey'
+  assign first = vibes.first
+-%}
+<section
+  class="hero hero--{{ section.settings.layout }}{% if section.settings.video != blank %} hero--video{% endif %}"
+  data-tb="hero"
+  data-layout="{{ section.settings.layout }}"
+  data-braps="{{ section.settings.brap_words | escape }}"
+  {% if first %}style="--hero-bg: {{ first.settings.bg }}; --hero-fg: {{ first.settings.fg }};"{% endif %}
+>
+  {%- for v in vibes -%}
+    <i hidden data-vibe data-name="{{ v.settings.name | escape }}" data-bg="{{ v.settings.bg }}" data-fg="{{ v.settings.fg }}" data-pattern="{{ v.settings.pattern }}" data-j="{{ v.settings.jersey_1 | escape }}|{{ v.settings.jersey_2 | escape }}|{{ v.settings.jersey_3 | escape }}" data-ph="{% if v.settings.photo_1 != blank %}{{ v.settings.photo_1 | image_url: width: 800 }}{% endif %}|{% if v.settings.photo_2 != blank %}{{ v.settings.photo_2 | image_url: width: 800 }}{% endif %}|{% if v.settings.photo_3 != blank %}{{ v.settings.photo_3 | image_url: width: 800 }}{% endif %}" {{ v.shopify_attributes }}></i>
+  {%- endfor -%}
+  <div class="hero__top">
+    <div class="hero__kicker">{{ section.settings.kicker }}</div>
+    {%- if vibes.size > 1 -%}
+      <button class="vibe-btn" type="button" data-vibe-btn data-h><i></i><span data-vibe-name>{{ 'hero.vibe' | t }}: {{ first.settings.name | escape }}</span></button>
+    {%- endif -%}
+  </div>
+  {%- if section.settings.video != blank -%}
+    <div class="hero__video" style="--hero-overlay: {{ section.settings.video_overlay | divided_by: 100.0 }}">
+      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1600x' }}
+    </div>
+  {%- endif -%}
+  {%- if section.settings.layout == 'floating' and jerseys.size > 0 -%}
+    {%- for j in jerseys limit: 3 -%}
+      <div class="hero__float hero__float--{{ forloop.index }}" data-float data-depth="{% cycle '18', '-12', '26' %}" data-type="{{ j.settings.type }}" data-side="{{ j.settings.side }}" data-num="{{ j.settings.num | escape }}" data-name="{{ j.settings.name | escape }}" {{ j.shopify_attributes }}>
+        <div class="hero__float-in"></div>
+      </div>
+    {%- endfor -%}
+  {%- endif -%}
+  {%- if section.settings.layout == 'line' and jerseys.size > 0 -%}
+    <div class="line" data-line aria-hidden="true">
+      <svg class="line__rope" data-rope></svg>
+      {%- for j in jerseys limit: 3 -%}
+        <div class="peg{% if forloop.index == 2 %} peg--mid{% endif %}" data-peg data-type="{{ j.settings.type }}" data-side="{{ j.settings.side }}" data-num="{{ j.settings.num | escape }}" data-name="{{ j.settings.name | escape }}" {{ j.shopify_attributes }}>
+          <div class="peg__swing"><div class="peg__j"></div><i class="pin" style="left:24%"></i><i class="pin" style="left:71%"></i></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+  {%- if section.settings.show_badge -%}
+    <div class="spin-badge" aria-hidden="true">
+      <svg viewBox="0 0 200 200"><defs><path id="circ-{{ section.id }}" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text class="spin-badge__t"><textPath href="#circ-{{ section.id }}">{{ section.settings.badge_text | escape }}</textPath></text></svg>
+      {% render 'badge' %}
+    </div>
+  {%- endif -%}
+  {%- if section.settings.show_skyline -%}
+    <div class="hero__land" aria-hidden="true" data-land>
+      {% render 'panorama' %}
+    </div>
+  {%- endif -%}
+  {%- if section.settings.show_car -%}
+    <div class="hero__car" aria-hidden="true" data-hero-car>{% render 'cadillac', uid: section.id %}</div>
+  {%- endif -%}
+  <h1 class="hero__title d grunge">
+    <span class="hero__line"><span>{{ section.settings.title_1 | escape }}</span></span>
+    <span class="hero__line"><span>{{ section.settings.title_2 | escape }}</span></span>
+  </h1>
+  <div class="hero__bottom">
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn hero__cta" data-h>{{ section.settings.button_label | escape }}</a>
+    {%- endif -%}
+    {%- if section.settings.count_label != blank -%}
+      {%- comment -%} countdown of the "Poster + countdown" section (#countdown) at the bottom of the page: the date is set there {%- endcomment -%}
+      <a href="#countdown" class="hero__count" data-hero-count hidden data-h><i aria-hidden="true"></i><span><small>{{ section.settings.count_label | escape }}</small><b data-hero-count-t>--</b></span></a>
+    {%- endif -%}
+    <span class="hero__route label" aria-hidden="true"><b>{{ section.settings.route_from | escape }}</b><i></i><b>{{ section.settings.route_to | escape }}</b></span>
+    <span class="hero__hint label"><i aria-hidden="true"></i>{{ section.settings.hint | escape }}</span>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero cambia vibe",
+  "class": "section-hero",
+  "max_blocks": 11,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "kicker",
+      "label": "Testo in alto",
+      "default": "Da <b>Chianni</b>, Toscana, a <b>Milano</b>. Maglie da hockey, MX e football per chi va di traverso."
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Titolo riga 1",
+      "default": "Team"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Titolo riga 2",
+      "default": "Butti"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Bottone",
+      "default": "Shop il drop →"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link bottone"
+    },
+    {
+      "type": "text",
+      "id": "count_label",
+      "label": "Bottone countdown",
+      "info": "Porta al countdown in fondo alla pagina (sezione Poster + countdown, dove si imposta la data). Vuoto = niente bottone. Sparisce da solo il giorno dopo la data.",
+      "default": "Market Milano · 07.11"
+    },
+    {
+      "type": "text",
+      "id": "hint",
+      "label": "Suggerimento",
+      "default": "Clicca ovunque · Brap brap"
+    },
+    {
+      "type": "text",
+      "id": "brap_words",
+      "label": "Scritte al click",
+      "info": "Separate da virgola",
+      "default": "BRAAAP!,MERDE!,BRAP BRAP,TEAM!,GAS!,00!"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Maglie nella hero",
+      "default": "floating",
+      "options": [
+        {
+          "value": "floating",
+          "label": "Fluttuanti con parallax (concept approvato)"
+        },
+        {
+          "value": "line",
+          "label": "Appese allo stendino"
+        },
+        {
+          "value": "none",
+          "label": "Nessuna"
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video di sfondo (es. clip Higgsfield)",
+      "info": "MP4 compresso 3–8 MB, senza audio. Parte in automatico in loop."
+    },
+    {
+      "type": "range",
+      "id": "video_overlay",
+      "label": "Scurisci video",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 25
+    },
+    {
+      "type": "checkbox",
+      "id": "show_skyline",
+      "label": "Panorama Chianni → Milano",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_car",
+      "label": "Cadillac che attraversa la hero",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "route_from",
+      "label": "Percorso: partenza",
+      "default": "Chianni"
+    },
+    {
+      "type": "text",
+      "id": "route_to",
+      "label": "Percorso: arrivo",
+      "default": "Milano"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Badge rotante",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Testo badge rotante",
+      "default": "TEAM BUTTI ★ CHIANNI ★ MILANO ★ MERDE ★ "
+    }
+  ],
+  "blocks": [
+    {
+      "type": "vibe",
+      "name": "Vibe",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nome",
+          "default": "Pink Market"
+        },
+        {
+          "type": "color",
+          "id": "bg",
+          "label": "Sfondo",
+          "default": "#FF2E93"
+        },
+        {
+          "type": "color",
+          "id": "fg",
+          "label": "Testo",
+          "default": "#0D0D0D"
+        },
+        {
+          "type": "select",
+          "id": "pattern",
+          "label": "Texture",
+          "default": "halftone",
+          "options": [
+            {
+              "value": "halftone",
+              "label": "Retino"
+            },
+            {
+              "value": "halftone-pink",
+              "label": "Retino rosa"
+            },
+            {
+              "value": "leopard",
+              "label": "Leopardato"
+            },
+            {
+              "value": "none",
+              "label": "Nessuna"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "jersey_1",
+          "label": "Colori maglia 1",
+          "info": "base,maniche,bordi,scritte",
+          "default": "#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d"
+        },
+        {
+          "type": "text",
+          "id": "jersey_2",
+          "label": "Colori maglia 2",
+          "default": "#f4f1ea,#0d0d0d,#9a9a9a,#0d0d0d"
+        },
+        {
+          "type": "text",
+          "id": "jersey_3",
+          "label": "Colori maglia 3",
+          "default": "#39ff14,#ff2e93,#0d0d0d,#ff2e93"
+        },
+        {
+          "type": "header",
+          "content": "Maglie vere (still life)"
+        },
+        {
+          "type": "paragraph",
+          "content": "PNG scontornate: con questo vibe al posto delle maglie disegnate compaiono le foto. Vuoto = maglia disegnata con i colori sopra."
+        },
+        {
+          "type": "image_picker",
+          "id": "photo_1",
+          "label": "Foto maglia 1 (in basso a sinistra)"
+        },
+        {
+          "type": "image_picker",
+          "id": "photo_2",
+          "label": "Foto maglia 2 (in alto al centro)"
+        },
+        {
+          "type": "image_picker",
+          "id": "photo_3",
+          "label": "Foto maglia 3 (in alto a destra)"
+        }
+      ]
+    },
+    {
+      "type": "jersey",
+      "name": "Maglia sullo stendino",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "type",
+          "label": "Modello",
+          "default": "hockey",
+          "options": [
+            {
+              "value": "hockey",
+              "label": "Hockey"
+            },
+            {
+              "value": "mx",
+              "label": "Motocross"
+            },
+            {
+              "value": "football",
+              "label": "Football"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "side",
+          "label": "Lato",
+          "default": "front",
+          "options": [
+            {
+              "value": "front",
+              "label": "Fronte"
+            },
+            {
+              "value": "back",
+              "label": "Retro"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "num",
+          "label": "Numero",
+          "default": "00"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nome (retro)",
+          "default": "BUTTI"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero cambia vibe",
+      "blocks": [
+        {
+          "type": "vibe",
+          "settings": {
+            "name": "Pink Market"
+          }
+        },
+        {
+          "type": "vibe",
+          "settings": {
+            "name": "Leopardo",
+            "bg": "#E0A54A",
+            "pattern": "leopard",
+            "jersey_1": "#0d0d0d,#ff6a13,#f4f1ea,#ff6a13"
+          }
+        },
+        {
+          "type": "vibe",
+          "settings": {
+            "name": "Giallo MX",
+            "bg": "#FFD400",
+            "fg": "#E3191B",
+            "jersey_1": "#f4f1ea,#e3191b,#1d3fbf,#e3191b"
+          }
+        },
+        {
+          "type": "jersey",
+          "settings": {
+            "type": "hockey"
+          }
+        },
+        {
+          "type": "jersey",
+          "settings": {
+            "type": "mx",
+            "side": "back",
+            "num": "69"
+          }
+        },
+        {
+          "type": "jersey",
+          "settings": {
+            "type": "football",
+            "num": "68"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
