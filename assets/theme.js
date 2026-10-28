@@ -157,9 +157,13 @@
           var opt = $('[data-opt]', pf) || pf; opt.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
           opt.classList.remove('nudge'); void opt.offsetWidth; opt.classList.add('nudge');
         });
-        if ('IntersectionObserver' in window) new IntersectionObserver(function (es) {
-          var off = !es[0].isIntersecting; bar.classList.toggle('on', off); bar.setAttribute('aria-hidden', off ? 'false' : 'true'); barBtn.tabIndex = off ? 0 : -1;
-        }).observe(form);
+        // in once the real button has scrolled away above, so on arrival it never covers the name and the price
+        var barOn = false;
+        var barCheck = function () {
+          var off = form.getBoundingClientRect().bottom < 0; if (off === barOn) return; barOn = off;
+          bar.classList.toggle('on', off); bar.setAttribute('aria-hidden', off ? 'false' : 'true'); barBtn.tabIndex = off ? 0 : -1;
+        };
+        window.addEventListener('scroll', function () { requestAnimationFrame(barCheck); }, { passive: true }); barCheck();
       }
     });
     $$('[data-stage]', root).forEach(function (stage) {
@@ -403,13 +407,28 @@
       }
       window.addEventListener('scroll', function () { requestAnimationFrame(onScroll); }, { passive: true });
       onScroll();
-      $$('.stk', root).forEach(function (s) {
+      var stks = $$('.stk', root);
+      function fit() {
+        var W = root.clientWidth, H = root.clientHeight, m = 6;
+        stks.forEach(function (s) {
+          if (s.dataset.moved) return;
+          s.style.left = s._l; s.style.top = s._t;
+          var w = s.offsetWidth, h = s.offsetHeight;
+          if (s.offsetLeft + w > W - m) s.style.left = Math.max(m, W - m - w) + 'px';
+          else if (s.offsetLeft < m) s.style.left = m + 'px';
+          if (s.offsetTop + h > H - m) s.style.top = Math.max(m, H - m - h) + 'px';
+        });
+      }
+      stks.forEach(function (s) { s._l = s.style.left; s._t = s.style.top; $$('img', s).forEach(function (i) { if (!i.complete) i.addEventListener('load', fit); }); });
+      fit(); window.addEventListener('resize', fit); window.addEventListener('load', fit);
+      stks.forEach(function (s) {
         var sx, sy, ox, oy;
         s.addEventListener('pointerdown', function (e) {
           s.setPointerCapture(e.pointerId);
           var r = s.getBoundingClientRect(), pr = s.offsetParent.getBoundingClientRect();
           ox = r.left - pr.left; oy = r.top - pr.top; sx = e.clientX; sy = e.clientY;
           s.style.left = ox + 'px'; s.style.top = oy + 'px'; s.style.zIndex = 10;
+          s.dataset.moved = '1'; // after the px position is set, so leaving the phone layout does not make it jump
         });
         s.addEventListener('pointermove', function (e) {
           if (!s.hasPointerCapture(e.pointerId)) return;
@@ -586,12 +605,13 @@
       } else { visible = true; playCur(); schedule(); bubbles(); stickers(); }
       // scroll: the frame grows from a card to full screen; HUD timecode follows the clip.
       // Once it is full screen the "keep scrolling" hint shows, its bar filling until the page moves on.
-      var more = $('[data-reel-more]', root), moreOn = false, lastMp = -1;
+      var more = $('[data-reel-more]', root), moreOn = false, lastMp = -1, full = null;
       whileVisible(root, function () {
         var r = root.getBoundingClientRect(), total = root.offsetHeight - window.innerHeight;
         var p = total > 0 ? Math.min(1, Math.max(0, -r.top / (total * 0.7))) : 1;
         var x = reduce ? 1 : 1 - Math.pow(1 - p, 3);
         root.style.setProperty('--x', x.toFixed(4));
+        if ((x > 0.8) !== full) { full = x > 0.8; root.classList.toggle('is-full', full); }
         if (more) {
           var on = x > 0.55;
           if (on !== moreOn) { moreOn = on; root.classList.toggle('more-on', on); }
@@ -1194,12 +1214,14 @@
     }
     // airborne from the moment the rear wheel leaves the lip until both wheels are back on the landing ramp
     var A = lip + WB / 2, B = l0 + Math.max(0.42 * lL, WB / 2 + 4);
-    var yA = lipY + lipSlope * WB / 2, yB = (g(B - WB / 2) + g(B + WB / 2)) / 2, peak = 0.5 * u * s;
+    var yA = lipY + lipSlope * WB / 2, yB = (g(B - WB / 2) + g(B + WB / 2)) / 2, peak = 0.5 * u * s * (H > W * 1.1 ? 2.1 : 1.15);
     var aA = Math.atan(lipSlope), aB = Math.atan2(g(B + WB / 2) - g(B - WB / 2), WB);
     function pose(xc) {
       if (xc > A && xc < B) {
-        var t = (xc - A) / (B - A);
-        return { y: yA + (yB - yA) * t - peak * 4 * t * (1 - t), a: aA + (aB - aA) * sm(t) - 0.12 * Math.sin(Math.PI * t), air: true };
+        // the nose follows the flight path a little: up on the way out, down for the landing
+        var t = (xc - A) / (B - A), slope = Math.atan(((yB - yA) - peak * 4 * (1 - 2 * t)) / (B - A));
+        var lean = 0.3 * Math.max(-0.6, Math.min(0.6, slope)) * (1 - t * t);
+        return { y: yA + (yB - yA) * t - peak * 4 * t * (1 - t), a: aA + (aB - aA) * sm(t) + lean - 0.08 * Math.sin(Math.PI * t), air: true };
       }
       var yr = g(xc - WB / 2), yf = g(xc + WB / 2);
       return { y: (yr + yf) / 2, a: Math.atan2(yf - yr, WB), air: false };
@@ -1229,50 +1251,106 @@
       '<g transform="translate(' + n(fin) + ' ' + n(y0) + ') scale(' + n(as) + ')"><path d="M-120 0V-200M120 0V-200" stroke="#0d0d0d" stroke-width="8"/><rect x="-132" y="-226" width="264" height="52" fill="#ff2e93" stroke="#0d0d0d" stroke-width="4"/><text x="0" y="-188" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="36" fill="#0d0d0d">TEAM BUTTI</text><g fill="#0d0d0d">' + (function () { var r = ''; for (var k = 0; k < 13; k++) r += '<rect x="' + n(-132 + k * 20.3) + '" y="' + (k % 2 ? -174 : -165) + '" width="20.3" height="9"/>'; return r; })() + '</g></g>';
     scene.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
     scene.innerHTML =
-      '<defs><linearGradient id="ldirt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dcb273"/><stop offset="1" stop-color="#9a6332"/></linearGradient>' +
-      '<clipPath id="lrut"><rect data-lrut x="0" y="0" width="0" height="' + H + '"/></clipPath></defs>' +
+      '<defs><linearGradient id="ldirt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dcb273"/><stop offset="1" stop-color="#9a6332"/></linearGradient></defs>' +
       props +
       '<path d="' + ground + '" fill="url(#ldirt)" stroke="#0d0d0d" stroke-width="5" stroke-linejoin="round"/>' +
       '<g fill="rgba(90,52,20,.35)">' + clods + '</g>' +
-      '<path d="' + surf(0, lip) + surf(l0, W) + '" fill="none" stroke="#f0d39a" stroke-width="3" opacity=".8"/>' +
-      '<g clip-path="url(#lrut)" fill="none" stroke="rgba(70,40,14,.55)" stroke-width="' + n(0.03 * u) + '" stroke-dasharray="' + n(0.06 * u) + ' ' + n(0.035 * u) + '"><path d="' + surf(0, lip) + '"/><path d="' + surf(B - WB / 2, W) + '"/></g>';
-    var rut = $('[data-lrut]', scene);
-    var cols = ['#ecd3a0', '#dcb877', '#c9a46a', '#f3e2bd'];
+      '<path d="' + surf(0, lip) + surf(l0, W) + '" fill="none" stroke="#f0d39a" stroke-width="3" opacity=".8"/>';
+    // camera: track, ruts, shadow, bike and sand move together (zoom on the jump, shake on the landing)
+    var cam = document.createElement('div'); cam.className = 'loader__cam';
+    l.insertBefore(cam, $('.loader__pano', l));
+    // ruts on their own layer, revealed behind the rear wheel by two opposite translations (no repaint per frame)
+    var ruts = document.createElement('div'); ruts.className = 'loader__ruts';
+    ruts.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" focusable="false"><g fill="none" stroke="rgba(70,40,14,.55)" stroke-width="' + n(0.03 * u) + '" stroke-dasharray="' + n(0.06 * u) + ' ' + n(0.035 * u) + '"><path d="' + surf(0, lip) + '"/><path d="' + surf(B - WB / 2, W) + '"/></g></svg>';
+    var rutsIn = ruts.firstChild;
+    var shadow = document.createElement('div'); shadow.className = 'loader__shadow';
+    var shW = WB * 1.3, shH = Math.max(8, WB * 0.16);
+    shadow.style.width = n(shW) + 'px'; shadow.style.height = n(shH) + 'px';
+    [$('.loader__pano', l), scene, ruts, shadow, bike, fx].forEach(function (el) { cam.appendChild(el); });
+    // sand: a fixed pool of puffs animated on the compositor, recycled oldest first
+    var cols = ['#ecd3a0', '#dcb877', '#c9a46a', '#f3e2bd'], pool = [], pi = 0, base = u * 0.2, anim = !!fx.animate;
+    if (anim) for (var q2 = 0; q2 < 56; q2++) {
+      var e = document.createElement('i'); e.className = 'lp';
+      e.style.width = n(base) + 'px'; e.style.background = cols[q2 % cols.length];
+      fx.appendChild(e); pool.push(e);
+    }
     function puff(x, y, sz, dx, dy) {
-      var p = document.createElement('i');
-      p.style.cssText = 'left:' + n(x) + 'px;top:' + n(y) + 'px;width:' + n(sz) + 'px;background:' + cols[Math.floor(Math.random() * cols.length)] + ';--dx:' + n(dx) + 'px;--dy:' + n(dy) + 'px';
-      fx.appendChild(p);
+      if (!anim) {
+        var p = document.createElement('i');
+        p.style.cssText = 'left:' + n(x) + 'px;top:' + n(y) + 'px;width:' + n(sz) + 'px;background:' + cols[Math.floor(Math.random() * cols.length)] + ';--dx:' + n(dx) + 'px;--dy:' + n(dy) + 'px';
+        fx.appendChild(p); return;
+      }
+      var el = pool[pi++ % pool.length], k = sz / base;
+      if (el._a) el._a.cancel();
+      el._a = el.animate([
+        { transform: 'translate(' + n(x) + 'px,' + n(y) + 'px) translate(-50%,-50%) scale(' + (k * 0.3).toFixed(3) + ')', opacity: 0.95 },
+        { transform: 'translate(' + n(x + dx) + 'px,' + n(y + dy) + 'px) translate(-50%,-50%) scale(' + (k * 2.6).toFixed(3) + ')', opacity: 0.3 }
+      ], { duration: 1000 + Math.random() * 400, easing: 'cubic-bezier(.15,.7,.3,1)', fill: 'forwards' });
+    }
+    var clamp01 = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+    // ground under the bike as drawn (the pit floor between lip and landing)
+    var floor = function (x) { return x > lip && x < l0 ? y0 : g(x); };
+    // speed along the track, px/s: builds up to the kicker, holds through the air, pulls away after the landing
+    var Vb = (W + 1.5 * u) / 2.15, vLip = 1.2 * Vb;
+    function vel(x) {
+      if (x <= lip) return Vb * (0.85 + 0.35 * sm(clamp01((x + 0.7 * u) / (lip + 0.7 * u))));
+      if (x < B) return vLip;
+      return vLip * (0.95 + 0.3 * sm(clamp01((x - B) / Math.max(1, W - B))));
     }
     function ride() {
       if (ride.on || out) return; ride.on = true;
-      var t0 = performance.now(), dur = 2100, acc = 0, last = -2 * u, wasAir = false, braap = false, dust = false;
+      var x = -0.7 * u, last = 0, clock = 0, acc = 0, wasAir = false, braap = false, dust = false, pre = false, tLand = -9;
+      var ang = null, zoom = 1, rate = 1, wheels = bike.getAnimations ? bike.getAnimations({ subtree: true }).filter(function (a) { return a.animationName === 'spin'; }) : [];
       bike.style.visibility = 'visible';
-      (function step(now) {
+      requestAnimationFrame(function step(now) {
         if (out) return;
-        var p = Math.min(1, (now - t0) / dur), xc = -0.7 * u + (W + 1.5 * u) * p * (0.7 + 0.3 * p), ps = pose(xc);
-        bike.style.transform = 'translate3d(' + n(xc - CX) + 'px,' + n(ps.y - GY) + 'px,0) rotate(' + (ps.a * 180 / Math.PI).toFixed(2) + 'deg)';
-        rut.setAttribute('width', Math.max(0, xc - WB / 2));
-        var xr = xc - WB / 2;
+        var dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60; last = now; clock += dt;
+        // slow motion at the top of the jump
+        var p0 = pose(x), ta = p0.air ? (x - A) / (B - A) : 0, ts = p0.air ? 1 - 0.55 * Math.pow(Math.sin(Math.PI * ta), 2) : 1;
+        var dx = vel(x) * ts * dt; x += dx;
+        var ps = pose(x), xr = x - WB / 2;
+        // a wheelie through the whoops, pivoting on the rear wheel
+        var wl = 0.2 * Math.pow(Math.sin(Math.PI * clamp01((x - 0.06 * W) / Math.max(1, k0 - 0.5 * u - 0.06 * W))), 2);
+        var ta2 = ps.a - wl, ty = ps.y - WB / 2 * Math.sin(wl);
+        ang = ang === null ? ta2 : ang + (ta2 - ang) * (1 - Math.exp(-dt * 26));
+        bike.style.transform = 'translate3d(' + n(x - CX) + 'px,' + n(ty - GY) + 'px,0) rotate(' + (ang * 180 / Math.PI).toFixed(2) + 'deg)';
+        // shadow on the ground, smaller and lighter the higher the bike flies
+        var hgt = Math.max(0, floor(x) - ps.y), sk = Math.max(0.35, 1 - hgt / (1.6 * bh));
+        shadow.style.transform = 'translate3d(' + n(x - shW / 2) + 'px,' + n(floor(x) - shH / 2) + 'px,0) scale(' + sk.toFixed(3) + ')';
+        shadow.style.opacity = (0.9 * sk).toFixed(2);
+        // ruts behind the rear wheel
+        var rx = Math.max(0, Math.min(W, xr));
+        ruts.style.transform = 'translate3d(' + n(rx - W) + 'px,0,0)'; rutsIn.style.transform = 'translate3d(' + n(W - rx) + 'px,0,0)';
+        // wheels spin with the speed (slower in the slow motion)
+        var r = Math.max(0.3, Math.min(2, vel(x) * ts / Vb));
+        if (Math.abs(r - rate) > 0.08) { rate = r; wheels.forEach(function (a) { a.playbackRate = r; }); }
         if (!ps.air) {
-          acc += xc - last;
+          acc += dx;
           // roost from the rear wheel
           while (acc > 0.05 * u) { acc -= 0.05 * u; puff(xr, g(xr) - 4, u * (0.1 + Math.random() * 0.16), -0.15 * u - Math.random() * 0.4 * u, -0.05 * u - Math.random() * 0.45 * u); }
         }
+        // the suspension loads up on the kicker face
+        if (!pre && x > lip - 0.28 * u) { pre = true; art.classList.remove('land'); void art.offsetWidth; art.classList.add('land'); }
         if (ps.air && !braap) {
           braap = true;
-          var b = document.createElement('b'); b.className = 'loader__braap'; b.textContent = 'BRAAAP!';
-          b.style.left = n(lip) + 'px'; b.style.top = n(lipY - 0.9 * bh) + 'px'; fx.appendChild(b);
+          var bb = document.createElement('b'); bb.className = 'loader__braap'; bb.textContent = 'BRAAAP!';
+          bb.style.left = n(lip) + 'px'; bb.style.top = n(lipY - 0.9 * bh) + 'px'; fx.appendChild(bb);
         }
         if (wasAir && !ps.air) {
-          // landing: suspension, a big burst of sand, the ground shakes
-          for (var k = 0; k < 16; k++) puff(xc + (k % 2 ? 1 : -1) * Math.random() * WB * 0.6, g(xc) - 6, u * (0.16 + Math.random() * 0.22), (k % 2 ? 1 : -1) * (0.1 + Math.random() * 0.5) * u, -0.1 * u - Math.random() * 0.4 * u);
+          // landing: suspension, a big burst of sand, the camera shakes
+          for (var k = 0; k < 18; k++) puff(x + (k % 2 ? 1 : -1) * Math.random() * WB * 0.6, g(x) - 6, u * (0.16 + Math.random() * 0.24), (k % 2 ? 1 : -1) * (0.1 + Math.random() * 0.55) * u, -0.1 * u - Math.random() * 0.45 * u);
           art.classList.remove('land'); void art.offsetWidth; art.classList.add('land');
-          l.classList.add('shake'); setTimeout(function () { l.classList.remove('shake'); }, 320);
+          tLand = clock;
         }
-        wasAir = ps.air; last = xc;
-        if (!dust && xc > fin + 0.3 * u) { dust = true; l.classList.add('dust'); setTimeout(done, 480); }
-        if (p < 1) requestAnimationFrame(step); else if (!dust) { l.classList.add('dust'); setTimeout(done, 480); }
-      })(t0);
+        wasAir = ps.air;
+        // camera: pushes in on the bike in the air, eases back after; a damped shake on the landing
+        zoom += ((ps.air ? 1 + (H > W * 1.1 ? 0.1 : 0.075) * Math.sin(Math.PI * clamp01((x - A) / (B - A))) : 1) - zoom) * (1 - Math.exp(-dt * 7));
+        var st = clock - tLand, amp = st < 0.6 ? (W < 700 ? 5 : 8) * Math.exp(-st / 0.11) : 0;
+        var ox = x, oy = ty - bh * 0.45;
+        cam.style.transform = 'translate3d(' + n(ox * (1 - zoom) + amp * Math.sin(st * 62)) + 'px,' + n(oy * (1 - zoom) + amp * 0.8 * Math.cos(st * 47)) + 'px,0) scale(' + zoom.toFixed(4) + ')';
+        if (!dust && x > fin + 0.3 * u) { dust = true; l.classList.add('dust'); setTimeout(done, 480); }
+        if (x < W + 1.2 * u) requestAnimationFrame(step); else if (!dust) { dust = true; l.classList.add('dust'); setTimeout(done, 480); }
+      });
     }
     // start once the bike layers are decoded (they are preloaded in <head>), or after 700 ms anyway
     Promise.all($$('img', bike).map(function (im) { return im.decode ? im.decode().catch(function () {}) : null; })).then(ride);
@@ -1291,7 +1369,8 @@
     document.addEventListener('pointerover', function (e) { cur.classList.toggle('big', !!e.target.closest('a,button,.stk,[data-h]')); });
   }
 
-  // floating shop button: in after the first screen, out over product grids, the reel (own button) and the footer,
+  // floating shop button: in after the first screen, out over product grids, the reel (own button), the Cadillac road,
+  // the sticker manifesto, the market countdown (own form) and the footer,
   // and it steps aside whenever it would sit on top of a button, a link or a form field
   function shopPill() {
     var pill = $('[data-shop-pill]'); if (!pill) return;
@@ -1321,7 +1400,7 @@
     }, { passive: true });
     if ('IntersectionObserver' in window) {
       var pio = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target._pillOver = e.isIntersecting; }); set(); }, { rootMargin: '0px 0px -12% 0px' });
-      cover = $$('[data-tb="grid"], [data-tb="reel"], [data-tb="footer"], .main-collection, .pdp');
+      cover = $$('[data-tb="grid"], [data-tb="reel"], [data-tb="vscroll"], [data-tb="manifesto"], [data-tb="drop"], [data-tb="footer"], .main-collection, .pdp');
       cover.forEach(function (el) { pio.observe(el); });
     }
   }

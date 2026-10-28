@@ -47,13 +47,25 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(await p.$$eval('.nl button', x => x.every(b => getComputedStyle(b).backgroundColor !== getComputedStyle(b.querySelector('span')).color)), `[${name}] newsletter: testo del pulsante leggibile`);
     ok(await p.$eval('#shopify-section-drop .card__quick', q => q.textContent.trim() === 'Scegli la taglia +'), `[${name}] card prodotto: "Scegli la taglia +"`);
     ok(!(await p.$eval('[data-shop-pill]', a => a.classList.contains('on'))), `[${name}] bottone Shop flottante: nascosto in cima alla pagina`);
+    { let seen = false; const H = await p.evaluate(() => document.documentElement.scrollHeight);
+      for (let y = 900; y < H && !seen; y += 260) { await p.evaluate(y => scrollTo({ top: y, behavior: 'instant' }), y); await p.waitForTimeout(260); seen = await p.$eval('[data-shop-pill]', a => a.classList.contains('on') && a.getAttribute('href') === '/collections/all'); }
+      ok(seen, `[${name}] bottone Shop flottante: compare scorrendo`); }
+    await p.$eval('[data-tb=vscroll]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.9, behavior: 'instant' })); await p.waitForTimeout(700);
+    ok(!(await p.$eval('[data-shop-pill]', a => a.classList.contains('on'))), `[${name}] bottone Shop flottante: non copre la Cadillac sulla strada`);
     await p.$eval('#shopify-section-manifesto', el => scrollTo({ top: el.offsetTop, behavior: 'instant' })); await p.waitForTimeout(700);
-    ok(await p.$eval('[data-shop-pill]', a => a.classList.contains('on') && a.getAttribute('href') === '/collections/all'), `[${name}] bottone Shop flottante: compare scorrendo`);
+    ok(!(await p.$eval('[data-shop-pill]', a => a.classList.contains('on'))), `[${name}] bottone Shop flottante: non copre gli sticker del manifesto`);
+    if (name === 'mob') {
+      ok(await p.$eval('[data-tb=manifesto]', m => { const t = m.querySelector('.mani__txt').getBoundingClientRect(), r = m.getBoundingClientRect(); return [...m.querySelectorAll('.stk')].every(s => { const b = s.getBoundingClientRect(); return b.left >= r.left - 1 && b.right <= r.right + 1 && (b.bottom <= t.top + 6 || b.top >= t.bottom - 6); }); }), `[${name}] manifesto: sticker dentro lo schermo e mai sopra il testo`);
+      ok(await p.$eval('[data-tb=manifesto]', m => m.offsetHeight < innerHeight * 1.05), `[${name}] manifesto: sezione non più lunga di uno schermo`);
+    }
     await p.$eval('#shopify-section-drop .grid', el => scrollTo({ top: el.getBoundingClientRect().top + scrollY - 100, behavior: 'instant' })); await p.waitForTimeout(700);
     ok(!(await p.$eval('[data-shop-pill]', a => a.classList.contains('on'))), `[${name}] bottone Shop flottante: si toglie sopra la griglia prodotti`);
     ok(!(await p.$('[data-tb=customizer]')) && !(await p.$('[data-tb=plate]')), `[${name}] niente prodotti custom online`);
     await p.$eval('[data-tb=reel]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.6, behavior: 'instant' })); await p.waitForTimeout(900);
     ok(+(await p.$eval('[data-tb=reel]', el => getComputedStyle(el).getPropertyValue('--x'))) > 0.5, `[${name}] video del brand: si espande con lo scroll`);
+    if (name === 'mob') {
+      ok(await p.$eval('[data-tb=reel]', el => el.classList.contains('is-full') && getComputedStyle(el.querySelector('.reel__chips')).opacity === '1'), `[${name}] video del brand: linguette 01–05 a schermo pieno`);
+    }
     await p.waitForTimeout(700);
     ok(await p.$eval('[data-tb=reel]', el => el.classList.contains('more-on') && getComputedStyle(el.querySelector('.reel__more')).opacity === '1' && el.querySelector('.reel__more').textContent.replace(/\s+/g, ' ').includes('Scorri')), `[${name}] video del brand: a tutto schermo compare "Scorri giù · c'è il drop"`);
     { let shown = 0, hits = 0;
@@ -115,7 +127,9 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     await p.goto(BASE + '/products/cross-merde-62-bluette-giallo'); await p.waitForTimeout(900);
     ok(await p.$eval('.pdp__legal', e => /IVA inclusa/.test(e.textContent) && /Garanzia legale 24 mesi/.test(e.textContent) && !!e.querySelector('a[href="/policies/refund-policy"]') && !!e.querySelector('a[href="/policies/shipping-policy"]')), `[${name}] pagina prodotto: IVA inclusa, spedizione, reso 14 giorni e garanzia legale con i link alle policy`);
     if (name === 'mob') {
-      ok(await p.$eval('[data-pbar]', b => b.classList.contains('on') && getComputedStyle(b).visibility === 'visible'), `[${name}] pagina prodotto: barra "Aggiungi alla bag" fissa in basso finché il bottone non è a schermo`);
+      ok(!(await p.$eval('[data-pbar]', b => b.classList.contains('on'))), `[${name}] pagina prodotto: all'apertura la barra fissa non copre nome e prezzo`);
+      await p.$eval('[data-product-form]', f => scrollTo({ top: f.getBoundingClientRect().bottom + scrollY + 60, behavior: 'instant' })); await p.waitForTimeout(800);
+      ok(await p.$eval('[data-pbar]', b => b.classList.contains('on') && getComputedStyle(b).visibility === 'visible'), `[${name}] pagina prodotto: barra "Aggiungi alla bag" fissa in basso dopo aver superato il bottone`);
       await p.$eval('[data-product-form]', f => f.scrollIntoView({ block: 'center' })); await p.waitForTimeout(800);
       ok(!(await p.$eval('[data-pbar]', b => b.classList.contains('on'))), `[${name}] pagina prodotto: la barra si toglie quando il bottone vero è a schermo`);
       await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(500);

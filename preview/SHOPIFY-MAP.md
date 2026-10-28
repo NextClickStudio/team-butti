@@ -11,6 +11,22 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.3.2 (telefono e loader)
+**Telefono**
+- Il bottone rosa "Shop il drop" che segue lo scroll non copre più la Cadillac: si toglie sulla strada Chianni → Milano, sugli sticker del manifesto e sul countdown del market, oltre che su griglia, video e footer. È anche più piccolo.
+- Strada della Cadillac: il contatore dei km sta in una riga sua sopra il titolo, non sopra il testo. Lo scroll della sezione è più corto del 26%.
+- Video "La vera Team Butti": le linguette 01–05 compaiono quando il video è a schermo pieno, così non coprono "Shop il drop".
+- Manifesto: sticker più piccoli, in una fascia sopra e una sotto il testo, mai sulle parole; restano trascinabili. La sezione passa da 928 a circa 740 px.
+- Griglia: i filtri stanno su una riga che scorre; "Scegli la taglia +" su una riga sola, la maglia si vede.
+- Footer su due colonne: da 1.290 a circa 1.000 px.
+- Scheda prodotto: la barra "Aggiungi alla bag" compare solo dopo aver superato il bottone, così all'apertura non copre nome e prezzo.
+- Home da 11.280 a circa 9.900 px su iPhone.
+
+**Loader**
+- Animazione a tempo reale, più fluida anche su telefoni lenti; la sabbia usa un gruppo fisso di sbuffi animati dalla scheda grafica.
+- Impennata sulle cunette, ammortizzatori che si caricano sulla rampa, salto più alto sui telefoni, rallentatore in cima al salto, muso che segue la traiettoria.
+- Ombra sulla pista che si stringe in volo; la camera stringe sulla moto in volo e trema all'atterraggio; le ruote girano con la velocità.
+
 ## Novità v2.3.1
 - **Solo Italia**: la scheda prodotto dice "Spediamo solo in Italia, con DHL: 5 €, gratis sopra 100 €. 2–3 giorni lavorativi, isole e località remote 6–10", più cambio o reso entro 14 giorni.
 - **Footer**: ragione sociale esatta, Fradel S.a.s. di Lorenzo Barindelli & C.

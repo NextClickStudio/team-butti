@@ -1,6 +1,6 @@
 # Cosa fa Claude dentro Shopify (connettore)
 
-Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Il tema 2.3.0 è pubblicato dal 27 ottobre (*Team Butti 2.3.0*). Il 2.3.1 è caricato da Claude come tema non pubblicato (*Team Butti 2.3.1*): lo pubblica l'utente. Lo zip è in `pacchetti/`.
+Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Il tema 2.3.1 è pubblicato dal 28 ottobre (*Team Butti 2.3.1*). Il 2.3.2 (telefono e loader) è caricato da Claude come tema non pubblicato (*Team Butti 2.3.2*): lo pubblica l'utente. Lo zip è in `pacchetti/`.
 
 Prima di ogni scrittura, Claude legge lo stato attuale e non sovrascrive niente di già compilato senza chiedere.
 

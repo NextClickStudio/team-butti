@@ -13,7 +13,7 @@
   assign signs = section.blocks | where: 'type', 'sign'
 -%}
 {%- if show -%}
-<section class="vscroll vscroll--{{ section.settings.theme }}{% if section.settings.video == blank %} vscroll--journey{% endif %}" data-tb="vscroll" data-km="{{ section.settings.km }}" data-places="{{ section.settings.places | escape }}" style="height: {{ section.settings.length }}vh">
+<section class="vscroll vscroll--{{ section.settings.theme }}{% if section.settings.video == blank %} vscroll--journey{% endif %}" data-tb="vscroll" data-km="{{ section.settings.km }}" data-places="{{ section.settings.places | escape }}" style="height: {{ section.settings.length }}vh; --len: {{ section.settings.length }}">
   <div class="vscroll__s">
     {%- if section.settings.video != blank -%}
       <div class="vscroll__media">{{ section.settings.video | video_tag: autoplay: false, loop: false, muted: true, controls: false, playsinline: true, preload: 'auto', image_size: '1920x' }}</div>
