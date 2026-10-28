@@ -9,9 +9,9 @@ HK = dict(type='Hockey', fit='oversize', comp='100% poliestere', sizes=['Unica']
 P = [
   # handle, title, code, color code, kind, stock per size, images (first = cover)
   ('team-butti-t-shirt-bianca', 'Team Butti T-shirt – Bianco', 'TEE', 'BIA', TEE, [4, 5, 2], ['59825523065173', '59825523130709']),
-  ('team-butti-t-shirt-nera', 'Team Butti T-shirt – Nero', 'TEE', 'NER', TEE, [10, 5, 6], ['59825523163477', '59825523229013']),
+  # the black tee in the photos is the Merde one: the sheet's "Team Butti T-shirt nera" row (10/5/6) was the same shirt under another name (28 Oct)
   ('team-butti-merde-t-shirt-bianca', 'Team Butti Merde T-shirt – Bianco', 'TEEM', 'BIA', TEE, [6, 5, 2], ['59825522835797', '59825522901333']),
-  ('team-butti-merde-t-shirt-nera', 'Team Butti Merde T-shirt – Nero', 'TEEM', 'NER', TEE, [7, 1, 0], []),
+  ('team-butti-merde-t-shirt-nera', 'Team Butti Merde T-shirt – Nero', 'TEEM', 'NER', TEE, [7, 1, 0], ['59825523163477', '59825523229013']),
   ('tabacchi-ricamo-t-shirt-bianca', 'Tabacchi Ricamo T-shirt – Bianco', 'TAB', 'BIA', TEE, [4, 8, 0], ['59825522966869', '59825522999637']),
   ('tabacchi-ricamo-t-shirt-nera', 'Tabacchi Ricamo T-shirt – Nero', 'TAB', 'NER', TEE, [9, 7, 6], ['59825523032405', '59825523097941']),
   ('team-butti-pettorina', 'Team Butti Pettorina – Bianco', 'PET', 'BIA', TEE, [14, 16, 4], ['59825522803029']),

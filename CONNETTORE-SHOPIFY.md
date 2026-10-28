@@ -21,6 +21,8 @@ Fatto da Claude il 27/10:
 
 Già fatto dall'utente: tema 2.3.0 pubblicato, password tolta, 4 policy incollate (testi del 24/10, da sostituire con quelli del 27/10).
 
+28 ottobre: la "Team Butti T-shirt – Nero" con le foto era in realtà la Merde nera. Rinominata in *Team Butti Merde T-shirt – Nero* (handle `team-butti-merde-t-shirt-nera`, redirect dal vecchio indirizzo, SKU `TB-TEEM-NER-*`, stock della riga Merde nera del foglio: S 7, M 1, L 0); il doppione senza foto è stato eliminato. Drop 01 ora ha 27 prodotti.
+
 Da fare dall'utente: dati del negozio, le 5 policy nuove, pagamenti, email ai clienti, collegare il dominio.
 
 ## Stato al 24 ottobre 2026 (storico)
