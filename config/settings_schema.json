@@ -245,8 +245,7 @@
       {
         "type": "url",
         "id": "social_instagram",
-        "label": "Instagram",
-        "default": "https://www.instagram.com/team_butti/"
+        "label": "Instagram"
       },
       {
         "type": "url",
