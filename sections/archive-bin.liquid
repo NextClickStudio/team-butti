@@ -1,0 +1,53 @@
+{%- comment -%}
+  Archive bin: a Team Butti trash can; when it comes on screen the lid pops and stylised jerseys jump out.
+  The whole bin is a link to the archive of the past drop (collection with the "archivio" template).
+  Kept off on the home page until after the drop: turn it on in the theme editor (eye icon on the section).
+{%- endcomment -%}
+{%- assign arch = section.settings.collection -%}
+{%- if arch != blank or request.design_mode -%}
+<section class="bin bin--{{ section.settings.style }}" data-tb="bin">
+  <a class="bin__a" href="{{ arch.url | default: routes.collections_url }}" data-h>
+    <span class="bin__txt">
+      <span class="label">{{ section.settings.kicker | escape }}</span>
+      <b class="d grunge">{{ section.settings.title | escape }}</b>
+      {%- if section.settings.text != blank -%}<span class="bin__p">{{ section.settings.text | escape }}</span>{%- endif -%}
+      <span class="btn btn--pink bin__btn">{{ section.settings.button | escape }}</span>
+    </span>
+    <span class="bin__can" aria-hidden="true">
+      <span class="bin__out">
+        {%- assign looks = 'hockey:#ff2e93,#0d0d0d,#ffd400,#0d0d0d|mx:#f4f1ea,#e3191b,#e3191b,#e3191b|hockey:#39ff14,#0d0d0d,#0d0d0d,#0d0d0d|mx:#ffd400,#1d3fbf,#1d3fbf,#1d3fbf|hockey:#0d0d0d,#f4f1ea,#f4f1ea,#f4f1ea' | split: '|' -%}
+        {%- for l in looks -%}
+          {%- assign lp = l | split: ':' -%}
+          <span class="bin__j bin__j--{{ forloop.index }}">{% render 'jersey-art', type: lp[0], colors: lp[1], num: '00' %}</span>
+        {%- endfor -%}
+      </span>
+      <svg class="bin__lid" viewBox="0 0 220 44" focusable="false"><rect x="6" y="14" width="208" height="24" rx="6" fill="#c9cdd1" stroke="#0d0d0d" stroke-width="5"/><rect x="84" y="2" width="52" height="16" rx="6" fill="#9aa1a7" stroke="#0d0d0d" stroke-width="5"/></svg>
+      <svg class="bin__body" viewBox="0 0 200 230" focusable="false">
+        <path d="M12 6h176l-16 214a8 8 0 0 1-8 8H36a8 8 0 0 1-8-8Z" fill="#aeb4ba" stroke="#0d0d0d" stroke-width="6" stroke-linejoin="round"/>
+        <path d="M58 30l6 172M100 30v172M142 30l-6 172" stroke="#7d858c" stroke-width="7" stroke-linecap="round"/>
+        <rect x="34" y="88" width="132" height="54" rx="6" fill="#ff2e93" stroke="#0d0d0d" stroke-width="5" transform="rotate(-6 100 115)"/>
+        <text x="100" y="124" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="30" fill="#0d0d0d" transform="rotate(-6 100 115)">ARCHIVIO</text>
+      </svg>
+    </span>
+  </a>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cestino archivio",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collezione archivio", "info": "Il drop passato, con il modello \"archivio\"." },
+    { "type": "text", "id": "kicker", "label": "Sopra il titolo", "default": "Archivio" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Drop Cross" },
+    { "type": "text", "id": "text", "label": "Testo", "default": "Il primo drop è finito nel cestino. Tutto sold out: apri le maglie che rivorresti." },
+    { "type": "text", "id": "button", "label": "Bottone", "default": "Apri l'archivio →" },
+    { "type": "select", "id": "style", "label": "Sfondo", "default": "yellow", "options": [
+      { "value": "yellow", "label": "Giallo" },
+      { "value": "ink", "label": "Nero" },
+      { "value": "paper", "label": "Carta" }
+    ] }
+  ],
+  "presets": [{ "name": "Cestino archivio" }]
+}
+{% endschema %}

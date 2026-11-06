@@ -1,6 +1,6 @@
 # Resi, cambi e diritto di recesso
 
-Ultimo aggiornamento: 27 ottobre 2026
+Ultimo aggiornamento: 6 novembre 2026
 
 ## In breve
 
@@ -11,7 +11,7 @@ Ultimo aggiornamento: 27 ottobre 2026
 
 ## Come fare un reso o un cambio
 
-1. Entro 14 giorni dalla ricezione del pacco scrivi a **online@teambutti.com** con il numero d'ordine, i prodotti da restituire e se vuoi il cambio (con la nuova taglia) o il rimborso. In alternativa puoi:
+1. Entro 14 giorni dalla ricezione del pacco scrivi a **fradel@teambutti.com** con il numero d'ordine, i prodotti da restituire e se vuoi il cambio (con la nuova taglia) o il rimborso. In alternativa puoi:
    - mandare il modulo di recesso qui sotto, compilato, allo stesso indirizzo o alla PEC **fradel.sas@pec.it**;
    - inviare una raccomandata a Fradel S.a.s. di Lorenzo Barindelli & C. – Team Butti, Corso Magenta 52, 20123 Milano (MI).
 2. Segui le istruzioni che ti manda il nostro servizio clienti.
@@ -57,7 +57,7 @@ Se il prodotto è difettoso o diverso da quello ordinato, non è un reso ma gara
 
 *(Allegato I, parte B, del Codice del Consumo. Compilalo e mandalo solo se vuoi recedere dal contratto.)*
 
-> Destinatario: Fradel S.a.s. di Lorenzo Barindelli & C., Corso Concordia 5, 20129 Milano (MI), email online@teambutti.com, PEC fradel.sas@pec.it
+> Destinatario: Fradel S.a.s. di Lorenzo Barindelli & C., Corso Concordia 5, 20129 Milano (MI), email fradel@teambutti.com, PEC fradel.sas@pec.it
 >
 > Con la presente io/noi (\*) notifico/notifichiamo (\*) il recesso dal mio/nostro (\*) contratto di vendita dei seguenti beni:
 > ______________________________________________

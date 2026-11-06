@@ -1102,3 +1102,128 @@ html[data-img-fit="contain"] .pdp__slide{background:var(--paper)}
   .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.tabs::-webkit-scrollbar{display:none}.tab{flex:none}
   .ftr{padding-top:48px}.ftr__links a{padding:10px 0}.ftr__word{margin:36px 0 14px}
 }
+/* ===== v2.4.0: Drop 02 Off-Road, archive, bin, Instagram Cadillac, stickers in the bag, contact page ===== */
+/* drop grid: teaser before the drop, archive button */
+.soon{grid-column:1/-1;display:grid;justify-items:start;gap:10px;padding:clamp(36px,6vw,90px) clamp(18px,3vw,44px);border:3px solid var(--ink);background:radial-gradient(circle,rgba(0,0,0,.16) 1.2px,transparent 1.7px) 0 0/10px 10px,var(--yellow);box-shadow:8px 8px 0 var(--ink)}
+.soon__t{font-size:clamp(64px,13vw,210px);line-height:.82}
+.soon__p{margin:0;max-width:46ch;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.sec__more{flex-wrap:wrap;gap:12px}
+.btn--ghost{background:transparent;color:var(--ink)}
+.btn--ghost:hover{background:var(--ink);color:var(--paper)}
+.arch-btn i{position:relative;width:14px;height:16px;border:2px solid currentColor;border-top-width:3px;border-radius:0 0 3px 3px}
+.arch-btn i::before{content:'';position:absolute;left:-5px;right:-5px;top:-7px;height:3px;background:currentColor;border-radius:2px}
+.stamp--soon{border-color:var(--ink);color:var(--ink);background:var(--yellow)}
+/* archive page */
+.arch__head{display:grid;gap:10px;margin-bottom:24px}
+.arch__k{color:var(--pink);font-weight:700}
+.arch__t{font-size:clamp(64px,12vw,200px);margin:0}
+.arch__meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.arch__sold{background:var(--red);color:var(--paper);padding:4px 8px}
+.arch__p{margin:0;max-width:60ch;font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+.arch__p p{margin:0}
+.arch .coll-tabs{margin-bottom:18px}
+.pdp__arch{margin:14px 0 0;padding:12px 14px;border:2px dashed var(--ink);background:var(--yellow);font-size:12px;line-height:1.5;text-transform:uppercase;letter-spacing:.04em}
+.pdp__arch a{text-decoration:underline;font-weight:700}
+/* archive bin: lid pops, jerseys jump out */
+.bin{padding:clamp(40px,6vw,90px) var(--g);background:var(--yellow)}
+.bin--ink{background:var(--ink);color:var(--paper)}.bin--paper{background:var(--paper)}
+.bin__a{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,380px);align-items:center;gap:clamp(20px,4vw,60px);text-decoration:none;color:inherit;max-width:1200px;margin:0 auto}
+.bin__txt{display:grid;gap:12px;justify-items:start}
+.bin__txt .d{font-size:clamp(56px,9vw,150px)}
+.bin__p{max-width:40ch;font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+.bin__btn{pointer-events:none}
+.bin__can{position:relative;justify-self:center;width:min(100%,300px);aspect-ratio:200/300}
+.bin__body{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;z-index:2;filter:drop-shadow(6px 6px 0 rgba(13,13,13,.35))}
+.bin__lid{position:absolute;left:-5%;width:110%;top:21%;z-index:3;transform-origin:8% 90%;transition:transform .55s cubic-bezier(.3,1.7,.5,1)}
+.bin__out{position:absolute;inset:0;z-index:1}
+.bin__j{position:absolute;left:30%;top:42%;width:40%;opacity:0;transform:translate(0,30%) rotate(0) scale(.6);transition:transform .7s cubic-bezier(.2,1.5,.4,1),opacity .25s}
+.bin.on .bin__lid{transform:rotate(-34deg) translate(-6%,-18%)}
+.bin.on .bin__j{opacity:1}
+.bin.on .bin__j--1{transform:translate(-78%,-72%) rotate(-24deg) scale(.9);transition-delay:.12s}
+.bin.on .bin__j--2{transform:translate(-10%,-112%) rotate(-6deg) scale(1);transition-delay:.2s}
+.bin.on .bin__j--3{transform:translate(64%,-78%) rotate(20deg) scale(.88);transition-delay:.28s}
+.bin.on .bin__j--4{transform:translate(-112%,-20%) rotate(-38deg) scale(.7);transition-delay:.34s}
+.bin.on .bin__j--5{transform:translate(104%,-24%) rotate(34deg) scale(.72);transition-delay:.4s}
+.bin__a:hover .bin__lid{transform:rotate(-44deg) translate(-8%,-24%)}
+.bin__a:hover .bin__j--2{transform:translate(-10%,-128%) rotate(4deg) scale(1.04)}
+@media(max-width:700px){.bin__a{grid-template-columns:1fr}.bin__can{width:min(70vw,260px);margin-top:70px}}
+@media(prefers-reduced-motion:reduce){.bin__lid,.bin__j{transition:none}}
+/* Instagram strip: the mini Cadillac tows the button onto the road and parks */
+.ig{position:relative;overflow:hidden;height:clamp(170px,22vw,240px);background:var(--pink)}
+.ig--paper{background:var(--paper)}.ig--ink{background:var(--ink);color:var(--paper)}
+.ig__road{position:absolute;left:0;right:0;bottom:0;height:30%;background:#2a2430;border-top:4px solid var(--ink)}
+.ig__road i{position:absolute;left:0;right:0;top:46%;height:4px;background:repeating-linear-gradient(90deg,#f4f1ea 0 34px,transparent 34px 68px)}
+.ig__rig{position:absolute;left:50%;bottom:calc(30% - 6px);display:flex;align-items:flex-end;gap:0;text-decoration:none;color:var(--ink);transform:translateX(-50%)}
+.ig.go .ig__rig{animation:igtow 2.4s cubic-bezier(.22,.9,.28,1) both}
+.ig:not(.go):not(.parked) .ig__rig{transform:translateX(-160vw)}
+.ig__btn{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding:12px 18px 12px 14px;background:var(--paper);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);transform:rotate(-3deg);transform-origin:100% 50%}
+.ig.parked .ig__btn{animation:igwag 1.8s ease-in-out infinite}
+.ig__rig:hover .ig__btn{background:var(--yellow)}
+.ig__logo{width:34px;height:34px;flex:none}
+.ig__t{display:grid;gap:3px}
+.ig__t b{font-size:clamp(20px,2.4vw,30px);line-height:.9}
+.ig__t span{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em}
+.ig__rope{width:clamp(40px,6vw,80px);height:20px;margin:0 -2px 34px}
+.ig__car{width:clamp(150px,17vw,230px);flex:none}
+.ig.go:not(.parked) .ig__car .wh{animation:spin .3s linear infinite;transform-box:fill-box;transform-origin:center}
+.ig.go:not(.parked) .ig__car .car__body{animation:cruise .16s ease-in-out infinite alternate}
+@keyframes igtow{0%{transform:translateX(calc(-50% - 110vw))}82%{transform:translateX(calc(-50% + 14px))}100%{transform:translateX(-50%)}}
+@keyframes igwag{50%{transform:rotate(1deg)}}
+@media(max-width:700px){.ig{height:190px}.ig__btn{padding:9px 12px;gap:9px;margin-bottom:18px}.ig__logo{width:26px;height:26px}.ig__t span{font-size:10px}.ig__car{width:120px}.ig__rope{width:28px;margin-bottom:26px}}
+@media(prefers-reduced-motion:reduce){.ig.go .ig__rig,.ig.parked .ig__btn{animation:none}}
+/* stickers in the bag */
+.ups{display:grid;gap:10px;margin:0 0 14px;padding:12px;border:2px dashed var(--ink);background:var(--yellow)}
+.ups__h{display:grid;gap:2px}
+.ups__h b{font-size:22px}
+.ups__h span{font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.ups__row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px}
+.ups__row::-webkit-scrollbar{display:none}
+.ups__it{position:relative;flex:none;display:grid;justify-items:center;gap:4px;width:84px;padding:8px 6px 6px;background:var(--paper);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);cursor:pointer;transition:transform .15s}
+.ups__it:hover{transform:translate(-2px,-2px) rotate(-2deg)}
+.ups__it.is-loading{opacity:.5;pointer-events:none}
+.ups__img{width:60px;height:60px;object-fit:contain}
+.ups__p{font-family:var(--mono);font-size:11px;font-weight:700}
+.ups__it i{position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;background:var(--pink);border:2px solid var(--ink);display:grid;place-items:center;font-style:normal;font-weight:700;line-height:1}
+.cart-page__sum .ups{margin-bottom:18px}
+/* contact page */
+.ct{padding:clamp(40px,6vw,90px) var(--g) clamp(56px,8vw,110px)}
+.ct__hero{display:grid;gap:12px;margin-bottom:clamp(26px,4vw,48px)}
+.ct__k{color:var(--pink);font-weight:700}
+.ct__t{font-size:clamp(76px,16vw,260px);margin:0}
+.ct__p{margin:0;max-width:56ch;font-size:13px;line-height:1.6;text-transform:uppercase;letter-spacing:.05em}
+.ct__cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.4vw,18px);margin-bottom:clamp(36px,5vw,64px)}
+.ct__card{position:relative;display:grid;align-content:start;gap:8px;min-height:180px;padding:18px 18px 22px;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);text-decoration:none;color:var(--ink);transition:transform .15s,box-shadow .15s}
+a.ct__card:hover{transform:translate(-3px,-3px) rotate(-.6deg);box-shadow:9px 9px 0 var(--ink)}
+.ct__card--pink{background:var(--pink)}.ct__card--yellow{background:var(--yellow)}.ct__card--green{background:var(--green)}.ct__card--paper{background:var(--paper)}
+.ct__v{font-family:var(--display);font-weight:400;font-size:clamp(22px,2.2vw,32px);line-height:.95;text-transform:uppercase;overflow-wrap:anywhere}
+.ct__v--mail{overflow-wrap:normal;word-break:normal}
+.ct__n{font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.8}
+.ct__go{position:absolute;right:14px;bottom:12px;font-style:normal;font-family:var(--display);font-size:28px;transition:transform .2s}
+a.ct__card:hover .ct__go{transform:translateX(4px)}
+.ct__ico{width:34px;height:34px;border:2.5px solid var(--ink);border-radius:9px;position:relative}
+.ct__ico--email::before{content:'';position:absolute;inset:6px 5px;border:2.5px solid var(--ink);border-radius:2px}
+.ct__ico--email::after{content:'';position:absolute;left:8px;right:8px;top:9px;height:9px;border:solid var(--ink);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(.9,.6) translate(-1px,-4px)}
+.ct__ico--instagram{border-radius:11px}
+.ct__ico--instagram::before{content:'';position:absolute;inset:8px;border:2.5px solid var(--ink);border-radius:50%}
+.ct__ico--instagram::after{content:'';position:absolute;right:5px;top:5px;width:5px;height:5px;border-radius:50%;background:var(--ink)}
+.ct__ico--phone{border-radius:50%}
+.ct__ico--phone::before{content:'';position:absolute;left:9px;top:6px;width:12px;height:18px;border:2.5px solid var(--ink);border-radius:4px}
+.ct__ico--place{border-radius:50% 50% 50% 0;transform:rotate(-45deg)}
+.ct__ico--place::before{content:'';position:absolute;inset:9px;border-radius:50%;background:var(--ink)}
+.ct__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,4vw,64px);align-items:start}
+.ct__h{font-size:clamp(34px,4vw,56px);margin:0 0 14px}
+.ct__faq details.acc:last-child{border-bottom:2px solid var(--ink)}
+.ct__faq .rte{padding:0 0 16px;font-size:14px;line-height:1.6}
+.ct__faq .rte p{margin:0}
+.ct__faq .rte a{text-decoration:underline}
+.ct__formbox{padding:clamp(18px,2.4vw,30px);border:3px solid var(--ink);background:var(--paper);box-shadow:8px 8px 0 var(--pink)}
+.ct__topics{display:flex;flex-wrap:wrap;gap:8px;border:0;padding:0;margin:0 0 6px}
+.ct__topics legend{margin-bottom:8px}
+.ct__chip{position:relative;cursor:pointer}
+.ct__chip input{position:absolute;opacity:0;width:1px;height:1px}
+.ct__chip span{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:2px solid var(--ink);font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.ct__chip input:checked+span{background:var(--ink);color:var(--paper)}
+.ct__chip input:focus-visible+span{outline:3px solid var(--pink);outline-offset:2px}
+.ct__legal{margin:clamp(30px,4vw,50px) 0 0;opacity:.7}
+@media(max-width:990px){.ct__cards{grid-template-columns:repeat(2,minmax(0,1fr))}.ct__grid{grid-template-columns:1fr}}
+@media(max-width:520px){.ct__card{min-height:150px;padding:14px 14px 18px}.ct__v{font-size:20px}}

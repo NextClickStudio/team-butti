@@ -5,7 +5,7 @@
     "announcement": {
       "type": "announcement-bar",
       "settings": {
-        "text": "Prossimo market: Milano · 07.11 · Piazzale Cantore 10|Crew List: la tua taglia tenuta da parte al market|Team Butti Merde|Spedizione gratis in Italia sopra 100€|Market Milano 26.09 — grazie a tutti|Da Chianni a Milano",
+        "text": "Drop 02 · Off-Road · domenica|Spedizione gratis in Italia sopra 100€|Team Butti Merde|Felpe, longsleeve e accessori|Da Chianni a Milano",
         "separator": "★"
       }
     },
@@ -16,5 +16,8 @@
       }
     }
   },
-  "order": ["announcement", "header"]
+  "order": [
+    "announcement",
+    "header"
+  ]
 }

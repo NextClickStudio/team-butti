@@ -1,7 +1,103 @@
 {
   "sections": {
-    "main": { "type": "main-page", "settings": {} },
-    "form": { "type": "contact-form", "settings": {} }
+    "contact": {
+      "type": "contact-page",
+      "blocks": {
+        "mail": {
+          "type": "channel",
+          "settings": {
+            "kind": "email",
+            "label": "Email",
+            "value": "fradel@teambutti.com",
+            "note": "Ordini, resi, cambi taglia",
+            "link": "mailto:fradel@teambutti.com",
+            "color": "pink"
+          }
+        },
+        "ig": {
+          "type": "channel",
+          "settings": {
+            "kind": "instagram",
+            "label": "Instagram",
+            "value": "@team_butti",
+            "note": "Drop, market e DM",
+            "link": "",
+            "color": "yellow"
+          }
+        },
+        "tel": {
+          "type": "channel",
+          "settings": {
+            "kind": "phone",
+            "label": "Telefono",
+            "value": "+39 331 700 0849",
+            "note": "Lun–ven, orari d’ufficio",
+            "link": "tel:+393317000849",
+            "color": "green"
+          }
+        },
+        "place": {
+          "type": "channel",
+          "settings": {
+            "kind": "place",
+            "label": "Resi e cambi",
+            "value": "Corso Magenta 52, 20123 Milano",
+            "note": "Solo dopo averci scritto",
+            "link": "",
+            "color": "paper"
+          }
+        },
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "q": "Quanto costa la spedizione e quanto ci mette?",
+            "a": "<p>Spediamo solo in Italia, con DHL: 5 €, gratis sopra 100 €. Arriva in 2–3 giorni lavorativi, 6–10 per isole e località remote. Quando il pacco parte ti mandiamo il link per seguirlo.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "q": "Come faccio un reso o un cambio?",
+            "a": "<p>Hai 14 giorni dalla consegna. Scrivici con il numero d’ordine e cosa vuoi cambiare o rendere: ti mandiamo le istruzioni. Tutti i dettagli sono nella pagina <a href=\"/policies/refund-policy\">Resi e cambi</a>.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "q": "Che taglia prendo?",
+            "a": "<p>In ogni scheda prodotto c’è la guida taglie con le misure. Se sei a metà tra due taglie scrivici su Instagram altezza e come ti piace portarla: ti diciamo noi.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "q": "Il pezzo che volevo è sold out. Torna?",
+            "a": "<p>I drop sono a pezzi contati e di solito non tornano. Guarda l’<a href=\"/collections/drop-cross\">archivio</a>: le maglie più cliccate sono quelle che rifacciamo nei prossimi drop.</p>"
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "q": "Collaborazioni, market, eventi?",
+            "a": "<p>Scrivici dal modulo scegliendo \"Collaborazioni\", oppure in DM su Instagram.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "mail",
+        "ig",
+        "tel",
+        "place",
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {}
+    }
   },
-  "order": ["main", "form"]
+  "order": [
+    "contact"
+  ]
 }

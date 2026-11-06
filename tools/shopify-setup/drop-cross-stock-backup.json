@@ -1,0 +1,33 @@
+{
+  "note": "Stock of the Drop 01 (now 'Drop Cross', archive) before it was set to sold out on 6 Nov 2026. Location: Magazzino Team Butti (gid://shopify/Location/118730195285). To restore, set these 'available' quantities again with inventorySetQuantities.",
+  "location": "gid://shopify/Location/118730195285",
+  "items": [
+    {"sku": "TB-TEE-BIA-S", "inventoryItem": "gid://shopify/InventoryItem/57362156618069", "quantity": 4},
+    {"sku": "TB-TEE-BIA-M", "inventoryItem": "gid://shopify/InventoryItem/57362156650837", "quantity": 5},
+    {"sku": "TB-TEE-BIA-L", "inventoryItem": "gid://shopify/InventoryItem/57362156683605", "quantity": 2},
+    {"sku": "TB-TEEM-NER-S", "inventoryItem": "gid://shopify/InventoryItem/57362170708309", "quantity": 7},
+    {"sku": "TB-TEEM-NER-M", "inventoryItem": "gid://shopify/InventoryItem/57362170741077", "quantity": 1},
+    {"sku": "TB-TEEM-BIA-S", "inventoryItem": "gid://shopify/InventoryItem/57362170806613", "quantity": 6},
+    {"sku": "TB-TEEM-BIA-M", "inventoryItem": "gid://shopify/InventoryItem/57362170839381", "quantity": 5},
+    {"sku": "TB-TEEM-BIA-L", "inventoryItem": "gid://shopify/InventoryItem/57362170872149", "quantity": 2},
+    {"sku": "TB-TAB-BIA-S", "inventoryItem": "gid://shopify/InventoryItem/57362171068757", "quantity": 4},
+    {"sku": "TB-TAB-BIA-M", "inventoryItem": "gid://shopify/InventoryItem/57362171101525", "quantity": 8},
+    {"sku": "TB-TAB-NER-S", "inventoryItem": "gid://shopify/InventoryItem/57362172117333", "quantity": 9},
+    {"sku": "TB-TAB-NER-M", "inventoryItem": "gid://shopify/InventoryItem/57362172150101", "quantity": 7},
+    {"sku": "TB-TAB-NER-L", "inventoryItem": "gid://shopify/InventoryItem/57362172182869", "quantity": 6},
+    {"sku": "TB-PET-BIA-S", "inventoryItem": "gid://shopify/InventoryItem/57362172248405", "quantity": 14},
+    {"sku": "TB-PET-BIA-M", "inventoryItem": "gid://shopify/InventoryItem/57362172281173", "quantity": 16},
+    {"sku": "TB-PET-BIA-L", "inventoryItem": "gid://shopify/InventoryItem/57362172313941", "quantity": 4},
+    {"sku": "TB-MX62-BRO-OS", "inventoryItem": "gid://shopify/InventoryItem/57362178507093", "quantity": 12},
+    {"sku": "TB-MX62-NBI-OS", "inventoryItem": "gid://shopify/InventoryItem/57362178539861", "quantity": 8},
+    {"sku": "TB-MX62-GBL-OS", "inventoryItem": "gid://shopify/InventoryItem/57362178834773", "quantity": 3},
+    {"sku": "TB-MX62-BCA-OS", "inventoryItem": "gid://shopify/InventoryItem/57362178900309", "quantity": 2},
+    {"sku": "TB-MXH-NBI-OS", "inventoryItem": "gid://shopify/InventoryItem/57362179031381", "quantity": 6},
+    {"sku": "TB-MXH-ARN-OS", "inventoryItem": "gid://shopify/InventoryItem/57362179064149", "quantity": 13},
+    {"sku": "TB-H00-BLU-OS", "inventoryItem": "gid://shopify/InventoryItem/57362189746517", "quantity": 11},
+    {"sku": "TB-H00-VFL-OS", "inventoryItem": "gid://shopify/InventoryItem/57362190008661", "quantity": 16},
+    {"sku": "TB-H00-GIA-OS", "inventoryItem": "gid://shopify/InventoryItem/57362190106965", "quantity": 9},
+    {"sku": "TB-H00-NER-OS", "inventoryItem": "gid://shopify/InventoryItem/57362190205269", "quantity": 17},
+    {"sku": "TB-H00-BIA-OS", "inventoryItem": "gid://shopify/InventoryItem/57362190336341", "quantity": 10}
+  ]
+}

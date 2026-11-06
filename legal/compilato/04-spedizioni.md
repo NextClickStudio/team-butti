@@ -1,6 +1,6 @@
 # Spedizioni
 
-Ultimo aggiornamento: 27 ottobre 2026
+Ultimo aggiornamento: 6 novembre 2026
 
 ## Dove e quanto
 
@@ -27,4 +27,4 @@ Quando il pacco parte ricevi un'email con il link di tracciamento.
 
 ## Pacco danneggiato
 
-Controlla il pacco alla consegna. Se è aperto o rovinato, accettalo "con riserva" e scrivici entro 7 giorni a online@teambutti.com con una foto: ce ne occupiamo noi con il corriere.
+Controlla il pacco alla consegna. Se è aperto o rovinato, accettalo "con riserva" e scrivici entro 7 giorni a fradel@teambutti.com con una foto: ce ne occupiamo noi con il corriere.

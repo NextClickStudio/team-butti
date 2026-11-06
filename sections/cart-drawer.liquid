@@ -41,6 +41,7 @@
         {%- endfor -%}
       </div>
       <div class="drawer__f">
+        {% render 'sticker-upsell' %}
         {%- if threshold > 0 -%}
           <div class="free">
             {%- if left > 0 -%}{%- assign left_money = left | money -%}{{ 'cart.free_left' | t: amount: left_money }}{%- else -%}{{ 'cart.free_done' | t }}{%- endif -%}

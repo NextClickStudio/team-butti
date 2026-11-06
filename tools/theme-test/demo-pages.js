@@ -27,7 +27,8 @@
     };
     var collections = {
       all: coll('all', 'Shop', products),
-      'drop-01': coll('drop-01', 'Drop 01', products)
+      'drop-02-off-road': coll('drop-02-off-road', 'Drop 02 · Off-Road', products),
+      'drop-cross': Object.assign(coll('drop-cross', 'Drop Cross', products), { template_suffix: 'archivio' })
     };
     var tpl = function (name) { return JSON.parse(o.read('templates/' + name + '.json')); };
     var sec = function (type, id, conf, extra) { return env.renderSection(type, id, conf || {}, extra); };
@@ -52,20 +53,27 @@
     var routes = {
       home: function () {
         var home = tpl('index');
-        home.sections.drop.settings = Object.assign({}, home.sections.drop.settings, { collection__obj: collections['drop-01'] });
+        home.sections.drop.settings = Object.assign({}, home.sections.drop.settings, { collection__obj: collections['drop-02-off-road'], archive_collection__obj: collections['drop-cross'] });
         var extra = { collections: { all: collections.all } };
-        return seq(home.order, function (id) { return sec(home.sections[id].type, id, home.sections[id], extra); })
+        // sections switched off in the editor ("disabled": true) are not on the live page either
+        var live = home.order.filter(function (id) { return !home.sections[id].disabled; });
+        return seq(live, function (id) { return sec(home.sections[id].type, id, home.sections[id], extra); })
           .then(function (b) { return page(b, { template: { name: 'index' }, page_title: 'Team Butti', request: req('index') }); });
       },
       collection: function (handle) {
         var c = collections[handle]; if (!c) return null;
+        if (c.template_suffix === 'archivio') {
+          var ta = tpl('collection.archivio');
+          return sec('main-archive', 'main', ta.sections.main, { collection: c })
+            .then(function (b) { return page(b, { template: { name: 'collection', suffix: 'archivio' }, page_title: c.title, request: req('collection') }); });
+        }
         return sec('main-collection', 'main', tpl('collection').sections.main, { collection: c })
           .then(function (b) { return page(b, { template: { name: 'collection' }, page_title: c.title, request: req('collection') }); });
       },
       product: function (handle) {
         var p = byHandle(handle); if (!p) return null;
         var t = tpl('product');
-        t.sections.more.settings = Object.assign({}, t.sections.more.settings, { collection__obj: collections['drop-01'] });
+        t.sections.more.settings = Object.assign({}, t.sections.more.settings, { collection__obj: collections['drop-02-off-road'] });
         return seq(t.order, function (id) { return sec(t.sections[id].type, id, t.sections[id], { product: p }); })
           .then(function (b) { return page(b, { template: { name: 'product' }, page_title: p.title, product: p, request: req('product') }); });
       },
@@ -77,8 +85,13 @@
           .then(function (b) { return page('<div data-demo-search>' + b + '</div>', { template: { name: 'search' }, page_title: 'Cerca', request: req('search') }); });
       },
       collections: function () {
-        return sec('main-list-collections', 'main', {}, { collections: [collections.all, collections['drop-01']] })
+        return sec('main-list-collections', 'main', {}, { collections: [collections.all, collections['drop-02-off-road'], collections['drop-cross']] })
           .then(function (b) { return page(b, { template: { name: 'list-collections' }, page_title: 'Collezioni', request: req('list-collections') }); });
+      },
+      contatti: function () {
+        var t = tpl('page.contact');
+        return seq(t.order, function (id) { return sec(t.sections[id].type, id, t.sections[id], { page: { title: 'Contatti', content: '' } }); })
+          .then(function (b) { return page(b, { template: { name: 'page', suffix: 'contact' }, page_title: 'Contatti', request: req('page') }); });
       },
       chiSiamo: function () {
         var t = tpl('page.chi-siamo');
@@ -118,13 +131,14 @@
       else if (p === '/search') out = routes.search();
       else if (p === '/pages/spedizioni') out = routes.spedizioni();
       else if (p === '/pages/chi-siamo') out = routes.chiSiamo();
+      else if (p === '/pages/contact') out = routes.contatti();
       else if ((m = p.match(/^\/policies\/([\w-]+)$/))) out = routes.policy(m[1]);
       else if (p === '/pages/cookie-policy') out = routes.legalPage('cookie-policy');
       else if (p === '/password') out = routes.password();
       return out || routes.notFound();
     }
 
-    var paths = ['/', '/collections', '/cart', '/search', '/pages/spedizioni', '/pages/chi-siamo', '/password']
+    var paths = ['/', '/collections', '/cart', '/search', '/pages/spedizioni', '/pages/chi-siamo', '/pages/contact', '/password']
       .concat(((env.globals.shop || {}).policies || []).map(function (x) { return x.url; })).concat(env.globals.pages ? Object.keys(env.globals.pages).map(function (h) { return '/pages/' + h; }) : [])
       .concat(Object.keys(collections).map(function (h) { return '/collections/' + h; }))
       .concat(products.map(function (p) { return '/products/' + p.handle; }));

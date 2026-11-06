@@ -43,7 +43,7 @@
   });
   var menus = {
     'main-menu': { title: 'Shop', links: [
-      { title: 'Shop', url: '/collections/all' }, { title: 'Drop 01', url: '/collections/drop-01' }, { title: 'Chi siamo', url: '/pages/chi-siamo' }, { title: 'Spedizioni', url: '/pages/spedizioni' }
+      { title: 'Shop', url: '/collections/all' }, { title: 'Drop 02 · Off-Road', url: '/collections/drop-02-off-road' }, { title: 'Archivio', url: '/collections/drop-cross' }, { title: 'Chi siamo', url: '/pages/chi-siamo' }, { title: 'Contatti', url: '/pages/contact' }
     ] },
     footer: { title: 'Info', links: [
       { title: 'Chi siamo', url: '/pages/chi-siamo' }, { title: 'Spedizioni e resi', url: '/pages/spedizioni' }, { title: 'Guida taglie', url: '/pages/spedizioni' }, { title: 'Cerca', url: '/search' }

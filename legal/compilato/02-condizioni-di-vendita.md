@@ -1,10 +1,10 @@
 # Condizioni generali di vendita
 
-Ultimo aggiornamento: 27 ottobre 2026
+Ultimo aggiornamento: 6 novembre 2026
 
 ## 1. Chi siamo
 
-Il venditore è **Fradel S.a.s. di Lorenzo Barindelli & C.**, sede Corso Concordia 5, 20129 Milano (MI), P.IVA 09963340964, email online@teambutti.com, PEC fradel.sas@pec.it: di seguito "Team Butti". Tutti i dati sono nella pagina *Informazioni legali*.
+Il venditore è **Fradel S.a.s. di Lorenzo Barindelli & C.**, sede Corso Concordia 5, 20129 Milano (MI), P.IVA 09963340964, email fradel@teambutti.com, PEC fradel.sas@pec.it: di seguito "Team Butti". Tutti i dati sono nella pagina *Informazioni legali*.
 
 ## 2. A chi si applicano
 
@@ -31,7 +31,7 @@ Si applicano il Codice del Consumo (D.Lgs. 206/2005) e il D.Lgs. 70/2003. Ordina
 2. Inserisci i dati di consegna e di pagamento, controlli il riepilogo e confermi con il pulsante di acquisto. Prima della conferma puoi correggere ogni errore.
 3. Il contratto è concluso quando ricevi l'**email di conferma d'ordine**, che contiene il riepilogo, queste condizioni e le informazioni sul recesso.
 
-Il contratto è in italiano. Conserviamo l'ordine e puoi chiederne copia a online@teambutti.com.
+Il contratto è in italiano. Conserviamo l'ordine e puoi chiederne copia a fradel@teambutti.com.
 
 ## 6. Pagamento
 
@@ -57,7 +57,7 @@ Puoi recedere dal contratto **entro 14 giorni** dalla consegna, senza dover dare
 Tutti i prodotti sono coperti dalla **garanzia legale di conformità** prevista dagli artt. 128 e seguenti del Codice del Consumo:
 
 - vale per i difetti che si manifestano entro **24 mesi dalla consegna**;
-- ti chiediamo di segnalarci il difetto entro 2 mesi dalla scoperta, scrivendo a online@teambutti.com con una foto e il numero d'ordine;
+- ti chiediamo di segnalarci il difetto entro 2 mesi dalla scoperta, scrivendo a fradel@teambutti.com con una foto e il numero d'ordine;
 - in caso di difetto hai diritto, senza spese, alla riparazione o alla sostituzione; se non sono possibili, a una riduzione del prezzo o alla risoluzione del contratto con rimborso.
 
 La garanzia non copre l'usura normale e i danni da uso improprio, per esempio lavaggi non conformi all'etichetta.

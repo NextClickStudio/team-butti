@@ -1,0 +1,126 @@
+{%- comment -%}
+  Contact page (template page.contact): big title, one card per channel (email, Instagram, phone, returns address),
+  quick answers to the usual questions, then the contact form. Shopify sends the form to the store's email
+  (Settings → Store details); the topic and the order number arrive as extra fields.
+{%- endcomment -%}
+{%- liquid
+  assign channels = section.blocks | where: 'type', 'channel'
+  assign faqs = section.blocks | where: 'type', 'faq'
+-%}
+<section class="ct" data-tb="contact">
+  <div class="ct__hero">
+    <span class="label ct__k">{{ section.settings.kicker | escape }}</span>
+    <h1 class="ct__t d grunge">{{ section.settings.title | default: page.title | escape }}</h1>
+    {%- if section.settings.text != blank -%}<p class="ct__p">{{ section.settings.text | escape }}</p>{%- endif -%}
+  </div>
+
+  {%- if channels.size > 0 -%}
+    <div class="ct__cards">
+      {%- for b in channels -%}
+        {%- liquid
+          assign href = b.settings.link
+          if b.settings.kind == 'instagram' and href == blank
+            assign href = settings.social_instagram
+          endif
+        -%}
+        {%- if href != blank -%}<a class="ct__card ct__card--{{ b.settings.color }}" href="{{ href }}"{% if b.settings.kind == 'instagram' %} target="_blank" rel="noopener"{% endif %} data-h {{ b.shopify_attributes }}>{%- else -%}<div class="ct__card ct__card--{{ b.settings.color }}" {{ b.shopify_attributes }}>{%- endif -%}
+          <span class="ct__ico ct__ico--{{ b.settings.kind }}" aria-hidden="true"></span>
+          <span class="label">{{ b.settings.label | escape }}</span>
+          {%- if b.settings.kind == 'email' -%}<b class="ct__v ct__v--mail">{{ b.settings.value | escape | replace: '@', '@<wbr>' }}</b>{%- else -%}<b class="ct__v">{{ b.settings.value | escape }}</b>{%- endif -%}
+          {%- if b.settings.note != blank -%}<span class="ct__n">{{ b.settings.note | escape }}</span>{%- endif -%}
+          {%- if href != blank -%}<i class="ct__go" aria-hidden="true">→</i>{%- endif -%}
+        {%- if href != blank -%}</a>{%- else -%}</div>{%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <div class="ct__grid">
+    {%- if faqs.size > 0 -%}
+      <div class="ct__faq">
+        <h2 class="ct__h d">{{ section.settings.faq_title | escape }}</h2>
+        {%- for b in faqs -%}
+          <details class="acc" {{ b.shopify_attributes }}{% if forloop.first %} open{% endif %}><summary>{{ b.settings.q | escape }}</summary><div class="rte">{{ b.settings.a }}</div></details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="ct__formbox">
+      <h2 class="ct__h d">{{ section.settings.form_title | escape }}</h2>
+      {%- form 'contact', id: 'ContactForm', class: 'contact__form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="nl-ok">{{ 'contact.success' | t }}</p>
+        {%- else -%}
+          {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+          {%- assign topics = section.settings.topics | split: ',' -%}
+          {%- if topics.size > 0 -%}
+            <fieldset class="ct__topics">
+              <legend class="label">{{ 'contact.topic' | t }}</legend>
+              {%- for tp in topics -%}
+                {%- assign tps = tp | strip -%}
+                <label class="ct__chip"><input type="radio" name="contact[Argomento]" value="{{ tps | escape }}"{% if forloop.first %} checked{% endif %}><span>{{ tps | escape }}</span></label>
+              {%- endfor -%}
+            </fieldset>
+          {%- endif -%}
+          <div class="contact__row">
+            <label class="contact__f"><span class="label">{{ 'contact.name' | t }}</span><input type="text" name="contact[name]" autocomplete="name" value="{{ form.name }}"></label>
+            <label class="contact__f"><span class="label">{{ 'contact.email' | t }}</span><input type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}"></label>
+          </div>
+          <label class="contact__f"><span class="label">{{ 'contact.order' | t }}</span><input type="text" name="contact[Ordine]" placeholder="#1001"></label>
+          <label class="contact__f"><span class="label">{{ 'contact.message' | t }}</span><textarea name="contact[body]" rows="6" required>{{ form.body }}</textarea></label>
+          <button type="submit" class="btn btn--pink">{{ 'contact.submit' | t }}</button>
+          <p class="nl-note">{{ 'contact.note' | t }}{%- if shop.privacy_policy.body != blank %} <a href="{{ shop.privacy_policy.url }}">{{ 'legal.privacy' | t }}</a>{%- endif -%}</p>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+
+  {%- if section.settings.legal != blank -%}<p class="ct__legal label">{{ section.settings.legal | escape }}</p>{%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Pagina contatti",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Sopra il titolo", "default": "Contatti" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Scrivici" },
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "Ordini, resi, cambi taglia, collaborazioni o due chiacchiere. Rispondiamo di solito entro 2 giorni lavorativi." },
+    { "type": "text", "id": "faq_title", "label": "Titolo domande", "default": "Prima di scriverci" },
+    { "type": "text", "id": "form_title", "label": "Titolo modulo", "default": "Mandaci un messaggio" },
+    { "type": "text", "id": "topics", "label": "Argomenti del modulo", "info": "Separati da virgola", "default": "Ordine, Reso o cambio, Taglie, Collaborazioni, Altro" },
+    { "type": "text", "id": "legal", "label": "Riga dati aziendali", "default": "Fradel S.a.s. di Lorenzo Barindelli & C. · Corso Concordia 5, 20129 Milano · P.IVA 09963340964" }
+  ],
+  "blocks": [
+    {
+      "type": "channel",
+      "name": "Canale",
+      "settings": [
+        { "type": "select", "id": "kind", "label": "Tipo", "default": "email", "options": [
+          { "value": "email", "label": "Email" },
+          { "value": "instagram", "label": "Instagram" },
+          { "value": "phone", "label": "Telefono" },
+          { "value": "place", "label": "Indirizzo" }
+        ] },
+        { "type": "text", "id": "label", "label": "Etichetta", "default": "Email" },
+        { "type": "text", "id": "value", "label": "Valore", "default": "fradel@teambutti.com" },
+        { "type": "text", "id": "note", "label": "Nota" },
+        { "type": "url", "id": "link", "label": "Link", "info": "mailto:, tel: o un indirizzo web. Instagram vuoto = link delle impostazioni tema." },
+        { "type": "select", "id": "color", "label": "Colore", "default": "pink", "options": [
+          { "value": "pink", "label": "Rosa" },
+          { "value": "yellow", "label": "Giallo" },
+          { "value": "green", "label": "Verde" },
+          { "value": "paper", "label": "Carta" }
+        ] }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Domanda",
+      "settings": [
+        { "type": "text", "id": "q", "label": "Domanda", "default": "Quanto costa la spedizione?" },
+        { "type": "richtext", "id": "a", "label": "Risposta", "default": "<p>5 € in tutta Italia, gratis sopra 100 €.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Pagina contatti" }]
+}
+{% endschema %}

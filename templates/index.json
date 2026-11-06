@@ -85,11 +85,12 @@
         "j3"
       ],
       "settings": {
-        "kicker": "Da <b>Chianni</b>, Toscana, a <b>Milano</b>. Maglie da hockey, MX e football per chi va di traverso.",
-        "route_from": "Chianni",
-        "route_to": "Milano",
+        "kicker": "",
+        "route_from": "",
+        "route_to": "",
         "badge_text": "TEAM BUTTI ★ CHIANNI ★ MILANO ★ MERDE ★ ",
-        "count_label": "Market Milano · 07.11"
+        "count_label": "",
+        "hint": ""
       }
     },
     "tapes": {
@@ -99,11 +100,16 @@
     "drop": {
       "type": "featured-collection",
       "settings": {
-        "title": "Drop",
-        "title_outline": "01",
+        "title": "Drop 02",
+        "title_outline": "Off-Road",
         "limit": 8,
         "link_label": "Vedi tutto il drop →",
-        "collection": "drop-01"
+        "collection": "drop-02-off-road",
+        "archive_collection": "drop-cross",
+        "archive_label": "Archivio · Drop Cross",
+        "soon_kicker": "Drop 02",
+        "soon_title": "Off-Road",
+        "soon_text": "Domenica si apre. Felpe, longsleeve, accessori: pezzi contati."
       }
     },
     "manifesto": {
@@ -205,7 +211,8 @@
         "submit": "Entra in lista",
         "success": "Sei nella Crew List. Il 6 novembre ti scriviamo noi: rispondi con la tua taglia.",
         "tags": "newsletter, market-milano, crew-list"
-      }
+      },
+      "disabled": true
     },
     "story": {
       "type": "story-video",
@@ -304,8 +311,8 @@
         "sign-market": {
           "type": "sign",
           "settings": {
-            "title": "Market 07.11",
-            "sub": "P.le Cantore 10",
+            "title": "Drop 02",
+            "sub": "Off-Road",
             "style": "pink",
             "pos": 93
           }
@@ -658,6 +665,26 @@
         "p21"
       ],
       "settings": {}
+    },
+    "bin": {
+      "type": "archive-bin",
+      "disabled": true,
+      "settings": {
+        "collection": "drop-cross",
+        "kicker": "Archivio",
+        "title": "Drop Cross",
+        "text": "Il primo drop è finito nel cestino. Tutto sold out: apri le maglie che rivorresti.",
+        "button": "Apri l'archivio →",
+        "style": "yellow"
+      }
+    },
+    "insta": {
+      "type": "insta-car",
+      "settings": {
+        "label": "Seguici su Instagram",
+        "handle": "",
+        "style": "pink"
+      }
     }
   },
   "order": [
@@ -665,9 +692,11 @@
     "reel",
     "tapes",
     "drop",
+    "bin",
     "cadillac",
     "manifesto",
     "crew",
+    "insta",
     "story",
     "drop_countdown"
   ]

@@ -1,8 +1,29 @@
 # Cosa fa Claude dentro Shopify (connettore)
 
-Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Il tema 2.3.1 è pubblicato dal 28 ottobre (*Team Butti 2.3.1*). Il 2.3.2 (telefono e loader) è caricato da Claude come tema non pubblicato (*Team Butti 2.3.2*): lo pubblica l'utente. Lo zip è in `pacchetti/`.
+Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Dal 5 novembre il tema pubblicato è *team-butti-countdown-tema-shopify-v4*: il countdown al drop di domenica 08.11 alle 16:20. Il 2.4.0 (Drop 02, archivio, contatti) è caricato da Claude come tema non pubblicato (*Team Butti 2.4.0*): lo pubblica l'utente al drop. Lo zip è in `pacchetti/`.
 
 Prima di ogni scrittura, Claude legge lo stato attuale e non sovrascrive niente di già compilato senza chiedere.
+
+## Stato al 6 novembre 2026
+Fatto da Claude il 6/11:
+- **Drop 02 · Off-Road**:
+  - 38 prodotti dal file *DROP_7-11_SKU.xlsx*, con le foto della cartella *still life nuovo drop* in Shopify Files;
+  - 131 varianti, 394 pezzi nel magazzino di Corso Magenta 52, SKU `TB2-…`;
+  - tutti in **bozza** (DRAFT) e già sul canale Negozio online: al drop basta attivarli;
+  - dati in `tools/shopify-setup/drop02.py`.
+- **Archivio Drop Cross**:
+  - il vecchio Drop 01 si chiama *Drop Cross* (`/collections/drop-cross`, modello `archivio`), con un redirect da `/collections/drop-01`;
+  - le 27 varianti sono a 0 pezzi; le quantità di prima (207 pezzi) sono salvate in `tools/shopify-setup/drop-cross-stock-backup.json`.
+- **Collezioni**: *Felpe* e *Accessori*, automatiche per tipo di prodotto.
+- **Sticker Team Butti**: prodotto da 5 € con 8 disegni (tipo Accessori), usato dall'offerta nella bag.
+- **Menu principale**: Shop · Drop 02 · Off-Road · Felpe · Accessori · Archivio · Chi siamo · Contatti.
+- **Email per i clienti**: fradel@teambutti.com. Aggiornate la pagina Contatti, la Cookie policy e i testi legali.
+- **Tema 2.4.0** non pubblicato, copiato dal 2.3.2.
+
+Da fare dall'utente:
+- al drop, pubblicare il 2.4.0 e attivare i 38 prodotti (o chiederlo a Claude);
+- reincollare le 5 policy con la nuova email;
+- mettere fradel@teambutti.com come email del negozio e del mittente.
 
 ## Stato al 27 ottobre 2026
 Dati di Davide (27/10):

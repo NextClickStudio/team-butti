@@ -19,6 +19,8 @@
   "products": {
     "add": "Aggiungi alla bag",
     "sold_out": "Sold out",
+    "soon": "In arrivo",
+    "archived_html": "Questo pezzo è nell'archivio <a href=\"{{ url }}\">{{ title }}</a>: è andato tutto. Le maglie più cliccate tornano nei prossimi drop.",
     "unavailable": "Non disponibile",
     "choose_size": "Scegli la taglia",
     "from": "Da",
@@ -123,6 +125,7 @@
     "name": "Nome",
     "email": "Email",
     "order": "Numero d'ordine (se ce l'hai)",
+    "topic": "Di cosa si tratta",
     "message": "Messaggio",
     "submit": "Invia",
     "success": "Ricevuto. Ti rispondiamo entro 2 giorni lavorativi.",

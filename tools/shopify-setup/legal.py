@@ -3,7 +3,7 @@
 import os, re
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 DATA = {
-    '[DATA]': '27 ottobre 2026',
+    '[DATA]': '6 novembre 2026',
     '[RAGIONE SOCIALE]': 'Fradel S.a.s. di Lorenzo Barindelli & C.',
     '[SEDE]': 'Corso Concordia 5, 20129 Milano (MI)',
     '[LEGALE RAPPRESENTANTE]': 'Lorenzo Barindelli',
@@ -11,7 +11,7 @@ DATA = {
     '[CODICE FISCALE]': '09963340964',
     '[REA]': 'MI-2124928',
     '[PEC]': 'fradel.sas@pec.it',
-    '[EMAIL]': 'online@teambutti.com',
+    '[EMAIL]': 'fradel@teambutti.com',
     '[TELEFONO]': '+39 331 700 0849',
     '[INDIRIZZO RESI]': 'Corso Magenta 52, 20123 Milano (MI)',
     '[CORRIERI]': 'DHL',

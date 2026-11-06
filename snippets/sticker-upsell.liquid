@@ -1,0 +1,36 @@
+{%- comment -%}
+  Bag upsell: the Team Butti stickers, one tap each (theme.js addVariant).
+  Product: Theme settings → Carrello → Prodotto da proporre; empty = the product with handle sticker-team-butti.
+  Shown only when the bag has something else in it and at least one sticker is available.
+{%- endcomment -%}
+{%- liquid
+  assign up = settings.upsell_product
+  if up == blank
+    assign up = all_products['sticker-team-butti']
+  endif
+  assign other = false
+  for item in cart.items
+    if item.product_id != up.id
+      assign other = true
+    endif
+  endfor
+-%}
+{%- if settings.upsell_on and up != blank and up.available and other -%}
+  <div class="ups">
+    <div class="ups__h"><b class="d">{{ settings.upsell_title | escape }}</b><span>{{ settings.upsell_text | escape }}</span></div>
+    <div class="ups__row">
+      {%- for v in up.variants -%}
+        {%- if v.available -%}
+          {%- liquid
+            assign img = v.image | default: up.featured_image
+            assign label = up.title | append: ' · ' | append: v.title | escape
+          -%}
+          <button type="button" class="ups__it" data-ups-add="{{ v.id }}" aria-label="{{ 'products.add' | t }}: {{ label }}" title="{{ v.title | escape }}">
+            {%- if img -%}{{ img | image_url: width: 200 | image_tag: loading: 'lazy', alt: '', class: 'ups__img' }}{%- endif -%}
+            <span class="ups__p">{{ v.price | money_without_trailing_zeros }}</span><i aria-hidden="true">+</i>
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}

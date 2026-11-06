@@ -47,6 +47,14 @@
       <h1 class="modal__t d">{{ product.title | escape }}</h1>
       <div class="modal__p">{% render 'price', product: product, variant: product.selected_or_first_available_variant %}</div>
       {% render 'product-buy', product: product %}
+      {%- comment -%} pieces of a past drop: the archive collection is the one with the "archivio" template {%- endcomment -%}
+      {%- for c in product.collections -%}
+        {%- if c.template_suffix == 'archivio' -%}
+          {%- assign arch_title = c.title | escape -%}
+          <p class="pdp__arch">{{ 'products.archived_html' | t: url: c.url, title: arch_title }}</p>
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
       <p class="pdp__legal">
         {%- if cart.taxes_included -%}{{ 'products.taxes_included' | t }} {% endif -%}
         {%- if shop.shipping_policy.body != blank -%}{{ 'products.shipping_html' | t: url: shop.shipping_policy.url }}{%- else -%}{{ 'products.shipping' | t }}{%- endif -%}

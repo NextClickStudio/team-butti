@@ -58,6 +58,22 @@
       .catch(function (e) { if (err) { err.textContent = e.message; err.hidden = false; } })
       .finally(function () { btn.classList.remove('is-loading'); });
   }
+  // one tap, one variant (the stickers offered in the bag); outside the drawer the page reloads with the new line
+  function addVariant(id, btn) {
+    var fd = new FormData(); fd.append('id', id); fd.append('quantity', 1);
+    var inDrawer = TB.cartDrawer && btn.closest('#CartDrawer');
+    if (inDrawer) fd.append('sections', 'cart-drawer');
+    btn.classList.add('is-loading');
+    return fetch(TB.routes.cartAdd + '.js', { method: 'POST', headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: fd })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.j.description || res.j.message || 'Error');
+        if (!inDrawer) { window.location.reload(); return; }
+        if (res.j.sections && res.j.sections['cart-drawer']) renderDrawer(res.j.sections['cart-drawer']); else return refreshDrawer();
+      })
+      .catch(function () { btn.classList.add('nudge'); setTimeout(function () { btn.classList.remove('nudge'); }, 500); })
+      .finally(function () { btn.classList.remove('is-loading'); });
+  }
   function changeLine(line, qty) {
     var d = $('#CartDrawer'); if (d) d.classList.add('is-loading');
     return fetch(TB.routes.cartChange + '.js', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ line: +line, quantity: +qty, sections: ['cart-drawer'] }) })
@@ -105,6 +121,8 @@
     if (t.closest('[data-close]') || t.id === 'ov') { closeAll(); return; }
     var line = t.closest('[data-line]');
     if (line) { changeLine(line.dataset.line, line.dataset.qty); return; }
+    var ups = t.closest('[data-ups-add]');
+    if (ups) { e.preventDefault(); addVariant(ups.dataset.upsAdd, ups); return; }
     var card = t.closest('[data-quick]');
     if (card && !e.metaKey && !e.ctrlKey && !e.shiftKey && $('#modal')) { e.preventDefault(); openQuick(card.dataset.quick); }
   });
@@ -385,6 +403,32 @@
           m.style.setProperty('--gy', ((e.clientY - r.top) / r.height * 100) + '%');
         });
       });
+    },
+
+    // archive of a past drop: the grid's filters and card effects; every card click is published for the analytics pixels
+    archive: function (root) {
+      inits.grid(root);
+      var coll = root.dataset.archColl;
+      root.addEventListener('click', function (e) {
+        var c = e.target.closest('[data-arch]'); if (!c) return;
+        try {
+          if (window.Shopify && Shopify.analytics && Shopify.analytics.publish) Shopify.analytics.publish('archivio_click', { collection: coll, handle: c.dataset.arch, title: c.dataset.archTitle, position: $$('[data-arch]', root).indexOf(c) + 1 });
+        } catch (err) {}
+      });
+    },
+
+    // archive bin: the lid pops and the jerseys jump out once it is on screen (again on hover, in CSS)
+    bin: function (root) {
+      if (reduce || !('IntersectionObserver' in window)) { root.classList.add('on'); return; }
+      new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { root.classList.add('on'); o.disconnect(); } }, { threshold: 0.45 }).observe(root);
+    },
+
+    // mini Cadillac towing the Instagram button onto the road, once the strip is on screen
+    insta: function (root) {
+      if (reduce || !('IntersectionObserver' in window)) { root.classList.add('go', 'parked'); return; }
+      var rig = $('[data-ig-rig]', root);
+      if (rig) rig.addEventListener('animationend', function (e) { if (e.target === rig) root.classList.add('parked'); });
+      new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { root.classList.add('go'); o.disconnect(); } }, { threshold: 0.55 }).observe(root);
     },
 
     manifesto: function (root) {

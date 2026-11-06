@@ -30,6 +30,7 @@
         {%- endfor -%}
       </div>
       <div class="cart-page__sum">
+        {% render 'sticker-upsell' %}
         <div class="sum"><span>{{ 'cart.total' | t }}</span><span>{{ cart.total_price | money_with_currency }}</span></div>
         <p class="label">{{ 'cart.taxes' | t }}</p>
         <button type="submit" name="update" class="btn btn--block">{{ 'cart.update' | t }}</button>

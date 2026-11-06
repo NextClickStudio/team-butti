@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Team Butti",
-    "theme_version": "2.3.2",
+    "theme_version": "2.4.0",
     "theme_author": "Team Butti",
     "theme_documentation_url": "https://www.instagram.com/team_butti/",
     "theme_support_url": "https://www.instagram.com/team_butti/"
@@ -208,6 +208,34 @@
         "step": 10,
         "unit": "€",
         "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Sticker nella bag"
+      },
+      {
+        "type": "checkbox",
+        "id": "upsell_on",
+        "label": "Proponi gli sticker nella bag",
+        "default": true
+      },
+      {
+        "type": "product",
+        "id": "upsell_product",
+        "label": "Prodotto da proporre",
+        "info": "Vuoto = il prodotto con handle sticker-team-butti. Si vede ogni sua variante disponibile, con un tocco si aggiunge."
+      },
+      {
+        "type": "text",
+        "id": "upsell_title",
+        "label": "Titolo",
+        "default": "Ci metti uno sticker?"
+      },
+      {
+        "type": "text",
+        "id": "upsell_text",
+        "label": "Testo",
+        "default": "5 € l'uno. Tocca e finisce nel pacco."
       }
     ]
   },
@@ -217,7 +245,8 @@
       {
         "type": "url",
         "id": "social_instagram",
-        "label": "Instagram"
+        "label": "Instagram",
+        "default": "https://www.instagram.com/team_butti/"
       },
       {
         "type": "url",

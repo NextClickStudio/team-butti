@@ -11,6 +11,31 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.4.0 (Drop 02 · Off-Road, archivio, contatti)
+**Home**
+- Hero: solo TEAM BUTTI e il bottone vibe; tolte le scritte piccole (kicker, percorso, suggerimento) e il bottone del countdown. I campi restano in *Personalizza*: se li riempi tornano.
+- Countdown del Market Milano nascosto (sezione spenta in *Personalizza*, non cancellata).
+- Griglia: **Drop 02 · Off-Road**, collezione `drop-02-off-road`. Finché la collezione non ha prodotti attivi mostra "In arrivo domenica". Sotto, accanto a "Vedi tutto il drop", c'è il bottone **Archivio · Drop Cross** con l'icona del cestino.
+- **Cestino dell'archivio** (sezione *Archivio · cestino*): un cestino disegnato da cui escono maglie Team Butti; al clic porta all'archivio. È pronto ma **spento**: si accende in *Personalizza* qualche giorno dopo il drop.
+- **Instagram**: striscia rosa con la mini Cadillac che traina il bottone "Seguici su Instagram @team_butti" (solo in home, apre Instagram in una scheda nuova).
+- Cadillac: l'ultimo cartello dice "Drop 02 · Off-Road".
+
+**Archivio Drop Cross** (`/collections/drop-cross`, modello `collection.archivio`)
+- È il vecchio Drop 01: 27 pezzi, tutti sold out, con le foto e i colori.
+- Ogni maglia apre la sua pagina (niente vista rapida), così Shopify conta le visite per prodotto.
+- Ogni clic manda l'evento analytics **`archivio_click`** (collezione, handle, nome, posizione) a Shopify e ai pixel collegati (GA4 con l'app *Google & YouTube*).
+- La scheda prodotto di un pezzo d'archivio dice "Fa parte dell'archivio Drop Cross".
+
+**Negozio**
+- Bag: offerta **sticker a 5 €** ("Ci metti uno sticker?") con le foto degli 8 sticker; un tocco e finisce nel pacco. Compare solo se nella bag c'è altro. Il checkout di Shopify Basic non si può modificare: l'offerta sta nella bag laterale e nella pagina carrello. Si spegne in *Impostazioni tema → Carrello*.
+- Carte con il tag `in-arrivo`: timbro "In arrivo".
+- Striscia in alto: "Drop 02 · Off-Road · domenica" al primo posto.
+
+**Contatti** (`/pages/contact`, modello `page.contact`)
+- Titolone "Scrivici", 4 schede: email fradel@teambutti.com, Instagram, telefono, indirizzo resi (Corso Magenta 52).
+- 5 domande frequenti: spedizioni, resi, taglie, sold out e archivio, collaborazioni.
+- Modulo con l'argomento a bottoni (Ordine, Reso o cambio, Taglie, Collaborazioni, Altro) e il numero d'ordine. Arriva all'email del negozio.
+
 ## Novità v2.3.2 (telefono e loader)
 **Telefono**
 - Il bottone rosa "Shop il drop" che segue lo scroll non copre più la Cadillac: si toglie sulla strada Chianni → Milano, sugli sticker del manifesto e sul countdown del market, oltre che su griglia, video e footer. È anche più piccolo.

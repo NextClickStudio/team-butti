@@ -14,7 +14,7 @@
     <i hidden data-vibe data-name="{{ v.settings.name | escape }}" data-bg="{{ v.settings.bg }}" data-fg="{{ v.settings.fg }}" data-pattern="{{ v.settings.pattern }}" data-j="{{ v.settings.jersey_1 | escape }}|{{ v.settings.jersey_2 | escape }}|{{ v.settings.jersey_3 | escape }}" data-ph="{% if v.settings.photo_1 != blank %}{{ v.settings.photo_1 | image_url: width: 800 }}{% endif %}|{% if v.settings.photo_2 != blank %}{{ v.settings.photo_2 | image_url: width: 800 }}{% endif %}|{% if v.settings.photo_3 != blank %}{{ v.settings.photo_3 | image_url: width: 800 }}{% endif %}" {{ v.shopify_attributes }}></i>
   {%- endfor -%}
   <div class="hero__top">
-    <div class="hero__kicker">{{ section.settings.kicker }}</div>
+    {%- if section.settings.kicker != blank -%}<div class="hero__kicker">{{ section.settings.kicker }}</div>{%- else -%}<span></span>{%- endif -%}
     {%- if vibes.size > 1 -%}
       <button class="vibe-btn" type="button" data-vibe-btn data-h><i></i><span data-vibe-name>{{ 'hero.vibe' | t }}: {{ first.settings.name | escape }}</span></button>
     {%- endif -%}
@@ -67,8 +67,10 @@
       {%- comment -%} countdown of the "Poster + countdown" section (#countdown) at the bottom of the page: the date is set there {%- endcomment -%}
       <a href="#countdown" class="hero__count" data-hero-count hidden data-h><i aria-hidden="true"></i><span><small>{{ section.settings.count_label | escape }}</small><b data-hero-count-t>--</b></span></a>
     {%- endif -%}
-    <span class="hero__route label" aria-hidden="true"><b>{{ section.settings.route_from | escape }}</b><i></i><b>{{ section.settings.route_to | escape }}</b></span>
-    <span class="hero__hint label"><i aria-hidden="true"></i>{{ section.settings.hint | escape }}</span>
+    {%- if section.settings.route_from != blank or section.settings.route_to != blank -%}
+      <span class="hero__route label" aria-hidden="true"><b>{{ section.settings.route_from | escape }}</b><i></i><b>{{ section.settings.route_to | escape }}</b></span>
+    {%- endif -%}
+    {%- if section.settings.hint != blank -%}<span class="hero__hint label"><i aria-hidden="true"></i>{{ section.settings.hint | escape }}</span>{%- endif -%}
   </div>
 </section>
 

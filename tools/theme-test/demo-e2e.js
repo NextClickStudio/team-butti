@@ -17,10 +17,13 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     await p.goto(BASE + '/collections/all'); await p.goto(BASE + '/'); await p.waitForTimeout(1500);
     ok(!(await p.$('#loader')), `[${name}] loader: tornando alla home nella stessa visita non riparte`);
     ok(await p.$$eval('.stk--img img', i => i.length === 6 && i.every(x => /tb-sticker-/.test(x.src))) && (await p.$$('[data-reel-stk]')).length === 8, `[${name}] sticker veri: 4 nel manifesto, 2 nel muro della crew, 8 a turno sul video`);
-    ok((await p.textContent('#countdown')).includes('Crew List') && !/gadget/i.test(await p.textContent('#countdown')), `[${name}] market: Crew List al posto del gadget`);
+    ok(!(await p.$('#countdown')) && !(await p.$('[data-hero-count]')), `[${name}] market finito: niente countdown in fondo né bottone countdown nella hero`);
+    ok(!(await p.$('.hero__kicker')) && !(await p.$('.hero__route')) && !(await p.$('.hero__hint')), `[${name}] hero: solo TEAM BUTTI, niente scritte piccole`);
+    ok(/Drop 02/.test(await p.textContent('#shopify-section-drop .sec__title')) && /Off-Road/.test(await p.textContent('#shopify-section-drop .sec__title')), `[${name}] griglia: Drop 02 · Off-Road`);
+    ok(await p.$eval('#shopify-section-drop .arch-btn', a => a.getAttribute('href') === '/collections/drop-cross' && /Drop Cross/.test(a.textContent)), `[${name}] griglia: bottone Archivio · Drop Cross`);
+    ok(!(await p.$('[data-tb=bin]')), `[${name}] cestino dell'archivio pronto ma spento fino a dopo il drop`);
+    ok(await p.$eval('[data-tb=insta] a[data-ig-rig]', a => a.href === 'https://www.instagram.com/team_butti/' && a.target === '_blank' && !!a.querySelector('.cad') && /@team_butti/.test(a.textContent)), `[${name}] Instagram: la mini Cadillac traina il bottone verso @team_butti`);
     ok(JSON.stringify(await p.$$eval('[data-vibe]', v => v.map(x => x.dataset.name))) === '["Pink Market","Leopardo","Giallo MX"]', `[${name}] hero: solo i vibe Pink Market, Leopardo, Giallo MX`);
-    ok((await p.textContent('[data-hero-count]')).includes('Market Milano') && /\d+g \d\d:\d\d:\d\d/.test(await p.textContent('[data-hero-count-t]')), `[${name}] hero: bottone countdown del Market Milano`);
-    ok((await p.textContent('#countdown')).includes('Market Milano') && (await p.textContent('#countdown')).includes('Cantore 10'), `[${name}] countdown in fondo: Market Milano in Piazzale Cantore 10`);
     ok(!/Veneto/.test(await p.content()), `[${name}] niente Veneto da nessuna parte`);
     ok((await p.textContent('#shopify-section-drop .card .price')).includes('89,00'), `[${name}] prezzi: quelli del foglio + 10 € (Merde X 89 €)`);
     await p.click('#shopify-section-drop .tab[data-f="long-sleeve"]'); await p.waitForTimeout(300);
@@ -37,7 +40,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(!/nextclick/i.test(await p.content()), `[${name}] nessun riferimento a NextClick nella pagina`);
     ok((await p.$$('[data-tb=reel] [data-clip] video')).length === 5 && !(await p.$('[data-tb=reel] .reel__slot')) && !!(await p.$('[data-tb=story] video')) && !(await p.$('.vscroll__slot, .reel__slot, .pol--empty')), `[${name}] video veri: 5 clip Cadillac nel video del brand + storia, nessun segnaposto`);
     ok(await p.$$eval('[data-tb=reel] source', s => s.every(x => /tb-reel-(deville|targa|leopardo|volante|milano)\.mp4/.test(x.src))), `[${name}] video del brand: solo clip della Cadillac (niente moto)`);
-    ok(!(await p.content()).includes('SoCal') && (await p.textContent('#shopify-section-manifesto')).replace(/\s+/g, ' ').includes('Non siamo nati a Los Angeles') && (await p.textContent('.hero__route')).includes('Chianni'), `[${name}] narrativa Chianni → Milano, manifesto "Non siamo nati a Los Angeles"`);
+    ok(!(await p.content()).includes('SoCal') && (await p.textContent('#shopify-section-manifesto')).replace(/\s+/g, ' ').includes('Non siamo nati a Los Angeles'), `[${name}] manifesto "Non siamo nati a Los Angeles"`);
     ok(await p.$eval('[data-tb=reel] [data-reel-cta]', a => a.getAttribute('href') === '/collections/all' && a.getBoundingClientRect().width > 100), `[${name}] video del brand: bottone "Shop il drop" sul video`);
     ok(!(await p.$('[data-tb=trust]')), `[${name}] niente fascia gialla sotto il drop`);
     { const r = await p.context().newPage(); await r.goto(BASE + '/policies/refund-policy'); await r.waitForTimeout(500);
@@ -89,7 +92,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     }
     await shot('reel');
     await p.$eval('[data-tb=vscroll]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.98, behavior: 'instant' })); await p.waitForTimeout(1500);
-    ok(+(await p.textContent('[data-km-out]')) >= 375 && (await p.textContent('[data-tb=vscroll] [data-place]')) === 'Milano' && (await p.textContent('[data-tb=vscroll] .jsign--brown')).includes('Il Ranch') && (await p.textContent('[data-tb=vscroll] .jsign--pink')).includes('Market 07.11'), `[${name}] Cadillac: parte dal Ranch di Chianni, arriva a Milano dopo ~390 km (ultimo cartello: Market 07.11)`);
+    ok(+(await p.textContent('[data-km-out]')) >= 375 && (await p.textContent('[data-tb=vscroll] [data-place]')) === 'Milano' && (await p.textContent('[data-tb=vscroll] .jsign--brown')).includes('Il Ranch') && (await p.textContent('[data-tb=vscroll] .jsign--pink')).includes('Drop 02'), `[${name}] Cadillac: parte dal Ranch di Chianni, arriva a Milano dopo ~390 km (ultimo cartello: Drop 02)`);
     await shot('cadillac');
     ok(!(await p.$('[data-tb=mxs]')), `[${name}] home: niente Storia in moto (minigioco tolto)`);
     // crew wall: polaroids slide with the scroll, open big, step with the arrows
@@ -171,6 +174,20 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     await p.click('.demo-checkout button');
     await p.click('.cart-page a[href^="/cart/change"]'); await p.waitForTimeout(800);
     ok(await p.$$eval('.cart-page .ln', x => x.length) === 1, `[${name}] pagina carrello: rimozione riga`);
+    // archive: Drop Cross, every piece sold out, cards open their product page and publish the click
+    await p.goto(BASE + '/collections/drop-cross'); await p.waitForTimeout(1000);
+    const ar = await p.evaluate(() => ({ title: document.querySelector('.arch__t').textContent.trim(), cards: document.querySelectorAll('[data-tb=archive] .card').length, quick: document.querySelectorAll('[data-tb=archive] [data-quick]').length, arch: document.querySelectorAll('[data-tb=archive] [data-arch]').length, back: (document.querySelector('[data-tb=archive] .sec__more a') || {}).getAttribute && document.querySelector('[data-tb=archive] .sec__more a').getAttribute('href') }));
+    ok(ar.title === 'Drop Cross' && ar.cards === ar.arch && ar.cards > 0 && ar.quick === 0 && ar.back === '/collections/drop-02-off-road', `[${name}] archivio Drop Cross: ${ar.cards} pezzi, ognuno apre la sua pagina (niente vista rapida), bottone per il Drop 02`);
+    await p.evaluate(() => { window.__ev = []; window.Shopify = window.Shopify || {}; Shopify.analytics = { publish: (n, d) => window.__ev.push([n, d]) }; document.addEventListener('click', e => { if (e.target.closest('[data-arch]')) e.preventDefault(); }, true); });
+    await p.click('[data-tb=archive] [data-arch]');
+    const ev = await p.evaluate(() => window.__ev);
+    ok(ev.length === 1 && ev[0][0] === 'archivio_click' && ev[0][1].collection === 'drop-cross' && ev[0][1].position === 1 && !!ev[0][1].handle, `[${name}] archivio: il clic su una maglia è un evento analytics "archivio_click"`);
+    await shot('archivio');
+    // contact page
+    await p.goto(BASE + '/pages/contact'); await p.waitForTimeout(800);
+    const ct = await p.evaluate(() => ({ t: document.querySelector('.ct__t').textContent.trim(), cards: [...document.querySelectorAll('.ct__card')].map(c => c.getAttribute('href') || ''), faq: document.querySelectorAll('.ct__faq details').length, topics: document.querySelectorAll('.ct__topics input').length, form: !!document.querySelector('#ContactForm textarea[required]') }));
+    ok(ct.t === 'Scrivici' && ct.cards.includes('mailto:fradel@teambutti.com') && ct.cards.includes('https://www.instagram.com/team_butti/') && ct.cards.includes('tel:+393317000849') && ct.faq === 5 && ct.topics === 5 && ct.form, `[${name}] Contatti: email fradel@, Instagram, telefono, resi, 5 domande, modulo con argomento`);
+    await shot('contatti');
     // search
     await p.goto(BASE + '/search?q=hockey'); await p.waitForTimeout(1000);
     ok(await p.$$eval('.grid .card', x => x.length) === 8 && await p.$$eval('.grid .card img', x => x.length) >= 8, `[${name}] ricerca "hockey": 8 maglie hockey con foto (con la Merde X bianco/rosso/blu sold out)`);
