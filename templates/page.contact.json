@@ -8,9 +8,9 @@
           "settings": {
             "kind": "email",
             "label": "Email",
-            "value": "fradel@teambutti.com",
+            "value": "info@teambutti.com",
             "note": "Ordini, resi, cambi taglia",
-            "link": "mailto:fradel@teambutti.com",
+            "link": "mailto:info@teambutti.com",
             "color": "pink"
           }
         },

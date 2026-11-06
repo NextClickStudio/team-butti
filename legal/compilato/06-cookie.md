@@ -4,7 +4,7 @@ Ultimo aggiornamento: 6 novembre 2026
 
 Questa pagina spiega quali cookie e tecnologie simili usa questo sito e come puoi gestirli. È scritta secondo l'art. 122 del Codice Privacy e le Linee guida del Garante sui cookie del 10 giugno 2021.
 
-Titolare: **Fradel S.a.s. di Lorenzo Barindelli & C.**, Corso Concordia 5, 20129 Milano (MI), fradel@teambutti.com.
+Titolare: **Fradel S.a.s. di Lorenzo Barindelli & C.**, Corso Concordia 5, 20129 Milano (MI), info@teambutti.com.
 
 ## Cosa sono i cookie
 

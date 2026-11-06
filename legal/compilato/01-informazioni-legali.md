@@ -10,7 +10,7 @@ Il sito e il negozio online Team Butti sono gestiti da:
 - Partita IVA e codice fiscale: 09963340964
 - Registro Imprese / REA: MI-2124928
 - PEC: fradel.sas@pec.it
-- Email servizio clienti: fradel@teambutti.com
+- Email servizio clienti: info@teambutti.com
 - Telefono: +39 331 700 0849
 - Magazzino e resi: Corso Magenta 52, 20123 Milano (MI)
 
@@ -18,7 +18,7 @@ Informazioni rese ai sensi dell'art. 7 del D.Lgs. 70/2003 (commercio elettronico
 
 ## Come contattarci
 
-Per ordini, resi, garanzia o qualsiasi domanda scrivi a **fradel@teambutti.com**. Rispondiamo di solito entro 2 giorni lavorativi.
+Per ordini, resi, garanzia o qualsiasi domanda scrivi a **info@teambutti.com**. Rispondiamo di solito entro 2 giorni lavorativi.
 
 Per le comunicazioni con valore legale (per esempio il recesso) puoi usare anche la PEC **fradel.sas@pec.it**.
 

@@ -17,8 +17,17 @@
       {%- if current_page != 1 %} – {{ 'general.page' | t: page: current_page }}{% endif -%}
       {%- unless page_title contains shop.name %} – {{ shop.name | escape }}{% endunless -%}
     </title>
-    {%- if page_description -%}
-      <meta name="description" content="{{ page_description | escape }}">
+    {%- liquid
+      comment
+        meta description: the page's own, else the shop's (Online Store > Preferences), else a default for the home page
+      endcomment
+      assign meta_d = page_description | default: shop.description
+      if meta_d == blank and request.page_type == 'index'
+        assign meta_d = 'Team Butti: maglie da hockey e motocross, longsleeve, felpe e accessori. Da Chianni a Milano, pezzi contati. Spedizione gratis in Italia sopra 100 €.'
+      endif
+    -%}
+    {%- if meta_d != blank -%}
+      <meta name="description" content="{{ meta_d | escape }}">
     {%- endif -%}
     {% render 'meta-tags' %}
     {% render 'structured-data' %}

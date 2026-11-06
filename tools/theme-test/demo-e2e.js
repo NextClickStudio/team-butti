@@ -186,7 +186,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     // contact page
     await p.goto(BASE + '/pages/contact'); await p.waitForTimeout(800);
     const ct = await p.evaluate(() => ({ t: document.querySelector('.ct__t').textContent.trim(), cards: [...document.querySelectorAll('.ct__card')].map(c => c.getAttribute('href') || ''), faq: document.querySelectorAll('.ct__faq details').length, topics: document.querySelectorAll('.ct__topics input').length, form: !!document.querySelector('#ContactForm textarea[required]') }));
-    ok(ct.t === 'Scrivici' && ct.cards.includes('mailto:fradel@teambutti.com') && ct.cards.includes('https://www.instagram.com/team_butti/') && ct.cards.includes('tel:+393317000849') && ct.faq === 5 && ct.topics === 5 && ct.form, `[${name}] Contatti: email fradel@, Instagram, telefono, resi, 5 domande, modulo con argomento`);
+    ok(ct.t === 'Scrivici' && ct.cards.includes('mailto:info@teambutti.com') && ct.cards.includes('https://www.instagram.com/team_butti/') && ct.cards.includes('tel:+393317000849') && ct.faq === 5 && ct.topics === 5 && ct.form, `[${name}] Contatti: email fradel@, Instagram, telefono, resi, 5 domande, modulo con argomento`);
     await shot('contatti');
     // search
     await p.goto(BASE + '/search?q=hockey'); await p.waitForTimeout(1000);

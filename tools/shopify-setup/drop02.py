@@ -7,12 +7,13 @@ import json, re
 LOC = 'gid://shopify/Location/118730195285'
 COLL = 'gid://shopify/Collection/687836201301'  # Drop Off-Road (handle drop-off-road)
 M = lambda n: 'gid://shopify/MediaImage/' + n
+# prices: column PREZZO of DROP_7-11_SKU_DEF.xlsx (not the online +5 column)
 SIZES = ['S', 'M', 'L', 'XL']
 COTTON = dict(comp='100% cotone', made='Italy')
-LS = dict(type='Long sleeve', price='74.00', fit='regular', sizes=SIZES, **COTTON)
-HD = dict(type='Felpe', price='115.00', fit='regular', sizes=SIZES, **COTTON)
-CR = dict(type='Felpe', price='84.00', fit='regular', sizes=SIZES, **COTTON)
-TS = dict(type='T-shirt', price='40.00', fit='regular', sizes=SIZES, **COTTON)
+LS = dict(type='Long sleeve', price='69.00', fit='regular', sizes=SIZES, **COTTON)
+HD = dict(type='Felpe', price='89.00', fit='regular', sizes=SIZES, **COTTON)
+CR = dict(type='Felpe', price='49.00', fit='regular', sizes=SIZES, **COTTON)
+TS = dict(type='T-shirt', price='29.00', fit='regular', sizes=SIZES, **COTTON)
 OS = ['Unica']
 
 P = [
@@ -33,10 +34,10 @@ P = [
   ('Longsleeve Pigboy – Panna/Fragola', 'LSPIG', 'PFR', LS, [2, 3, 3, 2], ['60697173393749', '60697173459285']),
   ('Longsleeve Pigboy – Verde militare/Fragola', 'LSPIG', 'VFR', LS, [2, 3, 3, 2], ['60697165660501', '60697177227605']),
   ('Longsleeve Pigboy – Nero/Bianco', 'LSPIG', 'NBI', LS, [2, 3, 3, 2], ['60697172640085', '60697172607317']),
-  ('Longsleeve Pussy Wagon – Nero', 'LSPUS', 'NER', LS, [2, 3, 3, 2], ['60697165758805', '60697174081877']),
-  ('Longsleeve Pussy Wagon – Panna', 'LSPUS', 'PAN', LS, [2, 3, 3, 2], ['60697174212949', '60697174180181']),
-  ('Longsleeve Pussy Wagon – Fuxia', 'LSPUS', 'FUX', LS, [2, 3, 3, 2], ['60697173426517', '60697173754197']),
-  ('Longsleeve Pussy Wagon – Giallo', 'LSPUS', 'GIA', LS, [2, 3, 3, 2], ['60697174016341', '60697174049109']),
+  ('Longsleeve Pussy Wagon – Nero', 'LSPUS', 'NER', dict(LS, price='79.00'), [2, 3, 3, 2], ['60697165758805', '60697174081877']),
+  ('Longsleeve Pussy Wagon – Panna', 'LSPUS', 'PAN', dict(LS, price='79.00'), [2, 3, 3, 2], ['60697174212949', '60697174180181']),
+  ('Longsleeve Pussy Wagon – Fuxia', 'LSPUS', 'FUX', dict(LS, price='79.00'), [2, 3, 3, 2], ['60697173426517', '60697173754197']),
+  ('Longsleeve Pussy Wagon – Giallo', 'LSPUS', 'GIA', dict(LS, price='79.00'), [2, 3, 3, 2], ['60697174016341', '60697174049109']),
   ('Longsleeve Toy Soldier – Bluette', 'LSTOY', 'BLT', LS, [2, 3, 3, 2], ['60697175195989', '60697175130453']),
   ('Longsleeve Toy Soldier – Bianco ottico', 'LSTOY', 'BIO', LS, [2, 3, 3, 2], ['60697175163221', '60697175064917']),
   ('Longsleeve Toy Soldier – Verde militare', 'LSTOY', 'VMI', LS, [2, 3, 3, 2], ['60697175228757', '60697175392597']),
@@ -49,11 +50,11 @@ P = [
   ('Logo Crewneck – Nero', 'CRLOG', 'NER', dict(CR, sizes=['S', 'M', 'L']), [2, 3, 3], ['60697171558741', '60697165627733']),
   ('Logo T-shirt – Rosa', 'TSLOG', 'ROS', dict(TS, sizes=['S', 'M', 'L']), [2, 3, 3], ['60697172181333', '60697172214101']),
   ('Logo T-shirt – Nero', 'TSLOG', 'NER', dict(TS, sizes=['S', 'M', 'L']), [2, 3, 3], ['60697172148565', '60697172115797']),
-  ('Helmet Beanie – Nero', 'ACBEA', 'NER', dict(type='Accessori', price='44.00', fit='cuffia', sizes=OS, **COTTON), [10], ['60697165594965', '60697170542933']),
-  ('Toyoda Hockey Tee – Digital camu beige', 'HKTOY', 'DCB', dict(type='Hockey', price='155.00', fit='oversize', sizes=OS, **COTTON), [10], ['60697177194837', '60697177915733']),
-  ('Fogliage Motocross – Tree camu', 'MXFOG', 'TCA', dict(type='Motocross', price='135.00', fit='regular', sizes=OS, **COTTON), [10], ['60697170379093', '60697170346325']),
-  ('Grinder Merde – Rosa', 'ACGRI', 'ROS', dict(type='Accessori', price='30.00', fit='', comp='', made='China', sizes=OS), [10], ['60697170411861', '60697170444629']),
-  ('Spilla Team Butti Merde – Rosa', 'ACSPI', 'ROS', dict(type='Accessori', price='10.00', fit='', comp='', made='Italy', sizes=OS), [100], []),
+  ('Helmet Beanie – Nero', 'ACBEA', 'NER', dict(type='Accessori', price='39.00', fit='cuffia', sizes=OS, **COTTON), [10], ['60697165594965', '60697170542933']),
+  ('Toyoda Hockey Tee – Digital camu beige', 'HKTOY', 'DCB', dict(type='Hockey', price='150.00', fit='oversize', sizes=OS, **COTTON), [10], ['60697177194837', '60697177915733']),
+  ('Fogliage Motocross – Tree camu', 'MXFOG', 'TCA', dict(type='Motocross', price='130.00', fit='regular', sizes=OS, **COTTON), [10], ['60697170379093', '60697170346325']),
+  ('Grinder Merde – Rosa', 'ACGRI', 'ROS', dict(type='Accessori', price='25.00', fit='', comp='', made='China', sizes=OS), [10], ['60697170411861', '60697170444629']),
+  ('Spilla Team Butti Merde – Rosa', 'ACSPI', 'ROS', dict(type='Accessori', price='5.00', fit='', comp='', made='Italy', sizes=OS), [100], []),
   # not in DROP_7-11_SKU_DEF.xlsx: kept in draft, out of the collection
   ('Leash da collo – Rosa', 'ACLEA', 'ROS', dict(type='Accessori', price='15.00', fit='', comp='', made='Italy', sizes=OS), [20], ['60697165562197']),
   ('Leash da collo – Nero', 'ACLEA', 'NER', dict(type='Accessori', price='15.00', fit='', comp='', made='', sizes=OS), [20], ['60697171460437']),

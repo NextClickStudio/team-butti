@@ -25,13 +25,13 @@ Fatto da Claude il 6/11:
 - **Collezioni**: *Felpe* e *Accessori*, automatiche per tipo di prodotto.
 - **Sticker Team Butti**: prodotto da 5 € con 8 disegni (tipo Accessori), usato dall'offerta nella bag.
 - **Menu principale**: Shop · Drop 02 · Off-Road · Felpe · Accessori · Archivio · Chi siamo · Contatti.
-- **Email per i clienti**: fradel@teambutti.com. Aggiornate la pagina Contatti, la Cookie policy e i testi legali.
+- **Email per i clienti**: info@teambutti.com. Aggiornate la pagina Contatti, la Cookie policy e i testi legali.
 - **Tema 2.4.0** non pubblicato, copiato dal 2.3.2.
 
 Da fare dall'utente:
 - al drop, pubblicare il 2.4.0 e attivare i 38 prodotti (o chiederlo a Claude);
 - reincollare le 5 policy con la nuova email;
-- mettere fradel@teambutti.com come email del negozio e del mittente.
+- mettere info@teambutti.com come email del negozio e del mittente.
 
 ## Stato al 27 ottobre 2026
 Dati di Davide (27/10):

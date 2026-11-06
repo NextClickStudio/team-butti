@@ -11,6 +11,12 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.4.3 (email, prezzi, foto rifatte, SEO)
+- Email per i clienti: **info@teambutti.com** ovunque (Contatti, testi legali, pagine).
+- Prezzi dalla colonna PREZZO del file: longsleeve 69 € (Pussy Wagon 79 €), hoodie 89 €, crewneck 49 €, t-shirt 29 €, beanie 39 €, Toyoda 150 €, Fogliage 130 €, grinder 25 €, spilla 5 €, sticker pack 5 €.
+- Foto PNG rifatte: lo sfondo è solo il bianco che tocca i bordi della foto, quindi scritte e stampe restano intere; tolte le ombre dello studio. Nuove foto di spilla e sticker pack.
+- SEO: la home ha sempre una meta description, anche se in Preferenze è vuota.
+
 ## Novità v2.4.2 (home da telefono, una pagina sola, foto scontornate)
 - Telefono, hero come un poster: TEAM BUTTI grande in alto, le tre maglie in fila sotto (quella in mezzo più grande) sopra lo skyline. Niente sta sopra a qualcos'altro; le misure seguono anche l'altezza del telefono.
 - Collezioni e archivio: tutti i prodotti in una pagina sola (fino a 250), quindi i filtri Felpe, Accessori, Hockey ecc. mostrano sempre tutto.
@@ -45,7 +51,7 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 - Striscia in alto: "Drop 02 · Off-Road · domenica" al primo posto.
 
 **Contatti** (`/pages/contact`, modello `page.contact`)
-- Titolone "Scrivici", 4 schede: email fradel@teambutti.com, Instagram, telefono, indirizzo resi (Corso Magenta 52).
+- Titolone "Scrivici", 4 schede: email info@teambutti.com, Instagram, telefono, indirizzo resi (Corso Magenta 52).
 - 5 domande frequenti: spedizioni, resi, taglie, sold out e archivio, collaborazioni.
 - Modulo con l'argomento a bottoni (Ordine, Reso o cambio, Taglie, Collaborazioni, Altro) e il numero d'ordine. Arriva all'email del negozio.
 

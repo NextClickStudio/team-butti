@@ -4,7 +4,7 @@ Read this first. It replaces rereading old chats. Write to the user in Italian, 
 
 ## What it is
 - Shopify OS 2.0 theme for Team Butti (Milano streetwear: hockey, MX and football jerseys). The theme lives at the repo root; `preview/` holds the old static preview.
-- Store `2m7t0k-43.myshopify.com`. Company: Fradel S.a.s. di Lorenzo Barindelli & C., P.IVA 09963340964. Customer email **fradel@teambutti.com**.
+- Store `2m7t0k-43.myshopify.com`. Company: Fradel S.a.s. di Lorenzo Barindelli & C., P.IVA 09963340964. Customer email **info@teambutti.com**.
 - Work branch `claude/bold-volta-1mv5ka`, draft PR NextClickStudio/team-butti#1.
 
 ## Rules (from the user)
@@ -16,18 +16,19 @@ Read this first. It replaces rereading old chats. Write to the user in Italian, 
 
 ## Store state (6 Nov 2026)
 - MAIN = `team-butti-countdown-tema-shopify-v4`: countdown to the launch, **Sun 08.11 at 16:20**.
-- Our theme: **Team Butti 2.4.2** (gid …/OnlineStoreTheme/207484289365), unpublished. On Sunday the user only presses Publish. 2.3.2 = 206793900373.
+- Our theme: **Team Butti 2.4.3** (gid …/OnlineStoreTheme/207484289365), unpublished. On Sunday the user only presses Publish. 2.3.2 = 206793900373.
 - Collections:
-  - Drop Off-Road `drop-off-road` (687836201301; never "Drop 02"): 36 products ACTIVE (hidden by the countdown until publish), tag `drop-02`. Spilla in DRAFT (no photo yet); the Leash products are DRAFT and out of the collection. Source: DROP_7-11_SKU_DEF.xlsx → `tools/shopify-setup/drop02.py`.
+  - Drop Off-Road `drop-off-road` (687836201301; never "Drop 02"): 37 products ACTIVE incl. Spilla (hidden by the countdown until publish), tag `drop-02`. Prices = column PREZZO (not the online +5 column). Photos = transparent PNGs in `media/drop-off-road/` (border flood-fill, `tools/media/cut2.py` + `shadow.py`; never the AI model alone: it punches holes in white ink); the Leash products are DRAFT and out of the collection. Source: DROP_7-11_SKU_DEF.xlsx → `tools/shopify-setup/drop02.py`.
   - Felpe and Accessori are tabs (product types) inside Drop Off-Road, not menu items.
   - Drop Cross `drop-cross` (685474742613, template `archivio`): the old Drop 01, all at 0 stock. Previous stock is in `tools/shopify-setup/drop-cross-stock-backup.json`.
   - Felpe `felpe` and Accessori `accessori`: smart collections by product type.
-- Sticker Pack Team Butti: product 11786887823701 (handle sticker-team-butti), 10 €, 50 pcs, used by the bag upsell.
+- Sticker Pack Team Butti: product 11786887823701 (handle sticker-team-butti), 5 €, 50 pcs, used by the bag upsell.
 - Location `gid://shopify/Location/118730195285` (Corso Magenta 52). Online Store publication `gid://shopify/Publication/336916676949`.
 - Pages: Contatti 165603082581 (template `contact`), Cookie 174043660629, Chi siamo 173746946389. Main menu 318492311893.
 - The connector can't do: `shopPolicyUpdate` (the user pastes the policies), payments, DNS, theme publish.
 - The user's guide with the open steps: https://claude.ai/artifact/P5mR4c5cKBoLA6q22m7mPw
-- Open checks: Spilla photo; after the market (07.11), update Drop Off-Road stock.
+- Customer email: info@teambutti.com (shop email in Settings still to be changed by the user).
+- Open checks: after the market (07.11), update Drop Off-Road stock.
 
 ## Theme map (where things are)
 - `sections/`:
