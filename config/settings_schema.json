@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Team Butti",
-    "theme_version": "2.4.0",
+    "theme_version": "2.4.1",
     "theme_author": "Team Butti",
     "theme_documentation_url": "https://www.instagram.com/team_butti/",
     "theme_support_url": "https://www.instagram.com/team_butti/"
@@ -229,13 +229,13 @@
         "type": "text",
         "id": "upsell_title",
         "label": "Titolo",
-        "default": "Ci metti uno sticker?"
+        "default": "Ci metti gli sticker?"
       },
       {
         "type": "text",
         "id": "upsell_text",
         "label": "Testo",
-        "default": "5 € l'uno. Tocca e finisce nel pacco."
+        "default": "Il pack Team Butti. Tocca e finisce nel pacco."
       }
     ]
   },

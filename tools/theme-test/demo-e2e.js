@@ -19,7 +19,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(await p.$$eval('.stk--img img', i => i.length === 6 && i.every(x => /tb-sticker-/.test(x.src))) && (await p.$$('[data-reel-stk]')).length === 8, `[${name}] sticker veri: 4 nel manifesto, 2 nel muro della crew, 8 a turno sul video`);
     ok(!(await p.$('#countdown')) && !(await p.$('[data-hero-count]')), `[${name}] market finito: niente countdown in fondo né bottone countdown nella hero`);
     ok(!(await p.$('.hero__kicker')) && !(await p.$('.hero__route')) && !(await p.$('.hero__hint')), `[${name}] hero: solo TEAM BUTTI, niente scritte piccole`);
-    ok(/Drop 02/.test(await p.textContent('#shopify-section-drop .sec__title')) && /Off-Road/.test(await p.textContent('#shopify-section-drop .sec__title')), `[${name}] griglia: Drop 02 · Off-Road`);
+    ok(/Drop/.test(await p.textContent('#shopify-section-drop .sec__title')) && !/02/.test(await p.textContent('#shopify-section-drop .sec__title')) && /Off-Road/.test(await p.textContent('#shopify-section-drop .sec__title')), `[${name}] griglia: Drop Off-Road, senza 02`);
     ok(await p.$eval('#shopify-section-drop .arch-btn', a => a.getAttribute('href') === '/collections/drop-cross' && /Drop Cross/.test(a.textContent)), `[${name}] griglia: bottone Archivio · Drop Cross`);
     ok(!(await p.$('[data-tb=bin]')), `[${name}] cestino dell'archivio pronto ma spento fino a dopo il drop`);
     ok(await p.$eval('[data-tb=insta] a[data-ig-rig]', a => a.href === 'https://www.instagram.com/team_butti/' && a.target === '_blank' && !!a.querySelector('.cad') && /@team_butti/.test(a.textContent)), `[${name}] Instagram: la mini Cadillac traina il bottone verso @team_butti`);
@@ -92,7 +92,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     }
     await shot('reel');
     await p.$eval('[data-tb=vscroll]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.98, behavior: 'instant' })); await p.waitForTimeout(1500);
-    ok(+(await p.textContent('[data-km-out]')) >= 375 && (await p.textContent('[data-tb=vscroll] [data-place]')) === 'Milano' && (await p.textContent('[data-tb=vscroll] .jsign--brown')).includes('Il Ranch') && (await p.textContent('[data-tb=vscroll] .jsign--pink')).includes('Drop 02'), `[${name}] Cadillac: parte dal Ranch di Chianni, arriva a Milano dopo ~390 km (ultimo cartello: Drop 02)`);
+    ok(+(await p.textContent('[data-km-out]')) >= 375 && (await p.textContent('[data-tb=vscroll] [data-place]')) === 'Milano' && (await p.textContent('[data-tb=vscroll] .jsign--brown')).includes('Il Ranch') && (await p.textContent('[data-tb=vscroll] .jsign--pink')).includes('Off-Road'), `[${name}] Cadillac: parte dal Ranch di Chianni, arriva a Milano dopo ~390 km (ultimo cartello: Drop Off-Road)`);
     await shot('cadillac');
     ok(!(await p.$('[data-tb=mxs]')), `[${name}] home: niente Storia in moto (minigioco tolto)`);
     // crew wall: polaroids slide with the scroll, open big, step with the arrows
@@ -177,7 +177,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     // archive: Drop Cross, every piece sold out, cards open their product page and publish the click
     await p.goto(BASE + '/collections/drop-cross'); await p.waitForTimeout(1000);
     const ar = await p.evaluate(() => ({ title: document.querySelector('.arch__t').textContent.trim(), cards: document.querySelectorAll('[data-tb=archive] .card').length, quick: document.querySelectorAll('[data-tb=archive] [data-quick]').length, arch: document.querySelectorAll('[data-tb=archive] [data-arch]').length, back: (document.querySelector('[data-tb=archive] .sec__more a') || {}).getAttribute && document.querySelector('[data-tb=archive] .sec__more a').getAttribute('href') }));
-    ok(ar.title === 'Drop Cross' && ar.cards === ar.arch && ar.cards > 0 && ar.quick === 0 && ar.back === '/collections/drop-02-off-road', `[${name}] archivio Drop Cross: ${ar.cards} pezzi, ognuno apre la sua pagina (niente vista rapida), bottone per il Drop 02`);
+    ok(ar.title === 'Drop Cross' && ar.cards === ar.arch && ar.cards > 0 && ar.quick === 0 && ar.back === '/collections/drop-off-road', `[${name}] archivio Drop Cross: ${ar.cards} pezzi, ognuno apre la sua pagina (niente vista rapida), bottone per il Drop 02`);
     await p.evaluate(() => { window.__ev = []; window.Shopify = window.Shopify || {}; Shopify.analytics = { publish: (n, d) => window.__ev.push([n, d]) }; document.addEventListener('click', e => { if (e.target.closest('[data-arch]')) e.preventDefault(); }, true); });
     await p.click('[data-tb=archive] [data-arch]');
     const ev = await p.evaluate(() => window.__ev);

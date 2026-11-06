@@ -100,14 +100,14 @@
     "drop": {
       "type": "featured-collection",
       "settings": {
-        "title": "Drop 02",
+        "title": "Drop",
         "title_outline": "Off-Road",
         "limit": 8,
         "link_label": "Vedi tutto il drop →",
-        "collection": "drop-02-off-road",
+        "collection": "drop-off-road",
         "archive_collection": "drop-cross",
         "archive_label": "Archivio · Drop Cross",
-        "soon_kicker": "Drop 02",
+        "soon_kicker": "Drop",
         "soon_title": "Off-Road",
         "soon_text": "Domenica si apre. Felpe, longsleeve, accessori: pezzi contati."
       }
@@ -311,7 +311,7 @@
         "sign-market": {
           "type": "sign",
           "settings": {
-            "title": "Drop 02",
+            "title": "Drop",
             "sub": "Off-Road",
             "style": "pink",
             "pos": 93

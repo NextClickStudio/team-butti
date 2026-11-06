@@ -11,6 +11,13 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.4.1 (telefono, nomi, Instagram)
+- Nomi: **Drop Off-Road** (senza 02, indirizzo `/collections/drop-off-road`) e **Drop Cross** per l'archivio. Felpe e accessori sono categorie dentro il Drop Off-Road (i filtri sopra la griglia), non voci del menu.
+- Telefono, hero: TEAM BUTTI al centro, più grande; due maglie appoggiate sopra "TEAM".
+- Telefono: il bottone rosa "Shop il drop" si toglie anche sulla striscia Instagram (sulla strada della Cadillac era già spento).
+- Instagram: il cartello "Seguici su Instagram" sta su un rimorchio con le ruote sulla strada, agganciato al paraurti della Cadillac con una barra rigida. Su telefono il testo sta su una riga.
+- Bag: l'offerta propone lo **Sticker Pack** (10 €, dal file del drop).
+
 ## Novità v2.4.0 (Drop 02 · Off-Road, archivio, contatti)
 **Home**
 - Hero: solo TEAM BUTTI e il bottone vibe; tolte le scritte piccole (kicker, percorso, suggerimento) e il bottone del countdown. I campi restano in *Personalizza*: se li riempi tornano.

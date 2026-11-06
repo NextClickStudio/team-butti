@@ -1,6 +1,6 @@
 {
   "sections": {
-    "main": { "type": "main-archive", "settings": { "back_label": "Vai al Drop 02 · Off-Road →", "back_link": "/collections/drop-02-off-road" } }
+    "main": { "type": "main-archive", "settings": { "back_label": "Vai al Drop Off-Road →", "back_link": "/collections/drop-off-road" } }
   },
   "order": ["main"]
 }

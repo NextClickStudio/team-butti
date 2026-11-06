@@ -1444,7 +1444,7 @@
     }, { passive: true });
     if ('IntersectionObserver' in window) {
       var pio = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target._pillOver = e.isIntersecting; }); set(); }, { rootMargin: '0px 0px -12% 0px' });
-      cover = $$('[data-tb="grid"], [data-tb="reel"], [data-tb="vscroll"], [data-tb="manifesto"], [data-tb="drop"], [data-tb="footer"], .main-collection, .pdp');
+      cover = $$('[data-tb="grid"], [data-tb="reel"], [data-tb="vscroll"], [data-tb="manifesto"], [data-tb="drop"], [data-tb="insta"], [data-tb="footer"], .main-collection, .pdp');
       cover.forEach(function (el) { pio.observe(el); });
     }
   }

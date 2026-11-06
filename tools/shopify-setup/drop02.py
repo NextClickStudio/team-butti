@@ -5,7 +5,7 @@
 import json, re
 
 LOC = 'gid://shopify/Location/118730195285'
-COLL = 'gid://shopify/Collection/687836201301'  # Drop 02 · Off-Road
+COLL = 'gid://shopify/Collection/687836201301'  # Drop Off-Road (handle drop-off-road)
 M = lambda n: 'gid://shopify/MediaImage/' + n
 SIZES = ['S', 'M', 'L', 'XL']
 COTTON = dict(comp='100% cotone', made='Italy')
@@ -53,6 +53,8 @@ P = [
   ('Toyoda Hockey Tee – Digital camu beige', 'HKTOY', 'DCB', dict(type='Hockey', price='155.00', fit='oversize', sizes=OS, **COTTON), [10], ['60697177194837', '60697177915733']),
   ('Fogliage Motocross – Tree camu', 'MXFOG', 'TCA', dict(type='Motocross', price='135.00', fit='regular', sizes=OS, **COTTON), [10], ['60697170379093', '60697170346325']),
   ('Grinder Merde – Rosa', 'ACGRI', 'ROS', dict(type='Accessori', price='30.00', fit='', comp='', made='China', sizes=OS), [10], ['60697170411861', '60697170444629']),
+  ('Spilla Team Butti Merde – Rosa', 'ACSPI', 'ROS', dict(type='Accessori', price='10.00', fit='', comp='', made='Italy', sizes=OS), [100], []),
+  # not in DROP_7-11_SKU_DEF.xlsx: kept in draft, out of the collection
   ('Leash da collo – Rosa', 'ACLEA', 'ROS', dict(type='Accessori', price='15.00', fit='', comp='', made='Italy', sizes=OS), [20], ['60697165562197']),
   ('Leash da collo – Nero', 'ACLEA', 'NER', dict(type='Accessori', price='15.00', fit='', comp='', made='', sizes=OS), [20], ['60697171460437']),
 ]
@@ -75,7 +77,7 @@ for title, code, col, k, stock, imgs in P:
         li.append('<li>Taglia unica</li>')
     if k.get('made'):
         li.append(f'<li>Made in {k["made"]}</li>')
-    desc = '<p>Team Butti · Drop 02 Off-Road. Pezzi contati.</p>' + ('<ul>' + ''.join(li) + '</ul>' if li else '')
+    desc = '<p>Team Butti · Drop Off-Road. Pezzi contati.</p>' + ('<ul>' + ''.join(li) + '</ul>' if li else '')
     variants = []
     for size, q in zip(k['sizes'], stock):
         sku = f'TB2-{code}-{col}-' + ('OS' if one else size)
@@ -84,7 +86,7 @@ for title, code, col, k, stock, imgs in P:
                          'inventoryItem': {'sku': sku, 'tracked': True},
                          'inventoryQuantities': [{'locationId': LOC, 'name': 'available', 'quantity': q}]})
     out.append({'title': title, 'handle': handle(title), 'vendor': 'Team Butti', 'productType': k['type'],
-                'status': 'DRAFT', 'descriptionHtml': desc, 'tags': ['drop-02', 'off-road'], 'collections': [COLL],
+                'status': 'DRAFT' if not imgs or 'Leash' in title else 'ACTIVE', 'descriptionHtml': desc, 'tags': ['drop-02', 'off-road'], 'collections': [COLL],
                 'productOptions': [{'name': 'Taglia', 'values': [{'name': s} for s in k['sizes']]}],
                 'files': [{'id': M(i)} for i in imgs], 'variants': variants})
 

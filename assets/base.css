@@ -1102,7 +1102,7 @@ html[data-img-fit="contain"] .pdp__slide{background:var(--paper)}
   .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.tabs::-webkit-scrollbar{display:none}.tab{flex:none}
   .ftr{padding-top:48px}.ftr__links a{padding:10px 0}.ftr__word{margin:36px 0 14px}
 }
-/* ===== v2.4.0: Drop 02 Off-Road, archive, bin, Instagram Cadillac, stickers in the bag, contact page ===== */
+/* ===== v2.4.0: Drop Off-Road, archive, bin, Instagram Cadillac, stickers in the bag, contact page ===== */
 /* drop grid: teaser before the drop, archive button */
 .soon{grid-column:1/-1;display:grid;justify-items:start;gap:10px;padding:clamp(36px,6vw,90px) clamp(18px,3vw,44px);border:3px solid var(--ink);background:radial-gradient(circle,rgba(0,0,0,.16) 1.2px,transparent 1.7px) 0 0/10px 10px,var(--yellow);box-shadow:8px 8px 0 var(--ink)}
 .soon__t{font-size:clamp(64px,13vw,210px);line-height:.82}
@@ -1227,3 +1227,30 @@ a.ct__card:hover .ct__go{transform:translateX(4px)}
 .ct__legal{margin:clamp(30px,4vw,50px) 0 0;opacity:.7}
 @media(max-width:990px){.ct__cards{grid-template-columns:repeat(2,minmax(0,1fr))}.ct__grid{grid-template-columns:1fr}}
 @media(max-width:520px){.ct__card{min-height:150px;padding:14px 14px 18px}.ct__v{font-size:20px}}
+
+/* ===== v2.4.1: phone hero centred, Instagram trailer ===== */
+/* phones: TEAM BUTTI in the middle of the hero, bigger and centred; two jerseys hang half over "TEAM" */
+@media(max-width:700px){
+  .hero__title{margin-block:auto;font-size:33vw;align-items:center}
+  .hero__line,.hero__line:nth-child(2){justify-content:center}
+  .hero__title span:nth-child(2){align-self:center}
+  .hero__float--1,.hero__float--3{bottom:auto;z-index:4;width:36vw}
+  .hero__float--1{top:8%;left:-3%;--r:-10deg}
+  .hero__float--3{top:12%;right:-3%;--r:8deg}
+}
+/* Instagram: the sign stands on a trailer whose wheels touch the road; a rigid bar hooks it to the rear bumper.
+   --cw = car width; in the car drawing the ground is 0.011 cw under the car's box and the bumper 0.07 cw above the ground */
+.ig__rig{--cw:clamp(150px,17vw,230px)}
+.ig__car{width:var(--cw)}
+.ig__trailer{position:relative;display:flex;flex-direction:column;margin-bottom:calc(var(--cw) * .011);padding-bottom:calc(var(--cw) * .07 - 3.5px)}
+.ig__trailer .ig__btn{margin-bottom:0;transform:none;box-shadow:4px 0 0 var(--ink)}
+.ig__bed{height:7px;margin:0 -6px 0 -4px;background:var(--ink);border-radius:2px}
+.ig__wh{position:absolute;bottom:0;left:16%;width:max(13px,calc(var(--cw) * .09));aspect-ratio:1;border-radius:50%;border:2px solid var(--ink);background:radial-gradient(circle,#d9d4cc 0 24%,var(--ink) 25% 36%,transparent 37%),repeating-conic-gradient(var(--ink) 0 30deg,#3a3440 30deg 60deg)}
+.ig__wh--2{left:auto;right:16%}
+.ig__bar{position:relative;flex:none;width:clamp(20px,3vw,40px);height:5px;margin:0 -1px calc(var(--cw) * .081 - 2.5px) 2px;background:var(--ink);border-radius:2px}
+.ig__bar::after{content:'';position:absolute;right:-3px;top:50%;width:9px;height:9px;margin-top:-4.5px;border-radius:50%;background:var(--ink)}
+.ig.go:not(.parked) .ig__wh{animation:spin .3s linear infinite}
+.ig.parked .ig__btn{animation:igbob 1.6s ease-in-out infinite}
+@keyframes igbob{50%{transform:translateY(-2px)}}
+@media(max-width:700px){.ig__rig{--cw:112px}.ig__bar{width:16px}.ig__trailer .ig__btn{padding:8px 10px;gap:8px}.ig__t b{font-size:15px;white-space:nowrap}}
+@media(prefers-reduced-motion:reduce){.ig.go .ig__wh,.ig.parked .ig__btn{animation:none}}

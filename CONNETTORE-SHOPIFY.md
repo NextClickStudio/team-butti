@@ -1,8 +1,16 @@
 # Cosa fa Claude dentro Shopify (connettore)
 
-Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Dal 5 novembre il tema pubblicato è *team-butti-countdown-tema-shopify-v4*: il countdown al drop di domenica 08.11 alle 16:20. Il 2.4.0 (Drop 02, archivio, contatti) è caricato da Claude come tema non pubblicato (*Team Butti 2.4.0*): lo pubblica l'utente al drop. Lo zip è in `pacchetti/`.
+Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Dal 5 novembre il tema pubblicato è *team-butti-countdown-tema-shopify-v4*: il countdown al drop di domenica 08.11 alle 16:20. Il 2.4.1 (Drop Off-Road, archivio, contatti) è caricato da Claude come tema non pubblicato (*Team Butti 2.4.1*): lo pubblica l'utente al drop. Lo zip è in `pacchetti/`.
 
 Prima di ogni scrittura, Claude legge lo stato attuale e non sovrascrive niente di già compilato senza chiedere.
+
+## Stato al 6 novembre 2026, sera (file DROP_7-11_SKU_DEF)
+- La collezione si chiama **Drop Off-Road** (`drop-off-road`, con un redirect dal vecchio indirizzo).
+- Menu principale: Shop · Drop Off-Road · Drop Cross · Chi siamo · Contatti.
+- **36 prodotti attivi**: si vedono solo quando l'utente pubblica il tema, perché fino ad allora il countdown copre tutte le pagine.
+- **Sticker Pack Team Butti**: 10 €, 50 pezzi (era lo sticker singolo da 5 €).
+- **Spilla Team Butti Merde – Rosa**: 10 €, 100 pezzi, in bozza finché non c'è la foto.
+- I due **Leash** non sono nel file definitivo: restano in bozza, fuori dalla collezione.
 
 ## Stato al 6 novembre 2026
 Fatto da Claude il 6/11:

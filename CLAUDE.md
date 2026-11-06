@@ -16,17 +16,18 @@ Read this first. It replaces rereading old chats. Write to the user in Italian, 
 
 ## Store state (6 Nov 2026)
 - MAIN = `team-butti-countdown-tema-shopify-v4`: countdown to the launch, **Sun 08.11 at 16:20**.
-- Our theme: **Team Butti 2.4.0** (gid …/OnlineStoreTheme/207484289365), unpublished. 2.3.2 = 206793900373.
+- Our theme: **Team Butti 2.4.1** (gid …/OnlineStoreTheme/207484289365), unpublished. On Sunday the user only presses Publish. 2.3.2 = 206793900373.
 - Collections:
-  - Drop 02 · Off-Road `drop-02-off-road` (687836201301): 38 products in **DRAFT**, tag `drop-02`, to activate at launch. Data in `tools/shopify-setup/drop02.py`.
+  - Drop Off-Road `drop-off-road` (687836201301; never "Drop 02"): 36 products ACTIVE (hidden by the countdown until publish), tag `drop-02`. Spilla in DRAFT (no photo yet); the Leash products are DRAFT and out of the collection. Source: DROP_7-11_SKU_DEF.xlsx → `tools/shopify-setup/drop02.py`.
+  - Felpe and Accessori are tabs (product types) inside Drop Off-Road, not menu items.
   - Drop Cross `drop-cross` (685474742613, template `archivio`): the old Drop 01, all at 0 stock. Previous stock is in `tools/shopify-setup/drop-cross-stock-backup.json`.
   - Felpe `felpe` and Accessori `accessori`: smart collections by product type.
-- Sticker Team Butti: product 11786887823701, 5 €, 8 variants, inventory not tracked.
+- Sticker Pack Team Butti: product 11786887823701 (handle sticker-team-butti), 10 €, 50 pcs, used by the bag upsell.
 - Location `gid://shopify/Location/118730195285` (Corso Magenta 52). Online Store publication `gid://shopify/Publication/336916676949`.
 - Pages: Contatti 165603082581 (template `contact`), Cookie 174043660629, Chi siamo 173746946389. Main menu 318492311893.
 - The connector can't do: `shopPolicyUpdate` (the user pastes the policies), payments, DNS, theme publish.
 - The user's guide with the open steps: https://claude.ai/artifact/P5mR4c5cKBoLA6q22m7mPw
-- Open checks: Pussy Wagon longsleeve priced at 74 (file says 79 base / 74 online); the leash gift for the first 100 buyers is handled by hand; after the market (07.11), update Drop 02 stock.
+- Open checks: Spilla photo; after the market (07.11), update Drop Off-Road stock.
 
 ## Theme map (where things are)
 - `sections/`:
