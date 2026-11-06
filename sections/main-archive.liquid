@@ -3,7 +3,7 @@
   Each card opens its own product page, so Shopify counts the visit, and the click is published as the
   analytics event "archivio_click" (handle, title, position) for the pixels connected in Settings → Customer events.
 {%- endcomment -%}
-{%- paginate collection.products by 48 -%}
+{%- paginate collection.products by 250 -%}
 <section class="sec arch" data-tb="archive" data-arch-coll="{{ collection.handle | escape }}">
   <div class="arch__head">
     <span class="arch__k label">{{ section.settings.kicker | escape }}</span>

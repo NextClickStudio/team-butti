@@ -1,6 +1,6 @@
 # Cosa fa Claude dentro Shopify (connettore)
 
-Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Dal 5 novembre il tema pubblicato è *team-butti-countdown-tema-shopify-v4*: il countdown al drop di domenica 08.11 alle 16:20. Il 2.4.1 (Drop Off-Road, archivio, contatti) è caricato da Claude come tema non pubblicato (*Team Butti 2.4.1*): lo pubblica l'utente al drop. Lo zip è in `pacchetti/`.
+Lista delle operazioni che Claude fa nel negozio con il connettore Shopify (Admin GraphQL), in quest'ordine. Dal 5 novembre il tema pubblicato è *team-butti-countdown-tema-shopify-v4*: il countdown al drop di domenica 08.11 alle 16:20. Il 2.4.2 (Drop Off-Road, archivio, contatti) è caricato da Claude come tema non pubblicato (*Team Butti 2.4.2*): lo pubblica l'utente al drop. Lo zip è in `pacchetti/`.
 
 Prima di ogni scrittura, Claude legge lo stato attuale e non sovrascrive niente di già compilato senza chiedere.
 

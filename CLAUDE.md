@@ -16,7 +16,7 @@ Read this first. It replaces rereading old chats. Write to the user in Italian, 
 
 ## Store state (6 Nov 2026)
 - MAIN = `team-butti-countdown-tema-shopify-v4`: countdown to the launch, **Sun 08.11 at 16:20**.
-- Our theme: **Team Butti 2.4.1** (gid …/OnlineStoreTheme/207484289365), unpublished. On Sunday the user only presses Publish. 2.3.2 = 206793900373.
+- Our theme: **Team Butti 2.4.2** (gid …/OnlineStoreTheme/207484289365), unpublished. On Sunday the user only presses Publish. 2.3.2 = 206793900373.
 - Collections:
   - Drop Off-Road `drop-off-road` (687836201301; never "Drop 02"): 36 products ACTIVE (hidden by the countdown until publish), tag `drop-02`. Spilla in DRAFT (no photo yet); the Leash products are DRAFT and out of the collection. Source: DROP_7-11_SKU_DEF.xlsx → `tools/shopify-setup/drop02.py`.
   - Felpe and Accessori are tabs (product types) inside Drop Off-Road, not menu items.

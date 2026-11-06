@@ -11,6 +11,12 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.4.2 (home da telefono, una pagina sola, foto scontornate)
+- Telefono, hero come un poster: TEAM BUTTI grande in alto, le tre maglie in fila sotto (quella in mezzo più grande) sopra lo skyline. Niente sta sopra a qualcos'altro; le misure seguono anche l'altezza del telefono.
+- Collezioni e archivio: tutti i prodotti in una pagina sola (fino a 250), quindi i filtri Felpe, Accessori, Hockey ecc. mostrano sempre tutto.
+- Drop Off-Road: foto still life in PNG senza sfondo, con un colore del brand dietro ogni pezzo (tag `bg:`). I PNG sono in `media/drop-off-road/`.
+- Sticker Pack: due foto nuove a 1254 px, il mucchio e gli 8 sticker in fila, con il bordo bianco fustellato.
+
 ## Novità v2.4.1 (telefono, nomi, Instagram)
 - Nomi: **Drop Off-Road** (senza 02, indirizzo `/collections/drop-off-road`) e **Drop Cross** per l'archivio. Felpe e accessori sono categorie dentro il Drop Off-Road (i filtri sopra la griglia), non voci del menu.
 - Telefono, hero: TEAM BUTTI al centro, più grande; due maglie appoggiate sopra "TEAM".
