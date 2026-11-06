@@ -1,0 +1,31 @@
+{%- comment -%}
+  Demo jerseys shown until a collection is selected, so the theme looks alive on day one.
+  Accepts: limit
+{%- endcomment -%}
+{%- liquid
+  assign names = 'Hockey Jersey "Kings"|MX Jersey "Hawaii 2003"|Football Jersey "Merde 00"|Hockey Jersey "Rosa Butti"|MX Jersey "Toscana Dirt"|Hockey Jersey "Navy X"|Football Jersey "Giallo"|MX Jersey "Desert"' | split: '|'
+  assign types = 'hockey|mx|football|hockey|mx|hockey|football|mx' | split: '|'
+  assign colors = '#f4f1ea,#0d0d0d,#9a9a9a,#0d0d0d|#f4f1ea,#e3191b,#1d3fbf,#e3191b|#0d0d0d,#ff6a13,#f4f1ea,#ff6a13|#ff2e93,#0d0d0d,#f4f1ea,#0d0d0d|#39ff14,#ff2e93,#0d0d0d,#ff2e93|#1d3fbf,#1d3fbf,#e3191b,#f4f1ea|#ffd400,#e3191b,#0d0d0d,#e3191b|#c9a46a,#7a5a2c,#f4f1ea,#0d0d0d' | split: '|'
+  assign bgs = '#e8e4da|#ffd400|#f4f1ea|#ffd400|#0d0d0d|#ff2e93|#1d3fbf|#39ff14' | split: '|'
+  assign nums = '00|03|00|69|91|10|68|25' | split: '|'
+  assign prices = '8900|7900|8500|8900|7900|8900|8500|7900' | split: '|'
+  assign tags = 'Nuovo|Best||Market|||Ultimi|' | split: '|'
+-%}
+{%- for i in (0..7) -%}
+  {%- if forloop.index > limit -%}{%- break -%}{%- endif -%}
+  {%- assign price = prices[i] | times: 1 -%}
+  <a href="{{ routes.all_products_collection_url }}" class="card{% if i == 5 %} sold{% endif %}" data-type="{{ types[i] }}" data-h>
+    <div class="card__m" style="background:{{ bgs[i] }}">
+      {%- if tags[i] != blank and i != 5 -%}<span class="card__tag">{{ tags[i] }}</span>{%- endif -%}
+      <div class="hang" data-swing>
+        <div class="flip">
+          <div>{% render 'jersey-art', type: types[i], colors: colors[i], num: nums[i], hanger: true, capt: true %}</div>
+          <div>{% render 'jersey-art', type: types[i], colors: colors[i], num: nums[i], side: 'back', hanger: true %}</div>
+        </div>
+      </div>
+      <span class="glare"></span>
+      {%- if i == 5 -%}<span class="stamp">{{ 'products.sold_out' | t }}</span>{%- else -%}<span class="card__quick">{{ 'products.demo' | t }}</span>{%- endif -%}
+    </div>
+    <div class="card__i"><b>{{ names[i] }}</b><span class="price">{{ price | money }}</span></div>
+  </a>
+{%- endfor -%}

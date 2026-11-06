@@ -1,0 +1,55 @@
+{%- comment -%}
+  Archive of a past drop (template collection.archivio): every piece sold out, shown as it was.
+  Each card opens its own product page, so Shopify counts the visit, and the click is published as the
+  analytics event "archivio_click" (handle, title, position) for the pixels connected in Settings → Customer events.
+{%- endcomment -%}
+{%- paginate collection.products by 250 -%}
+<section class="sec arch" data-tb="archive" data-arch-coll="{{ collection.handle | escape }}">
+  <div class="arch__head">
+    <span class="arch__k label">{{ section.settings.kicker | escape }}</span>
+    <h1 class="arch__t d grunge">{{ collection.title | escape }}</h1>
+    <div class="arch__meta label">
+      <span>{{ 'collections.count' | t: count: collection.products_count }}</span>
+      <span class="arch__sold">{{ 'products.sold_out' | t }}</span>
+    </div>
+    {%- if collection.description != blank -%}
+      <div class="rte arch__p">{{ collection.description }}</div>
+    {%- elsif section.settings.text != blank -%}
+      <p class="arch__p">{{ section.settings.text | escape }}</p>
+    {%- endif -%}
+  </div>
+  {%- if collection.all_types.size > 1 -%}
+    <div class="tabs coll-tabs" data-tabs>
+      <button type="button" class="tab on" data-f="all">{{ 'collections.all' | t }}</button>
+      {%- for t in collection.all_types -%}
+        {%- if t != blank -%}<button type="button" class="tab" data-f="{{ t | handleize }}">{{ t | escape }}</button>{%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+  {%- if collection.products.size > 0 -%}
+    <div class="grid arch__grid">
+      {%- for product in collection.products -%}{% render 'product-card', product: product, archive: true %}{%- endfor -%}
+    </div>
+  {%- else -%}
+    <p class="empty-msg">{{ 'collections.empty' | t }}</p>
+  {%- endif -%}
+  {%- if paginate.pages > 1 -%}
+    <nav class="pagination" aria-label="{{ 'general.pagination' | t }}">{{ paginate | default_pagination: next: '→', previous: '←' }}</nav>
+  {%- endif -%}
+  {%- if section.settings.back_label != blank -%}
+    <div class="sec__more"><a href="{{ section.settings.back_link | default: routes.all_products_collection_url }}" class="btn btn--pink" data-h>{{ section.settings.back_label | escape }}</a></div>
+  {%- endif -%}
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Archivio drop",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Sopra il titolo", "default": "Archivio" },
+    { "type": "textarea", "id": "text", "label": "Testo", "info": "Usato se la collezione non ha una descrizione.", "default": "Il primo drop. È andato tutto. Apri la maglia che rivorresti: contiamo i clic e le più cliccate tornano." },
+    { "type": "text", "id": "back_label", "label": "Bottone in fondo", "default": "Vai al drop nuovo →" },
+    { "type": "url", "id": "back_link", "label": "Link del bottone" }
+  ]
+}
+{% endschema %}

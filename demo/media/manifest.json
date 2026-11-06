@@ -1,0 +1,374 @@
+{
+ "tb-crew-01.jpg": {
+  "w": 898,
+  "h": 1200
+ },
+ "tb-crew-02.jpg": {
+  "w": 898,
+  "h": 1200
+ },
+ "tb-crew-03.jpg": {
+  "w": 1200,
+  "h": 900
+ },
+ "tb-crew-04.jpg": {
+  "w": 898,
+  "h": 1200
+ },
+ "tb-crew-05.jpg": {
+  "w": 1200,
+  "h": 900
+ },
+ "tb-crew-06.jpg": {
+  "w": 898,
+  "h": 1200
+ },
+ "tb-crew-07.jpg": {
+  "w": 1200,
+  "h": 898
+ },
+ "tb-crew-08.jpg": {
+  "w": 898,
+  "h": 1200
+ },
+ "tb-crew-09.jpg": {
+  "w": 898,
+  "h": 1200
+ },
+ "tb-crew-10.jpg": {
+  "w": 898,
+  "h": 1200
+ },
+ "tb-crew-11.jpg": {
+  "w": 900,
+  "h": 1200
+ },
+ "tb-crew-12.jpg": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-crew-13.jpg": {
+  "w": 900,
+  "h": 1200
+ },
+ "tb-crew-14.jpg": {
+  "w": 1200,
+  "h": 898
+ },
+ "tb-crew-15.jpg": {
+  "w": 898,
+  "h": 1200
+ },
+ "tb-crew-16.jpg": {
+  "w": 900,
+  "h": 1200
+ },
+ "tb-crew-17.jpg": {
+  "w": 900,
+  "h": 1200
+ },
+ "tb-crew-18.jpg": {
+  "w": 1200,
+  "h": 900
+ },
+ "tb-crew-19.jpg": {
+  "w": 900,
+  "h": 1200
+ },
+ "tb-crew-20.jpg": {
+  "w": 900,
+  "h": 1200
+ },
+ "tb-crew-21.jpg": {
+  "w": 898,
+  "h": 1200
+ },
+ "tb-maglia-cross-merde62-bianco-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-cross-merde62-bianco-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-cross-merde62-bianco-rosso-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-cross-merde62-bianco-rosso-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-cross-merde62-bluette-giallo-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-cross-merde62-bluette-giallo-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-cross-merde62-nero-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-cross-merde62-nero-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merde00-bianco-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merde00-bianco-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merde00-bluette-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merde00-bluette-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merde00-giallo-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merde00-giallo-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merde00-nero-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merde00-nero-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merde00-verde-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merde00-verde-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merdex-nero-arancio-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merdex-nero-arancio-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merdex-nero-bianco-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-hockey-merdex-nero-bianco-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-pettorina-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-tee-merde-bianco-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-tee-merde-bianco-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-tee-tabacchi-bianco-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-tee-tabacchi-bianco-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-tee-tabacchi-nero-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-tee-tabacchi-nero-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-tee-teambutti-bianco-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-tee-teambutti-bianco-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-tee-teambutti-nero-back.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-maglia-tee-teambutti-nero-front.png": {
+  "w": 640,
+  "h": 640
+ },
+ "tb-mx-maglie.jpg": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-mx-officina.jpg": {
+  "w": 1200,
+  "h": 900
+ },
+ "tb-mx-pickup-milano.jpg": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-mx-spinta.mp4": {
+  "w": 480,
+  "h": 854
+ },
+ "tb-mx-via.mp4": {
+  "w": 400,
+  "h": 718
+ },
+ "tb-reel-deville.mp4": {
+  "w": 768,
+  "h": 576
+ },
+ "tb-reel-leopardo.mp4": {
+  "w": 768,
+  "h": 576
+ },
+ "tb-reel-milano.mp4": {
+  "w": 768,
+  "h": 576
+ },
+ "tb-reel-targa.mp4": {
+  "w": 768,
+  "h": 576
+ },
+ "tb-reel-volante.mp4": {
+  "w": 768,
+  "h": 576
+ },
+ "tb-storia-estate.mp4": {
+  "w": 1280,
+  "h": 720
+ },
+ "tb-maglia-hockey-merdex-bianco-rosso-blu-back.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-hockey-merdex-bianco-rosso-blu-front.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-bad-bull-bluette-back.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-bad-bull-bluette-front.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-chiquita-giallo-back.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-chiquita-giallo-front.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-cool-story-bianco-ottico-back.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-cool-story-bianco-ottico-front.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-horny-fucsia-back.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-horny-fucsia-front.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-hot-milfs-blue-navy-back.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-hot-milfs-blue-navy-front.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-pigboy-nero-back.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-pigboy-nero-front.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-pimp-my-ride-panna-back.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-pimp-my-ride-panna-front.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-suckers-verde-militare-back.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-suckers-verde-militare-front.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-volgswagene-verdone-back.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-maglia-longsleeve-volgswagene-verdone-front.png": {
+  "w": 1200,
+  "h": 1200
+ },
+ "tb-sticker-dito-medio.png": {
+  "w": 317,
+  "h": 469
+ },
+ "tb-sticker-hot-milfs.png": {
+  "w": 575,
+  "h": 251
+ },
+ "tb-sticker-im-loving-it.png": {
+  "w": 379,
+  "h": 344
+ },
+ "tb-sticker-pigboy.png": {
+  "w": 287,
+  "h": 436
+ },
+ "tb-sticker-soldatino-skate.png": {
+  "w": 359,
+  "h": 422
+ },
+ "tb-sticker-team-butti-groovy.png": {
+  "w": 543,
+  "h": 356
+ },
+ "tb-sticker-team-butti-merde.png": {
+  "w": 324,
+  "h": 332
+ },
+ "tb-sticker-toyoda.png": {
+  "w": 615,
+  "h": 297
+ }
+}

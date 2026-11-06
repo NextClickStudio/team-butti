@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "size": { "type": "accordion", "settings": { "title": "Guida taglie", "content": "<p>S 66×56 · M 70×60 · L 74×64 · XL 78×68 · XXL 82×72 cm (lunghezza × larghezza)</p>" } },
+        "ship": { "type": "accordion", "settings": { "title": "Spedizioni e resi", "content": "<p>Spediamo solo in Italia, con DHL: 5 €, gratis sopra 100 €. 2–3 giorni lavorativi, isole e località remote 6–10.</p><p>Cambio o reso entro 14 giorni dalla consegna.</p>" } }
+      },
+      "block_order": ["size", "ship"],
+      "settings": {}
+    },
+    "more": { "type": "featured-collection", "settings": { "title": "Completa", "title_outline": "il fit", "limit": 4, "show_tabs": false, "link_label": "" } }
+  },
+  "order": ["main", "more"]
+}

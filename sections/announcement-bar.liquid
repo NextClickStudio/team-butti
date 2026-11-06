@@ -1,0 +1,26 @@
+{%- assign items = section.settings.text | split: '|' -%}
+{%- if items.size > 0 -%}
+  <div class="mq" style="--mq-speed: {{ section.settings.speed }}s">
+    <div class="mq__t">
+      {%- for n in (1..4) -%}
+        {%- for item in items -%}
+          <span{% if n > 1 %} aria-hidden="true"{% endif %}>{{ item | strip | escape }}</span><span aria-hidden="true">{{ section.settings.separator | escape }}</span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Barra annunci",
+  "class": "section-announcement",
+  "settings": [
+    { "type": "textarea", "id": "text", "label": "Messaggi", "info": "Separa i messaggi con |", "default": "Spedizione gratuita sopra 100€|Team Butti Merde" },
+    { "type": "text", "id": "separator", "label": "Separatore", "default": "★" },
+    { "type": "range", "id": "speed", "label": "Durata giro", "min": 10, "max": 80, "step": 2, "unit": "s", "default": 34 }
+  ],
+  "enabled_on": { "groups": ["header"] },
+  "presets": [{ "name": "Barra annunci" }]
+}
+{% endschema %}

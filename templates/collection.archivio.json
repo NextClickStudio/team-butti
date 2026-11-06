@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "main-archive", "settings": { "back_label": "Vai al Drop Off-Road →", "back_link": "/collections/drop-off-road" } }
+  },
+  "order": ["main"]
+}
