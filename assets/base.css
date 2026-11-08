@@ -1372,3 +1372,9 @@ a:hover .dt__s,.sec__title:hover .dt__s{animation-duration:.6s}
   .ig__t{min-width:0}
   .ig__t b{white-space:normal;font-size:15px;line-height:.95}
 }
+
+/* ===== v2.4.7: phones, the hero is as tall as its content, so the jerseys sit right under TEAM BUTTI on any phone height ===== */
+@media(max-width:700px){
+  .hero{min-height:0;padding-bottom:calc(min(36vw,22svh) + 64px)}
+  .hero__title{margin-bottom:0}
+}

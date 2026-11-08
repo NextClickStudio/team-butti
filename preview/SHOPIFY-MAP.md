@@ -11,6 +11,10 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.4.7
+- Telefono: la hero è alta quanto il suo contenuto, quindi le maglie stanno subito sotto TEAM BUTTI su qualsiasi altezza di telefono.
+- Vibe rosa con Pussy Wagon, Fogliage e Uniporn; il leopardato con le altre tre.
+
 ## Novità v2.4.6 (ritocchi finali prima del lancio)
 - Hero: tolto il bottone rosa "Shop il drop" in basso (c'è quello con lo sticker in alto) e la fascia nera sotto; TEAM BUTTI su telefono più grande e con più aria tra lettere e righe.
 - Menu da telefono: "Drop" + sticker con lo stesso carattere grande delle altre voci.
