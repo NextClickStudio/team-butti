@@ -16,7 +16,7 @@
 {%- if st != blank -%}
   {%- assign word = c.title | split: ' ' | first -%}
   {%- assign rest = c.title | remove_first: word | remove: '·' | strip -%}
-  <span class="dt{% if small %} dt--s{% endif %}"><span class="dt__w grunge">{{ word | escape }}</span><span class="dt__s{% if st.aspect_ratio > 1.4 %} dt__s--wide{% endif %}">{{ st | image_url: width: 600 | image_tag: alt: rest, loading: 'lazy', class: 'dt__i', widths: '200,400,600' }}</span></span>
+  <span class="dt{% if small %} dt--s{% endif %}"><span class="dt__w grunge">{{ word | escape }}</span><span class="dt__s{% if st.aspect_ratio > 1.4 %} dt__s--wide{% endif %}">{{ st | image_url: width: 1000 | image_tag: alt: rest, loading: 'lazy', class: 'dt__i', widths: '250,500,750,1000', sizes: '(min-width: 990px) 320px, 180px' }}</span></span>
 {%- elsif c != blank -%}
   <span class="grunge">{{ c.title | escape }}</span>
 {%- endif -%}

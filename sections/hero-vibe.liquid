@@ -16,7 +16,7 @@
   <div class="hero__top">
     {%- assign arch = settings.drop_b_collection -%}
     {%- if section.settings.show_bin and arch != blank -%}
-      <a class="hbin" href="{{ arch.url }}" data-h aria-label="{{ 'collections.archive' | t }} · {{ arch.title | escape }}">{% render 'mini-bin' %}<span class="hbin__t"><b>{{ 'collections.archive' | t }}</b><span>{{ arch.title | escape }}</span></span></a>
+      <a class="hbin" href="{{ arch.url }}" data-h aria-label="{{ 'collections.archive' | t }} · {{ arch.title | escape }}">{% render 'mini-bin' %}<span class="hbin__t"><b>{{ 'collections.archive' | t }}</b></span></a>
     {%- elsif section.settings.kicker != blank -%}<div class="hero__kicker">{{ section.settings.kicker }}</div>{%- else -%}<span></span>{%- endif -%}
     {%- if vibes.size > 1 -%}
       <button class="vibe-btn" type="button" data-vibe-btn data-h><i></i><span data-vibe-name>{{ 'hero.vibe' | t }}: {{ first.settings.name | escape }}</span></button>
