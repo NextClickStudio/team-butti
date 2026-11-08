@@ -11,6 +11,12 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.4.6 (ritocchi finali prima del lancio)
+- Hero: tolto il bottone rosa "Shop il drop" in basso (c'è quello con lo sticker in alto) e la fascia nera sotto; TEAM BUTTI su telefono più grande e con più aria tra lettere e righe.
+- Menu da telefono: "Drop" + sticker con lo stesso carattere grande delle altre voci.
+- Striscia Instagram su telefono: il testo va a capo dentro il cartello invece di uscire.
+- Cookie policy e informativa privacy: Google Analytics e Google Tag Manager (Google Ireland), solo con consenso.
+
 ## Novità v2.4.5 (Drop Fuck e Drop Hotmilf, Shop il drop in alto, Google Tag Manager, telefono)
 - I drop si chiamano **Drop Fuck** (`/collections/drop-fuck`) e **Drop Hotmilf** (`/collections/drop-hotmilf`, l'archivio); i vecchi indirizzi rimandano lì. Lo sticker prende il posto della parola ovunque: menu in alto (piccolo), menu da telefono, griglia, pagina della collezione, archivio, bottone dell'archivio.
 - In alto a sinistra nella hero, al posto del cestino: **"Shop il drop" con lo sticker del dito medio**, che cambia colori con il vibe. Si spegne in *Personalizza → hero*.

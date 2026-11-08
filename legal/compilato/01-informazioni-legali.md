@@ -1,6 +1,6 @@
 # Informazioni legali
 
-Ultimo aggiornamento: 6 novembre 2026
+Ultimo aggiornamento: 8 novembre 2026
 
 Il sito e il negozio online Team Butti sono gestiti da:
 

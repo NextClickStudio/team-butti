@@ -1349,3 +1349,26 @@ a:hover .dt__s,.sec__title:hover .dt__s{animation-duration:.6s}
 /* desktop: the hoodie sits in the empty corner under "TEAM", left of "BUTTI", without touching the letters */
 @media(min-width:701px){.hero__float--1{bottom:calc(var(--strip) + 1%);width:clamp(130px,14vw,220px)}}
 @media(min-width:701px){.hero__float--3{top:11%;width:clamp(150px,19vw,290px)}}
+
+/* ===== v2.4.6: phone menu drop names, bigger hero title, no bottom hero button, Instagram sign that fits ===== */
+/* phone menu: the number style (small mono spans) must not reach "Drop + sticker" */
+.mmenu a .dt,.mmenu a .dt span{font-family:var(--display);font-size:inherit;letter-spacing:inherit;vertical-align:baseline;margin:0}
+.mmenu a .dt{gap:.18em}
+.mmenu .dt--nav .dt__i{height:1.15em;margin:-.12em 0}
+.mmenu .dt--nav .dt__s--wide .dt__i{height:.72em;margin:0}
+/* hero without the bottom button: no black band, the skyline and the car sit on the edge */
+.hero--nocta{--strip:0px}
+.hero--nocta .hero__bottom{display:none}
+@media(max-width:700px){
+  /* TEAM BUTTI bigger and with air between letters and lines */
+  .hero__title{font-size:min(35vw,16.5svh);letter-spacing:.025em;line-height:.9}
+  .hero__line+.hero__line{margin-top:.06em}
+  .hero--nocta .hero__float--1{bottom:calc(min(40px,3.5svh) + 10px)}
+  .hero--nocta .hero__float--2{bottom:10px}
+  .hero--nocta .hero__float--3{bottom:calc(min(24px,2svh) + 10px)}
+  /* Instagram sign: the label may wrap to two lines instead of spilling out of the board */
+  .ig__trailer{min-width:0;flex:0 1 auto}
+  .ig__trailer .ig__btn{max-width:calc(100vw - 32px - 140px)}
+  .ig__t{min-width:0}
+  .ig__t b{white-space:normal;font-size:15px;line-height:.95}
+}

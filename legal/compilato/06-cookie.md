@@ -1,6 +1,6 @@
 # Cookie policy
 
-Ultimo aggiornamento: 6 novembre 2026
+Ultimo aggiornamento: 8 novembre 2026
 
 Questa pagina spiega quali cookie e tecnologie simili usa questo sito e come puoi gestirli. È scritta secondo l'art. 122 del Codice Privacy e le Linee guida del Garante sui cookie del 10 giugno 2021.
 
@@ -23,11 +23,13 @@ Non richiedono il consenso. Sono impostati da Shopify, la piattaforma del negozi
 
 ### Statistici: solo con il tuo consenso
 
-Ci dicono quante persone visitano il sito e quali pagine guardano (Shopify Analytics), per migliorarlo.
+Ci dicono quante persone visitano il sito e quali pagine guardano, per migliorarlo: Shopify Analytics e Google Analytics, caricato tramite Google Tag Manager.
+
+Google Tag Manager e Google Analytics partono solo dopo il tuo consenso: fino ad allora il sito comunica a Google che il consenso è negato (modalità di consenso di Google). I dati sono trattati da Google Ireland Limited; l'informativa di Google è su policies.google.com/privacy.
 
 ### Marketing: solo con il tuo consenso
 
-Servono a mostrarti annunci Team Butti su altri siti e social e a misurare le campagne. Esempi: Meta, Google o TikTok, solo se colleghiamo le loro app al negozio.
+Servono a mostrarti annunci Team Butti su altri siti e social e a misurare le campagne. Esempi: Google (anche tramite Google Tag Manager), Meta o TikTok, solo se colleghiamo i loro strumenti al negozio e solo con il tuo consenso.
 
 L'elenco aggiornato dei cookie di Shopify, con nomi e durate, è su shopify.com/legal/cookies.
 

@@ -1,6 +1,6 @@
 # Informativa privacy
 
-Ultimo aggiornamento: 6 novembre 2026
+Ultimo aggiornamento: 8 novembre 2026
 
 Questa informativa spiega come trattiamo i tuoi dati personali quando visiti questo sito, ti iscrivi alla newsletter o compri. È resa ai sensi degli artt. 13 e 14 del Regolamento UE 2016/679 (GDPR) e del D.Lgs. 196/2003 (Codice Privacy).
 
@@ -42,6 +42,7 @@ Solo a chi serve per le finalità sopra:
 - **Shopify**, la piattaforma del negozio: Shopify International Limited (Irlanda), responsabile del trattamento;
 - **fornitori di pagamento** (Shopify Payments, PayPal se attivo), per i pagamenti e i controlli antifrode;
 - **corrieri** (DHL), per le consegne;
+- **Google** (Google Ireland Limited, Irlanda), per le statistiche di visita e la misura delle campagne con Google Analytics e Google Tag Manager, solo se accetti i relativi cookie;
 - **commercialista e consulenti**, per gli adempimenti fiscali e legali;
 - **autorità**, se la legge lo richiede.
 
@@ -49,7 +50,7 @@ Non vendiamo i tuoi dati a nessuno.
 
 ## 5. Trasferimenti fuori dall'UE
 
-Alcuni fornitori, come Shopify Inc. (Canada) e i suoi sub-fornitori negli Stati Uniti, possono trattare dati fuori dall'UE. Il trasferimento avviene solo con le garanzie previste dal GDPR:
+Alcuni fornitori, come Shopify Inc. (Canada), Google LLC (Stati Uniti) e i loro sub-fornitori negli Stati Uniti, possono trattare dati fuori dall'UE. Il trasferimento avviene solo con le garanzie previste dal GDPR:
 - decisione di adeguatezza per il Canada;
 - EU-US Data Privacy Framework o clausole contrattuali standard per gli USA.
 

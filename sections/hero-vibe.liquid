@@ -4,7 +4,7 @@
   assign first = vibes.first
 -%}
 <section
-  class="hero hero--{{ section.settings.layout }}{% if section.settings.video != blank %} hero--video{% endif %}"
+  class="hero hero--{{ section.settings.layout }}{% if section.settings.button_label == blank %} hero--nocta{% endif %}{% if section.settings.video != blank %} hero--video{% endif %}"
   data-tb="hero"
   data-layout="{{ section.settings.layout }}"
   data-braps="{{ section.settings.brap_words | escape }}"

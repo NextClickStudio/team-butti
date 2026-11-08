@@ -1,6 +1,6 @@
 # Resi, cambi e diritto di recesso
 
-Ultimo aggiornamento: 6 novembre 2026
+Ultimo aggiornamento: 8 novembre 2026
 
 ## In breve
 

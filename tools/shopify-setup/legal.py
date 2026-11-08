@@ -3,7 +3,7 @@
 import os, re
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 DATA = {
-    '[DATA]': '6 novembre 2026',
+    '[DATA]': '8 novembre 2026',
     '[RAGIONE SOCIALE]': 'Fradel S.a.s. di Lorenzo Barindelli & C.',
     '[SEDE]': 'Corso Concordia 5, 20129 Milano (MI)',
     '[LEGALE RAPPRESENTANTE]': 'Lorenzo Barindelli',
