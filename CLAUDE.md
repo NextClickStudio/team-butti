@@ -16,7 +16,7 @@ Read this first. It replaces rereading old chats. Write to the user in Italian, 
 
 ## Store state (6 Nov 2026)
 - MAIN = `team-butti-countdown-tema-shopify-v4`: countdown to the launch, **Sun 08.11 at 16:20**.
-- Our theme: **Team Butti 2.4.7** (gid …/OnlineStoreTheme/207614411093, the copy called 2.4.4 before), unpublished. 2.4.3 (…/207484289365) stays as a fallback. On Sunday the user only presses Publish. 2.3.2 = 206793900373.
+- Our theme: **Team Butti 2.4.8** (gid …/OnlineStoreTheme/207614411093, the copy called 2.4.4 before), unpublished. 2.4.3 (…/207484289365) stays as a fallback. On Sunday the user only presses Publish. 2.3.2 = 206793900373.
 - Collections:
   - Drop Fuck `drop-fuck` (687836201301; was Drop Off-Road, never "Drop 02"; the middle-finger sticker replaces "Fuck" everywhere): 37 products ACTIVE incl. Spilla (hidden by the countdown until publish), tag `drop-02`. Prices = column PREZZO (not the online +5 column). Photos = transparent PNGs in `media/drop-off-road/` (border flood-fill, `tools/media/cut2.py` + `shadow.py`; never the AI model alone: it punches holes in white ink); the Leash products are DRAFT and out of the collection. Source: DROP_7-11_SKU_DEF.xlsx → `tools/shopify-setup/drop02.py`.
   - Felpe and Accessori are tabs (product types) inside Drop Fuck, not menu items.

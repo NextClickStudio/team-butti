@@ -1378,3 +1378,13 @@ a:hover .dt__s,.sec__title:hover .dt__s{animation-duration:.6s}
   .hero{min-height:0;padding-bottom:calc(min(36vw,22svh) + 64px)}
   .hero__title{margin-bottom:0}
 }
+
+/* ===== v2.4.8: Instagram sign on phones, fixed width for the whole rig (Safari no longer squeezes the board), text always inside ===== */
+@media(max-width:700px){
+  .ig__rig{width:min(360px,calc(100vw - 24px));justify-content:center}
+  .ig__trailer{flex:1 1 0;min-width:0}
+  .ig__trailer .ig__btn{max-width:none;min-width:0;overflow:hidden}
+  .ig__t{flex:1 1 0;min-width:0;grid-template-columns:minmax(0,1fr)}
+  .ig__t b{font-size:clamp(13px,4.3vw,18px);line-height:.95;white-space:normal;overflow-wrap:anywhere}
+  .ig__t span{font-size:9.5px;letter-spacing:.04em;overflow-wrap:anywhere}
+}
