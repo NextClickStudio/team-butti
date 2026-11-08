@@ -2,7 +2,11 @@
   "current": "Default",
   "presets": {
     "Default": {
-      "social_instagram": "https://www.instagram.com/team_butti/"
+      "social_instagram": "https://www.instagram.com/team_butti/",
+      "drop_a_collection": "drop-off-road",
+      "drop_a_sticker": "shopify://shop_images/tb-sticker-dito-medio.png",
+      "drop_b_collection": "drop-cross",
+      "drop_b_sticker": "shopify://shop_images/tb-sticker-hot-milfs.png"
     }
   }
 }

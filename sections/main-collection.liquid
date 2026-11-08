@@ -2,7 +2,7 @@
 {%- paginate collection.products by 250 -%}
   <section class="sec" data-tb="grid">
     <div class="sec__head">
-      <h1 class="sec__title d grunge">{{ collection.title | escape }}</h1>
+      <h1 class="sec__title d">{% render 'drop-title', c: collection %}</h1>
       <span class="label">{{ 'collections.count' | t: count: collection.products_count }}</span>
     </div>
     {%- if collection.description != blank -%}<div class="rte coll-desc">{{ collection.description }}</div>{%- endif -%}

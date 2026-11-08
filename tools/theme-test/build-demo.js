@@ -14,6 +14,8 @@ const locale = JSON.parse(rd('locales/it.default.json'));
 const settings = {};
 JSON.parse(rd('config/settings_schema.json')).forEach(g => (g.settings || []).forEach(s => { if ('default' in s) settings[s.id] = s.default; }));
 settings.social_instagram = 'https://www.instagram.com/team_butti/';
+// drop names with a sticker (config/settings_data.json presets on the store)
+Object.assign(settings, { drop_a_collection: { handle: 'drop-off-road' }, drop_a_sticker: 'shopify://shop_images/tb-sticker-dito-medio.png', drop_b_collection: { handle: 'drop-cross', url: '/collections/drop-cross', title: 'Drop Cross' }, drop_b_sticker: 'shopify://shop_images/tb-sticker-hot-milfs.png' });
 // Legal texts (legal/*.md) as the store's policies and the cookie policy page; [PLACEHOLDERS] stay visible, highlighted
 const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 // \* is a literal asterisk (the (*) of the withdrawal form), not emphasis

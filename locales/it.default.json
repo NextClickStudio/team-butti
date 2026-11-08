@@ -58,6 +58,7 @@
   },
   "collections": {
     "all": "Tutto",
+    "archive": "Archivio",
     "title": "Collezioni",
     "empty": "Niente qui. Il prossimo drop arriva presto.",
     "count": {

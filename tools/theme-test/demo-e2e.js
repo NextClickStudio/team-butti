@@ -19,9 +19,9 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(await p.$$eval('.stk--img img', i => i.length === 6 && i.every(x => /tb-sticker-/.test(x.src))) && (await p.$$('[data-reel-stk]')).length === 8, `[${name}] sticker veri: 4 nel manifesto, 2 nel muro della crew, 8 a turno sul video`);
     ok(!(await p.$('#countdown')) && !(await p.$('[data-hero-count]')), `[${name}] market finito: niente countdown in fondo né bottone countdown nella hero`);
     ok(!(await p.$('.hero__kicker')) && !(await p.$('.hero__route')) && !(await p.$('.hero__hint')), `[${name}] hero: solo TEAM BUTTI, niente scritte piccole`);
-    ok(/Drop/.test(await p.textContent('#shopify-section-drop .sec__title')) && !/02/.test(await p.textContent('#shopify-section-drop .sec__title')) && /Off-Road/.test(await p.textContent('#shopify-section-drop .sec__title')), `[${name}] griglia: Drop Off-Road, senza 02`);
-    ok(await p.$eval('#shopify-section-drop .arch-btn', a => a.getAttribute('href') === '/collections/drop-cross' && /Drop Cross/.test(a.textContent)), `[${name}] griglia: bottone Archivio · Drop Cross`);
-    ok(!(await p.$('[data-tb=bin]')), `[${name}] cestino dell'archivio pronto ma spento fino a dopo il drop`);
+    ok(/Drop/.test(await p.textContent('#shopify-section-drop .sec__title')) && !/02/.test(await p.textContent('#shopify-section-drop .sec__title')) && await p.$eval('#shopify-section-drop .sec__title .dt__i', i => i.alt === 'Off-Road' && i.complete && i.naturalWidth > 0), `[${name}] griglia: Drop Off-Road, senza 02`);
+    ok(await p.$eval('#shopify-section-drop .arch-btn', a => a.getAttribute('href') === '/collections/drop-cross' && !!a.querySelector('.mbin .mbin__lid') && a.querySelectorAll('.mbin__j').length === 3 && a.querySelector('.dt__i').alt === 'Cross'), `[${name}] griglia: bottone archivio = cestino animato con 3 maglie + Drop e lo sticker`);
+    ok(!(await p.$('[data-tb=bin]')) && await p.$eval('[data-tb=hero] .hbin', a => a.getAttribute('href') === '/collections/drop-cross' && a.querySelectorAll('.mbin__j').length === 3), `[${name}] cestino animato in alto a sinistra nella hero, porta all'archivio`);
     ok(await p.$eval('[data-tb=insta] a[data-ig-rig]', a => a.href === 'https://www.instagram.com/team_butti/' && a.target === '_blank' && !!a.querySelector('.cad') && /@team_butti/.test(a.textContent)), `[${name}] Instagram: la mini Cadillac traina il bottone verso @team_butti`);
     ok(JSON.stringify(await p.$$eval('[data-vibe]', v => v.map(x => x.dataset.name))) === '["Pink Market","Leopardo","Giallo MX"]', `[${name}] hero: solo i vibe Pink Market, Leopardo, Giallo MX`);
     ok(!/Veneto/.test(await p.content()), `[${name}] niente Veneto da nessuna parte`);
@@ -32,7 +32,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     await p.click('#shopify-section-drop .tab[data-f="all"]'); await p.waitForTimeout(300);
     ok(await p.$$eval('#shopify-section-drop .card', c => c.filter(x => getComputedStyle(x).display !== 'none').length) === 8, `[${name}] griglia: su Tutto restano 8 pezzi`);
     ok(await p.$$eval('#shopify-section-drop .card[data-quick]', x => x.filter(c => getComputedStyle(c).display !== 'none').length) === 8, `[${name}] home: 8 prodotti veri nella griglia (gli altri del drop sotto i filtri)`);
-    ok(await p.$$eval('[data-float].has-photo .hero__photo', x => x.filter(i => /tb-maglia-/.test(i.src) && i.complete && i.naturalWidth > 0).length) >= 2, `[${name}] hero: maglie vere (still life) al posto dei disegni`);
+    ok(await p.$$eval('[data-float].has-photo .hero__photo', x => x.filter(i => /(longsleeve|hoodie|fogliage)-[a-z-]+-\d\.png/.test(i.src) && i.complete && i.naturalWidth > 0).length) >= 2, `[${name}] hero: maglie vere del Drop Off-Road (PNG) al posto dei disegni`);
     const ph1 = await p.$eval('[data-float] .hero__photo', i => i.src);
     await p.click('[data-vibe-btn]'); await p.waitForTimeout(500);
     ok((await p.$eval('[data-float] .hero__photo', i => i.src)) !== ph1, `[${name}] hero: cambiando vibe cambiano anche le maglie`);
@@ -51,7 +51,7 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(await p.$eval('#shopify-section-drop .card__quick', q => q.textContent.trim() === 'Scegli la taglia +'), `[${name}] card prodotto: "Scegli la taglia +"`);
     ok(!(await p.$eval('[data-shop-pill]', a => a.classList.contains('on'))), `[${name}] bottone Shop flottante: nascosto in cima alla pagina`);
     { let seen = false; const H = await p.evaluate(() => document.documentElement.scrollHeight);
-      for (let y = 900; y < H && !seen; y += 260) { await p.evaluate(y => scrollTo({ top: y, behavior: 'instant' }), y); await p.waitForTimeout(260); seen = await p.$eval('[data-shop-pill]', a => a.classList.contains('on') && a.getAttribute('href') === '/collections/all'); }
+      for (let y = 900; y < H && !seen; y += 150) { await p.evaluate(y => scrollTo({ top: y, behavior: 'instant' }), y); await p.waitForTimeout(260); seen = await p.$eval('[data-shop-pill]', a => a.classList.contains('on') && a.getAttribute('href') === '/collections/all'); }
       ok(seen, `[${name}] bottone Shop flottante: compare scorrendo`); }
     await p.$eval('[data-tb=vscroll]', el => scrollTo({ top: el.offsetTop + (el.offsetHeight - innerHeight) * 0.9, behavior: 'instant' })); await p.waitForTimeout(700);
     ok(!(await p.$eval('[data-shop-pill]', a => a.classList.contains('on'))), `[${name}] bottone Shop flottante: non copre la Cadillac sulla strada`);
@@ -176,8 +176,8 @@ const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) process
     ok(await p.$$eval('.cart-page .ln', x => x.length) === 1, `[${name}] pagina carrello: rimozione riga`);
     // archive: Drop Cross, every piece sold out, cards open their product page and publish the click
     await p.goto(BASE + '/collections/drop-cross'); await p.waitForTimeout(1000);
-    const ar = await p.evaluate(() => ({ title: document.querySelector('.arch__t').textContent.trim(), cards: document.querySelectorAll('[data-tb=archive] .card').length, quick: document.querySelectorAll('[data-tb=archive] [data-quick]').length, arch: document.querySelectorAll('[data-tb=archive] [data-arch]').length, back: (document.querySelector('[data-tb=archive] .sec__more a') || {}).getAttribute && document.querySelector('[data-tb=archive] .sec__more a').getAttribute('href') }));
-    ok(ar.title === 'Drop Cross' && ar.cards === ar.arch && ar.cards > 0 && ar.quick === 0 && ar.back === '/collections/drop-off-road', `[${name}] archivio Drop Cross: ${ar.cards} pezzi, ognuno apre la sua pagina (niente vista rapida), bottone per il Drop 02`);
+    const ar = await p.evaluate(() => ({ title: document.querySelector('.arch__t').textContent.trim() + ' ' + ((document.querySelector('.arch__t .dt__i') || {}).alt || ''), cards: document.querySelectorAll('[data-tb=archive] .card').length, quick: document.querySelectorAll('[data-tb=archive] [data-quick]').length, arch: document.querySelectorAll('[data-tb=archive] [data-arch]').length, back: (document.querySelector('[data-tb=archive] .sec__more a') || {}).getAttribute && document.querySelector('[data-tb=archive] .sec__more a').getAttribute('href') }));
+    ok(ar.title === 'Drop Cross' && ar.cards === ar.arch && ar.cards > 0 && ar.quick === 0 && ar.back === '/collections/drop-off-road', `[${name}] archivio Drop Cross: ${ar.cards} pezzi, ognuno apre la sua pagina (niente vista rapida), bottone per il Drop Off-Road`);
     await p.evaluate(() => { window.__ev = []; window.Shopify = window.Shopify || {}; Shopify.analytics = { publish: (n, d) => window.__ev.push([n, d]) }; document.addEventListener('click', e => { if (e.target.closest('[data-arch]')) e.preventDefault(); }, true); });
     await p.click('[data-tb=archive] [data-arch]');
     const ev = await p.evaluate(() => window.__ev);

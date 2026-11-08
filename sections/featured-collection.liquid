@@ -6,7 +6,8 @@
 -%}
 <section class="sec" data-tb="grid">
   <div class="sec__head rv">
-    <h2 class="sec__title d grunge">{{ section.settings.title | escape }} <span class="out">{{ section.settings.title_outline | escape }}</span></h2>
+    {%- assign dt = '' -%}{%- if coll != blank -%}{%- capture dt -%}{% render 'drop-title', c: coll %}{%- endcapture -%}{%- endif -%}
+    {%- if dt contains 'class="dt' -%}<h2 class="sec__title d">{{ dt }}</h2>{%- else -%}<h2 class="sec__title d grunge">{{ section.settings.title | escape }} <span class="out">{{ section.settings.title_outline | escape }}</span></h2>{%- endif -%}
     {%- if section.settings.show_tabs -%}
       <div class="tabs" data-tabs>
         <button type="button" class="tab on" data-f="all">{{ 'collections.all' | t }}</button>
@@ -60,7 +61,8 @@
     <div class="sec__more">
       {%- if show_more -%}<a href="{{ coll.url }}" class="btn">{{ section.settings.link_label | escape }}</a>{%- endif -%}
       {%- if arch != blank -%}
-        <a href="{{ arch.url }}" class="btn btn--ghost arch-btn" data-h><i aria-hidden="true"></i>{{ section.settings.archive_label | default: arch.title | escape }}</a>
+        {%- capture at -%}{% render 'drop-title', c: arch, small: true %}{%- endcapture -%}
+        <a href="{{ arch.url }}" class="btn btn--ghost arch-btn arch-btn--bin" data-h>{% render 'mini-bin' %}<span class="arch-btn__t">{%- if at contains 'class="dt' -%}{{ 'collections.archive' | t }} · {{ at }}{%- else -%}{{ section.settings.archive_label | default: arch.title | escape }}{%- endif -%}</span></a>
       {%- endif -%}
     </div>
   {%- endif -%}

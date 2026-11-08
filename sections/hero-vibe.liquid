@@ -14,7 +14,10 @@
     <i hidden data-vibe data-name="{{ v.settings.name | escape }}" data-bg="{{ v.settings.bg }}" data-fg="{{ v.settings.fg }}" data-pattern="{{ v.settings.pattern }}" data-j="{{ v.settings.jersey_1 | escape }}|{{ v.settings.jersey_2 | escape }}|{{ v.settings.jersey_3 | escape }}" data-ph="{% if v.settings.photo_1 != blank %}{{ v.settings.photo_1 | image_url: width: 800 }}{% endif %}|{% if v.settings.photo_2 != blank %}{{ v.settings.photo_2 | image_url: width: 800 }}{% endif %}|{% if v.settings.photo_3 != blank %}{{ v.settings.photo_3 | image_url: width: 800 }}{% endif %}" {{ v.shopify_attributes }}></i>
   {%- endfor -%}
   <div class="hero__top">
-    {%- if section.settings.kicker != blank -%}<div class="hero__kicker">{{ section.settings.kicker }}</div>{%- else -%}<span></span>{%- endif -%}
+    {%- assign arch = settings.drop_b_collection -%}
+    {%- if section.settings.show_bin and arch != blank -%}
+      <a class="hbin" href="{{ arch.url }}" data-h aria-label="{{ 'collections.archive' | t }} · {{ arch.title | escape }}">{% render 'mini-bin' %}<span class="hbin__t"><b>{{ 'collections.archive' | t }}</b><span>{{ arch.title | escape }}</span></span></a>
+    {%- elsif section.settings.kicker != blank -%}<div class="hero__kicker">{{ section.settings.kicker }}</div>{%- else -%}<span></span>{%- endif -%}
     {%- if vibes.size > 1 -%}
       <button class="vibe-btn" type="button" data-vibe-btn data-h><i></i><span data-vibe-name>{{ 'hero.vibe' | t }}: {{ first.settings.name | escape }}</span></button>
     {%- endif -%}
@@ -80,6 +83,7 @@
   "class": "section-hero",
   "max_blocks": 11,
   "settings": [
+    { "type": "checkbox", "id": "show_bin", "label": "Cestino dell'archivio in alto a sinistra", "info": "Porta all'archivio scelto in Impostazioni tema → Nomi dei drop → Drop vecchio.", "default": true },
     {
       "type": "inline_richtext",
       "id": "kicker",

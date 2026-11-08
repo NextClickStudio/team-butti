@@ -16,7 +16,7 @@ Read this first. It replaces rereading old chats. Write to the user in Italian, 
 
 ## Store state (6 Nov 2026)
 - MAIN = `team-butti-countdown-tema-shopify-v4`: countdown to the launch, **Sun 08.11 at 16:20**.
-- Our theme: **Team Butti 2.4.3** (gid …/OnlineStoreTheme/207484289365), unpublished. On Sunday the user only presses Publish. 2.3.2 = 206793900373.
+- Our theme: **Team Butti 2.4.4** (copy of 2.4.3, which stays as a fallback) (gid …/OnlineStoreTheme/207484289365), unpublished. On Sunday the user only presses Publish. 2.3.2 = 206793900373.
 - Collections:
   - Drop Off-Road `drop-off-road` (687836201301; never "Drop 02"): 37 products ACTIVE incl. Spilla (hidden by the countdown until publish), tag `drop-02`. Prices = column PREZZO (not the online +5 column). Photos = transparent PNGs in `media/drop-off-road/` (border flood-fill, `tools/media/cut2.py` + `shadow.py`; never the AI model alone: it punches holes in white ink); the Leash products are DRAFT and out of the collection. Source: DROP_7-11_SKU_DEF.xlsx → `tools/shopify-setup/drop02.py`.
   - Felpe and Accessori are tabs (product types) inside Drop Off-Road, not menu items.
@@ -35,7 +35,7 @@ Read this first. It replaces rereading old chats. Write to the user in Italian, 
   - `hero-vibe`, `featured-collection` (drop grid + archive button), `main-archive` (archive page);
   - `archive-bin` (bin, disabled in index.json), `insta-car` (Cadillac towing the Instagram button), `contact-page`;
   - `video-scroll` (Cadillac road), `brand-reel`, `manifesto`, `crew-wall`, `drop-countdown` (disabled).
-- `snippets/`: `product-card` (`archive:` param → `data-arch`), `sticker-upsell` (in cart-drawer + main-cart).
+- `snippets/`: `product-card` (`archive:` param → `data-arch`), `sticker-upsell` (in cart-drawer + main-cart), `drop-title` ("Drop" + sticker from Theme settings → Nomi dei drop), `mini-bin` (animated sticker bin: hero corner + archive button).
 - `assets/theme.js`: modules by `data-tb` in `inits` (archive publishes `archivio_click`). `assets/base.css`: one block per version.
 - Changelog for the client: `preview/SHOPIFY-MAP.md` ("Novità vX"). Store log: `CONNETTORE-SHOPIFY.md`.
 - Version: `config/settings_schema.json` theme_version. A `url` setting can't have a URL default (Shopify rejects the whole file); put values in `config/settings_data.json` presets.

@@ -1,0 +1,22 @@
+{%- comment -%}
+  Drop name with its sticker: "Drop" in grunge letters + the drop's sticker used as a word
+  (Theme settings → Nomi dei drop: collection + sticker). The rest of the title stays as the image's alt text.
+  Accepts: c (collection), small (true in buttons). Without a matching sticker, prints the title.
+{%- endcomment -%}
+{%- liquid
+  assign st = blank
+  if c != blank
+    if settings.drop_a_collection != blank and settings.drop_a_sticker != blank and c.handle == settings.drop_a_collection.handle
+      assign st = settings.drop_a_sticker
+    elsif settings.drop_b_collection != blank and settings.drop_b_sticker != blank and c.handle == settings.drop_b_collection.handle
+      assign st = settings.drop_b_sticker
+    endif
+  endif
+-%}
+{%- if st != blank -%}
+  {%- assign word = c.title | split: ' ' | first -%}
+  {%- assign rest = c.title | remove_first: word | remove: '·' | strip -%}
+  <span class="dt{% if small %} dt--s{% endif %}"><span class="dt__w grunge">{{ word | escape }}</span><span class="dt__s{% if st.aspect_ratio > 1.4 %} dt__s--wide{% endif %}">{{ st | image_url: width: 600 | image_tag: alt: rest, loading: 'lazy', class: 'dt__i', widths: '200,400,600' }}</span></span>
+{%- elsif c != blank -%}
+  <span class="grunge">{{ c.title | escape }}</span>
+{%- endif -%}

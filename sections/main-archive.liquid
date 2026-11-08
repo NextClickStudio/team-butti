@@ -7,7 +7,7 @@
 <section class="sec arch" data-tb="archive" data-arch-coll="{{ collection.handle | escape }}">
   <div class="arch__head">
     <span class="arch__k label">{{ section.settings.kicker | escape }}</span>
-    <h1 class="arch__t d grunge">{{ collection.title | escape }}</h1>
+    <h1 class="arch__t d">{% render 'drop-title', c: collection %}</h1>
     <div class="arch__meta label">
       <span>{{ 'collections.count' | t: count: collection.products_count }}</span>
       <span class="arch__sold">{{ 'products.sold_out' | t }}</span>

@@ -11,6 +11,13 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.4.4 (cestino animato, nomi dei drop con lo sticker)
+- **Cestino dell'archivio** in alto a sinistra nella hero, di fronte al bottone vibe: uno sticker rosa con il coperchio giallo che ogni pochi secondi si schiaccia, apre il coperchio con una stella gialla e lancia fuori tre maglie disegnate del vecchio drop, che ricadono dentro. Porta all'archivio. Si spegne in *Personalizza → hero → Cestino dell'archivio*. Lo stesso cestino (più piccolo) è nel bottone "Archivio" sotto la griglia.
+- La sezione grande del cestino resta spenta in home.
+- **Nomi dei drop con lo sticker**: "Drop" + lo sticker del dito medio per il drop nuovo, "Drop" + lo sticker Hot Milfs per il Drop Cross. Compaiono nella griglia della home, nella pagina della collezione, nell'archivio e nel bottone. Si scelgono in *Impostazioni tema → Nomi dei drop*.
+- Hero: le maglie che fluttuano sono del Drop Off-Road (PNG), per tutti e tre i vibe.
+- Telefono: tutti i link del footer alti almeno 44 px; nessuna sovrapposizione e nessuno scroll laterale in home (controllo automatico su tutta la pagina).
+
 ## Novità v2.4.3 (email, prezzi, foto rifatte, SEO)
 - Email per i clienti: **info@teambutti.com** ovunque (Contatti, testi legali, pagine).
 - Prezzi dalla colonna PREZZO del file: longsleeve 69 € (Pussy Wagon 79 €), hoodie 89 €, crewneck 49 €, t-shirt 29 €, beanie 39 €, Toyoda 150 €, Fogliage 130 €, grinder 25 €, spilla 5 €, sticker pack 5 €.

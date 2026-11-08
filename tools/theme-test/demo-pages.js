@@ -54,6 +54,7 @@
       home: function () {
         var home = tpl('index');
         home.sections.drop.settings = Object.assign({}, home.sections.drop.settings, { collection__obj: collections['drop-off-road'], archive_collection__obj: collections['drop-cross'] });
+        if (home.sections.bin) home.sections.bin.settings = Object.assign({}, home.sections.bin.settings, { collection__obj: collections['drop-cross'] });
         var extra = { collections: { all: collections.all } };
         // sections switched off in the editor ("disabled": true) are not on the live page either
         var live = home.order.filter(function (id) { return !home.sections[id].disabled; });

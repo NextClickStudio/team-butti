@@ -103,6 +103,8 @@
     }));
 
     var globals = opts.globals || {};
+    // theme settings that point at Files (image_picker values like shopify://shop_images/x.png) become image objects too
+    if (globals.settings) files(globals.settings);
     // files referenced by the template JSON (shopify://shop_images/x.jpg, shopify://files/videos/x.mp4) → image / video objects,
     // from opts.media = { base: url prefix, list: { name: { w, h } } }; missing files are blank, as on a store without them
     function fileRef(u) {

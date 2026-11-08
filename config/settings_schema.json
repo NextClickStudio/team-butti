@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Team Butti",
-    "theme_version": "2.4.3",
+    "theme_version": "2.4.4",
     "theme_author": "Team Butti",
     "theme_documentation_url": "https://www.instagram.com/team_butti/",
     "theme_support_url": "https://www.instagram.com/team_butti/"
@@ -237,6 +237,16 @@
         "label": "Testo",
         "default": "5 € il pack. Tocca e finisce nel pacco."
       }
+    ]
+  },
+  {
+    "name": "Nomi dei drop",
+    "settings": [
+      { "type": "paragraph", "content": "Nel titolo di un drop la parola dopo \"Drop\" diventa uno sticker: nella griglia della home, nella pagina della collezione, nell'archivio e nel bottone del cestino." },
+      { "type": "collection", "id": "drop_a_collection", "label": "Drop nuovo" },
+      { "type": "image_picker", "id": "drop_a_sticker", "label": "Sticker del drop nuovo" },
+      { "type": "collection", "id": "drop_b_collection", "label": "Drop vecchio (archivio)" },
+      { "type": "image_picker", "id": "drop_b_sticker", "label": "Sticker del drop vecchio" }
     ]
   },
   {
