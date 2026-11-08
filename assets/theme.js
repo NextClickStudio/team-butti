@@ -412,7 +412,9 @@
       root.addEventListener('click', function (e) {
         var c = e.target.closest('[data-arch]'); if (!c) return;
         try {
-          if (window.Shopify && Shopify.analytics && Shopify.analytics.publish) Shopify.analytics.publish('archivio_click', { collection: coll, handle: c.dataset.arch, title: c.dataset.archTitle, position: $$('[data-arch]', root).indexOf(c) + 1 });
+          var ev = { collection: coll, handle: c.dataset.arch, title: c.dataset.archTitle, position: $$('[data-arch]', root).indexOf(c) + 1 };
+          if (window.Shopify && Shopify.analytics && Shopify.analytics.publish) Shopify.analytics.publish('archivio_click', ev);
+          if (window.dataLayer) window.dataLayer.push(Object.assign({ event: 'archivio_click' }, ev));
         } catch (err) {}
       });
     },

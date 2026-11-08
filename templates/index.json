@@ -101,14 +101,14 @@
       "type": "featured-collection",
       "settings": {
         "title": "Drop",
-        "title_outline": "Off-Road",
+        "title_outline": "Fuck",
         "limit": 8,
         "link_label": "Vedi tutto il drop →",
-        "collection": "drop-off-road",
-        "archive_collection": "drop-cross",
-        "archive_label": "Archivio · Drop Cross",
+        "collection": "drop-fuck",
+        "archive_collection": "drop-hotmilf",
+        "archive_label": "Archivio · Drop Hotmilf",
         "soon_kicker": "Drop",
-        "soon_title": "Off-Road",
+        "soon_title": "Fuck",
         "soon_text": "Domenica si apre. Felpe, longsleeve, accessori: pezzi contati."
       }
     },
@@ -312,7 +312,7 @@
           "type": "sign",
           "settings": {
             "title": "Drop",
-            "sub": "Off-Road",
+            "sub": "Fuck",
             "style": "pink",
             "pos": 93
           }
@@ -670,9 +670,9 @@
       "type": "archive-bin",
       "disabled": true,
       "settings": {
-        "collection": "drop-cross",
+        "collection": "drop-hotmilf",
         "kicker": "Archivio",
-        "title": "Drop Cross",
+        "title": "Drop Hotmilf",
         "text": "Il primo drop è finito nel cestino. Tutto sold out: apri le maglie che rivorresti.",
         "button": "Apri l'archivio →",
         "style": "yellow"

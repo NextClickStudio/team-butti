@@ -16,11 +16,12 @@ Read this first. It replaces rereading old chats. Write to the user in Italian, 
 
 ## Store state (6 Nov 2026)
 - MAIN = `team-butti-countdown-tema-shopify-v4`: countdown to the launch, **Sun 08.11 at 16:20**.
-- Our theme: **Team Butti 2.4.4** (gid …/OnlineStoreTheme/207614411093), unpublished. 2.4.3 (…/207484289365) stays as a fallback. On Sunday the user only presses Publish. 2.3.2 = 206793900373.
+- Our theme: **Team Butti 2.4.5** (gid …/OnlineStoreTheme/207614411093, the copy called 2.4.4 before), unpublished. 2.4.3 (…/207484289365) stays as a fallback. On Sunday the user only presses Publish. 2.3.2 = 206793900373.
 - Collections:
-  - Drop Off-Road `drop-off-road` (687836201301; never "Drop 02"): 37 products ACTIVE incl. Spilla (hidden by the countdown until publish), tag `drop-02`. Prices = column PREZZO (not the online +5 column). Photos = transparent PNGs in `media/drop-off-road/` (border flood-fill, `tools/media/cut2.py` + `shadow.py`; never the AI model alone: it punches holes in white ink); the Leash products are DRAFT and out of the collection. Source: DROP_7-11_SKU_DEF.xlsx → `tools/shopify-setup/drop02.py`.
-  - Felpe and Accessori are tabs (product types) inside Drop Off-Road, not menu items.
-  - Drop Cross `drop-cross` (685474742613, template `archivio`): the old Drop 01, all at 0 stock. Previous stock is in `tools/shopify-setup/drop-cross-stock-backup.json`.
+  - Drop Fuck `drop-fuck` (687836201301; was Drop Off-Road, never "Drop 02"; the middle-finger sticker replaces "Fuck" everywhere): 37 products ACTIVE incl. Spilla (hidden by the countdown until publish), tag `drop-02`. Prices = column PREZZO (not the online +5 column). Photos = transparent PNGs in `media/drop-off-road/` (border flood-fill, `tools/media/cut2.py` + `shadow.py`; never the AI model alone: it punches holes in white ink); the Leash products are DRAFT and out of the collection. Source: DROP_7-11_SKU_DEF.xlsx → `tools/shopify-setup/drop02.py`.
+  - Felpe and Accessori are tabs (product types) inside Drop Fuck, not menu items.
+- Google Tag Manager GTM-KCQMJ3CH in settings_data (`gtm_id`), loaded by `snippets/gtm.liquid` only after cookie consent (Google consent mode).
+  - Drop Hotmilf `drop-hotmilf` (685474742613, template `archivio`; was Drop Cross; the Hot Milfs sticker replaces "Hotmilf"): the old Drop 01, all at 0 stock. Previous stock is in `tools/shopify-setup/drop-cross-stock-backup.json`.
   - Felpe `felpe` and Accessori `accessori`: smart collections by product type.
 - Sticker Pack Team Butti: product 11786887823701 (handle sticker-team-butti), 5 €, 50 pcs, used by the bag upsell.
 - Location `gid://shopify/Location/118730195285` (Corso Magenta 52). Online Store publication `gid://shopify/Publication/336916676949`.

@@ -1313,3 +1313,39 @@ a:hover .dt__s,.sec__title:hover .dt__s{animation-duration:.6s}
 @media(min-width:901px) and (max-width:1200px){.nav{gap:14px}.nav a{letter-spacing:.06em;font-size:12px}}
 /* bin lids are wider than the can: the global svg max-width would cap them and push them off-centre */
 .mbin__lid,.bin__lid{max-width:none}
+
+/* ===== v2.4.5: "Shop il drop" with the sticker in the hero corner, sticker drop names in the menu, phone type & hero ===== */
+.hshop{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px 0 16px;background:var(--hero-fg);color:var(--hero-bg);border:3px solid var(--hero-fg);box-shadow:4px 4px 0 rgba(13,13,13,.28);font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:background .5s,color .5s,border-color .5s,transform .15s}
+.hshop:hover{transform:translate(-2px,-2px) rotate(-1deg);box-shadow:6px 6px 0 rgba(13,13,13,.3)}
+.hshop__s{display:inline-block;line-height:0;margin:-10px 0;transform:rotate(-10deg);animation:dtwob 2.6s ease-in-out infinite}
+.hshop__i{height:2.6em;width:auto;display:block}
+.hshop i{font-style:normal;font-size:1.25em;line-height:1}
+.hshop:hover .hshop__s{animation-duration:.6s}
+/* menu: "Drop" + sticker, the sticker a little taller than the letters */
+.dt--nav{gap:.35em;vertical-align:middle}
+.dt--nav .dt__i{height:2.4em;margin:-.7em 0}
+.dt--nav .dt__s--wide .dt__i{height:1.5em;margin:-.25em 0}
+.mmenu .dt--nav .dt__i{height:1.3em;margin:-.15em 0}.mmenu .dt--nav .dt__s--wide .dt__i{height:.8em}
+@media(max-width:700px){
+  .hero__top{gap:10px}
+  .hshop{font-size:11px;letter-spacing:.08em;padding:0 10px 0 12px;gap:6px}
+  .hero__top .vibe-btn{font-size:10px;letter-spacing:.1em;padding:10px 12px;gap:8px}
+  /* hero jerseys: staggered heights and angles, side by side, never on top of each other or of the title */
+  .hero__float--1{left:1%;bottom:calc(var(--strip) + 40px);width:min(30vw,18svh);--r:-14deg}
+  .hero__float--2{bottom:calc(var(--strip) + 4px);width:min(36vw,22svh);margin-left:calc(min(36vw,22svh) / -2);--r:5deg}
+  .hero__float--3{right:1%;bottom:calc(var(--strip) + 24px);width:min(30vw,18svh);--r:12deg}
+  /* readable type and air on phones */
+  .card__i{font-size:13.5px;line-height:1.3;letter-spacing:.02em;padding-top:12px;gap:12px}
+  .card__quick{font-size:11.5px;letter-spacing:.06em}
+  .grid{gap:26px 14px}
+  .tab{font-size:12.5px}
+  .label{font-size:12px;letter-spacing:.1em}
+  .btn{font-size:13px}
+  .ftr__links a,.ftr__pol a{font-size:13px}
+  .ftr__legal,.nl-note{font-size:12px;line-height:1.6}
+}
+.hshop{white-space:nowrap}
+@media(max-width:700px){.hero__title{font-size:min(30vw,14.5svh)}.hero__float--1{bottom:calc(var(--strip) + min(40px,3.5svh))}.hero__float--3{bottom:calc(var(--strip) + min(24px,2svh))}}
+/* desktop: the hoodie sits in the empty corner under "TEAM", left of "BUTTI", without touching the letters */
+@media(min-width:701px){.hero__float--1{bottom:calc(var(--strip) + 1%);width:clamp(130px,14vw,220px)}}
+@media(min-width:701px){.hero__float--3{top:11%;width:clamp(150px,19vw,290px)}}

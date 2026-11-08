@@ -27,8 +27,8 @@
     };
     var collections = {
       all: coll('all', 'Shop', products),
-      'drop-off-road': coll('drop-off-road', 'Drop Off-Road', products),
-      'drop-cross': Object.assign(coll('drop-cross', 'Drop Cross', products), { template_suffix: 'archivio' })
+      'drop-fuck': coll('drop-fuck', 'Drop Fuck', products),
+      'drop-hotmilf': Object.assign(coll('drop-hotmilf', 'Drop Hotmilf', products), { template_suffix: 'archivio' })
     };
     var tpl = function (name) { return JSON.parse(o.read('templates/' + name + '.json')); };
     var sec = function (type, id, conf, extra) { return env.renderSection(type, id, conf || {}, extra); };
@@ -53,8 +53,8 @@
     var routes = {
       home: function () {
         var home = tpl('index');
-        home.sections.drop.settings = Object.assign({}, home.sections.drop.settings, { collection__obj: collections['drop-off-road'], archive_collection__obj: collections['drop-cross'] });
-        if (home.sections.bin) home.sections.bin.settings = Object.assign({}, home.sections.bin.settings, { collection__obj: collections['drop-cross'] });
+        home.sections.drop.settings = Object.assign({}, home.sections.drop.settings, { collection__obj: collections['drop-fuck'], archive_collection__obj: collections['drop-hotmilf'] });
+        if (home.sections.bin) home.sections.bin.settings = Object.assign({}, home.sections.bin.settings, { collection__obj: collections['drop-hotmilf'] });
         var extra = { collections: { all: collections.all } };
         // sections switched off in the editor ("disabled": true) are not on the live page either
         var live = home.order.filter(function (id) { return !home.sections[id].disabled; });
@@ -74,7 +74,7 @@
       product: function (handle) {
         var p = byHandle(handle); if (!p) return null;
         var t = tpl('product');
-        t.sections.more.settings = Object.assign({}, t.sections.more.settings, { collection__obj: collections['drop-off-road'] });
+        t.sections.more.settings = Object.assign({}, t.sections.more.settings, { collection__obj: collections['drop-fuck'] });
         return seq(t.order, function (id) { return sec(t.sections[id].type, id, t.sections[id], { product: p }); })
           .then(function (b) { return page(b, { template: { name: 'product' }, page_title: p.title, product: p, request: req('product') }); });
       },
@@ -86,7 +86,7 @@
           .then(function (b) { return page('<div data-demo-search>' + b + '</div>', { template: { name: 'search' }, page_title: 'Cerca', request: req('search') }); });
       },
       collections: function () {
-        return sec('main-list-collections', 'main', {}, { collections: [collections.all, collections['drop-off-road'], collections['drop-cross']] })
+        return sec('main-list-collections', 'main', {}, { collections: [collections.all, collections['drop-fuck'], collections['drop-hotmilf']] })
           .then(function (b) { return page(b, { template: { name: 'list-collections' }, page_title: 'Collezioni', request: req('list-collections') }); });
       },
       contatti: function () {

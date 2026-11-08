@@ -11,6 +11,13 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 | Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
 | Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
 
+## Novità v2.4.5 (Drop Fuck e Drop Hotmilf, Shop il drop in alto, Google Tag Manager, telefono)
+- I drop si chiamano **Drop Fuck** (`/collections/drop-fuck`) e **Drop Hotmilf** (`/collections/drop-hotmilf`, l'archivio); i vecchi indirizzi rimandano lì. Lo sticker prende il posto della parola ovunque: menu in alto (piccolo), menu da telefono, griglia, pagina della collezione, archivio, bottone dell'archivio.
+- In alto a sinistra nella hero, al posto del cestino: **"Shop il drop" con lo sticker del dito medio**, che cambia colori con il vibe. Si spegne in *Personalizza → hero*.
+- **Google Tag Manager** `GTM-KCQMJ3CH` (*Impostazioni tema → Google Tag Manager*), con la modalità di consenso di Google: parte tutto "negato" e GTM si carica solo quando il visitatore accetta i cookie statistici o di marketing nel banner di Shopify. I clic sull'archivio arrivano a GTM come evento `archivio_click`.
+- Telefono: testi più grandi e con più aria (nomi e prezzi delle maglie 13,5 px, bottoni 13, filtri 12,5, etichette 12, footer 13); le tre maglie della hero ad altezze e angoli diversi, mai una sopra l'altra né sopra il titolo (controllato su iPhone SE e iPhone 13). Desktop: la felpa e la maglia bianca non toccano più le lettere di TEAM BUTTI (controllato da 1000 a 1920 px).
+- Menu in alto sempre su una riga.
+
 ## Novità v2.4.4 (cestino animato, nomi dei drop con lo sticker)
 - **Cestino dell'archivio** in alto a sinistra nella hero, di fronte al bottone vibe, con la sola scritta "Archivio": uno sticker rosa con il coperchio giallo che ogni pochi secondi si schiaccia, apre il coperchio con una stella gialla e lancia fuori tre maglie disegnate del vecchio drop, che ricadono dentro. Porta all'archivio. Si spegne in *Personalizza → hero → Cestino dell'archivio*. Lo stesso cestino (più piccolo) è nel bottone "Archivio" sotto la griglia.
 - La sezione grande del cestino resta spenta in home.

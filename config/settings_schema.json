@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Team Butti",
-    "theme_version": "2.4.4",
+    "theme_version": "2.4.5",
     "theme_author": "Team Butti",
     "theme_documentation_url": "https://www.instagram.com/team_butti/",
     "theme_support_url": "https://www.instagram.com/team_butti/"
@@ -247,6 +247,12 @@
       { "type": "image_picker", "id": "drop_a_sticker", "label": "Sticker del drop nuovo" },
       { "type": "collection", "id": "drop_b_collection", "label": "Drop vecchio (archivio)" },
       { "type": "image_picker", "id": "drop_b_sticker", "label": "Sticker del drop vecchio" }
+    ]
+  },
+  {
+    "name": "Google Tag Manager",
+    "settings": [
+      { "type": "text", "id": "gtm_id", "label": "ID contenitore", "placeholder": "GTM-XXXXXXX", "info": "Si carica solo dopo il consenso ai cookie statistici o di marketing (banner di Shopify). I clic sull'archivio arrivano a GTM come evento archivio_click." }
     ]
   },
   {

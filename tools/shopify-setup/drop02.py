@@ -5,7 +5,7 @@
 import json, re
 
 LOC = 'gid://shopify/Location/118730195285'
-COLL = 'gid://shopify/Collection/687836201301'  # Drop Off-Road (handle drop-off-road)
+COLL = 'gid://shopify/Collection/687836201301'  # Drop Fuck (handle drop-fuck)
 M = lambda n: 'gid://shopify/MediaImage/' + n
 # prices: column PREZZO of DROP_7-11_SKU_DEF.xlsx (not the online +5 column)
 SIZES = ['S', 'M', 'L', 'XL']
@@ -78,7 +78,7 @@ for title, code, col, k, stock, imgs in P:
         li.append('<li>Taglia unica</li>')
     if k.get('made'):
         li.append(f'<li>Made in {k["made"]}</li>')
-    desc = '<p>Team Butti · Drop Off-Road. Pezzi contati.</p>' + ('<ul>' + ''.join(li) + '</ul>' if li else '')
+    desc = '<p>Team Butti · Drop Fuck. Pezzi contati.</p>' + ('<ul>' + ''.join(li) + '</ul>' if li else '')
     variants = []
     for size, q in zip(k['sizes'], stock):
         sku = f'TB2-{code}-{col}-' + ('OS' if one else size)

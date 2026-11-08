@@ -67,6 +67,7 @@
     <script src="{{ 'tb-jersey.js' | asset_url }}" defer></script>
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
     {{ content_for_header }}
+    {% render 'gtm' %}
   </head>
 
   <body class="template-{{ template.name }}{% if settings.grain %} has-grain{% endif %}">

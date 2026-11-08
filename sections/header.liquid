@@ -3,7 +3,15 @@
     <button class="burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="MobileMenu">{{ 'general.menu' | t }}</button>
     <nav class="nav" aria-label="{{ 'general.menu' | t }}">
       {%- for link in section.settings.menu.links -%}
-        <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+        {%- liquid
+          assign dk = ''
+          if settings.drop_a_collection != blank and link.url == settings.drop_a_collection.url
+            assign dk = 'a'
+          elsif settings.drop_b_collection != blank and link.url == settings.drop_b_collection.url
+            assign dk = 'b'
+          endif
+        -%}
+        <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{%- if dk == 'a' -%}{% render 'drop-title', c: settings.drop_a_collection, nav: true %}{%- elsif dk == 'b' -%}{% render 'drop-title', c: settings.drop_b_collection, nav: true %}{%- else -%}{{ link.title | escape }}{%- endif -%}</a>
       {%- endfor -%}
     </nav>
     <a href="{{ routes.root_url }}" class="hdr__logo" aria-label="{{ shop.name | escape }}">
@@ -20,7 +28,15 @@
   </div>
   <nav class="mmenu" id="MobileMenu" aria-label="{{ 'general.menu' | t }}">
     {%- for link in section.settings.menu.links -%}
-      <a href="{{ link.url }}"><span>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{{ link.title | escape }}</a>
+      {%- liquid
+          assign dk = ''
+          if settings.drop_a_collection != blank and link.url == settings.drop_a_collection.url
+            assign dk = 'a'
+          elsif settings.drop_b_collection != blank and link.url == settings.drop_b_collection.url
+            assign dk = 'b'
+          endif
+        -%}
+      <a href="{{ link.url }}"><span>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{%- if dk == 'a' -%}{% render 'drop-title', c: settings.drop_a_collection, nav: true %}{%- elsif dk == 'b' -%}{% render 'drop-title', c: settings.drop_b_collection, nav: true %}{%- else -%}{{ link.title | escape }}{%- endif -%}</a>
     {%- endfor -%}
     <a href="{{ routes.search_url }}"><span>→</span>{{ 'general.search' | t }}</a>
   </nav>
