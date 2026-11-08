@@ -21,8 +21,8 @@
     <div class="story__grid">
       <div class="story__frame rv" data-story-frame>
         {%- if section.settings.video != blank -%}
-          <div class="story__media" data-story-media>
-            {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1600x' }}
+          <div class="story__media" data-story-media data-lazy-video>
+            {{ section.settings.video | video_tag: autoplay: false, loop: true, muted: true, controls: false, playsinline: true, preload: 'none', image_size: '1600x' }}
           </div>
         {%- elsif section.settings.video_url != blank -%}
           <div class="story__media story__media--embed" data-story-embed data-provider="{{ section.settings.video_url.type }}" data-id="{{ section.settings.video_url.id }}">

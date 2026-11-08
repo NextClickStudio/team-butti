@@ -51,7 +51,7 @@
             -%}
             <figure class="pol" style="--r: {{ tilt }}deg; --ar: {{ ar }}" {{ b.shopify_attributes }}>
               <button class="pol__btn" type="button" data-pol data-full="{{ img | image_url: width: 1600 }}" data-iw="{{ img.width }}" data-ih="{{ img.height }}" data-cap="{{ b.settings.caption | escape }}" aria-label="{{ 'crew.open' | t }}: {{ b.settings.caption | default: section.settings.title | escape }}" data-h>
-                <span class="pol__img">{{ img | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,500,700', sizes: '(min-width: 990px) 22vw, 50vw', alt: b.settings.caption }}</span>
+                <span class="pol__img">{{ img | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,500,700', sizes: '(min-width: 990px) 22vw, 50vw', alt: '' }}</span>
                 {%- if b.settings.caption != blank -%}<span class="pol__cap">{{ b.settings.caption | escape }}</span>{%- endif -%}
               </button>
               <i class="pol__tape" aria-hidden="true"></i>

@@ -19,14 +19,14 @@
   /* ---------------- overlay, drawer, modal ---------------- */
   function lock(on) { document.body.classList.toggle('lock', !!on); }
   function closeAll() {
-    ['#ov', '#CartDrawer', '#modal'].forEach(function (s) { var el = $(s); if (el) { el.classList.remove('on'); el.setAttribute('aria-hidden', 'true'); } });
+    ['#ov', '#CartDrawer', '#modal'].forEach(function (s) { var el = $(s); if (el) { el.classList.remove('on'); el.setAttribute('aria-hidden', 'true'); if (s !== '#ov') el.inert = true; } });
     lock(false);
   }
   function openCart() {
     var d = $('#CartDrawer');
     if (!d || !TB.cartDrawer) { window.location.href = TB.routes.cart; return; }
     closeAll(); toggleMenu(false);
-    d.classList.add('on'); d.setAttribute('aria-hidden', 'false'); $('#ov').classList.add('on'); lock(true);
+    d.classList.add('on'); d.setAttribute('aria-hidden', 'false'); d.inert = false; $('#ov').classList.add('on'); lock(true);
     var x = $('.x', d); if (x) x.focus();
   }
   function setCount(n) {
@@ -104,7 +104,7 @@
         var qv = $('.qv', doc); if (!qv) throw new Error();
         modal.innerHTML = qv.innerHTML;
         closeAll(); toggleMenu(false);
-        modal.classList.add('on'); modal.setAttribute('aria-hidden', 'false'); $('#ov').classList.add('on'); lock(true);
+        modal.classList.add('on'); modal.setAttribute('aria-hidden', 'false'); modal.inert = false; $('#ov').classList.add('on'); lock(true);
         init(modal);
         initProduct(modal);
       })
@@ -934,6 +934,18 @@
           frame.style.transform = 'perspective(1200px) rotateY(' + (x * 6).toFixed(2) + 'deg) rotateX(' + (-y * 6).toFixed(2) + 'deg)';
         });
         frame.addEventListener('pointerleave', function () { frame.style.transform = ''; });
+      }
+      // the video (several MB) is fetched only when the section gets close, then plays muted in a loop; it pauses off screen
+      var lazy = $('[data-lazy-video] video', root);
+      if (lazy && 'IntersectionObserver' in window) {
+        lazy.muted = true;
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) {
+            if (lazy._manual) return;
+            if (e.isIntersecting) { if (reduce) return; lazy.preload = 'auto'; var pr = lazy.play(); if (pr && pr.catch) pr.catch(function () {}); }
+            else lazy.pause();
+          });
+        }, { rootMargin: '300px 0px' }).observe(root);
       }
       if (!play) return;
       play.addEventListener('click', function () {

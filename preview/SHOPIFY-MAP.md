@@ -16,6 +16,8 @@ Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla pr
 - La sezione grande del cestino resta spenta in home.
 - **Nomi dei drop con lo sticker**: "Drop" + il dito medio del drop nuovo (ritagliato in alta qualità dalla stampa della longsleeve F*ck Team Butti) e "Drop" + lo sticker Hot Milfs per il Drop Cross, entrambi con il bordo bianco fustellato (`media/stickers/`, `tools/media/drop-stickers.py`). Compaiono nella griglia della home, nella pagina della collezione, nell'archivio e nel bottone. Si scelgono in *Impostazioni tema → Nomi dei drop*.
 - Hero: le maglie che fluttuano sono del Drop Off-Road (PNG), per tutti e tre i vibe.
+- Velocità: il video "La nostra storia" (6 MB) si scarica solo quando ci si avvicina e si mette in pausa fuori schermo. Pagina iniziale da 12,5 a 5,8 MB; Lighthouse da telefono: prestazioni da 35 a 67, accessibilità 100.
+- Accessibilità: carrello e vista rapida chiusi non raggiungibili da tastiera, bottone audio del video con un nome, didascalie delle foto della crew non ripetute.
 - Telefono: tutti i link del footer alti almeno 44 px; nessuna sovrapposizione e nessuno scroll laterale in home (controllo automatico su tutta la pagina).
 
 ## Novità v2.4.3 (email, prezzi, foto rifatte, SEO)

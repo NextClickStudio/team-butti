@@ -83,7 +83,7 @@
         </a>
       {%- endif -%}
       {%- if section.settings.show_sound and has_video -%}
-        <button class="reel__sound" type="button" data-sound aria-pressed="false" data-h>
+        <button class="reel__sound" type="button" data-sound aria-pressed="false" aria-label="Audio" data-h>
           <i aria-hidden="true"></i><span data-label-off>{{ 'reel.sound_on' | t }}</span><span data-label-on hidden>{{ 'reel.sound_off' | t }}</span>
         </button>
       {%- endif -%}

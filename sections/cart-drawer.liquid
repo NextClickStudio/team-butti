@@ -6,7 +6,7 @@
     assign pct = cart.total_price | times: 100 | divided_by: threshold
   endif
 -%}
-<aside class="drawer" id="CartDrawer" role="dialog" aria-modal="true" aria-label="{{ 'cart.title' | t }}" aria-hidden="true">
+<aside class="drawer" id="CartDrawer" role="dialog" aria-modal="true" aria-label="{{ 'cart.title' | t }}" aria-hidden="true" inert>
   <div class="drawer__inner" data-count="{{ cart.item_count }}">
     <div class="drawer__h"><span class="d">{{ 'cart.title' | t }} ({{ cart.item_count }})</span><button class="x" type="button" data-close aria-label="{{ 'general.close' | t }}">✕</button></div>
     {%- if cart.item_count > 0 -%}
