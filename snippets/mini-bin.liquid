@@ -1,0 +1,9 @@
+{%- comment -%} Small animated trash can for the archive button: the lid pops on a loop and three drawn jerseys of the old drop peek out. {%- endcomment -%}
+<span class="mbin" aria-hidden="true">
+  <i class="mbin__pop"></i>
+  <span class="mbin__j mbin__j--1">{% render 'jersey-art', type: 'hockey', colors: '#ff2e93,#0d0d0d,#ffd400,#0d0d0d', num: '00' %}</span>
+  <span class="mbin__j mbin__j--2">{% render 'jersey-art', type: 'mx', colors: '#f4f1ea,#e3191b,#e3191b,#e3191b', num: '62' %}</span>
+  <span class="mbin__j mbin__j--3">{% render 'jersey-art', type: 'hockey', colors: '#39ff14,#0d0d0d,#0d0d0d,#0d0d0d', num: 'X' %}</span>
+  <svg class="mbin__lid" viewBox="0 0 220 44" focusable="false"><rect x="6" y="14" width="208" height="24" rx="6" fill="#ffd400" stroke="#0d0d0d" stroke-width="7"/><rect x="84" y="2" width="52" height="16" rx="6" fill="#ffd400" stroke="#0d0d0d" stroke-width="7"/></svg>
+  <svg class="mbin__body" viewBox="0 0 200 230" focusable="false"><path d="M12 6h176l-16 214a8 8 0 0 1-8 8H36a8 8 0 0 1-8-8Z" fill="#ff2e93" stroke="#0d0d0d" stroke-width="9" stroke-linejoin="round"/><path d="M58 34l6 166M100 34v166M142 34l-6 166" stroke="#0d0d0d" stroke-opacity=".35" stroke-width="10" stroke-linecap="round"/></svg>
+</span>

@@ -1,0 +1,299 @@
+{
+  "sections": {
+    "about": {
+      "type": "about-lines",
+      "blocks": {
+        "l01": {
+          "type": "line",
+          "settings": {
+            "text": "Prima c'erano gli amici.",
+            "size": "xl",
+            "style": "fill",
+            "align": "left",
+            "highlight": "amici"
+          }
+        },
+        "l02": {
+          "type": "line",
+          "settings": {
+            "text": "Poi è arrivato il nome.",
+            "size": "xl",
+            "style": "outline",
+            "align": "right"
+          }
+        },
+        "l03": {
+          "type": "line",
+          "settings": {
+            "text": "Team Butti nasce così: persone, moto, idee e cose fatte insieme.",
+            "size": "m",
+            "style": "fill",
+            "align": "left",
+            "highlight": "insieme"
+          }
+        },
+        "l04": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-mx-officina.jpg",
+            "caption": "L'officina",
+            "align": "right"
+          }
+        },
+        "l05": {
+          "type": "line",
+          "settings": {
+            "text": "Un'officina dove ci si trova, si parla, si prova, si inventa.",
+            "size": "l",
+            "style": "marker",
+            "align": "left"
+          }
+        },
+        "l06": {
+          "type": "line",
+          "settings": {
+            "text": "Dove una cosa parte senza sapere ancora cosa diventerà.",
+            "size": "m",
+            "style": "fill",
+            "align": "right"
+          }
+        },
+        "l07": {
+          "type": "line",
+          "settings": {
+            "text": "Non è questione di andare lontano.",
+            "size": "xl",
+            "style": "fill",
+            "align": "left"
+          }
+        },
+        "l08": {
+          "type": "line",
+          "settings": {
+            "text": "È non stare dove ci si aspetta.",
+            "size": "xl",
+            "style": "outline",
+            "align": "right",
+            "highlight": "dove ci si aspetta"
+          }
+        },
+        "l09": {
+          "type": "line",
+          "settings": {
+            "text": "Libertà di fare, cambiare, mescolare. Moto, vestiti, oggetti, persone, esperienze: se ci interessa, ci entra.",
+            "size": "m",
+            "style": "fill",
+            "align": "left",
+            "highlight": "mescolare"
+          }
+        },
+        "l10": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/tb-crew-04.jpg",
+            "caption": "Senza un'unica direzione",
+            "align": "left"
+          }
+        },
+        "l11": {
+          "type": "line",
+          "settings": {
+            "text": "Senza troppe definizioni. Senza un'unica direzione.",
+            "size": "l",
+            "style": "marker",
+            "align": "right"
+          }
+        },
+        "l12": {
+          "type": "line",
+          "settings": {
+            "text": "Essere un team non vuol dire essere tutti uguali.",
+            "size": "l",
+            "style": "fill",
+            "align": "left",
+            "highlight": "tutti uguali"
+          }
+        },
+        "l13": {
+          "type": "line",
+          "settings": {
+            "text": "Vuol dire avere qualcosa che ti tiene insieme mentre ognuno fa a modo suo.",
+            "size": "m",
+            "style": "fill",
+            "align": "right",
+            "highlight": "a modo suo"
+          }
+        },
+        "l14": {
+          "type": "line",
+          "settings": {
+            "text": "Team Butti non è un brand.",
+            "strike": "brand",
+            "size": "xl",
+            "style": "fill",
+            "align": "center"
+          }
+        },
+        "l15": {
+          "type": "line",
+          "settings": {
+            "text": "È uno stile di vita.",
+            "highlight": "stile di vita",
+            "size": "xl",
+            "style": "fill",
+            "align": "center"
+          }
+        }
+      },
+      "block_order": [
+        "l01",
+        "l02",
+        "l03",
+        "l04",
+        "l05",
+        "l06",
+        "l07",
+        "l08",
+        "l09",
+        "l10",
+        "l11",
+        "l12",
+        "l13",
+        "l14",
+        "l15"
+      ],
+      "settings": {}
+    },
+    "story": {
+      "type": "story-video",
+      "blocks": {
+        "f1": {
+          "type": "fact",
+          "settings": {
+            "value": "1",
+            "label": "Stile di vita"
+          }
+        },
+        "f2": {
+          "type": "fact",
+          "settings": {
+            "value": "00",
+            "label": "Direzioni obbligate"
+          }
+        },
+        "f3": {
+          "type": "fact",
+          "settings": {
+            "value": "26.09",
+            "label": "Market Milano"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
+      "settings": {
+        "kicker": "Girato da noi · nessun attore",
+        "title": "La nostra",
+        "title_outline": "estate",
+        "video": "shopify://files/videos/tb-storia-estate.mp4",
+        "rec_label": "Chianni · Estate 2025–26",
+        "style": "pink",
+        "text": "<p>Ventiquattro secondi d'estate, girati col telefono: lo sterrato, le crete, il pick-up, la bandiera giù. Nessun attore, nessun set.</p>"
+      }
+    },
+    "mix": {
+      "type": "about-mix",
+      "blocks": {
+        "w1": {
+          "type": "word",
+          "settings": {
+            "word": "Moto",
+            "caption": "Due tempi, sterrato, Chianni",
+            "image": "shopify://shop_images/tb-crew-02.jpg"
+          }
+        },
+        "w2": {
+          "type": "word",
+          "settings": {
+            "word": "Vestiti",
+            "caption": "Maglie con il nome sopra",
+            "image": "shopify://shop_images/tb-crew-14.jpg"
+          }
+        },
+        "w3": {
+          "type": "word",
+          "settings": {
+            "word": "Oggetti",
+            "caption": "La moneta, la Cadillac, il pick-up",
+            "image": "shopify://shop_images/tb-crew-18.jpg"
+          }
+        },
+        "w4": {
+          "type": "word",
+          "settings": {
+            "word": "Persone",
+            "caption": "La crew, ognuno a modo suo",
+            "image": "shopify://shop_images/tb-crew-01.jpg"
+          }
+        },
+        "w5": {
+          "type": "word",
+          "settings": {
+            "word": "Esperienze",
+            "caption": "Market, palchi, luna park",
+            "image": "shopify://shop_images/tb-crew-12.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4",
+        "w5"
+      ],
+      "settings": {}
+    },
+    "ranch": {
+      "type": "about-ranch",
+      "blocks": {
+        "k1": {
+          "type": "fact",
+          "settings": {
+            "value": "1.276",
+            "label": "Abitanti a Chianni"
+          }
+        },
+        "k2": {
+          "type": "fact",
+          "settings": {
+            "value": "390 km",
+            "label": "Dal Ranch al Market"
+          }
+        },
+        "k3": {
+          "type": "fact",
+          "settings": {
+            "value": "1",
+            "label": "Cadillac leopardata"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "about",
+    "ranch",
+    "mix",
+    "story"
+  ]
+}

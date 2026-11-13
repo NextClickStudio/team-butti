@@ -1,0 +1,13 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "social_instagram": "https://www.instagram.com/team_butti/",
+      "drop_a_collection": "drop-fuck",
+      "drop_a_sticker": "shopify://shop_images/tb-drop-sticker-medio.png",
+      "drop_b_collection": "drop-hotmilf",
+      "drop_b_sticker": "shopify://shop_images/tb-drop-sticker-hot-milfs.png",
+      "gtm_id": "GTM-KCQMJ3CH"
+    }
+  }
+}

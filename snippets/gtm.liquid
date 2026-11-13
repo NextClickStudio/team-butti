@@ -1,0 +1,35 @@
+{%- comment -%}
+  Google Tag Manager (Theme settings → Google Tag Manager). Consent mode: everything starts denied and GTM is loaded
+  only once the visitor accepts statistics or marketing cookies in Shopify's banner; the consent is passed on to Google.
+{%- endcomment -%}
+{%- if settings.gtm_id != blank -%}
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', wait_for_update: 500 });
+  (function () {
+    var id = {{ settings.gtm_id | strip | json }}, loaded = false;
+    function load() {
+      if (loaded) return; loaded = true;
+      dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(id);
+      document.head.appendChild(s);
+    }
+    function apply() {
+      var p = window.Shopify && window.Shopify.customerPrivacy; if (!p) return;
+      var stats = false, ads = false;
+      try { stats = p.analyticsProcessingAllowed(); ads = p.marketingAllowed(); } catch (e) {}
+      var g = function (v) { return v ? 'granted' : 'denied'; };
+      gtag('consent', 'update', { analytics_storage: g(stats), ad_storage: g(ads), ad_user_data: g(ads), ad_personalization: g(ads) });
+      if (stats || ads) load();
+    }
+    document.addEventListener('visitorConsentCollected', apply);
+    function boot() {
+      if (window.Shopify && window.Shopify.loadFeatures) {
+        window.Shopify.loadFeatures([{ name: 'consent-tracking-api', version: '0.1' }], function (err) { if (!err) apply(); });
+      } else if (window.Shopify && window.Shopify.customerPrivacy) apply();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  })();
+</script>
+{%- endif -%}

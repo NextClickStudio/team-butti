@@ -1,0 +1,320 @@
+# Preview → Shopify: mappa di porting
+
+Il porting è **già fatto**: il tema Shopify OS 2.0 è nella root del repo (`layout/`, `sections/`, `snippets/`, `templates/`, `assets/`, `config/`, `locales/`).
+Il disegno delle maglie è lo stesso file (`assets/tb-jersey.js`) usato dalla preview. Nessuna app a pagamento.
+
+## Come è stato verificato
+| Prova | Risultato |
+|---|---|
+| `shopify theme check` (validatore ufficiale Shopify CLI 4.8) | **51 file, 0 errori, 0 avvisi** |
+| `shopify theme package` | Zip caricabile generato (`Team Butti-1.0.0.zip`, 67 file) |
+| Render Liquid locale + test in Chromium con finto backend Shopify (`tools/theme-test`) | **18/18 test superati**, 0 errori JS: stendino e cambia vibe, griglia, configuratore (variante giusta + proprietà Nome/Numero/Colori inviate a `/cart/add.js`), carrello laterale via Section Rendering API, rimozione via `/cart/change.js`, targa, ride, vista rapida, pagina prodotto |
+| Unica prova che manca | Anteprima su un negozio Shopify vero (serve accesso al negozio o un development store gratuito) |
+
+## Novità v2.4.8
+- Striscia Instagram su telefono: il cartello è più largo e il testo resta sempre dentro, anche su iPhone (Safari).
+
+## Novità v2.4.7
+- Telefono: la hero è alta quanto il suo contenuto, quindi le maglie stanno subito sotto TEAM BUTTI su qualsiasi altezza di telefono.
+- Vibe rosa con Pussy Wagon, Fogliage e Uniporn; il leopardato con le altre tre.
+
+## Novità v2.4.6 (ritocchi finali prima del lancio)
+- Hero: tolto il bottone rosa "Shop il drop" in basso (c'è quello con lo sticker in alto) e la fascia nera sotto; TEAM BUTTI su telefono più grande e con più aria tra lettere e righe.
+- Menu da telefono: "Drop" + sticker con lo stesso carattere grande delle altre voci.
+- Striscia Instagram su telefono: il testo va a capo dentro il cartello invece di uscire.
+- Cookie policy e informativa privacy: Google Analytics e Google Tag Manager (Google Ireland), solo con consenso.
+
+## Novità v2.4.5 (Drop Fuck e Drop Hotmilf, Shop il drop in alto, Google Tag Manager, telefono)
+- I drop si chiamano **Drop Fuck** (`/collections/drop-fuck`) e **Drop Hotmilf** (`/collections/drop-hotmilf`, l'archivio); i vecchi indirizzi rimandano lì. Lo sticker prende il posto della parola ovunque: menu in alto (piccolo), menu da telefono, griglia, pagina della collezione, archivio, bottone dell'archivio.
+- In alto a sinistra nella hero, al posto del cestino: **"Shop il drop" con lo sticker del dito medio**, che cambia colori con il vibe. Si spegne in *Personalizza → hero*.
+- **Google Tag Manager** `GTM-KCQMJ3CH` (*Impostazioni tema → Google Tag Manager*), con la modalità di consenso di Google: parte tutto "negato" e GTM si carica solo quando il visitatore accetta i cookie statistici o di marketing nel banner di Shopify. I clic sull'archivio arrivano a GTM come evento `archivio_click`.
+- Telefono: testi più grandi e con più aria (nomi e prezzi delle maglie 13,5 px, bottoni 13, filtri 12,5, etichette 12, footer 13); le tre maglie della hero ad altezze e angoli diversi, mai una sopra l'altra né sopra il titolo (controllato su iPhone SE e iPhone 13). Desktop: la felpa e la maglia bianca non toccano più le lettere di TEAM BUTTI (controllato da 1000 a 1920 px).
+- Menu in alto sempre su una riga.
+
+## Novità v2.4.4 (cestino animato, nomi dei drop con lo sticker)
+- **Cestino dell'archivio** in alto a sinistra nella hero, di fronte al bottone vibe, con la sola scritta "Archivio": uno sticker rosa con il coperchio giallo che ogni pochi secondi si schiaccia, apre il coperchio con una stella gialla e lancia fuori tre maglie disegnate del vecchio drop, che ricadono dentro. Porta all'archivio. Si spegne in *Personalizza → hero → Cestino dell'archivio*. Lo stesso cestino (più piccolo) è nel bottone "Archivio" sotto la griglia.
+- La sezione grande del cestino resta spenta in home.
+- **Nomi dei drop con lo sticker**: "Drop" + il dito medio del drop nuovo (ritagliato in alta qualità dalla stampa della longsleeve F*ck Team Butti) e "Drop" + lo sticker Hot Milfs per il Drop Cross, entrambi con il bordo bianco fustellato (`media/stickers/`, `tools/media/drop-stickers.py`). Compaiono nella griglia della home, nella pagina della collezione, nell'archivio e nel bottone. Si scelgono in *Impostazioni tema → Nomi dei drop*.
+- Hero: le maglie che fluttuano sono del Drop Off-Road (PNG), per tutti e tre i vibe.
+- Velocità: il video "La nostra storia" (6 MB) si scarica solo quando ci si avvicina e si mette in pausa fuori schermo. Pagina iniziale da 12,5 a 5,8 MB; Lighthouse da telefono: prestazioni da 35 a 67, accessibilità 100.
+- Accessibilità: carrello e vista rapida chiusi non raggiungibili da tastiera, bottone audio del video con un nome, didascalie delle foto della crew non ripetute.
+- Telefono: tutti i link del footer alti almeno 44 px; nessuna sovrapposizione e nessuno scroll laterale in home (controllo automatico su tutta la pagina).
+
+## Novità v2.4.3 (email, prezzi, foto rifatte, SEO)
+- Email per i clienti: **info@teambutti.com** ovunque (Contatti, testi legali, pagine).
+- Prezzi dalla colonna PREZZO del file: longsleeve 69 € (Pussy Wagon 79 €), hoodie 89 €, crewneck 49 €, t-shirt 29 €, beanie 39 €, Toyoda 150 €, Fogliage 130 €, grinder 25 €, spilla 5 €, sticker pack 5 €.
+- Foto PNG rifatte: lo sfondo è solo il bianco che tocca i bordi della foto, quindi scritte e stampe restano intere; tolte le ombre dello studio. Nuove foto di spilla e sticker pack.
+- SEO: la home ha sempre una meta description, anche se in Preferenze è vuota.
+
+## Novità v2.4.2 (home da telefono, una pagina sola, foto scontornate)
+- Telefono, hero come un poster: TEAM BUTTI grande in alto, le tre maglie in fila sotto (quella in mezzo più grande) sopra lo skyline. Niente sta sopra a qualcos'altro; le misure seguono anche l'altezza del telefono.
+- Collezioni e archivio: tutti i prodotti in una pagina sola (fino a 250), quindi i filtri Felpe, Accessori, Hockey ecc. mostrano sempre tutto.
+- Drop Off-Road: foto still life in PNG senza sfondo, con un colore del brand dietro ogni pezzo (tag `bg:`). I PNG sono in `media/drop-off-road/`.
+- Sticker Pack: due foto nuove a 1254 px, il mucchio e gli 8 sticker in fila, con il bordo bianco fustellato.
+
+## Novità v2.4.1 (telefono, nomi, Instagram)
+- Nomi: **Drop Off-Road** (senza 02, indirizzo `/collections/drop-off-road`) e **Drop Cross** per l'archivio. Felpe e accessori sono categorie dentro il Drop Off-Road (i filtri sopra la griglia), non voci del menu.
+- Telefono, hero: TEAM BUTTI al centro, più grande; due maglie appoggiate sopra "TEAM".
+- Telefono: il bottone rosa "Shop il drop" si toglie anche sulla striscia Instagram (sulla strada della Cadillac era già spento).
+- Instagram: il cartello "Seguici su Instagram" sta su un rimorchio con le ruote sulla strada, agganciato al paraurti della Cadillac con una barra rigida. Su telefono il testo sta su una riga.
+- Bag: l'offerta propone lo **Sticker Pack** (10 €, dal file del drop).
+
+## Novità v2.4.0 (Drop 02 · Off-Road, archivio, contatti)
+**Home**
+- Hero: solo TEAM BUTTI e il bottone vibe; tolte le scritte piccole (kicker, percorso, suggerimento) e il bottone del countdown. I campi restano in *Personalizza*: se li riempi tornano.
+- Countdown del Market Milano nascosto (sezione spenta in *Personalizza*, non cancellata).
+- Griglia: **Drop 02 · Off-Road**, collezione `drop-02-off-road`. Finché la collezione non ha prodotti attivi mostra "In arrivo domenica". Sotto, accanto a "Vedi tutto il drop", c'è il bottone **Archivio · Drop Cross** con l'icona del cestino.
+- **Cestino dell'archivio** (sezione *Archivio · cestino*): un cestino disegnato da cui escono maglie Team Butti; al clic porta all'archivio. È pronto ma **spento**: si accende in *Personalizza* qualche giorno dopo il drop.
+- **Instagram**: striscia rosa con la mini Cadillac che traina il bottone "Seguici su Instagram @team_butti" (solo in home, apre Instagram in una scheda nuova).
+- Cadillac: l'ultimo cartello dice "Drop 02 · Off-Road".
+
+**Archivio Drop Cross** (`/collections/drop-cross`, modello `collection.archivio`)
+- È il vecchio Drop 01: 27 pezzi, tutti sold out, con le foto e i colori.
+- Ogni maglia apre la sua pagina (niente vista rapida), così Shopify conta le visite per prodotto.
+- Ogni clic manda l'evento analytics **`archivio_click`** (collezione, handle, nome, posizione) a Shopify e ai pixel collegati (GA4 con l'app *Google & YouTube*).
+- La scheda prodotto di un pezzo d'archivio dice "Fa parte dell'archivio Drop Cross".
+
+**Negozio**
+- Bag: offerta **sticker a 5 €** ("Ci metti uno sticker?") con le foto degli 8 sticker; un tocco e finisce nel pacco. Compare solo se nella bag c'è altro. Il checkout di Shopify Basic non si può modificare: l'offerta sta nella bag laterale e nella pagina carrello. Si spegne in *Impostazioni tema → Carrello*.
+- Carte con il tag `in-arrivo`: timbro "In arrivo".
+- Striscia in alto: "Drop 02 · Off-Road · domenica" al primo posto.
+
+**Contatti** (`/pages/contact`, modello `page.contact`)
+- Titolone "Scrivici", 4 schede: email info@teambutti.com, Instagram, telefono, indirizzo resi (Corso Magenta 52).
+- 5 domande frequenti: spedizioni, resi, taglie, sold out e archivio, collaborazioni.
+- Modulo con l'argomento a bottoni (Ordine, Reso o cambio, Taglie, Collaborazioni, Altro) e il numero d'ordine. Arriva all'email del negozio.
+
+## Novità v2.3.2 (telefono e loader)
+**Telefono**
+- Il bottone rosa "Shop il drop" che segue lo scroll non copre più la Cadillac: si toglie sulla strada Chianni → Milano, sugli sticker del manifesto e sul countdown del market, oltre che su griglia, video e footer. È anche più piccolo.
+- Strada della Cadillac: il contatore dei km sta in una riga sua sopra il titolo, non sopra il testo. Lo scroll della sezione è più corto del 26%.
+- Video "La vera Team Butti": le linguette 01–05 compaiono quando il video è a schermo pieno, così non coprono "Shop il drop".
+- Manifesto: sticker più piccoli, in una fascia sopra e una sotto il testo, mai sulle parole; restano trascinabili. La sezione passa da 928 a circa 740 px.
+- Griglia: i filtri stanno su una riga che scorre; "Scegli la taglia +" su una riga sola, la maglia si vede.
+- Footer su due colonne: da 1.290 a circa 1.000 px.
+- Scheda prodotto: la barra "Aggiungi alla bag" compare solo dopo aver superato il bottone, così all'apertura non copre nome e prezzo.
+- Home da 11.280 a circa 9.900 px su iPhone.
+
+**Loader**
+- Animazione a tempo reale, più fluida anche su telefoni lenti; la sabbia usa un gruppo fisso di sbuffi animati dalla scheda grafica.
+- Impennata sulle cunette, ammortizzatori che si caricano sulla rampa, salto più alto sui telefoni, rallentatore in cima al salto, muso che segue la traiettoria.
+- Ombra sulla pista che si stringe in volo; la camera stringe sulla moto in volo e trema all'atterraggio; le ruote girano con la velocità.
+
+## Novità v2.3.1
+- **Solo Italia**: la scheda prodotto dice "Spediamo solo in Italia, con DHL: 5 €, gratis sopra 100 €. 2–3 giorni lavorativi, isole e località remote 6–10", più cambio o reso entro 14 giorni.
+- **Footer**: ragione sociale esatta, Fradel S.a.s. di Lorenzo Barindelli & C.
+- **Sold out**: le maglie restano a colori, con il timbro SOLD OUT su una riga sopra la parte bassa della maglia.
+
+## Novità v2.3.0
+- **Loader con pista vera**: dietro c'è il panorama Chianni → Milano. La pista si adatta allo schermo, con whoops, rampa, buca e salto ("BRAAAP!"). All'atterraggio la moto ammortizza, si alza il polverone e la terra trema. Le gomme lasciano i solchi; bandiera, balla 69, gomme e arco d'arrivo TEAM BUTTI completano la scena.
+  - Di default si vede solo alla prima apertura della home nella visita (*Effetti → Loader solo alla prima apertura*).
+- **Sticker veri** dal foglio del team, scontornati con il bordo fustellato (`tools/art/sticker/cut.py`, file `tb-sticker-*.png` nei File di Shopify):
+  - nel manifesto, trascinabili: Team Butti groovy, guanto, Pigboy, soldatino skate;
+  - sul video della Cadillac: Hot Milfs e Toyoda;
+  - nel muro della crew: I'm loving it e TEAM BUTTI MERDE.
+  - I blocchi sticker ora accettano un'immagine.
+- **Market Milano**: al posto del gadget c'è la Crew List (tag `crew-list`). Il 6 novembre chi è in lista riceve cosa portate e, rispondendo con la taglia, si fa tenere il pezzo da parte fino alle 13.
+- **Contatti**: nuovo modulo contatti (`sections/contact-form.liquid`, modello `page.contact`).
+- **Spedizione** nella scheda prodotto: 5 € in Italia, gratis sopra 100 €.
+
+## Novità v2.2.0 (modifiche dopo la call con il team)
+**Home**
+- **Vibe della hero**: restano i primi tre, Pink Market (il primo), Leopardo e Giallo MX. Night Milano e Neon Dirt sono tolti.
+- **Loader nuovo**: su sfondo fucsia la moto Team Butti attraversa lo schermo e alza la sabbia, la nuvola copre tutto e si posa sulla pagina. Le 5 parti della moto sono precaricate (100 KB). Un clic lo salta.
+- **Storia in moto tolta dalla home** (il percorso con la pista e i salti). La sezione resta nel tema, ma non è più nella pagina.
+- **Market Milano 07.11**, in Piazzale Antonio Cantore 10 come il 26.09:
+  - barra annunci;
+  - bottone countdown nella hero, che porta al countdown in fondo (`#countdown`) e sparisce il giorno dopo la data;
+  - poster e countdown del market con l'iscrizione per il gadget gratis, con tag cliente `market-milano`;
+  - l'ultimo cartello della strada della Cadillac è "Market 07.11 · P.le Cantore 10".
+- **Griglia Drop 01**:
+  - c'è il filtro "Long sleeve" con tutte le longsleeve sold out;
+  - su "Tutto" restano i primi 8 pezzi, mentre ogni filtro mostra tutti i pezzi del suo tipo.
+- **Manifesto**: la frase centrale ora è "Moto, vestiti, oggetti, persone, esperienze: se ci piace, ci entra." Inizio e fine sono invariati.
+- **Sticker** con il merch vero: MERDE X, 00 MERDE, Tabacchi, Pettorina, 62 (crew: MERDE 62, 00).
+- **La nostra storia**: solo video e numeri, senza testo. Aggiunto 07.11 Market Milano.
+
+**Prodotti e footer**
+- **Pagina prodotto**:
+  - tag `modello:L` → "Il modello è alto 1,80 m e indossa la L";
+  - prezzo 0 (sold out caricati senza prezzo) → nessun "0,00 €".
+- **Footer**: dati legali di Fradel S.a.s.
+
+**Strumenti**
+- `tools/theme-test/pacchetti.py` crea i due zip del tema.
+- `tools/theme-test/check-templates.py` controlla i valori dei template, che Shopify altrimenti scarta in silenzio.
+- `tools/art/modello-higgsfield/` contiene i prompt per le foto con il modello.
+
+## Novità v2.0.1
+- **Caricamento su Shopify corretto.** Shopify rifiutava lo zip con "file contains Liquid templates that can't be parsed". La causa era una parentesi graffa dentro un testo tra virgolette nella sezione *Perché comprare qui* (`{soglia}`): il server di Shopify la legge come fine del codice, mentre `shopify theme check` non se ne accorge.
+- Nuovo controllo `tools/theme-test/shopify-parse.rb`: legge ogni file con il motore Liquid di Shopify (la gemma Ruby `liquid`), in modalità rigorosa. Oggi passano tutti i 47 file.
+
+## Novità v2.0
+- **Moto nuova nella Storia in moto**: è l'illustrazione Team Butti generata con Higgsfield, di profilo, al posto della moto disegnata.
+  - È tagliata in 5 livelli (`assets/tb-moto-*.webp`, script in `tools/art/moto-higgsfield/`): ruote, corpo con il pilota, forcellone, forcella bassa.
+  - Le ruote girano con lo scroll. All'atterraggio il corpo scende sulle sospensioni: gli steli oro scorrono nella forcella e il forcellone ruota sul perno dietro. A terra c'è una piccola vibrazione.
+  - Le parti nascoste dietro forcella e forcellone sono state ricostruite, quindi le ruote girano intere.
+- Stesso passo tra le ruote della moto di prima, quindi pista e salti sono identici.
+- Pesa 230 KB in tutto sul computer e 100 KB sul telefono (WebP). Si carica quando la sezione si avvicina.
+- In *Personalizza → Storia in moto (cross) → Moto* puoi tornare alla moto disegnata, che ha i colori modificabili.
+
+## Novità v1.9
+- **Parte legale**:
+  - testi pronti in `legal/`, con i dati da compilare tra parentesi quadre: informazioni legali, condizioni di vendita, recesso con modulo, spedizioni, privacy, cookie;
+  - `legal/README.md` dice dove incollarli in Shopify.
+- **Footer**: link a ogni policy compilata in *Impostazioni → Policy*, più la pagina `cookie-policy` e "Preferenze cookie", che riapre il banner di Shopify e compare solo se il banner è attivo.
+- **Newsletter**: avviso privacy con link all'informativa sotto ogni modulo. Corretto anche il pulsante "Entra" del footer e della pagina password, che aveva il testo invisibile (bianco su bianco).
+- **Scheda prodotto**: IVA inclusa, spedizione calcolata al checkout, reso entro 14 giorni e garanzia legale di 24 mesi, con i link alle policy.
+- **Sicurezza**:
+  - il titolo della pagina, che sulla ricerca contiene il testo cercato, e il nome del negozio ora sono sempre "escapati";
+  - la vista rapida carica solo pagine del negozio stesso, mai indirizzi esterni o `javascript:`.
+- **Prova completa su Shopify** passo per passo in `TEST-SHOPIFY.md`.
+
+## Novità v1.8
+- **Moto Team Butti nella Storia in moto.** È l'illustrazione del brand ridisegnata di profilo, piatta in 2D, in vettoriale (`tools/art/bike.py` genera `snippets/mx-bike.liquid`):
+  - moto: plastiche rosa con fulmini gialli, sella leopardata, forcella e mozzi oro, scarico cromato, TEAM BUTTI sul convogliatore, 69 sulla tabella;
+  - pilota: maglia nera a bande bianche con TEAM BUTTI e 69, pantaloni neri, stivali bianchi, casco bianco con calotta e frontino leopardati, maschera arancione alzata, viso visibile.
+- Stessa geometria della moto precedente, quindi percorso e salti sono identici. Le ruote girano con lo scroll, le sospensioni lavorano all'atterraggio e il pilota si piega in volo.
+- Colori di partenza della sezione: maglia e pantaloni neri, casco bianco. Restano modificabili in *Personalizza → Storia in moto (cross)*.
+
+## Novità v1.7.1
+- **Storia in moto di nuovo a posto su Safari.** Safari a volte faceva partire `theme.js` prima che `base.css` fosse applicato, così la sezione misurava una pagina senza stile. Risultato: un percorso largo quanto lo schermo, niente salti, la moto fuori schermo e i capitoli fermi su "Gli amici".
+  - Ora le sezioni partono solo quando lo stile è applicato: `base.css` mette `--tb-css` su `:root` e `theme.js` lo aspetta.
+  - Il percorso si ricostruisce ogni volta che la sezione cambia davvero misura: finestra ridimensionata, telefono ruotato, stile arrivato tardi.
+  - Verificato con WebKit (il motore di Safari) sulla demo online, con il foglio di stile ritardato apposta.
+
+## Novità v1.7
+- **Fascia gialla tolta** dalla home. La sezione *Perché comprare qui* resta nel tema, se un giorno la vuoi rimettere.
+- **"Scorri giù · c'è il drop"**: quando il video del brand è a tutto schermo compare una scritta animata. Le lettere fanno l'onda, le frecce scendono e una barretta si riempie finché la pagina va avanti, così nessuno pensa che il sito sia bloccato. Il testo si cambia nel campo *Scritta "continua a scorrere"*.
+- **SEO nel codice**: dati strutturati per Google in ogni pagina (`snippets/structured-data.liquid`):
+  - il marchio con logo e social;
+  - il sito con la ricerca;
+  - i prodotti con un'offerta per taglia (prezzo, valuta, disponibilità);
+  - il percorso di navigazione su prodotti e collezioni;
+  - gli articoli.
+
+  Anteprime social complete (immagine, prezzo, testi), con un'immagine di condivisione col logo su rosa già inclusa. Favicon e icona per iPhone col logo. Nuova impostazione *SEO e condivisione* e campo *Dati legali* (P.IVA) nel footer.
+- **Logo ufficiale** ricostruito in vettoriale (`assets/tb-logo.svg` + PNG nero, bianco, quadrato, favicon). Il carattere più vicino all'originale è Oswald Bold, a righe della stessa larghezza.
+- **Sicurezza**: audit completo, nessun problema serio nel tema. Corretti:
+  - il colore di sfondo delle card da tag/metafield ora è sempre escapato;
+  - il testo delle tappe della Cadillac è escapato;
+  - la demo su Vercel serve solo il commit pubblicato e solo i tipi di file che usa, con intestazioni di sicurezza (`nosniff`, niente iframe esterni) e senza cache sugli errori.
+- **Mobile, controllato pagina per pagina a 360, 390 e 430 px** e in orizzontale:
+  - tutti i bottoni grandi almeno 44 px (menu, borsa, filtri, tab del video, link del footer);
+  - testi mai sotto 11 px; campi email e ricerca a 16 px, così l'iPhone non zooma;
+  - **bug corretto**: il menu mobile non si poteva richiudere, perché il bottone restava sotto il menu aperto. Ora diventa "Chiudi";
+  - il bottone Shop flottante si sposta da solo quando starebbe sopra un bottone, un link o un campo;
+  - **pagina prodotto**: barra "Aggiungi alla bag" fissa in basso finché il bottone vero non è a schermo (se non hai scelto la taglia ti porta alle taglie), e pallini sotto le foto per lo swipe fronte/retro;
+  - Chi siamo su telefono: le polaroid non scivolano più sopra il testo;
+  - cartello del Ranch intero all'inizio del viaggio;
+  - telefono in orizzontale: hero, video e storia in moto ridimensionati sull'altezza.
+
+  Scroll misurato sul telefono: 16,6 ms per frame (60 fps), nessun frame lento.
+- **Higgsfield**: guida per la moto custom col vostro personaggio (`tools/higgsfield/README.md`, ultima parte): Nano Banana Pro per l'immagine, AutoSprite Animation per lo sprite animato, più un secondo sprite per i trick in aria.
+- **Lancio**: lista completa in `LANCIO.md`.
+
+## Novità v1.6
+- **Tutto parte da Chianni.** Il quartier generale del team è il Ranch, a Chianni (colline pisane). La Cadillac a scroll ora parte da lì: cartello marrone *Il Ranch · Chianni · Team Butti HQ*, poi FI-PI-LI, A1, Bologna e Milano, 390 km sul contachilometri (tappe: Chianni, Valdera, FI-PI-LI, Firenze, Appennino, Bologna, Emilia, Milano). Chianni anche nella hero (testo, percorso, badge), nell'annuncio, nel manifesto, nel footer e nelle didascalie che prima dicevano Valdera. Nuovo stile cartello *Località turistica (marrone)*.
+- **Video del brand con la Cadillac** (dal secondo Drive, girato Sony): 5 clip, *La DeVille* (la fiancata leopardata nel traffico), *Los Angeles?* (il portatarga SOCAL / LOS ANGELES in gotico), *Leopardo* (cruscotto e sedili), *Al volante*, *Milano* (pavé e binari del tram). Niente più clip in moto.
+- **Fumetti sulle clip**: nuovo campo *Fumetti* nel blocco clip, fino a 3 separati da `|`. Escono uno dopo l'altro mentre gira la clip. Tra virgolette diventano un fumetto parlato (bianco, a pennarello). Senza virgolette diventano una didascalia gialla. Le frasi tra virgolette vengono dall'audio del girato ("Il portatarga? Los Angeles, in gotico", "Fa paura", "Alla Joker, frate", "Tira fuori un fumo nero, frate").
+- **Il video blocca meno e porta allo shop**: la sezione è lunga 130 invece di 200 (si resta fermi sul video circa un terzo dello schermo) e parte già grande. Sul video c'è sempre il bottone rosa **Shop il drop** con la nota *Spedizione gratis da 100€* (impostazioni *Bottone shop*, *Sotto il bottone*, *Link bottone*).
+- **Bottone Shop che segue lo scroll** (Impostazioni tema → Carrello): compare dopo la prima schermata su home e pagine, si toglie sopra le griglie prodotti, sul video del brand (che ha il suo bottone) e sul footer.
+- **Perché comprare qui** (nuova sezione, subito sotto il drop): spedizione gratis da {soglia}€ (prende la soglia dalle impostazioni del carrello), reso entro 14 giorni, pagamento sicuro, pezzi limitati. Da adattare alle policy vere del negozio.
+- **Card prodotto**: l'etichetta ora dice *Scegli la taglia +* (apre la vista rapida con le taglie). Il bottone sotto la griglia dice *Vedi tutto il drop →*.
+- **Chi siamo**: la riga finale ora è **"Team Butti non è un brand. È uno stile di vita."**, con *brand* barrato a pennarello rosso e *stile di vita* evidenziato. Nella parte bianca le parole salgono una dopo l'altra, le parole evidenziate si colorano con un tratto di evidenziatore, le polaroid si spostano appena con lo scroll. Nuovo campo riga *Parole barrate a pennarello*.
+- **Il Ranch (Chianni)** (nuova sezione in Chi siamo): testo sul quartier generale, i numeri (1.276 abitanti, 390 km, 1 Cadillac leopardata) e la mappa vera Chianni → Pontedera → Firenze → Bologna → Parma → Milano. La strada si disegna con lo scroll, un punto rosa la percorre e i chilometri salgono fino a 390.
+- *La nostra storia*: il primo numero ora è "1 · Stile di vita". Storia in moto, capitolo Oggi: "Team Butti non è un brand, è uno stile di vita".
+- Demo: niente più segnaposto Higgsfield, si vede come il negozio vero.
+
+## Novità v1.5
+- **Fluidità**: il sito andava a scatti per l'effetto "grunge" dei titoli, un filtro SVG ricalcolato a ogni frame. Ora è una texture fissa con lo stesso aspetto (`assets/grunge-mask.png`). In più: grana di sfondo ferma, cursore senza fusione colori, ombre delle maglie calcolate una volta, animazioni attive solo quando sono a schermo. Scroll misurato in Chromium: home da circa 145 ms a circa 20 ms per frame su desktop, 16,7 ms (60 fps) su telefono.
+- **Video**: partono da soli quando entrano a schermo e si fermano quando escono, per non sprecare batteria. Se il telefono blocca l'autoplay (risparmio energetico iPhone) compare ▶ e basta un tocco. Nella demo i video passavano da una cache che restituiva sempre i primi 2 byte, e Safari e Chrome non li avviavano. Ora passano da una funzione edge (oggi `tools/theme-test/vercel/api/v.js`), verificata con Chrome vero.
+- **Maglie vere (still life)**: le 33 foto del Drive sono scontornate. Nella hero ogni vibe ha le sue 3 maglie abbinate ai colori (blocco Vibe → *Foto maglia 1/2/3*). Nella demo il catalogo è fatto con i pezzi veri: fronte e retro sulle card, nella vista rapida e nella pagina prodotto. Nuova impostazione tema *Foto prodotto*: intere su colore (still life) oppure a tutto riquadro.
+- **Moto ridisegnata**: forcella con l'inclinazione giusta, tabella anteriore pulita senza numero, casco vero (visiera, occhiali a specchio, mentoniera), 69 pulito sulla schiena. Ruote, telaio e pilota sono livelli separati. In più c'è l'opzione **Sprite della moto** per la versione generata con Higgsfield (prompt in `tools/higgsfield/README.md`).
+- **Cadillac più precisa**: doppi fari sovrapposti ('66), linee delle portiere sopra le scritte, maniglie cromate, stemma sul cofano, scritta DeVille, pinna, pinze freno rosse. La scia colorata ora sono due sagome che si spostano: niente più filtro per frame.
+- **Chi siamo**: nuova sezione *Tutto può entrarci* (Moto, Vestiti, Oggetti, Persone, Esperienze). Su desktop la foto segue il mouse; su telefono si apre sotto la parola al centro dello schermo.
+- **Bug corretto**: un prodotto con una sola foto risultava invisibile nella card.
+
+## Novità v1.4
+- **Foto e video veri del team** (dal Drive): 4 clip nel *Video del brand* (Sterrato, Le crete, Ferragosto, Il pick-up), foto o video in ogni capitolo della *Storia in moto*, e *La nostra storia* con un montaggio di 24 secondi (tre clip verticali affiancate, con l'audio). I video iPhone sono HDR: convertiti in colori standard per il web, compressi per caricarsi veloci.
+- **Foto della crew** (nuova sezione, dopo il manifesto): 20 polaroid con lo scotch e la scritta a pennarello, su due file che scorrono in direzioni opposte con lo scroll; tocchi una foto e si apre grande (frecce, swipe, Esc). Si possono aggiungere adesivi tra le foto.
+- **Collegamento automatico**: la home punta ai file per nome (`shopify://shop_images/tb-crew-01.jpg`, `shopify://files/videos/tb-reel-deville.mp4`…). Caricati i file in *Contenuti → File* con lo stesso nome, le sezioni si riempiono da sole.
+- **Tolti i prodotti personalizzati** (configuratore "Fattela tua" e targa custom): la maglia custom si fa solo dal vivo, ai market.
+- **Manifesto**: torna "Non siamo nati a Los Angeles".
+- **Chi siamo** (nuova pagina, template `page.chi-siamo`): il testo del brand ("Prima c'erano gli amici. Poi è arrivato il nome…") riga per riga, a caratteri enormi che entrano con lo scroll, due polaroid, nastro finale "Il resto è in movimento" e il video della storia. Sezione `sections/about-lines.liquid`, ogni riga è un blocco (testo, parole evidenziate in rosa, grandezza, pieno/contorno/pennarello, allineamento).
+- **Storia in moto** riscritta sul testo del brand: Prima (gli amici) → Poi (il nome) → Qui (l'officina) → 26.09 (fuori posto, Milano) → Oggi (in movimento). *La nostra storia* in home ha il testo breve e il bottone **Chi siamo**.
+- Date e luoghi nelle didascalie presi dai metadati dei video (es. Valdera, 06.08.2025).
+
+## Media (file → sezione)
+| File | Sezione → impostazione |
+|---|---|
+| `tb-reel-deville.mp4`, `tb-reel-targa.mp4`, `tb-reel-leopardo.mp4`, `tb-reel-volante.mp4`, `tb-reel-milano.mp4` | Video del brand → clip 1–5 (Cadillac) |
+| `tb-mx-spinta.mp4` · `tb-mx-maglie.jpg` · `tb-mx-officina.jpg` · `tb-mx-pickup-milano.jpg` · `tb-mx-via.mp4` | Storia in moto → capitoli 1–5 |
+| `tb-crew-01.jpg` … `tb-crew-21.jpg` | Foto della crew → foto 1–21 (nello stesso ordine) |
+| `tb-storia-estate.mp4` | La nostra storia (video) → Video (in home e in Chi siamo) |
+| `tb-mx-officina.jpg`, `tb-crew-04.jpg` | Chi siamo → le due foto tra le righe |
+| `tb-crew-02/14/18/01/12.jpg` | Chi siamo → Tutto può entrarci (Moto, Vestiti, Oggetti, Persone, Esperienze) |
+| `tb-maglia-*.png` (15 di 33) | Hero → ogni Vibe → Foto maglia 1/2/3 (abbinamenti in `templates/index.json`) |
+| `tb-maglia-*.png` (tutte) | Foto dei prodotti (fronte = prima foto, retro = seconda) |
+
+## Novità v1.3.1
+- **Storia in moto, percorso nuovo.** Ogni capitolo ha un salto diverso: tabletop, doppio con fossa, step-down dall'altopiano, duna gigante, doppio piccolo con whoops e arrivo sotto lo striscione TEAM BUTTI. Il volo si calcola prima del terreno; la zona sotto la traiettoria viene costruita apposta e l'atterraggio è tangente alla discesa, quindi la moto non entra mai nella fossa e non decolla uscendone. Ci sono bandierine sui labbri, balle di fieno, pile di gomme e coni, e lo sfondo toscano è generato senza ripetizioni (borghi, viali di cipressi, pini, vigne, rotoballe).
+- **Su telefono** i salti sono in scala con la moto, i capitoli sono più distanziati e il testo del capitolo resta fisso in alto con una dissolvenza al cambio.
+
+## Novità v1.3
+- **Storia in moto (cross)** (nuova sezione, al posto di *Il viaggio* in home): una moto da cross Team Butti (2 tempi, numero 69, pilota con la maglia del team) salta le dune toscane mentre scorri. Il terreno e i salti si generano al caricamento; la fisica dipende solo dalla posizione, quindi tornando indietro il salto si ripete identico. Ruote, sospensioni, terra sollevata, polvere all'atterraggio, "BRAAAP!" al decollo. Un capitolo per schermata, come blocco: anno, luogo, titolo, testo, foto o video, didascalia. Colori di moto e pilota modificabili. I testi dei capitoli sono provvisori: vanno sostituiti con la storia vera.
+- **Cadillac v2**: assetto più basso, vernice candy con riflessi, cromature sui passaruota, scritta leopardata in rilievo, fanale acceso, braccio fuori dal finestrino, cerchi con il riflesso fisso e le razze che girano.
+- **Panorama ridisegnato**: un'unica sagoma per livello con la stessa base, nessun pezzo staccato (Madonnina sulla guglia, tetto del Pirellone attaccato, Bosco Verticale a terrazzi, borgo toscano fuso con la collina).
+- La sezione *Il viaggio (Cadillac)* resta disponibile nel tema, ma non è più in home.
+
+## Novità v1.2
+- **Hero ripulita**: panorama disegnato *Toscana → Milano* (colline, cipressi, borgo con torri → Duomo, Velasca, Pirellone, Bosco Verticale, UniCredit, CityLife) al posto dei palazzi con le palme; striscia-strada con bottone, percorso Toscana → Milano e suggerimento; mini Cadillac che attraversa la hero e salta quando cambi vibe. Il bottone vibe e le scritte al click sono gli stessi di prima.
+- **Video del brand** (nuova sezione, subito sotto la hero): fino a 6 clip, cornice da videocamera (REC, timecode, luogo, data), il video passa da card a schermo intero con lo scroll, tab per cambiare clip con effetto glitch, audio on/off, clip verticali (Reel) con sfondo sfocato. Nascosta sul negozio finché non c'è almeno un video.
+- **Cadillac a scroll** (ex *Moto a scroll*): la Cadillac del team (DeVille '66 rossa, scritta leopardata, tetto crema) viaggia dalla Toscana a Milano mentre scorri, con parallasse, cartelli A1 modificabili (blocchi), cielo giorno → tramonto rosa, contachilometri, ruote che girano, sospensioni, scia e fumo. Può usare uno **sprite Higgsfield** o un **video** a scroll: vedi `tools/higgsfield/README.md`.
+- **Il viaggio (Cadillac)** (ex *Racconto in moto*): tappe Toscana → A1 → Milano → Navigli, la Cadillac al posto della moto, colline toscane vere, strada asfaltata.
+- Testi: narrativa *dalla Toscana a Milano* (annuncio, hero, badge, manifesto, footer). La targa SoCal resta perché è un prodotto.
+
+## Novità v1.1
+- **Default = concept approvato**: maglie fluttuanti con parallax nella hero e disegno maglie "flat". Stendino e maglie dettagliate restano disponibili (sezione Hero → *Maglie nella hero*; Impostazioni tema → *Maglie*).
+- **Video**: hero con video di sfondo, video per ogni tappa del racconto in moto, nuova sezione *Moto a scroll (video)* (clip Higgsfield che avanza con lo scroll; esportare con keyframe su ogni frame, `ffmpeg -i in.mp4 -g 1 -an -crf 24 out.mp4`), nuova sezione *La nostra storia (video)* (video Shopify o link YouTube/Vimeo, anteprima muta + Play con audio). Le sezioni video sono nascoste sul negozio finché manca il video.
+- **Effetti** (Impostazioni tema → Effetti, tutti disattivabili): titoli lettera per lettera, bottoni magnetici, tendina rosa tra le pagine.
+- **Zero setup**: griglia = tutti i prodotti se non scegli una collezione; configuratore e targa trovano da soli i prodotti `maglia-custom` e `targa-socal`; disegni maglia anche da tag (`jersey:hockey`, `colors:ff2e93-0d0d0d-f4f1ea-0d0d0d`, `num:69`, `bg:ffd400`, `badge:Nuovo`).
+
+## Setup sul negozio (10 minuti)
+1. **Carica il tema**: Online Store → Temi → Aggiungi tema → Connetti da GitHub (repo `team-butti`, branch) oppure Carica file .zip.
+2. **Metafield prodotto** (Impostazioni → Dati personalizzati → Prodotti), servono solo finché non ci sono foto:
+   `custom.jersey_type` (testo: hockey / mx / football), `custom.jersey_colors` (testo: `base,maniche,bordi,scritte`), `custom.jersey_number` (testo).
+3. **Foto e video**: Contenuti → File → carica i file `tb-*` senza rinominarli (vedi la tabella *Media* sopra).
+4. **Pagina Chi siamo**: Online Store → Pagine → Aggiungi pagina, titolo *Chi siamo* (indirizzo `chi-siamo`), Modello tema **chi-siamo**. Poi Navigazione → menu principale → aggiungi *Chi siamo*.
+5. **Badge sulle card**: tag prodotto `badge:Nuovo`, `badge:Market`, …
+6. **Filtri della griglia**: usano il *Tipo prodotto* (Hockey, Motocross, Football).
+
+
+| Sezione preview | Sezione Liquid | Editabile dal Theme Editor | Dati / API Shopify |
+|---|---|---|---|
+| Marquee rosa | `sections/announcement-bar.liquid` (header group) | testi, colori, velocità | — |
+| Header + badge logo + bag | `sections/header.liquid` | logo, menu, larghezza logo | `linklists`, `cart.item_count` |
+| Hero "Cambia vibe" | `sections/hero-vibe.liquid` | blocchi "Vibe" (nome, sfondo, testo, texture, colori delle 3 maglie) + blocchi "Maglia sullo stendino", testi, CTA, scritte al click | — |
+| Nastri inclinati | `sections/tapes.liquid` | testi dei 2 nastri | — |
+| Griglia "Drop 01" + filtri | `sections/featured-collection.liquid` / `main-collection.liquid` | collezione, n° prodotti, filtri | `collection.products`, filtri = `collection.all_types`; fronte/retro = 1ª e 2ª foto; senza foto = maglia dai metafield; senza collezione = 8 maglie demo |
+| Vista rapida | `sections/quick-view.liquid` via Section Rendering API (`?section_id=quick-view`) | — | `product.variants`, disponibilità per taglia |
+| Manifesto + sticker trascinabili | `sections/manifesto.liquid` | testo (richtext, parole evidenziate), blocchi sticker (testo/stile/posizione) | — |
+| Video del brand | `sections/brand-reel.liquid` | blocchi clip (video, titolo, luogo, data), sfondo, zoom con lo scroll | video da *File* (`video_tag`) |
+| Chi siamo (pagina) | `templates/page.chi-siamo.json` + `sections/about-lines.liquid` | blocchi riga (testo, evidenziato, grandezza, stile, allineamento) e foto, nastro finale | — |
+| Foto della crew | `sections/crew-wall.liquid` | blocchi foto (foto, scritta) e adesivi, sfondo, scorrimento on/off | immagini da *File* (`image_url`) |
+| Storia in moto | `sections/mx-story.liquid` | blocchi capitolo (anno, luogo, titolo, testo, foto o video, didascalia), colori moto e paesaggio | — |
+| Ride Milano→NYC | `sections/ride.liquid` | blocchi "tappa" (titolo, testo, colore, immagine) | — |
+| Poster Market + countdown | `sections/drop-countdown.liquid` | data/ora drop, testi poster, stamp on/off | — |
+| Newsletter | `snippets/newsletter-form.liquid` | testi | `{% form 'customer' %}` → clienti con tag `newsletter` |
+| Carrello laterale | `sections/cart-drawer.liquid` | soglia spedizione gratis | Cart AJAX API (`/cart/add.js`, `/cart/change.js`) + Section Rendering API |
+| Checkout | checkout Shopify nativo | — | `name="checkout"` |
+| Footer + wordmark | `sections/footer.liquid` | menu, social, testi | `shop.enabled_payment_types` |
+| Loader RPM, cursore, grana | `assets/theme.js` + `assets/base.css` | on/off in Impostazioni tema → Effetti | — |
+| Pagina password / pre-drop | `sections/main-password.liquid` | etichetta, data countdown | `form 'storefront_password'` + newsletter |
+
+## Cosa serve dal brand per passare in produzione
+1. Foto prodotto (fronte + retro, sfondo pulito) e foto lifestyle.
+2. Listino: nome, prezzo, taglie, stock, descrizione.
+3. Logo in vettoriale.
+4. Testi definitivi (manifesto, spedizioni, resi, guida taglie).
+5. Prossime date di drop/market.

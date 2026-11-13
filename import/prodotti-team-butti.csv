@@ -1,0 +1,41 @@
+Handle,Title,Body (HTML),Vendor,Type,Tags,Published,Option1 Name,Option1 Value,Option2 Name,Option2 Value,Variant SKU,Variant Grams,Variant Inventory Tracker,Variant Inventory Qty,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Compare At Price,Variant Requires Shipping,Variant Taxable,Gift Card,Status
+hockey-jersey-kings,"Hockey Jersey ""Kings""","<p>La maglia da capitano. Mesh pesante, scollo a V con lacci, numeri e scritte ricamati in twill. Vestibilità oversize da pista.</p>",Team Butti,Hockey,"badge:Nuovo, jersey:hockey, colors:f4f1ea-0d0d0d-9a9a9a-0d0d0d, num:00, bg:e8e4da",TRUE,Taglia,S,,,HJK-S,350,shopify,20,deny,manual,89.00,,TRUE,TRUE,FALSE,active
+hockey-jersey-kings,,,,,,,,M,,,HJK-M,350,shopify,20,deny,manual,89.00,,TRUE,TRUE,,
+hockey-jersey-kings,,,,,,,,L,,,HJK-L,350,shopify,20,deny,manual,89.00,,TRUE,TRUE,,
+hockey-jersey-kings,,,,,,,,XL,,,HJK-XL,350,shopify,20,deny,manual,89.00,,TRUE,TRUE,,
+hockey-jersey-kings,,,,,,,,XXL,,,HJK-XXL,350,shopify,20,deny,manual,89.00,,TRUE,TRUE,,
+mx-jersey-hawaii-2003,"MX Jersey ""Hawaii 2003""",<p>Omaggio al Thanksgiving Weekend del 2003. Maniche lunghe con pannelli diagonali e sponsor finti. Testata sullo sterrato toscano.</p>,Team Butti,Motocross,"badge:Best, jersey:mx, colors:f4f1ea-e3191b-1d3fbf-e3191b, num:03, bg:ffd400",TRUE,Taglia,S,,,MJH2-S,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,FALSE,active
+mx-jersey-hawaii-2003,,,,,,,,M,,,MJH2-M,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,,
+mx-jersey-hawaii-2003,,,,,,,,L,,,MJH2-L,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,,
+mx-jersey-hawaii-2003,,,,,,,,XL,,,MJH2-XL,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,,
+mx-jersey-hawaii-2003,,,,,,,,XXL,,,MJH2-XXL,350,shopify,0,deny,manual,79.00,,TRUE,TRUE,,
+football-jersey-merde-00,"Football Jersey ""Merde 00""","<p>Il doppio zero più famoso del Market di Milano. Numeri giganti, spalle squadrate, inserti laterali a contrasto.</p>",Team Butti,Football,"jersey:football, colors:0d0d0d-ff6a13-f4f1ea-ff6a13, num:00, bg:f4f1ea",TRUE,Taglia,S,,,FJM0-S,350,shopify,20,deny,manual,85.00,,TRUE,TRUE,FALSE,active
+football-jersey-merde-00,,,,,,,,M,,,FJM0-M,350,shopify,20,deny,manual,85.00,,TRUE,TRUE,,
+football-jersey-merde-00,,,,,,,,L,,,FJM0-L,350,shopify,20,deny,manual,85.00,,TRUE,TRUE,,
+football-jersey-merde-00,,,,,,,,XL,,,FJM0-XL,350,shopify,20,deny,manual,85.00,,TRUE,TRUE,,
+football-jersey-merde-00,,,,,,,,XXL,,,FJM0-XXL,350,shopify,20,deny,manual,85.00,,TRUE,TRUE,,
+hockey-jersey-rosa-butti,"Hockey Jersey ""Rosa Butti""","<p>Rosa poster, maniche nere, strisce panna. La maglia che è finita su metà dei TikTok del Market.</p>",Team Butti,Hockey,"badge:Market, jersey:hockey, colors:ff2e93-0d0d0d-f4f1ea-0d0d0d, num:69, bg:ffd400",TRUE,Taglia,S,,,HJRB-S,350,shopify,20,deny,manual,89.00,,TRUE,TRUE,FALSE,active
+hockey-jersey-rosa-butti,,,,,,,,M,,,HJRB-M,350,shopify,20,deny,manual,89.00,,TRUE,TRUE,,
+hockey-jersey-rosa-butti,,,,,,,,L,,,HJRB-L,350,shopify,20,deny,manual,89.00,,TRUE,TRUE,,
+hockey-jersey-rosa-butti,,,,,,,,XL,,,HJRB-XL,350,shopify,20,deny,manual,89.00,,TRUE,TRUE,,
+hockey-jersey-rosa-butti,,,,,,,,XXL,,,HJRB-XXL,350,shopify,20,deny,manual,89.00,,TRUE,TRUE,,
+mx-jersey-toscana-dirt,"MX Jersey ""Toscana Dirt""","<p>Verde neon e fucsia, come la nostra prima maglia MX. Si vede da tre colline di distanza.</p>",Team Butti,Motocross,"jersey:mx, colors:39ff14-ff2e93-0d0d0d-ff2e93, num:91, bg:0d0d0d",TRUE,Taglia,S,,,MJTD-S,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,FALSE,active
+mx-jersey-toscana-dirt,,,,,,,,M,,,MJTD-M,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,,
+mx-jersey-toscana-dirt,,,,,,,,L,,,MJTD-L,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,,
+mx-jersey-toscana-dirt,,,,,,,,XL,,,MJTD-XL,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,,
+mx-jersey-toscana-dirt,,,,,,,,XXL,,,MJTD-XXL,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,,
+hockey-jersey-navy-x,"Hockey Jersey ""Navy X""","<p>Andata in 40 minuti al Market. Torna al prossimo drop, forse.</p>",Team Butti,Hockey,"jersey:hockey, colors:1d3fbf-1d3fbf-e3191b-f4f1ea, num:10, bg:ff2e93",TRUE,Taglia,S,,,HJNX-S,350,shopify,0,deny,manual,89.00,,TRUE,TRUE,FALSE,active
+hockey-jersey-navy-x,,,,,,,,M,,,HJNX-M,350,shopify,0,deny,manual,89.00,,TRUE,TRUE,,
+hockey-jersey-navy-x,,,,,,,,L,,,HJNX-L,350,shopify,0,deny,manual,89.00,,TRUE,TRUE,,
+hockey-jersey-navy-x,,,,,,,,XL,,,HJNX-XL,350,shopify,0,deny,manual,89.00,,TRUE,TRUE,,
+hockey-jersey-navy-x,,,,,,,,XXL,,,HJNX-XXL,350,shopify,0,deny,manual,89.00,,TRUE,TRUE,,
+football-jersey-giallo,"Football Jersey ""Giallo""",<p>Giallo MX e rosso poster. In saldo finché ci sono taglie.</p>,Team Butti,Football,"jersey:football, colors:ffd400-e3191b-0d0d0d-e3191b, num:68, bg:1d3fbf",TRUE,Taglia,S,,,FJG-S,350,shopify,20,deny,manual,85.00,99.00,TRUE,TRUE,FALSE,active
+football-jersey-giallo,,,,,,,,M,,,FJG-M,350,shopify,20,deny,manual,85.00,99.00,TRUE,TRUE,,
+football-jersey-giallo,,,,,,,,L,,,FJG-L,350,shopify,20,deny,manual,85.00,99.00,TRUE,TRUE,,
+football-jersey-giallo,,,,,,,,XL,,,FJG-XL,350,shopify,20,deny,manual,85.00,99.00,TRUE,TRUE,,
+football-jersey-giallo,,,,,,,,XXL,,,FJG-XXL,350,shopify,20,deny,manual,85.00,99.00,TRUE,TRUE,,
+mx-jersey-desert,"MX Jersey ""Desert""",<p>Color sabbia come il gilet camo. Ultime taglie rimaste.</p>,Team Butti,Motocross,"badge:Ultimi, jersey:mx, colors:c9a46a-7a5a2c-f4f1ea-0d0d0d, num:25, bg:39ff14",TRUE,Taglia,S,,,MJD-S,350,shopify,0,deny,manual,79.00,,TRUE,TRUE,FALSE,active
+mx-jersey-desert,,,,,,,,M,,,MJD-M,350,shopify,0,deny,manual,79.00,,TRUE,TRUE,,
+mx-jersey-desert,,,,,,,,L,,,MJD-L,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,,
+mx-jersey-desert,,,,,,,,XL,,,MJD-XL,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,,
+mx-jersey-desert,,,,,,,,XXL,,,MJD-XXL,350,shopify,20,deny,manual,79.00,,TRUE,TRUE,,

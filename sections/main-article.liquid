@@ -1,0 +1,13 @@
+<article class="sec page-sec">
+  <span class="label">{{ article.published_at | date: '%d.%m.%Y' }}</span>
+  <h1 class="sec__title d grunge">{{ article.title | escape }}</h1>
+  {%- if article.image -%}
+    {%- assign alt = article.title | escape -%}
+    <div class="article__img">{{ article.image | image_url: width: 1600 | image_tag: widths: '800,1200,1600', sizes: '100vw', alt: alt }}</div>
+  {%- endif -%}
+  <div class="rte page-rte">{{ article.content }}</div>
+</article>
+
+{% schema %}
+{ "name": "Articolo", "settings": [] }
+{% endschema %}

@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "main-archive", "settings": { "back_label": "Vai al Drop Fuck →", "back_link": "/collections/drop-fuck" } }
+  },
+  "order": ["main"]
+}
