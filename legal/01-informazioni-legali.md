@@ -12,7 +12,6 @@ Il sito **[DOMINIO]** e il negozio online Team Butti sono gestiti da:
 - Capitale sociale: [CAPITALE SOCIALE]
 - PEC: [PEC]
 - Email servizio clienti: [EMAIL]
-- Telefono: [TELEFONO]
 - Magazzino e resi: [INDIRIZZO RESI]
 
 Informazioni rese ai sensi dell'art. 7 del D.Lgs. 70/2003 (commercio elettronico) e dell'art. 49 del D.Lgs. 206/2005 (Codice del Consumo).

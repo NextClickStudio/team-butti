@@ -12,7 +12,6 @@ DATA = {
     '[REA]': 'MI-2124928',
     '[PEC]': 'fradel.sas@pec.it',
     '[EMAIL]': 'info@teambutti.com',
-    '[TELEFONO]': '+39 331 700 0849',
     '[INDIRIZZO RESI]': 'Corso Magenta 52, 20123 Milano (MI)',
     '[CORRIERI]': 'DHL',
     '[COSTO ITALIA]': '5 €',

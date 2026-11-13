@@ -25,17 +25,6 @@
             "color": "yellow"
           }
         },
-        "tel": {
-          "type": "channel",
-          "settings": {
-            "kind": "phone",
-            "label": "Telefono",
-            "value": "+39 331 700 0849",
-            "note": "Lun–ven, orari d’ufficio",
-            "link": "tel:+393317000849",
-            "color": "green"
-          }
-        },
         "place": {
           "type": "channel",
           "settings": {
@@ -86,7 +75,6 @@
       "block_order": [
         "mail",
         "ig",
-        "tel",
         "place",
         "q1",
         "q2",

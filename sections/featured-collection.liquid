@@ -30,14 +30,29 @@
           assign shown = 50
         endif
       -%}
-      {%- for product in coll.products limit: shown -%}
+      {%- assign skip_h = section.settings.exclude_collection.handle -%}
+      {%- assign n = 0 -%}
+      {%- for product in coll.products limit: 100 -%}
         {%- liquid
-          assign more = false
-          if forloop.index > section.settings.limit
-            assign more = true
+          assign skip = false
+          if skip_h != blank
+            assign ph = product.collections | map: 'handle'
+            if ph contains skip_h
+              assign skip = true
+            endif
           endif
         -%}
-        {% render 'product-card', product: product, more: more %}
+        {%- if skip == false -%}
+          {%- assign n = n | plus: 1 -%}
+          {%- liquid
+            assign more = false
+            if n > section.settings.limit
+              assign more = true
+            endif
+          -%}
+          {% render 'product-card', product: product, more: more %}
+          {%- if n >= shown -%}{%- break -%}{%- endif -%}
+        {%- endif -%}
       {%- endfor -%}
     {%- elsif section.settings.collection != blank and request.design_mode == false -%}
       {%- comment -%} the drop is announced but its pieces are not online yet {%- endcomment -%}
@@ -78,6 +93,7 @@
     { "type": "range", "id": "limit", "label": "Prodotti", "info": "Quanti se ne vedono su Tutto. Con i filtri per tipo, ogni tipo mostra tutti i suoi pezzi.", "min": 2, "max": 16, "step": 1, "default": 8 },
     { "type": "checkbox", "id": "show_tabs", "label": "Filtri per tipo prodotto", "default": true },
     { "type": "text", "id": "link_label", "label": "Bottone collezione", "default": "Vedi tutto" },
+    { "type": "collection", "id": "exclude_collection", "label": "Nascondi i prodotti di questa collezione", "info": "Es. l'archivio, così i pezzi esauriti non compaiono in \"Completa il fit\"." },
     { "type": "header", "content": "Archivio" },
     { "type": "collection", "id": "archive_collection", "label": "Collezione archivio", "info": "Il drop precedente (es. Drop Hotmilf): sotto la griglia compare il bottone per andarci." },
     { "type": "text", "id": "archive_label", "label": "Bottone archivio", "default": "Archivio · Drop Hotmilf" },

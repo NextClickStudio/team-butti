@@ -9,7 +9,7 @@
       "block_order": ["size", "ship"],
       "settings": {}
     },
-    "more": { "type": "featured-collection", "settings": { "title": "Completa", "title_outline": "il fit", "limit": 4, "show_tabs": false, "link_label": "" } }
+    "more": { "type": "featured-collection", "settings": { "title": "Completa", "title_outline": "il fit", "limit": 4, "show_tabs": false, "link_label": "", "exclude_collection": "drop-hotmilf" } }
   },
   "order": ["main", "more"]
 }
